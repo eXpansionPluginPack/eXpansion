@@ -101,42 +101,57 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->karma = Service::GetChallengeKarma($this->storage->currentMap, $this->storage->players);
 
         // display the new challenge's karma to all players
-        foreach ($this->storage->players as $login => $player)
+        foreach ($this->storage->players as $login => $player) {
             $this->displayWidget($login);
-        foreach ($this->storage->spectators as $login => $player)
+        }
+        foreach ($this->storage->spectators as $login => $player) {
             $this->displayWidget($login);
+        }
     }
 
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
-        if ($playerUid == 0)
+        if ($playerUid == 0) {
             return;
+        }
 
-        if ($text == "0/5")
+        if ($text == "0/5") {
             $this->doVote($login, -3);
-        if ($text == "1/5")
+        }
+        if ($text == "1/5") {
             $this->doVote($login, -3);
-        if ($text == "2/5")
+        }
+        if ($text == "2/5") {
             $this->doVote($login, -1);
-        if ($text == "3/5")
+        }
+        if ($text == "3/5") {
             $this->doVote($login, 1);
-        if ($text == "4/5")
+        }
+        if ($text == "4/5") {
             $this->doVote($login, 2);
-        if ($text == "5/5")
+        }
+        if ($text == "5/5") {
             $this->doVote($login, 3);
+        }
 
-        if ($text == "---")
+        if ($text == "---") {
             $this->doVote($login, -3);
-        if ($text == "--")
+        }
+        if ($text == "--") {
             $this->doVote($login, -2);
-        if ($text == "-")
+        }
+        if ($text == "-") {
             $this->doVote($login, -1);
-        if ($text == "+")
+        }
+        if ($text == "+") {
             $this->doVote($login, 1);
-        if ($text == "++")
+        }
+        if ($text == "++") {
             $this->doVote($login, 2);
-        if ($text == "+++")
+        }
+        if ($text == "+++") {
             $this->doVote($login, 3);
+        }
     }
 
     /**
@@ -201,5 +216,3 @@ class TMKarma extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Widget::EraseAll();
     }
 }
-
-?>

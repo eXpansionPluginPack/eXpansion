@@ -32,7 +32,6 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-        //$this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->mainFrame->addComponent($this->pager);
         $this->actionBackup = $this->createAction(array($this, "Backup"));
@@ -70,8 +69,9 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function populateList()
     {
 
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
         $this->pager->clearItems();
         $this->items = array();
 
@@ -79,12 +79,18 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $x = 0;
 
         $path = $this->getPath();
-        if (!$path)
+        if (!$path) {
             return;
+        }
         $files = glob($path . "/*.sql");
 
         foreach ($files as $file) {
-            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Database\Gui\Controls\SqlFile($x, $this, $file, $this->sizeX);
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Database\Gui\Controls\SqlFile(
+                $x,
+                $this,
+                $file,
+                $this->sizeX
+            );
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
@@ -97,8 +103,9 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function write($string)
     {
-        if ($this->fileHandler === false)
+        if ($this->fileHandler === false) {
             return;
+        }
 
         if (fwrite($this->fileHandler, $string) === false) {
             throw new \Exception("Writting to file failed!", 4);
@@ -107,6 +114,7 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function getPath()
     {
+        $login ='';
         $path = $this->connection->GameDataDirectory();
         $path = dirname($path) . "/backup";
         if (!is_dir($path)) {
@@ -126,8 +134,9 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $this->connection->chatSendServerMessage("No backup filename given, canceling backup!", $login);
         }
         $path = $this->getPath();
-        if (!$path)
+        if (!$path) {
             return;
+        }
         $this->fileName = $path . "/" . $inputboxes['filename'] . ".sql";
 
         $this->fileHandler = fopen($this->fileName, "wb");
@@ -184,8 +193,9 @@ class BackupRestore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function destroy()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->db = null;
         $this->items = array();

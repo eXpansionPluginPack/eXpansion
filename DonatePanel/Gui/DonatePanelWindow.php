@@ -77,8 +77,9 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     function destroy()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
         parent::destroy();
     }
 }

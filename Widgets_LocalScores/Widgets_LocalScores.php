@@ -33,10 +33,12 @@ class Widgets_LocalScores extends ExpPlugin implements Listener
         $this->enableDedicatedEvents();
 
         $this->lastUpdate = time();
-        if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\SM_PlatformScores\\SM_PlatformScores'))
+        if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\SM_PlatformScores\\SM_PlatformScores')) {
             self::$localrecords = $this->callPublicMethod(
-                "\\ManiaLivePlugins\\eXpansion\\SM_PlatformScores\\SM_PlatformScores", "getRecords"
+                "\\ManiaLivePlugins\\eXpansion\\SM_PlatformScores\\SM_PlatformScores",
+                "getRecords"
             );
+        }
 
         $this->updateLocalPanel();
     }

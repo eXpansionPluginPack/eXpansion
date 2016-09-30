@@ -35,9 +35,8 @@ class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\Exp
 
     public function eXpOnLoad()
     {
-        if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania') || $this->isPluginLoaded(
-                '\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script'
-            )
+        if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania')
+            || $this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script')
         ) {
             Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
         }
@@ -56,10 +55,12 @@ class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\Exp
         $this->lastUpdate = time();
         $this->enableTickerEvent();
 
-        if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords'))
+        if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\\LocalRecords\\LocalRecords')) {
             self::$localrecords = $this->callPublicMethod(
-                "\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRecords"
+                "\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords",
+                "getRecords"
             );
+        }
 
         $this->updateCombiPanel();
         self::$me = $this;
@@ -70,8 +71,9 @@ class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\Exp
 
         if ((time() - $this->lastUpdate) > 20) {
 
-            if (($this->needUpdate & self::DEDIMANIA) == self::DEDIMANIA || $this->forceUpdate || ($this->needUpdate & self::DEDIMANIA_FORCE)
-                == self::DEDIMANIA_FORCE
+            if (($this->needUpdate & self::DEDIMANIA) == self::DEDIMANIA
+                || $this->forceUpdate
+                || ($this->needUpdate & self::DEDIMANIA_FORCE) == self::DEDIMANIA_FORCE
             ) {
                 if ($this->dedi || $this->needUpdate == self::DEDIMANIA_FORCE) {
                     $this->updateCombiPanel();
@@ -93,9 +95,8 @@ class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\Exp
         $gui = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
 
         try {
-            if (($this->isPluginLoaded($dedi1) && $this->callPublicMethod(
-                        $dedi1, 'isRunning'
-                    )) || ($this->isPluginLoaded($dedi2) && $this->callPublicMethod($dedi2, 'isRunning'))
+            if (($this->isPluginLoaded($dedi1) && $this->callPublicMethod($dedi1, 'isRunning'))
+                || ($this->isPluginLoaded($dedi2) && $this->callPublicMethod($dedi2, 'isRunning'))
             ) {
                 $localRecs = CombiPanel::GetAll();
                 if (!isset($localRecs[0])) {
@@ -111,7 +112,7 @@ class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\Exp
                     $this->widgetIds["CombiPanel"]->setNbFirstFields($this->config->nbTop);
                     $this->widgetIds["CombiPanel"]->update();
                     $this->widgetIds["CombiPanel"]->show();
-                } else if (isset($localRecs[0])) {
+                } elseif (isset($localRecs[0])) {
                     $localRecs[0]->setNbFields($this->config->nbTotal);
                     $localRecs[0]->setNbFirstFields($this->config->nbTop);
                     $localRecs[0]->update();
@@ -130,7 +131,7 @@ class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\Exp
                         $this->widgetIds["CombiPanel2"]->setNbFirstFields($this->config->nbTop);
                         $this->widgetIds["CombiPanel2"]->update();
                         $this->widgetIds["CombiPanel2"]->show();
-                    } else if (isset($localRecs[0])) {
+                    } elseif (isset($localRecs[0])) {
                         $localRecs[0]->setNbFields($this->config->nbTotal);
                         $localRecs[0]->setNbFirstFields($this->config->nbTop);
                         $localRecs[0]->update();
@@ -201,7 +202,9 @@ class Widgets_CombinedRecords extends \ManiaLivePlugins\eXpansion\Core\types\Exp
 
     public function onBeginMatch()
     {
-        if (self::$raceOn == true) return;
+        if (self::$raceOn == true) {
+            return;
+        }
 
         self::$raceOn = false;
         $this->forceUpdate = true;

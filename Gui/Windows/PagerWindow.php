@@ -70,8 +70,9 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
             $this->labels[$i]->setSizeX($x);
             $i++;
         }
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->setSizeX($sizeX);
+        }
     }
 
     public function onShow()
@@ -112,7 +113,14 @@ abstract class PagerWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Windo
         $login = $this->getRecipient();
 
         while ($x < sizeof($data)) {
-            $this->items[$x] = new Item($x, $login, $data[$x], $this->getWidths(), $this->getKeys(), $this->getFormaters());
+            $this->items[$x] = new Item(
+                $x,
+                $login,
+                $data[$x],
+                $this->getWidths(),
+                $this->getKeys(),
+                $this->getFormaters()
+            );
             $this->pager->addItem($this->items[$x]);
             $x++;
         }

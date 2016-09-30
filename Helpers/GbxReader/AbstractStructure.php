@@ -83,12 +83,14 @@ abstract class AbstractStructure
     final public static function fetchLookbackString($fp)
     {
         // Ignoring version for first lookback string
-        if (empty(self::$lookbackStrings))
+        if (empty(self::$lookbackStrings)) {
             self::ignore($fp, 4);
+        }
 
         $index = self::fetchLong($fp) & 0x3fffffff;
-        if ($index)
+        if ($index) {
             return self::$lookbackStrings[$index - 1];
+        }
 
         self::$lookbackStrings[] = $string = self::fetchString($fp);
 

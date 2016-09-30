@@ -26,8 +26,9 @@ class DirectoryItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button($sizeX, 5);
         $this->label->setAlign('center', 'center');
         $name = $dir->getFilename();
-        if ($dir->getFilename() == "rules")
+        if ($dir->getFilename() == "rules") {
             $name = "[rules]";
+        }
         $this->label->setText($name);
 
         if ($dir->isDir()) {
@@ -35,7 +36,6 @@ class DirectoryItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         }
         if ($dir->isFile()) {
             $this->label->setAction($this->createAction(array($controller, "setFile"), $dir->getRealPath()));
-            //$this->label->colorize("0707");
         }
         if ($dir->getRealPath() == $compare) {
             $this->label->colorize("0e0a");
@@ -50,7 +50,6 @@ class DirectoryItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected function onResize($oldX, $oldY)
     {
-
         $this->frame->setSize($this->sizeX, $this->sizeY);
     }
 }

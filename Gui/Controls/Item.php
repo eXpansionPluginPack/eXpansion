@@ -41,10 +41,11 @@ class Item extends \ManiaLivePlugins\eXpansion\Gui\Control
                 $text = $indexNumber + 1;
             } else {
                 if (isset($datas[$dataKey])) {
-                    if (isset($formaters[$i]) && $formaters[$i] != null)
+                    if (isset($formaters[$i]) && $formaters[$i] != null) {
                         $text = $formaters[$i]->format($datas[$dataKey]);
-                    else
+                    } else {
                         $text = $datas[$dataKey];
+                    }
                 }
             }
             $label->setText($text);

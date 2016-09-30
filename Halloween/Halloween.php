@@ -33,8 +33,9 @@ class Halloween extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-        if ($this->wasWarmup)
+        if ($this->wasWarmup) {
             return;
+        }
         $window = Gui\Widget\SpiderWidget::Create(null);
         $window->show();
     }

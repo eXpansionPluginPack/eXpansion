@@ -101,34 +101,41 @@ class AroundMe extends Widget
         if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_LAPS) {
             $this->timeScript->setParam("isLaps", "True");
 
-            if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
+            if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                 $this->timeScript->setParam("nbLaps", $nbLaps);
-            else
+            } else {
                 $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->lapsNbLaps);
-        } else if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_ROUNDS && $this->storage->gameInfos->roundsForcedLaps > 0
+            }
+        } elseif (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode()
+            == GameInfos::GAMEMODE_ROUNDS && $this->storage->gameInfos->roundsForcedLaps > 0
         ) {
             $this->timeScript->setParam("isLaps", "True");
 
-            if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
+            if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                 $this->timeScript->setParam("nbLaps", $nbLaps);
-            else
+            } else {
                 $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
-        } else if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->roundsForcedLaps > 0
+            }
+        } elseif (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode()
+            == GameInfos::GAMEMODE_TEAM && $this->storage->gameInfos->roundsForcedLaps > 0
         ) {
             $this->timeScript->setParam("isLaps", "True");
 
-            if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
+            if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                 $this->timeScript->setParam("nbLaps", $$nbLaps);
-            else
+            } else {
                 $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
-        } else if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_CUP && $this->storage->gameInfos->roundsForcedLaps > 0
+            }
+        } elseif (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode()
+            == GameInfos::GAMEMODE_CUP && $this->storage->gameInfos->roundsForcedLaps > 0
         ) {
             $this->timeScript->setParam("isLaps", "True");
 
-            if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT)
+            if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
                 $this->timeScript->setParam("nbLaps", $nbLaps);
-            else
+            } else {
                 $this->timeScript->setParam("nbLaps", $this->storage->gameInfos->roundsForcedLaps);
+            }
         }
 
         if (Widgets_LocalRecords::eXpGetCurrentCompatibilityGameMode() == GameInfos::GAMEMODE_TEAM) {
@@ -161,10 +168,15 @@ class AroundMe extends Widget
 
         foreach (Core::$playerInfo as $login => $player) {
             $lastCpIndex = count($player->checkpoints) - 1;
-            if ($player->isPlaying && $lastCpIndex >= 0 && isset($player->checkpoints[$lastCpIndex]) && $player->checkpoints[$lastCpIndex] > 0) {
+            if ($player->isPlaying
+                && $lastCpIndex >= 0
+                && isset($player->checkpoints[$lastCpIndex])
+                && $player->checkpoints[$lastCpIndex] > 0
+            ) {
 
-                if ($lastCpIndex > $biggestCp)
+                if ($lastCpIndex > $biggestCp) {
                     $biggestCp = $lastCpIndex;
+                }
 
                 $lastCpTime = $player->checkpoints[$lastCpIndex];
                 $player = $this->storage->getPlayerObject($login);
@@ -227,8 +239,9 @@ class AroundMe extends Widget
 
         $bestCpsText = '';
         foreach ($bestCps as $cpIndex => $time) {
-            if ($bestCpsText != "")
+            if ($bestCpsText != "") {
                 $bestCpsText .= ', ';
+            }
             $bestCpsText .= $cpIndex . '=>' . $time;
         }
 
@@ -237,8 +250,9 @@ class AroundMe extends Widget
 
         if ($teamCont == 0) {
             $this->timeScript->setParam("playerTeams", "Integer[Text]");
-        } else
+        } else {
             $this->timeScript->setParam("playerTeams", $teams);
+        }
 
         if (!empty($newPlayerCps)) {
             $this->timeScript->setParam("playerTimes", $playerTimes);

@@ -14,7 +14,12 @@ use ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords;
 class Cps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
     protected $frame;
-    protected $label_rank, $label_nick, $label_score, $frameCP, $nextButton, $prevButton;
+    protected $label_rank;
+    protected $label_nick;
+    protected $label_score;
+    protected $frameCP;
+    protected $nextButton;
+    protected $prevButton;
     protected $widths = array(0.5, 3, 10);
     protected $pager;
     protected $items = array();
@@ -77,11 +82,11 @@ class Cps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $this->label_rank->setSizeX($scaledSizes[0]);
         $this->label_nick->setSizeX($scaledSizes[1]);
-        //	$this->label_score->setSizeX($scaledSizes[2]);
 
         $this->pager->setSize($this->getSizeX() - 4, $this->getSizeY() - 12);
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->setSizeX($this->getSizeX());
+        }
     }
 
     public function onShow()

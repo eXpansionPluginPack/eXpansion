@@ -109,7 +109,11 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
             // do query every 50 values
             if ($y % 100 == 0 && $y > 0) {
                 $buffer = trim($buffer, ",");
-                $this->query("INSERT INTO exp_records (`record_challengeuid`, `record_playerlogin`, `record_nbLaps`, `record_score`, `record_nbFinish`, `record_avgScore`, `record_checkpoints`, `record_date`) VALUES $buffer;", $this->conn);
+                $this->query(
+                    "INSERT INTO exp_records (`record_challengeuid`, `record_playerlogin`, `record_nbLaps`,
+ `record_score`, `record_nbFinish`, `record_avgScore`, `record_checkpoints`, `record_date`) VALUES $buffer;",
+                    $this->conn
+                );
                 $buffer = "";
                 // for pretty output to user :)
                 $percentage = round(($x / $total) * 100, 0);
@@ -126,7 +130,11 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
         }
         // if buffer had some values, write them..
         $buffer = trim($buffer, ",");
-        $this->query("INSERT INTO exp_records (`record_challengeuid`, `record_playerlogin`, `record_nbLaps`, `record_score`, `record_nbFinish`, `record_avgScore`, `record_checkpoints`, `record_date`) VALUES $buffer;", $this->conn);
+        $this->query(
+            "INSERT INTO exp_records (`record_challengeuid`, `record_playerlogin`, `record_nbLaps`, `record_score`,
+ `record_nbFinish`, `record_avgScore`, `record_checkpoints`, `record_date`) VALUES $buffer;",
+            $this->conn
+        );
         $buffer = "";
         $this->c("Done!");
 
@@ -135,7 +143,11 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
         $this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);
 
 
-        $xplayers = $this->query("SELECT Login as player_login, NickName as player_nickname, UNIX_TIMESTAMP(UpdatedAt) as player_updated, Wins as player_wins, TimePlayed as player_timeplayed FROM players p;", $this->conn);
+        $xplayers = $this->query(
+            "SELECT Login as player_login, NickName as player_nickname, UNIX_TIMESTAMP(UpdatedAt) as player_updated,
+ Wins as player_wins, TimePlayed as player_timeplayed FROM players p;",
+            $this->conn
+        );
 
         while ($xaseco_players[] = mysql_fetch_object($xplayers)) ;
         unset($xplayer);
@@ -154,20 +166,31 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
             }
             if ($y % 100 == 0 && $y > 0) {
                 $buffer = trim($buffer, ",");
-                $this->query("INSERT INTO exp_players (`player_login`, `player_nickname`, `player_updated`, `player_wins`, `player_timeplayed`) VALUES $buffer;", $this->conn);
+                $this->query(
+                    "INSERT INTO exp_players (`player_login`, `player_nickname`, `player_updated`, `player_wins`,
+ `player_timeplayed`) VALUES $buffer;",
+                    $this->conn
+                );
                 $buffer = "";
                 // for pretty output to user :)
                 $percentage = round(($x / $total) * 100, 0);
                 $this->c($percentage . "%...");
             }
-            $buffer .= "('" . mysql_real_escape_string($data->player_login, $this->conn) . "','" . mysql_real_escape_string($data->player_nickname, $this->conn) . "', '" . $data->player_updated . "','" . $data->player_wins . "','" . $data->player_timeplayed . "'),";
+            $buffer .= "('" . mysql_real_escape_string($data->player_login, $this->conn)
+                . "','" . mysql_real_escape_string($data->player_nickname, $this->conn)
+                . "', '" . $data->player_updated . "','" . $data->player_wins . "','"
+                . $data->player_timeplayed . "'),";
 
             $x++;
             $y++;
         } // outer foreach
 
         $buffer = trim($buffer, ",");
-        $this->query("INSERT INTO exp_players (`player_login`, `player_nickname`, `player_updated`, `player_wins`, `player_timeplayed`) VALUES $buffer;", $this->conn);
+        $this->query(
+            "INSERT INTO exp_players (`player_login`, `player_nickname`, `player_updated`, `player_wins`,
+ `player_timeplayed`) VALUES $buffer;",
+            $this->conn
+        );
         $buffer = "";
         $this->c($percentage . "Done.");
 
@@ -175,7 +198,11 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
 
         $this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);
 
-        $xkarma = $this->query("SELECT p.login as login, Score as rating, c.uid as uid FROM maps c, players p, rs_karma r where r.Playerid = p.id and r.MapId = c.id;", $this->conn);
+        $xkarma = $this->query(
+            "SELECT p.login as login, Score as rating, c.uid as uid FROM maps c, players p, rs_karma r 
+where r.Playerid = p.id and r.MapId = c.id;",
+            $this->conn
+        );
         while ($xaseco_karma[] = mysql_fetch_object($xkarma)) ;
         unset($xkarma);
         $this->query("USE " . $this->config['exp_db'] . ";", $this->conn);
@@ -235,7 +262,8 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;", 
         /// DONATIONS MIGRATION ///
         ///////////////////////////
         $this->query("USE " . $this->config['xaseco_db'] . ";", $this->conn);
-        $xdons = $this->query("SELECT p.login AS transaction_fromLogin, Donations AS transaction_amount
+        $xdons = $this->query(
+            "SELECT p.login AS transaction_fromLogin, Donations AS transaction_amount
 FROM players p, players_extra r
 WHERE r.Playerid = p.id
 AND Donations >0;", $this->conn);
@@ -254,19 +282,30 @@ AND Donations >0;", $this->conn);
 
             if ($y % 100 == 0 && $y > 0) {
                 $buffer = trim($buffer, ",");
-                $this->query("INSERT INTO exp_planet_transaction (`transaction_fromLogin`, `transaction_toLogin`, `transaction_plugin`, `transaction_subject`, `transaction_amount`) VALUES $buffer;", $this->conn);
+                $this->query(
+                    "INSERT INTO exp_planet_transaction (`transaction_fromLogin`, `transaction_toLogin`, 
+`transaction_plugin`, `transaction_subject`, `transaction_amount`) VALUES $buffer;",
+                    $this->con
+                );
                 $buffer = "";
                 // for pretty output to user :)
                 $percentage = round(($x / $total) * 100, 0);
                 $this->c($percentage . "%...");
             }
-            $buffer .= "('" . mysql_escape_string($data->transaction_fromLogin) . "','" . mysql_escape_string($this->config['transaction_toLogin']) . "','eXpansion\DonatePanel','server_donation','" . mysql_escape_string($data->transaction_amount) . "'),";
+            $buffer .= "('" . mysql_escape_string($data->transaction_fromLogin)
+                . "','" . mysql_escape_string($this->config['transaction_toLogin'])
+                . "','eXpansion\DonatePanel','server_donation','"
+                . mysql_escape_string($data->transaction_amount) . "'),";
 
             $x++;
             $y++;
         }
         $buffer = trim($buffer, ",");
-        $this->query("INSERT INTO exp_planet_transaction (`transaction_fromLogin`, `transaction_toLogin`, `transaction_plugin`, `transaction_subject`, `transaction_amount`) VALUES $buffer;", $this->conn);
+        $this->query(
+            "INSERT INTO exp_planet_transaction (`transaction_fromLogin`, `transaction_toLogin`, `transaction_plugin`, 
+`transaction_subject`, `transaction_amount`) VALUES $buffer;",
+            $this->conn
+        );
         $buffer = "";
         $this->c("done.");
     }
@@ -309,5 +348,3 @@ AND Donations >0;", $this->conn);
         }
     }
 }
-
-?>

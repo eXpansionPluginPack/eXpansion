@@ -66,7 +66,9 @@ class ForceMod extends ExpPlugin
 
             $this->connection->setForcedMods(true, $rnd_mod);
         } catch (Exception $e) {
-            $this->console("[eXp\\ForceMod] error while enabling the mod:" . $e->getMessage() . " line:" . $e->getLine());
+            $this->console(
+                "[eXp\\ForceMod] error while enabling the mod:" . $e->getMessage() . " line:" . $e->getLine()
+            );
 
             return;
         }
@@ -83,8 +85,9 @@ class ForceMod extends ExpPlugin
             }
             foreach ($this->config->mods as $url => $envString) {
                 $env = $envString;
-                if (empty($envString))
+                if (empty($envString)) {
                     $env = $this->expStorage->version->titleId;
+                }
 
                 $mod = new Mod();
                 $mod->url = $url;

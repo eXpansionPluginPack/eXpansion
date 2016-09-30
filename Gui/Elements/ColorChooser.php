@@ -9,7 +9,13 @@ use ManiaLivePlugins\eXpansion\Gui\Config;
 class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
 
-    protected $inputbox, $preview, $openButton, $frame, $bg, $ok, $cancel;
+    protected $inputbox;
+    protected $preview;
+    protected $openButton;
+    protected $frame;
+    protected $bg;
+    protected $ok;
+    protected $cancel;
 
     protected $settings;
 
@@ -43,8 +49,9 @@ class ColorChooser extends Control implements \ManiaLivePlugins\eXpansion\Gui\St
 
         $this->buttonId = self::$counter++;
 
-        if (self::$counter > 100000)
+        if (self::$counter > 100000) {
             self::$counter = 0;
+        }
 
         $this->digits = $output;
         $this->prefix = $hasPrefix ? 1 : 0;

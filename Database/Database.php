@@ -46,7 +46,12 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->setPublicMethod('showDbMaintainance');
         $this->updateServerChallenges();
         // add admin command ;)
-        $cmd = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::addAdminCommand('dbtools', $this, 'showDbMaintainance', Permission::SERVER_DATABASE); //
+        $cmd = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::addAdminCommand(
+            'dbtools',
+            $this,
+            'showDbMaintainance',
+            Permission::SERVER_DATABASE
+        );
         $cmd->setHelp('shows administrative window for database');
         $cmd->setMinParam(0);
     }
@@ -147,8 +152,9 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     function updateServerChallenges()
     {
-        if ($this->expStorage->isRelay)
+        if ($this->expStorage->isRelay) {
             return;
+        }
         //get database challenges
         $uids = "";
         $mapsByUid = array();
@@ -183,7 +189,6 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             try {
                 $data = $connection->getMapInfo($data->fileName);
             } catch (\Exception $e) {
-                //$this->sendChat('%adminerror%' . $e->getMessage(), $login);
             }
         }
 
@@ -228,18 +233,21 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function initCreateTables()
     {
-        if (!$this->db->tableExists('exp_databaseversion'))
+        if (!$this->db->tableExists('exp_databaseversion')) {
             $this->createDatabaseTable();
+        }
 
-        if (!$this->db->tableExists('exp_players'))
+        if (!$this->db->tableExists('exp_players')) {
             $this->createPlayersTable();
+        }
 
         if ($this->getDatabaseVersion('exp_players') == 1) {
             $this->updatePlayersTableTo2();
         }
 
-        if (!$this->db->tableExists('exp_maps'))
+        if (!$this->db->tableExists('exp_maps')) {
             $this->createMapTable();
+        }
         if ($this->getDatabaseVersion('exp_maps') != 2) {
             $this->db->execute('ALTER TABLE exp_maps ADD KEY(challenge_uid);');
             $this->setDatabaseVersion('exp_maps', 2);
@@ -344,17 +352,28 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
              WHERE `player_login` = " . $this->db->quote($player->login) . ";";
         $this->db->execute($q);
         if ($this->config->showWins) {
-            $q = "SELECT `player_wins` FROM `exp_players` WHERE `player_login` = " . $this->db->quote($player->login) . ";";
+            $q = "SELECT `player_wins` FROM `exp_players` WHERE `player_login` = "
+                . $this->db->quote($player->login) . ";";
             $query = $this->db->execute($q);
             $data = $query->fetchStdObject();
             $w = $data->player_wins;
-            $msg_pub = eXpGetMessage('#rank#Congratulations to #variable#%1$s#rank# for their #variable#%2$s#rank# win!');
+            $msg_pub = eXpGetMessage(
+                '#rank#Congratulations to #variable#%1$s#rank# for their #variable#%2$s#rank# win!'
+            );
             $msg_self = eXpGetMessage('#rank#Congratulations for your #variable#%1$s#rank# win!');
             $wins = $this->numberize($w);
             if ($w <= 100 && $w % 10 == 0) {
-                $this->eXpChatSendServerMessage($msg_pub, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wosnm"), $wins));
-            } else if ($w % 25 == 0) {
-                $this->eXpChatSendServerMessage($msg_pub, null, array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wosnm"), $wins));
+                $this->eXpChatSendServerMessage(
+                    $msg_pub,
+                    null,
+                    array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wosnm"), $wins)
+                );
+            } elseif ($w % 25 == 0) {
+                $this->eXpChatSendServerMessage(
+                    $msg_pub,
+                    null,
+                    array(\ManiaLib\Utils\Formatting::stripCodes($player->nickName, "wosnm"), $wins)
+                );
             } else {
                 $this->eXpChatSendServerMessage($msg_self, $player->login, array($wins));
             }
@@ -365,11 +384,11 @@ class Database extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if ($num >= 10 && $num <= 20) {
             $num = $num . 'th';
-        } else if (substr($num, -1) == 1) {
+        } elseif (substr($num, -1) == 1) {
             $num = $num . 'st';
-        } else if (substr($num, -1) == 2) {
+        } elseif (substr($num, -1) == 2) {
             $num = $num . 'nd';
-        } else if (substr($num, -1) == 3) {
+        } elseif (substr($num, -1) == 3) {
             $num = $num . 'rd';
         } else {
             $num = $num . 'th';

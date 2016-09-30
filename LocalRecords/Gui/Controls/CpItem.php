@@ -55,8 +55,9 @@ class CpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $idx = 0;
         $addLast = false;
         for ($x = $offset; $x <= $offset + 6; $x++) {
-            if ($x > count($cpArray))
+            if ($x > count($cpArray)) {
                 break;
+            }
 
             if (array_key_exists($x, $cpArray)) {
                 $label = new \ManiaLib\Gui\Elements\Label(15, 6);

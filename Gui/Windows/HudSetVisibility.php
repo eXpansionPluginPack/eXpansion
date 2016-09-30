@@ -29,9 +29,11 @@ class HudSetVisibility extends \ManiaLive\Gui\Window
 			';
         foreach ($this->data as $item) {
             $bool = "False";
-            if ($item->value)
+            if ($item->value) {
                 $bool = "True";
-            $content .= "eXp_widgetVisible[\"" . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . "\"][\"" . $item->id . "\"][\"" . $item->gameMode . "\"] = " . $bool . "; \n";
+            }
+            $content .= "eXp_widgetVisible[\"" . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION
+                . "\"][\"" . $item->id . "\"][\"" . $item->gameMode . "\"] = " . $bool . "; \n";
         }
 
         $content .= '

@@ -30,7 +30,9 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
 
         $config = Config::getInstance();
         $this->checkboxId = self::$counter++;
-        if (self::$counter > 100000) self::$counter = 0;
+        if (self::$counter > 100000) {
+            self::$counter = 0;
+        }
 
         $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->button->setAlign('left', 'center2');
@@ -48,7 +50,6 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         $this->entry->setDefault($this->active ? "1" : "0");
         $this->entry->setPosX(4000);
         $this->entry->setScriptEvents(true);
-        //$this->entry->setVisibility(false);
 
         if (self::$script == null) {
             self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\CheckboxScript();
@@ -145,7 +146,9 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
     public function toggleActive($login)
     {
         $this->active = !$this->active;
-        if ($this->toToggle != null) $this->toToggle->ToogleIsWorking($login);
+        if ($this->toToggle != null) {
+            $this->toToggle->ToogleIsWorking($login);
+        }
         $this->entry->setDefault($this->active ? "1" : "0");
         $this->redraw();
     }
@@ -163,8 +166,11 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
 
     public function getScript()
     {
-        if ($this->enabled) return self::$script;
-        else return null;
+        if ($this->enabled) {
+            return self::$script;
+        } else {
+            return null;
+        }
     }
 
     public function setArgs($args)
@@ -172,7 +178,9 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         if (isset($args['eXp_CheckboxE_' . $this->checkboxId])) {
             $active = $args['eXp_CheckboxE_' . $this->checkboxId] == '1';
             $out = true;
-            if ($active == 0 || empty($active)) $out = false;
+            if ($active == 0 || empty($active)) {
+                $out = false;
+            }
             $this->setStatus($out);
         }
     }

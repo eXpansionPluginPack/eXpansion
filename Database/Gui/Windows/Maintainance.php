@@ -50,7 +50,6 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onConstruct();
         $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-        //$this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
         $this->addComponent($this->pager);
 
@@ -110,8 +109,9 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function populateList()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
         $this->pager->clearItems();
         $this->items = array();
 
@@ -122,7 +122,11 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $tables = $this->db->execute("SHOW TABLES in " . $dbName . ";")->fetchArrayOfRow();
 
         foreach ($tables as $table) {
-            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Database\Gui\Controls\DbTable($x, $table[0], $this->sizeX);
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Database\Gui\Controls\DbTable(
+                $x,
+                $table[0],
+                $this->sizeX
+            );
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
@@ -155,7 +159,10 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             if ($item->checkBox->getStatus()) {
                 // repair table
                 $status = $this->db->execute("REPAIR TABLE " . $item->tableName . ";")->fetchObject();
-                $this->connection->chatSendServerMessage("Table " . $status->Table . " repaired with " . $status->Msg_type . ":" . $status->Msg_text, $login);
+                $this->connection->chatSendServerMessage(
+                    "Table " . $status->Table . " repaired with " . $status->Msg_type . ":" . $status->Msg_text,
+                    $login
+                );
             }
         }
         //   $this->erase($login);
@@ -169,10 +176,12 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             if ($item->checkBox->getStatus()) {
                 // repair table
                 $status = $this->db->execute("TRUNCATE TABLE " . $item->tableName . ";");
-                $this->connection->chatSendServerMessage('Table \'$0d0' . $item->tableName . '$fff\' contents is now $d00CLEARED$fff!', $login);
+                $this->connection->chatSendServerMessage(
+                    'Table \'$0d0' . $item->tableName . '$fff\' contents is now $d00CLEARED$fff!',
+                    $login
+                );
             }
         }
-        //  $this->erase($login);
     }
 
     public function Optimize($login, $args)
@@ -184,10 +193,12 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             if ($item->checkBox->getStatus()) {
                 // repair table
                 $status = $this->db->execute("OPTIMIZE TABLE `" . $item->tableName . "`;")->fetchObject();
-                $this->connection->chatSendServerMessage("Table " . $status->Table . " Optimized with " . $status->Msg_type . ":" . $status->Msg_text, $login);
+                $this->connection->chatSendServerMessage(
+                    "Table " . $status->Table . " Optimized with " . $status->Msg_type . ":" . $status->Msg_text,
+                    $login
+                );
             }
         }
-        //  $this->erase($login);
     }
 
     public function Cancel($login)
@@ -197,8 +208,9 @@ class Maintainance extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function destroy()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->db = null;
         $this->connection = null;

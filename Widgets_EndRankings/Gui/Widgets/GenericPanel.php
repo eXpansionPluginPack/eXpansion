@@ -83,7 +83,9 @@ class GenericPanel extends Widget
             $this->items[$x] = new GenericItem($x, $item);
             $this->frame->addComponent($this->items[$x]);
             $x++;
-            if ($x == $this->totalLines) break;
+            if ($x == $this->totalLines) {
+                break;
+            }
         }
     }
 

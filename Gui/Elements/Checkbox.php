@@ -117,8 +117,9 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
     public function toggleActive($login)
     {
         $this->active = !$this->active;
-        if ($this->toToggle != null)
+        if ($this->toToggle != null) {
             $this->toToggle->ToogleIsWorking($login);
+        }
         $this->redraw();
     }
 

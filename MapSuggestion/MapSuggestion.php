@@ -30,8 +30,9 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
     function addMapToWish($login, $mxid, $description = null)
     {
 
-        if (is_array($mxid))
+        if (is_array($mxid)) {
             $mxid = $mxid[0];
+        }
 
 
         if ($description == null || is_array($description)) {
@@ -58,7 +59,13 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
 
             $data .= $mxid . ";" . $from . ";\"" . $description . "\"\r\n";
             $dataAccess->save($file, $data, true);
-            Gui::showNotice(eXpGetMessage("Your wish has been saved\nThe server admin will review the wish\nand add the map if it's good enough."), $login);
+            Gui::showNotice(
+                eXpGetMessage(
+                    "Your wish has been saved\nThe server "
+                    ."admin will review the wish\nand add the map if it's good enough."
+                ),
+                $login
+            );
             MapWish::Erase($login);
 
             return;

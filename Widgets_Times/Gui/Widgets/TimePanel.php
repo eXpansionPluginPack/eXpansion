@@ -96,14 +96,19 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     protected function onDraw()
     {
-        $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(self::$localrecords, "login", $this->target);
+        $record = \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::getObjbyPropValue(
+            self::$localrecords,
+            "login",
+            $this->target
+        );
 
         $checkpoints = "[ -1 ]";
         $noRecs = true;
 
         // Add record information for MS usage.
         if ($record instanceof \ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record) {
-            // Normally all CP even last one should be in the object, but not in databases imported from XAseco where last CP is missing.
+            // Normally all CP even last one should be in the object,
+            // but not in databases imported from XAseco where last CP is missing.
             if (sizeof($record->ScoreCheckpoints) == $this->totalCp) {
                 // Normal DB entry with all CP's.
                 $checkpoints = "[" . implode(",", $record->ScoreCheckpoints) . "]";
@@ -150,7 +155,9 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         }
 
         $bool = "False";
-        if ($this->lapRace) $bool = "True";
+        if ($this->lapRace) {
+            $bool = "True";
+        }
 
         $this->nScript->setParam('checkpoints', $checkpoints);
         $this->nScript->setParam('deditimes', $dediTime);

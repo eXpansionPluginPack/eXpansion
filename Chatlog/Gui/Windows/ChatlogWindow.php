@@ -37,8 +37,9 @@ class ChatlogWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
      */
     function populateList($messages)
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
         $this->pager->clearItems();
         $this->items = array();
 

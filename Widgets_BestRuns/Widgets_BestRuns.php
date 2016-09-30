@@ -35,10 +35,12 @@ class Widgets_BestRuns extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->bestTime = 0;
         BestRunPanel::$bestRuns = array();
 
-        foreach ($this->storage->players as $player)
+        foreach ($this->storage->players as $player) {
             $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $player)
+        }
+        foreach ($this->storage->spectators as $player) {
             $this->onPlayerConnect($player->login, true);
+        }
     }
 
     public function onPlayerNewBestTime($player, $oldBest, $newBest)

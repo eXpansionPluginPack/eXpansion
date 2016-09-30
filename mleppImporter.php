@@ -153,11 +153,13 @@ class Mimporter
         );
 
         $query = 'UPDATE ' . $this->config['exp_db']
-            . '.exp_planet_transaction SET transaction_plugin = "eXpansion\\DonatePanel" WHERE transaction_plugin = "MLEPP\\DonatePlanets"';
+            . '.exp_planet_transaction SET transaction_plugin = "eXpansion\\DonatePanel" '
+            .'WHERE transaction_plugin = "MLEPP\\DonatePlanets"';
         mysql_query($query, $this->conn);
 
         $query = 'UPDATE ' . $this->config['exp_db']
-            . '.exp_planet_transaction SET transaction_plugin = "ManiaLivePlugins\\PMC" WHERE transaction_plugin = "PMC"';
+            . '.exp_planet_transaction SET transaction_plugin = "ManiaLivePlugins\\PMC" '
+            .'WHERE transaction_plugin = "PMC"';
         mysql_query($query, $this->conn);
     }
 

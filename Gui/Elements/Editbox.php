@@ -17,7 +17,9 @@ class Editbox extends Control
 
     protected $name;
 
-    protected $bgleft, $bgcenter, $bgright;
+    protected $bgleft;
+    protected $bgcenter;
+    protected $bgright;
 
     protected $bg;
 
@@ -30,7 +32,6 @@ class Editbox extends Control
         $this->createButton($editable);
 
         $this->bg = new WidgetBackGround(100, 30);
-        //	$this->addComponent($this->bg);
 
         $this->label = new Label($sizeX, 4);
         $this->label->setAlign('left', 'top');
@@ -39,20 +40,6 @@ class Editbox extends Control
         $this->label->setTextEmboss();
         $this->addComponent($this->label);
 
-        /* 	$this->bgleft = new Quad(3, 6);
-          $this->bgleft->setAlign("right", "top");
-          $this->bgleft->setImage($config->getImage("inputbox", "left.png"), true);
-          $this->addComponent($this->bgleft);
-
-          $this->bgcenter = new Quad(3, 6);
-          $this->bgcenter->setAlign("left", "top");
-          $this->bgcenter->setImage($config->getImage("inputbox", "center.png"), true);
-          $this->addComponent($this->bgcenter);
-
-          $this->bgright = new Quad(3, 6);
-          $this->bgright->setAlign("left", "top");
-          $this->bgright->setImage($config->getImage("inputbox", "right.png"), true);
-          $this->addComponent($this->bgright); */
 
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;
@@ -64,15 +51,6 @@ class Editbox extends Control
     {
         $this->button->setSize($this->getSizeX(), $this->getSizeY() - 5);
         $this->button->setPosition(0, 0);
-
-        /* 	$this->bgleft->setSize(3, $this->getSizeY());
-          $this->bgleft->setPosX(3);
-
-          $this->bgcenter->setSize($this->getSizeX() - 6, $this->getSizeY());
-          $this->bgcenter->setPosX(3);
-
-          $this->bgright->setSize(3, $this->getSizeY());
-          $this->bgright->setPosX($this->getSizeX() - 3); */
 
         $this->label->setSize($this->getSizeX(), 3);
         $this->label->setPosition(1, 5);
@@ -130,18 +108,20 @@ class Editbox extends Control
 
     public function getText()
     {
-        if ($this->button instanceof Entry)
+        if ($this->button instanceof Entry) {
             return $this->button->getDefault();
-        else
+        } else {
             return $this->button->getText();
+        }
     }
 
     public function setText($text)
     {
-        if ($this->button instanceof Entry)
+        if ($this->button instanceof Entry) {
             $this->button->setDefault($text);
-        else
+        } else {
             $this->button->setText($text);
+        }
     }
 
     public function getName()

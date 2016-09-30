@@ -20,8 +20,9 @@ class InfoMessage extends ExpPlugin
     {
         $this->config = Config::getInstance();
 
-        if (count($this->config->infoMessages) < 1)
+        if (count($this->config->infoMessages) < 1) {
             return;
+        }
 
         $interval = TimeConversion::MStoTM($this->config->infoInterval) / 1000;
 

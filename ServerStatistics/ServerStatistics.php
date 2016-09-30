@@ -27,11 +27,14 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         global $lang;
         //The Database plugin is needed.
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Database\\Database"));
+        $this->addDependency(
+            new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Database\\Database")
+        );
 
         // Make sure pcre and php_com_dotnet are loaded :)
         if (!extension_loaded('pcre') && !function_exists('preg_match') && !function_exists('preg_match_all')) {
-            $message = 'ServerStatistics needs the `pcre` extension to be loaded. http://us2.php.net/manual/en/book.pcre.php';
+            $message = 'ServerStatistics needs the `pcre` extension '
+                .'to be loaded. http://us2.php.net/manual/en/book.pcre.php';
             $this->dumpException($message, new \Exception('`pcre` is missing'));
             exit(1);
         }
@@ -91,9 +94,18 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
 
         //Checking the version if the table
-        $version = $this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\Database\\Database', 'getDatabaseVersion', 'exp_records');
+        $version = $this->callPublicMethod(
+            '\ManiaLivePlugins\\eXpansion\\Database\\Database',
+            'getDatabaseVersion',
+            'exp_records'
+        );
         if (!$version) {
-            $version = $this->callPublicMethod('\ManiaLivePlugins\\eXpansion\\Database\\Database', 'setDatabaseVersion', 'exp_records', 1);
+            $version = $this->callPublicMethod(
+                '\ManiaLivePlugins\\eXpansion\\Database\\Database',
+                'setDatabaseVersion',
+                'exp_records',
+                1
+            );
         }
 
         $this->nbPlayer = 0;
@@ -145,12 +157,14 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if ($isSpectator) {
             $this->spectators[$login] = $login;
-            if (sizeof($this->spectators) > $this->nbSpecMax)
+            if (sizeof($this->spectators) > $this->nbSpecMax) {
                 $this->nbSpecMax = sizeof($this->spectators);
+            }
         } else {
             $this->players[$login] = $login;
-            if (sizeof($this->players) > $this->nbPlayerMax)
+            if (sizeof($this->players) > $this->nbPlayerMax) {
                 $this->nbPlayerMax = sizeof($this->players);
+            }
         }
     }
 
@@ -188,7 +202,13 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         $win = Gui\Windows\StatsWindow::Create($login);
         $win->setData($data, $this->storage);
-        $win->setTitle(__('Welcome to : %1$s', $login, \ManiaLivePlugins\eXpansion\Gui\Gui::fixString($this->storage->server->name)));
+        $win->setTitle(
+            __(
+                'Welcome to : %1$s',
+                $login,
+                \ManiaLivePlugins\eXpansion\Gui\Gui::fixString($this->storage->server->name)
+            )
+        );
         $win->setSize(85, 70);
         $win->show($login);
     }
@@ -201,12 +221,14 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $win = Gui\Windows\PlotterWindow::Create($login);
         $win->setTitle(__("Players", $login));
         $win->setSize(170, 110);
-        $datas = $this->db->execute("SELECT `server_nbPlayers` as players, server_nbSpec as specs, "
+        $datas = $this->db->execute(
+            "SELECT `server_nbPlayers` as players, server_nbSpec as specs, "
             . " server_updateDate as date "
             . " FROM exp_server_stats "
             . " WHERE server_updateDate > " . $startTime
             . "     AND server_login = " . $this->db->quote($this->storage->serverLogin)
-            . " ORDER BY `server_updateDate` ASC")->fetchArrayOfObject();
+            . " ORDER BY `server_updateDate` ASC"
+        )->fetchArrayOfObject();
         $win->setLineColor(0, "00f");
         $win->setLineColor(1, "f00");
 
@@ -223,10 +245,12 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $i++;
             $out[0][] = $data->players;
             $out[1][] = $data->specs;
-            if ($max < $data->players)
+            if ($max < $data->players) {
                 $max = $data->players;
-            if ($max < $data->specs)
+            }
+            if ($max < $data->specs) {
                 $max = $data->specs;
+            }
         }
         $win->setLimit(12 * 60, (((int)($max / 5)) + 1) * 5);
         $win->setDatas($out);
@@ -242,14 +266,16 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $win = Gui\Windows\PlotterWindow::Create($login);
         $win->setTitle(__("Memory usage", $login));
         $win->setSize(170, 110);
-        $datas = $this->db->execute("SELECT `server_ramTotal` as total, "
+        $datas = $this->db->execute(
+            "SELECT `server_ramTotal` as total, "
             . "`server_ramFree` as free, "
             . "`server_phpRamUsage` as phpram, "
             . "server_updateDate as date "
             . " FROM exp_server_stats "
             . " WHERE server_updateDate > " . $startTime
             . "     AND server_login = " . $this->db->quote($this->storage->serverLogin)
-            . " ORDER BY `server_updateDate` ASC")->fetchArrayOfObject();
+            . " ORDER BY `server_updateDate` ASC"
+        )->fetchArrayOfObject();
 
         $win->setLineColor(0, "f90");
         $win->setLineColor(1, "f00");
@@ -260,7 +286,7 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (preg_match('/^(\d+)(.)$/', $memory_limit, $matches)) {
                 if ($matches[2] == 'M') {
                     $memory_limit = $matches[1] * 1024 * 1024; // nnnM -> nnn MB
-                } else if ($matches[2] == 'K') {
+                } elseif ($matches[2] == 'K') {
                     $memory_limit = $matches[1] * 1024; // nnnK -> nnn KB
                 }
             }
@@ -302,11 +328,13 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $win = Gui\Windows\PlotterWindow::Create($login);
         $win->setTitle(__("Cpu usage", $login));
         $win->setSize(170, 110);
-        $datas = $this->db->execute("SELECT `server_load` as cpuload, server_updateDate as date"
+        $datas = $this->db->execute(
+            "SELECT `server_load` as cpuload, server_updateDate as date"
             . " FROM exp_server_stats "
             . " WHERE server_updateDate > " . $startTime
             . "     AND server_login = " . $this->db->quote($this->storage->serverLogin)
-            . " ORDER BY `server_updateDate` ASC")->fetchArrayOfObject();
+            . " ORDER BY `server_updateDate` ASC"
+        )->fetchArrayOfObject();
 
         $out = array();
         $win->setLineColor(0, "f00");
@@ -365,10 +393,12 @@ class ServerStatistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     private function removePlayer($login)
     {
-        if (array_key_exists($login, $this->spectators))
+        if (array_key_exists($login, $this->spectators)) {
             unset($this->spectators[$login]);
-        if (array_key_exists($login, $this->players))
+        }
+        if (array_key_exists($login, $this->players)) {
             unset($this->players[$login]);
+        }
     }
 
     public function onPlayerInfoChanged($playerInfo)

@@ -18,10 +18,14 @@ class LongDate extends AbstractFormater
         $text = $days . 'd ' . $hours . 'h ' . $minutes . 'min';
 
         $month = (int)(($val / (3600 * 24 * 30)));
-        if ($month > 0) $text = ($month % 30) . 'm ' . $days . 'd ' . $hours . 'h ';
+        if ($month > 0) {
+            $text = ($month % 30) . 'm ' . $days . 'd ' . $hours . 'h ';
+        }
 
         $year = (int)(($val / (3600 * 24 * 30 * 12)));
-        if ($year > 0) $text = $year . 'y ' . ($month % 30) . 'm ' . $days . 'd ';
+        if ($year > 0) {
+            $text = $year . 'y ' . ($month % 30) . 'm ' . $days . 'd ';
+        }
 
         return $text;
     }

@@ -37,14 +37,14 @@ class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function populateList($callback, $text = "")
     {
         $this->storage = \ManiaLive\Data\Storage::getInstance();
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->pager->clearItems();
 
         $x = 0;
         $login = $this->getRecipient();
-        //for($i =0; $i < 100; $i++){
         foreach ($this->storage->players as $player) {
 
             if ($player->login != $this->getRecipient()) {
@@ -53,7 +53,6 @@ class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $x++;
             }
         }
-        //}
         foreach ($this->storage->spectators as $player) {
             if ($player->login != $this->getRecipient()) {
                 $this->items[$x] = new Playeritem($x, $player, $callback, $text);
@@ -75,8 +74,9 @@ class PlayerSelection extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function destroy()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         parent::destroy();
     }

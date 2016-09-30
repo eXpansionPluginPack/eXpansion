@@ -29,7 +29,9 @@ class DbPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
         $values = "";
         $update = "";
         foreach ($properties as $key => $value) {
-            if ($key == "id") continue;
+            if ($key == "id") {
+                continue;
+            }
             $key = mysql_real_escape_string($key);
             $value = mysql_real_escape_string($value);
 
@@ -42,6 +44,7 @@ class DbPlayer extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
         $values = substr($values, 0, -1);
         $update = substr($update, 0, -1);
 
-        return "INSERT INTO exp_players (" . $keys . ") VALUES (" . $values . ") ON DUPLICATE KEY UPDATE " . $update . ";";
+        return "INSERT INTO exp_players (" . $keys . ") 
+        VALUES (" . $values . ") ON DUPLICATE KEY UPDATE " . $update . ";";
     }
 }

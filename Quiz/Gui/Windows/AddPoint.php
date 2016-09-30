@@ -47,8 +47,9 @@ class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function setData($quizPlayers)
     {
 
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
         $this->pager->clearItems();
         $this->items = array();
 
@@ -57,7 +58,14 @@ class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $isadmin = AdminGroups::hasPermission($login, Permission::QUIZ_ADMIN);
         try {
             foreach (\ManiaLive\Data\Storage::getInstance()->players as $login => $player) {
-                $this->items[$x] = new AddPointItem($x++, $player, $this, $isadmin, $this->getRecipient(), $this->sizeX);
+                $this->items[$x] = new AddPointItem(
+                    $x++,
+                    $player,
+                    $this,
+                    $isadmin,
+                    $this->getRecipient(),
+                    $this->sizeX
+                );
                 if (array_key_exists($login, $quizPlayers)) {
                     $this->items[$x]->setPoints($quizPlayers[$login]->points);
                 }
@@ -86,8 +94,9 @@ class AddPoint extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $this->connection = null;
         $this->storage = null;
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->items = null;
         $this->pager->destroy();

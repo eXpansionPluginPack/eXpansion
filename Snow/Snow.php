@@ -28,7 +28,9 @@ class Snow extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-        if ($this->wasWarmup) return;
+        if ($this->wasWarmup) {
+            return;
+        }
         $window = Gui\Windows\SnowParticle::Create(null);
         $window->show();
     }

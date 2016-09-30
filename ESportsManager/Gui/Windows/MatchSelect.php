@@ -56,8 +56,9 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function apply($login)
     {
-        if (empty($this->settingsFile))
+        if (empty($this->settingsFile)) {
             return;
+        }
         $this->readSettingsFile($login, $this->settingsFile);
         $this->Erase($login);
     }
@@ -99,14 +100,16 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             return;
         }
         try {
-            ESportsManager::$nextMatchSettings = new \ManiaLivePlugins\eXpansion\ESportsManager\Structures\MatchSetting();
+            ESportsManager::$nextMatchSettings
+                = new \ManiaLivePlugins\eXpansion\ESportsManager\Structures\MatchSetting();
             ESportsManager::$nextMatchSettings->gameInfos = $this->parseGameInfos($ini);
             ESportsManager::$nextMatchSettings->matchTitle = $ini['Match']['name'];
             ESportsManager::$nextMatchSettings->matchOrganizer = $ini['Match']['matchOrganizer'];
             ESportsManager::$nextMatchSettings->rulesText = $ini['Match']['rulesText'];
             $out = $ini['SendChatLines']['line'];
-            if (!is_array($ini['SendChatLines']['line']))
+            if (!is_array($ini['SendChatLines']['line'])) {
                 $out = array($ini['SendChatLines']['line']);
+            }
             ESportsManager::$nextMatchSettings->adminCommands = $out;
             ESportsManager::$nextMatchSettings->gameMode = ESportsManager::$nextMatchSettings->gameInfos->gameMode;
         } catch (\Exception $e) {
@@ -122,8 +125,9 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         foreach ($ini['GameInfos'] as $setting => $value) {
             if ($value !== null) {
-                if (empty($value))
+                if (empty($value)) {
                     continue;
+                }
 
                 $newVal = null;
                 if ($setting == "gameMode") {
@@ -184,8 +188,9 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
 
         $boolCheck = filter_var($var, FILTER_VALIDATE_BOOLEAN);
-        if ($boolCheck !== null)
+        if ($boolCheck !== null) {
             return $boolCheck;
+        }
 
         return null;
     }

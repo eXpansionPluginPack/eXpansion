@@ -22,7 +22,11 @@ class debugWidget extends \ManiaLive\Gui\Window
     {
         parent::onConstruct();
         $this->lastUpdate = 0;
-        Dispatcher::register(\ManiaLive\Application\Event::getClass(), $this, \ManiaLive\Application\Event::ON_POST_LOOP);
+        Dispatcher::register(
+            \ManiaLive\Application\Event::getClass(),
+            $this,
+            \ManiaLive\Application\Event::ON_POST_LOOP
+        );
 
         $this->setName("Debug widget");
 
@@ -36,7 +40,9 @@ class debugWidget extends \ManiaLive\Gui\Window
     public function onPostLoop()
     {
         $startTime = microtime(true);
-        if ($startTime < $this->nextLoop) return;
+        if ($startTime < $this->nextLoop) {
+            return;
+        }
         $value = "mem usage: " . round((memory_get_usage() / 1024 / 1024), 3) . " Mb";
         if ($value == $this->lastValue) {
             $this->label->setTextColor("fff");

@@ -54,7 +54,11 @@ class ExpSetting extends Control
         $this->bg = new ListBackGround($indexNumber, 100, 4);
         $this->addComponent($this->bg);
 
-        if ($var instanceof HashList || $var instanceof BasicList || $var instanceof SortedList || $var->hasConfWindow()) {
+        if ($var instanceof HashList
+            || $var instanceof BasicList
+            || $var instanceof SortedList
+            || $var->hasConfWindow()
+        ) {
 
             $this->label_varValue = new Label(40, 5);
             $this->label_varValue->setScale(0.9);
@@ -68,7 +72,7 @@ class ExpSetting extends Control
             $this->button_change->setDescription(__('Allows you to edit values', $login), 40);
             $this->button_change->setAction($this->createAction(array($this, "openWin"), $var));
             $this->addComponent($this->button_change);
-        } else if ($var->getDescription() != "") {
+        } elseif ($var->getDescription() != "") {
 
             $this->button_change = new Button(8, 8);
             $this->button_change->setIcon('UIConstructionSimple_Buttons', 'Help');
@@ -83,7 +87,11 @@ class ExpSetting extends Control
         if ($var->getDefaultValue() != null)
             $this->addComponent($this->button_reset);
 
-        if ($var instanceof HashList || $var instanceof BasicList || $var instanceof SortedList || $var->hasConfWindow()) {
+        if ($var instanceof HashList
+            || $var instanceof BasicList
+            || $var instanceof SortedList
+            || $var->hasConfWindow()
+        ) {
 
         } else {
             if ($var instanceof Boolean) {
@@ -93,8 +101,13 @@ class ExpSetting extends Control
                 $this->input->setPosY(-2);
                 $this->input->setPosX(7);
                 $this->addComponent($this->input);
-            } else if ($var instanceof ColorCode) {
-                $this->input = new \ManiaLivePlugins\eXpansion\Gui\Elements\ColorChooser($var->getName(), 35, $var->getUseFullHex(), $var->getUsePrefix());
+            } elseif ($var instanceof ColorCode) {
+                $this->input = new \ManiaLivePlugins\eXpansion\Gui\Elements\ColorChooser(
+                    $var->getName(),
+                    35,
+                    $var->getUseFullHex(),
+                    $var->getUsePrefix()
+                );
                 $this->input->setColor($var->getRawValue());
                 $this->input->setPosY(-2);
                 $this->input->setPosX(7);
@@ -111,14 +124,16 @@ class ExpSetting extends Control
         $this->icon_global = new Button(7, 7);
         if ($var->getIsGlobal()) {
             $this->icon_global->setIcon('Icons64x64_1', 'IconLeaguesLadder');
-            $this->icon_global->setDescription(__("Global Setting, Saved for all servers sharing this configuration", $login), 120);
+            $this->icon_global->setDescription(
+                __("Global Setting, Saved for all servers sharing this configuration", $login),
+                120
+            );
         } else {
             $this->icon_global->setIcon('Icons64x64_1', 'IconServers');
             $this->icon_global->setDescription(__("Server Setting, Saved for this server only", $login), 80);
         }
         $this->addComponent($this->icon_global);
 
-        //	$this->setScale(0.8);
         $this->sizeX = 130;
         $this->sizeY = 10;
 
@@ -177,10 +192,11 @@ class ExpSetting extends Control
 
     public function getVar()
     {
-        if ($this->input != null)
+        if ($this->input != null) {
             return $this->var;
-        else
+        } else {
             return null;
+        }
     }
 
     public function getVarValue($options)

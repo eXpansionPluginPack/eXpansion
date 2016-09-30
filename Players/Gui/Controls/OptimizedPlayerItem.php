@@ -51,8 +51,16 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
     /** @var \ManiaLive\Data\Player */
     private $player;
 
-    function __construct($indexNumber, \ManiaLive\Data\Player $player, $controller, $isAdmin, $login, $widths, $sizeX, $ignored = false)
-    {
+    function __construct(
+        $indexNumber,
+        \ManiaLive\Data\Player $player,
+        $controller,
+        $isAdmin,
+        $login,
+        $widths,
+        $sizeX,
+        $ignored = false
+    ) {
         $this->recipient = $login;
         $this->widths = \ManiaLivePlugins\eXpansion\Gui\Gui::getScaledSize($widths, $sizeX);
 
@@ -112,7 +120,6 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(4, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-//$this->frame->addComponent($spacer);
 
 
         $this->nickname = new \ManiaLib\Gui\Elements\Label(50, 4);
@@ -133,7 +140,7 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->frame->addComponent($spacer);
 
-// admin additions
+        // admin additions
         if ($this->isAdmin) {
             if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::PLAYER_IGNORE)) {
                 $this->ignoreButton = new MyButton(7, 5);
@@ -144,8 +151,9 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
                 if ($ignored) {
                     $this->ignoreButton->setDescription(__('UnIgnore player %1$s ', $login, $player->login), 50);
                     $this->ignoreButton->setIcon('Icons128x128_1', 'Beginner');
-                } else
+                } else {
                     $this->ignoreButton->setIcon('Icons128x128_1', 'Easy');
+                }
                 $this->frame->addComponent($this->ignoreButton);
             }
 
@@ -180,7 +188,8 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
                 $this->frame->addComponent($this->blacklistButton);
             }
 
-            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::PLAYER_FORCESPEC)) {
+            if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::PLAYER_FORCESPEC)
+            ) {
                 $this->forceButton = new MyButton(6, 5);
                 $this->forceButton->setAction($this->forceAction);
                 $this->forceButton->colorize("2f2");
@@ -216,15 +225,17 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
         if ($this->forceButton != null) {
             if ($this->player->spectator == 1) {
                 $this->forceButton->setIcon('Icons64x64_1', 'Opponents');
-                $this->forceButton->setDescription(__('Force %1$s to play', $this->recipient, $this->player->login), 50);
+                $this->forceButton
+                    ->setDescription(__('Force %1$s to play', $this->recipient, $this->player->login), 50);
             } else {
                 $this->forceButton->setIcon('BgRaceScore2', 'Spectator');
-                $this->forceButton->setDescription(__('Force %1$s to spectate', $this->recipient, $this->player->login), 50);
+                $this->forceButton
+                    ->setDescription(__('Force %1$s to spectate', $this->recipient, $this->player->login), 50);
             }
         }
     }
 
-// manialive 3.1 override to do nothing.
+    // manialive 3.1 override to do nothing.
     function destroy()
     {
 
@@ -233,21 +244,26 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
     /*
      * custom function to remove contents.
      */
-
     function erase()
     {
-        if (is_object($this->banButton))
+        if (is_object($this->banButton)) {
             $this->banButton->destroy();
-        if (is_object($this->forceButton))
+        }
+        if (is_object($this->forceButton)) {
             $this->forceButton->destroy();
-        if (is_object($this->kickButton))
+        }
+        if (is_object($this->kickButton)) {
             $this->kickButton->destroy();
-        if (is_object($this->blacklistButton))
+        }
+        if (is_object($this->blacklistButton)) {
             $this->blacklistButton->destroy();
-        if (is_object($this->ignoreButton))
+        }
+        if (is_object($this->ignoreButton)) {
             $this->ignoreButton->destroy();
-        if (is_object($this->guestButton))
+        }
+        if (is_object($this->guestButton)) {
             $this->guestButton->destroy();
+        }
 
         $this->destroyComponents();
 

@@ -19,7 +19,10 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         EmotePanel::$emotePlugin = $this;
         $this->config = Config::getInstance();
 
-        $commands = array("bb", "bye", "hi", "hello", "thx", "ty", "lol", "brb", "afk", "gg", "nl", "bgm", "sry", "sorry", "glhf", "wb", "omg", "buzz", "eat", "drink", "rant");
+        $commands = array(
+            "bb", "bye", "hi", "hello", "thx", "ty", "lol", "brb", "afk", "gg",
+            "nl", "bgm", "sry", "sorry", "glhf", "wb", "omg", "buzz", "eat", "drink", "rant"
+        );
         $help = "performs a chatemote.";
         foreach ($commands as $command) {
             $cmd = $this->registerChatCommand("$command", "$command", -1, true);
@@ -32,15 +35,16 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $cmd->help = $help;
         }
 
-        foreach ($this->storage->players as $player)
+        foreach ($this->storage->players as $player) {
             $this->onPlayerConnect($player->login, false);
-        foreach ($this->storage->spectators as $player)
+        }
+        foreach ($this->storage->spectators as $player) {
             $this->onPlayerConnect($player->login, true);
+        }
     }
 
     public function onPlayerDisconnect($login, $reason = null)
     {
-        // EmotePanel::Erase($login);
         if (isset($this->timeStamps[$login])) {
             unset($this->timeStamps[$login]);
         }
@@ -214,8 +218,14 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     function helper($login, $args, $source1, $source2)
     {
 
-        if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Chat\Chat') && !\ManiaLivePlugins\eXpansion\Chat\Config::getInstance()->publicChatActive) {
-            $this->eXpChatSendServerMessage("#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages", $login, array());
+        if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\Chat\Chat')
+            && !\ManiaLivePlugins\eXpansion\Chat\Config::getInstance()->publicChatActive
+        ) {
+            $this->eXpChatSendServerMessage(
+                "#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages",
+                $login,
+                array()
+            );
 
             return;
         }
@@ -232,7 +242,9 @@ class Emotes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             } else {
                 array_shift($args);
                 $text = implode(" ", $args);
-                $this->eXpChatSendServerMessage($player->nickName . '$z$s #emote#' . $message2 . ", " . $nick . " #emote#" . $text);
+                $this->eXpChatSendServerMessage(
+                    $player->nickName . '$z$s #emote#' . $message2 . ", " . $nick . " #emote#" . $text
+                );
             }
         } else {
             $this->eXpChatSendServerMessage($player->nickName . '$z$s #emote#' . $message);

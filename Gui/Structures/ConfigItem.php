@@ -23,8 +23,9 @@ class ConfigItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->id = $id;
         $this->gameMode = $gamemode;
         $outval = true;
-        if ($value == "0")
+        if ($value == "0") {
             $outval = false;
+        }
         $this->value = $outval;
     }
 }

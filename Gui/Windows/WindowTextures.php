@@ -19,7 +19,14 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
     protected $_closeAction;
     protected $_showCoords = 'False';
     protected $_windowFrame;
-    private $_titlebar, $_bg, $_bgeff, $_topcenter, $_bottomcenter, $_windowBorder, $_title, $_titleBar;
+    private $_titlebar;
+    private $_bg;
+    private $_bgeff;
+    private $_topcenter;
+    private $_bottomcenter;
+    private $_windowBorder;
+    private $_title;
+    private $_titleBar;
     private $script;
     private $_scripts = array();
     private $dDeclares = "";
@@ -41,8 +48,6 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WindowScript");
 
-        //$lib = new \ManiaLivePlugins\eXpansion\Gui\Script_libraries\Animation();
-        //$this->registerScript($lib);
 
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
         $this->_windowFrame->setPosZ(-0.1);
@@ -53,8 +58,6 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_bg->setAlign("left", "top");
 
-        //$this->_bg->setStyle("Bgs1");
-        //$this->_bg->setSubStyle("BgColorContour");
         $this->_bg->setBgcolor($config->windowBackgroundColor);
 
         $this->_bg->setOpacity(0.9);
@@ -64,7 +67,6 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_bgeff = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_bgeff->setAlign("left", "top");
         $this->_bgeff->setImage('file://Media/Manialinks/TrackMania/Window/tm-structure-background.png', true);
-        //$this->_bgeff->setImage('file://Media/Images/Effects/Vignette.dds', true);
         $this->_bgeff->setAlign("left", "top");
 
         $this->_bgeff->setColorize($config->windowBackgroundColor);
@@ -101,7 +103,6 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_title->setStyle("TextRaceMessageBig");
         $this->_title->setTextColor($config->windowTitleColor);
         $this->_title->setTextSize(1);
-        //$this->_title->setTextEmboss();
         $this->_windowFrame->addComponent($this->_title);
 
         $this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->element);
@@ -234,7 +235,9 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->script->setParam("disableAnimations", Config::getInstance()->disableAnimations ? "True" : "False");
         $this->script->setParam("version", \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION);
         $reset = "False";
-        if (DEBUG) $reset = "True";
+        if (DEBUG) {
+            $reset = "True";
+        }
 
         $this->script->setParam("forceReset", $reset);
 

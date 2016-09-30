@@ -25,10 +25,12 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         $this->checkRedirect();
 
-        foreach ($this->storage->players as $login => $player)
-            $this->onPlayerConnect($login, false); // force update...
-        foreach ($this->storage->spectators as $login => $player)
-            $this->onPlayerConnect($login, false); // force update...
+        foreach ($this->storage->players as $login => $player) {
+            $this->onPlayerConnect($login, false);
+        } // force update...
+        foreach ($this->storage->spectators as $login => $player) {
+            $this->onPlayerConnect($login, false);
+        } // force update...
     }
 
     function send($login, $message, $icon = null, $callback = null, $pluginid = null)

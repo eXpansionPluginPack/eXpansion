@@ -59,13 +59,15 @@ class Map extends FileStructure
             self::fetchByte($fp),
         );
         $classId = self::fetchLong($fp);
-        if ($classId != 0x03043000)
+        if ($classId != 0x03043000) {
             throw new \InvalidArgumentException('File is not a map');
+        }
         $headerSize = self::fetchLong($fp);
         $nbChunks = self::fetchLong($fp);
         $chunkInfos = array();
-        for (; $nbChunks > 0; --$nbChunks)
+        for (; $nbChunks > 0; --$nbChunks) {
             $chunkInfos[self::fetchLong($fp)] = self::fetchLong($fp);
+        }
 
         $wantedChunks = array(0x03043005, 0x03043007, 0x03043008);
         foreach ($chunkInfos as $chunkId => $chunkSize) {
@@ -73,8 +75,9 @@ class Map extends FileStructure
                 $func = 'fetchChunk' . str_pad(dechex($chunkId & 0xfff), 3, '0', STR_PAD_LEFT);
                 self::$func($map, $fp);
                 $wantedChunks = array_diff($wantedChunks, array($chunkId));
-                if (!$wantedChunks)
+                if (!$wantedChunks) {
                     break;
+                }
             } else {
                 self::ignore($fp, $chunkSize & 0x7fffffff);
             }
@@ -112,8 +115,9 @@ class Map extends FileStructure
             $map->environment = (string)$header->desc->attributes()->envir;
             $map->mood = (string)$header->desc->attributes()->mood;
             $map->type = (string)$header->desc->attributes()->type;
-            if ($map->type == 'Script')
+            if ($map->type == 'Script') {
                 $map->type = (string)$header->desc->attributes()->maptype;
+            }
             $map->displayCost = (int)$header->desc->attributes()->displaycost;
             $map->nbLaps = (int)$header->desc->attributes()->nblaps;
 
@@ -141,15 +145,16 @@ class Map extends FileStructure
             $thumbsize = self::fetchLong($fp);
             self::ignore($fp, strlen('<Thumbnail.jpg>'));
             if ($thumbsize) {
-                if (!extension_loaded('gd'))
+                if (!extension_loaded('gd')) {
                     self::ignore($fp, $thumbsize);
-                else {
+                } else {
                     $mirroredThumbnail = imagecreatefromstring(fread($fp, $thumbsize));
                     $width = imagesx($mirroredThumbnail);
                     $height = imagesy($mirroredThumbnail);
                     $map->thumbnail = imagecreatetruecolor($width, $height);
-                    foreach (range($height - 1, 0) as $oldY => $newY)
+                    foreach (range($height - 1, 0) as $oldY => $newY) {
                         imagecopy($map->thumbnail, $mirroredThumbnail, 0, $newY, 0, $oldY, $width, 1);
+                    }
                 }
             }
             self::ignore($fp, strlen('</Thumbnail.jpg>'));

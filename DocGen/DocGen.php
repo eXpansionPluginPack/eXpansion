@@ -37,7 +37,8 @@ class DocGen extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $help = \ManiaLib\Utils\Formatting::stripStyles($help);
             $helpmore = __($cmd->getHelpMore());
             $helpmore = \ManiaLib\Utils\Formatting::stripStyles($helpmore);
-            $buffer .= '<tr><td>/admin ' . $cmd->getCmd() . '</td><td>' . implode("<br/>", $cmd->getAliases()) . '</td><td>' . $help . '<br/><div id="morehelp">' . $helpmore . '</div></td></tr>';
+            $buffer .= '<tr><td>/admin ' . $cmd->getCmd() . '</td><td>' . implode("<br/>", $cmd->getAliases())
+                . '</td><td>' . $help . '<br/><div id="morehelp">' . $helpmore . '</div></td></tr>';
         }
         unset($cmd);
 
@@ -49,10 +50,11 @@ class DocGen extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             </tr>";
         $chatcommands = \ManiaLive\Features\ChatCommand\Interpreter::getInstance();
         foreach ($chatcommands->getRegisteredCommands() as $commands) {
-            foreach ($commands as $cmd)
+            foreach ($commands as $cmd) {
                 if ($cmd->isPublic) {
                     $buffer .= '<tr><td>/' . $cmd->name . '</td><td>' . $cmd->help . '</td></tr>';
                 }
+            }
         }
 
         $buffer .= "</table>\n";

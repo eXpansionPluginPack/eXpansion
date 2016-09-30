@@ -32,10 +32,11 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
     public function eXpOnLoad()
     {
-        if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania') || $this->isPluginLoaded(
-                '\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script'
-            )
-        ) Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
+        if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania\\Dedimania')
+            || $this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Dedimania_Script')
+        ) {
+            Dispatcher::register(\ManiaLivePlugins\eXpansion\Dedimania\Events\Event::getClass(), $this);
+        }
 
         $this->config = Config::getInstance();
     }
@@ -56,8 +57,9 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
         if ((time() - $this->lastUpdate) > 20) {
 
-            if (($this->needUpdate & self::DEDIMANIA) == self::DEDIMANIA || $this->forceUpdate || ($this->needUpdate & self::DEDIMANIA_FORCE)
-                == self::DEDIMANIA_FORCE
+            if (($this->needUpdate & self::DEDIMANIA) == self::DEDIMANIA
+                || $this->forceUpdate
+                || ($this->needUpdate & self::DEDIMANIA_FORCE) == self::DEDIMANIA_FORCE
             ) {
                 if ($this->dedi || $this->needUpdate == self::DEDIMANIA_FORCE) {
                     $this->updateDediPanel();
@@ -79,9 +81,8 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
         $gui = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
 
         try {
-            if (($this->isPluginLoaded($dedi1) && $this->callPublicMethod(
-                        $dedi1, 'isRunning'
-                    )) || ($this->isPluginLoaded($dedi2) && $this->callPublicMethod($dedi2, 'isRunning'))
+            if (($this->isPluginLoaded($dedi1) && $this->callPublicMethod($dedi1, 'isRunning'))
+                || ($this->isPluginLoaded($dedi2) && $this->callPublicMethod($dedi2, 'isRunning'))
             ) {
                 $localRecs = DediPanel::GetAll();
                 if (!isset($localRecs[0])) {
@@ -95,7 +96,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
                     $this->widgetIds["DediPanel"] = $panelMain;
                     $this->widgetIds["DediPanel"]->update();
                     $this->widgetIds["DediPanel"]->show();
-                } else if (isset($localRecs[0])) {
+                } elseif (isset($localRecs[0])) {
                     $localRecs[0]->update();
                     $localRecs[0]->show($login);
                 }
@@ -110,7 +111,7 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
                         $this->widgetIds["DediPanel2"] = $panelScore;
                         $this->widgetIds["DediPanel2"]->update();
                         $this->widgetIds["DediPanel2"]->show();
-                    } else if (isset($localRecs[0])) {
+                    } elseif (isset($localRecs[0])) {
                         $localRecs[0]->update();
                         $localRecs[0]->show($login);
                     }
@@ -177,7 +178,9 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
     public function onBeginMatch()
     {
-        if (self::$raceOn == true) return;
+        if (self::$raceOn == true) {
+            return;
+        }
 
         self::$raceOn = false;
         $this->forceUpdate = true;

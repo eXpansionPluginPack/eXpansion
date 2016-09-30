@@ -89,8 +89,9 @@ class ConfPluginList extends Window
 
         foreach (AutoLoad::getAvailablePlugins() as $pluginId => $meta) {
             $item = new ItemPlugin($pluginId, $meta);
-            if (in_array($pluginId, $list))
+            if (in_array($pluginId, $list)) {
                 $item->setStatus(true);
+            }
 
             $this->items[] = $item;
             $this->pagerFrame->addItem($item);
@@ -111,8 +112,6 @@ class ConfPluginList extends Window
                 $outArray[] = (string)$item->pluginId;
             }
         }
-
-        //print_r($outArray);
 
         $var = MetaData::getInstance()->getVariable('redirectedPlugins');
         $var->setRawValue($outArray);

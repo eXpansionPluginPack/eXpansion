@@ -39,8 +39,9 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         if ($this->update) {
             $this->update = false;
-            if ($this->isPodium)
+            if ($this->isPodium) {
                 return;
+            }
 
             foreach ($this->retiredPlayers as $login => $player) {
                 $this->showWidget($login);
@@ -89,7 +90,11 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $teamMaxPoint = $this->storage->gameInfos->teamPointsLimit;
         }
 
-        $pospanel->setData(\ManiaLivePlugins\eXpansion\Core\Core::$playerInfo, self::eXpGetCurrentCompatibilityGameMode(), $teamMaxPoint);
+        $pospanel->setData(
+            \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo,
+            self::eXpGetCurrentCompatibilityGameMode(),
+            $teamMaxPoint
+        );
         $pospanel->setScale(1.1);
         $pospanel->show();
     }

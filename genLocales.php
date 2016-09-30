@@ -11,8 +11,9 @@ $totalMessages = 0;
 
 foreach ($files as $data2) {
     $filename = $data2->getPathname();
-    if ($data2->getPath() == __DIR__)
+    if ($data2->getPath() == __DIR__) {
         continue;
+    }
 
     $messageCount = 0;
 
@@ -20,8 +21,9 @@ foreach ($files as $data2) {
     $plugin = explode(DIRECTORY_SEPARATOR, $plugin);
     $plugin = $plugin[0];
 
-    if (!array_key_exists($plugin, $pluginMessages))
+    if (!array_key_exists($plugin, $pluginMessages)) {
         $pluginMessages[$plugin] = array();
+    }
 
     $data = file($filename);
     foreach ($data as $row) {
@@ -60,8 +62,9 @@ foreach ($files as $data2) {
         }
     }
 
-    if (!is_dir(__DIR__ . "/" . $plugin . "/messages"))
+    if (!is_dir(__DIR__ . "/" . $plugin . "/messages")) {
         mkdir(__DIR__ . "/" . $plugin . "/messages", 755);
+    }
 
     echo $plugin . ":" . $filename . " -> generated messages count: " . $messageCount . "\n";
     $totalMessages += $messageCount;
@@ -73,4 +76,3 @@ foreach ($pluginMessages as $key => $messages) {
     echo "\n$key messages count: " . sizeof($messages);
 }
 print "\nTotal Message count: " . $totalMessages;
-?>

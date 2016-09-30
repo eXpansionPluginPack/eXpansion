@@ -17,7 +17,6 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->name = $name;
 
         $this->bg = new WidgetBackGround(100, 30);
-        //	$this->addComponent($this->bg);
 
         $this->createButton($editable);
 
@@ -25,9 +24,7 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bgcenter->setStyle("Bgs1InRace");
         $this->bgcenter->setSubStyle("BgColorContour");
         $this->bgcenter->setAlign("left", "center");
-        //$this->bgcenter->setImage($config->getImage("inputbox", "center.png"), true);
         $this->bgcenter->setColorize("555");
-        //  $this->addComponent($this->bgcenter);
 
         $this->label = new \ManiaLib\Gui\Elements\Label(30, 3);
         $this->label->setAlign('left', 'top');
@@ -43,8 +40,6 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected function onDraw()
     {
-
-
         $yOffset = 0;
 
         $this->button->setSize($this->getSizeX() - 2, 5);
@@ -77,7 +72,6 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->button->setId($this->name);
             $this->button->setDefault($text);
             $this->button->setScriptEvents(true);
-            //      $this->button->setStyle("TextValueSmall");
             $this->button->setTextSize(1);
             $this->button->setFocusAreaColor1("222");
             $this->button->setFocusAreaColor2("000");
@@ -115,14 +109,20 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public function getText()
     {
-        if ($this->button instanceof \ManiaLib\Gui\Elements\Entry) return $this->button->getDefault();
-        else return $this->button->getText();
+        if ($this->button instanceof \ManiaLib\Gui\Elements\Entry) {
+            return $this->button->getDefault();
+        } else {
+            return $this->button->getText();
+        }
     }
 
     public function setText($text)
     {
-        if ($this->button instanceof \ManiaLib\Gui\Elements\Entry) $this->button->setDefault($text);
-        else $this->button->setText($text);
+        if ($this->button instanceof \ManiaLib\Gui\Elements\Entry) {
+            $this->button->setDefault($text);
+        } else {
+            $this->button->setText($text);
+        }
     }
 
     public function getName()

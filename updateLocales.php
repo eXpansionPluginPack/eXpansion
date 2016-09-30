@@ -13,10 +13,12 @@ foreach ($iterator as $dir) {
         $filedata = file($messagedir . DIRECTORY_SEPARATOR . $newMessagesFileName);
         foreach ($filedata as $message) {
             $message = fixMessage($message);
-            if (trim($message) == "")
+            if (trim($message) == "") {
                 continue;
-            if (!array_key_exists($message, $newmessages))
+            }
+            if (!array_key_exists($message, $newmessages)) {
                 $newmessages[$message] = $message;
+            }
         }
 
         $localefiles = glob($messagedir . DIRECTORY_SEPARATOR . "*.txt");
@@ -25,20 +27,23 @@ foreach ($iterator as $dir) {
             $difference = array();
             $filename = explode(DIRECTORY_SEPARATOR, $localefile);
             $filename = end($filename);
-            if ($filename == $newMessagesFileName)
+            if ($filename == $newMessagesFileName) {
                 continue;
+            }
 
             $filedata = file($localefile, FILE_IGNORE_NEW_LINES);
 
             for ($i = 0; $i < count($filedata); $i += 3) {
                 $message = fixMessage($filedata[$i]);
-                if (trim($message) == "")
+                if (trim($message) == "") {
                     continue;
+                }
 
                 $translation = fixMessage($filedata[$i + 1]);
 
-                if (!array_key_exists($message, $pluginMessages))
+                if (!array_key_exists($message, $pluginMessages)) {
                     $pluginMessages[$message] = $translation;
+                }
             }
 
             $old = 0;
@@ -48,8 +53,9 @@ foreach ($iterator as $dir) {
             $lastRow = str_replace("\n", "", $lastRow);
 
             $outputBuffer = "";
-            if (trim($lastRow) != "")
+            if (trim($lastRow) != "") {
                 $outBuffer = "\r\n";
+            }
 
             foreach ($newmessages as $newmessage) {
                 $newmessage = fixMessage($newmessage);
@@ -58,7 +64,6 @@ foreach ($iterator as $dir) {
                     $old++;
                 } else {
                     $new++;
-                    //$difference[$newmessage] = "*!*" . $newmessage;
                     if ($filename == "en.txt") {
                         $pluginMessages[$newmessage] = $newmessage;
                     } else {

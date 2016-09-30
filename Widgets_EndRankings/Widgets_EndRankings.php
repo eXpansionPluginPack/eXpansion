@@ -27,7 +27,9 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
     public function displayWidget($login = null)
     {
         $info = Gui\Widgets\RanksPanel::Create(null);
-        $info->setData($this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRanks"));
+        $info->setData(
+            $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords", "getRanks")
+        );
         $info->setSize(38, 95);
         $info->setPosition(-160, 60);
         $info->show();
@@ -94,7 +96,9 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
 
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-        if ($this->wasWarmup) return;
+        if ($this->wasWarmup) {
+            return;
+        }
         $this->displayWidget();
     }
 
@@ -110,5 +114,3 @@ class Widgets_EndRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlug
         $this->hide();
     }
 }
-
-

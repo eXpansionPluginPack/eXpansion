@@ -53,10 +53,14 @@ class KnockOut extends ExpPlugin
 
     public function eXpOnLoad()
     {
-        $this->msg_newRound = eXpGetMessage('#ko#KnockOut! Round: #variable#%1$s #ko#Players #variable#%2$s #ko#/#variable#%3$s remain');
+        $this->msg_newRound = eXpGetMessage(
+            '#ko#KnockOut! Round: #variable#%1$s #ko#Players #variable#%2$s #ko#/#variable#%3$s remain'
+        );
         $this->msg_koStart = eXpGetMessage('#ko#KnockOut #variable#starts #ko#after next map');
         $this->msg_koStop = eXpGetMessage('#ko#KnockOut has been #variable#stopped.');
-        $this->msg_knockout = eXpGetMessage('#ko#KnockOut! #variable# %1$s $z$s#ko# knocked out, but the game is still on!');
+        $this->msg_knockout = eXpGetMessage(
+            '#ko#KnockOut! #variable# %1$s $z$s#ko# knocked out, but the game is still on!'
+        );
         $this->msg_knockoutDNF = eXpGetMessage('#ko#KnockOut! #variable# %1$s $z$s#ko# knocked out, since no finish!');
         $this->msg_champ = eXpGetMessage('#ko#KnockOut! #variable# %1$s $z$s#ko# is the CHAMP!!! congrats');
     }
@@ -127,8 +131,6 @@ class KnockOut extends ExpPlugin
 
     /**
      * Starts the KnockOut
-     *
-     * @param string $login
      */
     public function koStart()
     {
@@ -153,8 +155,6 @@ class KnockOut extends ExpPlugin
 
     /**
      * Stops
-     *
-     * @param string $login
      */
     public function koStop()
     {
@@ -162,7 +162,7 @@ class KnockOut extends ExpPlugin
         $this->isRunning = false;
         $this->eXpChatSendServerMessage($this->msg_koStop, null);
 
-// release spectators to play
+        // release spectators to play
         foreach ($this->storage->spectators as $player) {
             $this->connection->forceSpectator($player->login, 2);
             $this->connection->forceSpectator($player->login, 0);
@@ -174,7 +174,11 @@ class KnockOut extends ExpPlugin
         $this->isWarmup = $this->connection->getWarmUp();
         if ($this->isRunning && !$this->isWarmup) {
             $this->round++;
-            $this->eXpChatSendServerMessage($this->msg_newRound, null, array("" . $this->round, "" . count($this->players), "" . $this->playersAtStart));
+            $this->eXpChatSendServerMessage(
+                $this->msg_newRound,
+                null,
+                array("" . $this->round, "" . count($this->players), "" . $this->playersAtStart)
+            );
             $this->delay = false;
         }
     }
@@ -206,8 +210,9 @@ class KnockOut extends ExpPlugin
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
 
-        if ($this->delay || !$this->isRunning || $this->isWarmup)
+        if ($this->delay || !$this->isRunning || $this->isWarmup) {
             return;
+        }
 
         $ranking = $this->expStorage->getCurrentRanking();
         $this->sortAsc($ranking);
@@ -241,8 +246,9 @@ class KnockOut extends ExpPlugin
         print_r($ranking);
 
         foreach ($ranking as $player) {
-            if ($player->{$prop} <= 0)
+            if ($player->{$prop} <= 0) {
                 continue;
+            }
             if ($knockedOut < $nbKo) {
                 if (array_key_exists($player->login, $this->players)) {
                     $out[] = $player->nickName;
@@ -269,6 +275,8 @@ class KnockOut extends ExpPlugin
     /**
      *
      * @param \Maniaplanet\DedicatedServer\Structures\PlayerRanking[] $array
+     *
+     * @return array
      */
     public function findDNF($array)
     {

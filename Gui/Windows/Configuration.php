@@ -58,8 +58,9 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     {
         $login = $this->getRecipient();
 
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
         $this->pager->clearItems();
         $this->items = array();
 
@@ -86,14 +87,16 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
      */
     private function parseData($data)
     {
-        if (!array_key_exists("widgetStatus", $data))
+        if (!array_key_exists("widgetStatus", $data)) {
             return array();
+        }
 
         $entries = explode("|", $data["widgetStatus"]);
         $items = array();
         foreach ($entries as $entry) {
-            if (empty($entry))
+            if (empty($entry)) {
                 continue;
+            }
             $val = explode(":", $entry, 3);
             $this->gameMode = $val[1];
             $items[] = new \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem($val[0], $val[1], $val[2]);
@@ -109,7 +112,11 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         foreach ($this->items as $component) {
             if ($component instanceof Checkbox) {
                 $component->setArgs($options);
-                $outValues[] = new \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem($component->getText(), $this->gameMode, $component->getStatus());
+                $outValues[] = new \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem(
+                    $component->getText(),
+                    $this->gameMode,
+                    $component->getStatus()
+                );
             }
         }
 
@@ -127,8 +134,9 @@ class Configuration extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function destroy()
     {
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->destroy();
+        }
 
         $this->items = array();
         $this->pager->destroy();

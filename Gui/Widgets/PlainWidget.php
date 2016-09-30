@@ -54,8 +54,9 @@ class PlainWidget extends \ManiaLive\Gui\Window
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\MultipleScriptedContainer) {
                 $scripts = $component->getScripts();
                 if (!empty($scripts)) {
-                    foreach ($scripts as $script)
+                    foreach ($scripts as $script) {
                         $this->applyScript($script, $component);
+                    }
                 }
             }
         }
@@ -204,7 +205,9 @@ class PlainWidget extends \ManiaLive\Gui\Window
 
     public function getBoolean($boolean)
     {
-        if ($boolean) return "True";
+        if ($boolean) {
+            return "True";
+        }
 
         return "False";
     }

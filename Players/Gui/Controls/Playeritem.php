@@ -72,7 +72,7 @@ class Playeritem extends Control implements OptimizedPagerElement
 
         $this->frame->addComponent($spacer);
 
-// admin additions
+        // admin additions
         if (AdminGroups::isInList($login)) {
             if (AdminGroups::hasPermission($login, Permission::PLAYER_IGNORE)) {
                 $this->ignoreButton = new MyButton(7, 5);
@@ -83,7 +83,9 @@ class Playeritem extends Control implements OptimizedPagerElement
                 if ($ignored) {
                     $this->ignoreButton->setDescription(__('UnIgnore player', $login), 50);
                     $this->ignoreButton->setIcon('Icons128x128_1', 'Beginner');
-                } else $this->ignoreButton->setIcon('Icons128x128_1', 'Easy');
+                } else {
+                    $this->ignoreButton->setIcon('Icons128x128_1', 'Easy');
+                }
                 $this->ignoreButton->setId('column_' . $indexNumber . '_2');
                 $this->ignoreButton->setClass("eXpOptimizedPagerAction");
                 $this->columnCount++;
@@ -181,12 +183,24 @@ class Playeritem extends Control implements OptimizedPagerElement
 
     public function destroy()
     {
-        if (is_object($this->banButton)) $this->banButton->destroy();
-        if (is_object($this->forceButton)) $this->forceButton->destroy();
-        if (is_object($this->kickButton)) $this->kickButton->destroy();
-        if (is_object($this->blacklistButton)) $this->blacklistButton->destroy();
-        if (is_object($this->ignoreButton)) $this->ignoreButton->destroy();
-        if (is_object($this->guestButton)) $this->guestButton->destroy();
+        if (is_object($this->banButton)) {
+            $this->banButton->destroy();
+        }
+        if (is_object($this->forceButton)) {
+            $this->forceButton->destroy();
+        }
+        if (is_object($this->kickButton)) {
+            $this->kickButton->destroy();
+        }
+        if (is_object($this->blacklistButton)) {
+            $this->blacklistButton->destroy();
+        }
+        if (is_object($this->ignoreButton)) {
+            $this->ignoreButton->destroy();
+        }
+        if (is_object($this->guestButton)) {
+            $this->guestButton->destroy();
+        }
 
         $this->destroyComponents();
 
@@ -198,4 +212,3 @@ class Playeritem extends Control implements OptimizedPagerElement
         return 2;
     }
 }
-

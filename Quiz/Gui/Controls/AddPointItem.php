@@ -9,7 +9,8 @@ class AddPointItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected $bg;
 
-    protected $addpointButton, $removepointButton;
+    protected $addpointButton;
+    protected $removepointButton;
 
     protected $nickname;
 
@@ -42,7 +43,6 @@ class AddPointItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $spacer = new \ManiaLib\Gui\Elements\Quad();
         $spacer->setSize(4, 4);
         $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-//$this->frame->addComponent($spacer);
 
         $this->login = new \ManiaLib\Gui\Elements\Label(20, 4);
         $this->login->setAlign('left', 'center');
@@ -121,11 +121,13 @@ class AddPointItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public function erase()
     {
-        if (is_object($this->addpointButton))
+        if (is_object($this->addpointButton)) {
             $this->addpointButton->destroy();
+        }
 
-        if (is_object($this->removepointButton))
+        if (is_object($this->removepointButton)) {
             $this->removepointButton->destroy();
+        }
 
         $this->frame->destroy();
         $this->destroyComponents();

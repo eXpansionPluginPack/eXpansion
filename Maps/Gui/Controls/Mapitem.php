@@ -18,7 +18,12 @@ class Mapitem extends Control implements OptimizedPagerElement
     protected $goButton;
     protected $showRecsButton;
     protected $removeButton;
-    public $label_map, $label_envi, $label_author, $label_authortime, $label_localrec, $label_rating;
+    public $label_map;
+    public $label_envi;
+    public $label_author;
+    public $label_authortime;
+    public $label_localrec;
+    public $label_rating;
     protected $frame;
     protected $actionsFrame;
 
@@ -102,13 +107,6 @@ class Mapitem extends Control implements OptimizedPagerElement
         }
 
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
-
-            /*  $spacer = new \ManiaLib\Gui\Elements\Quad();
-              $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
-              $spacer->setSize(2, 4);
-              $this->actionsFrame->addComponent($spacer);
-             */
-
             $this->removeButton = new MyButton(5, 5);
             $this->removeButton->setDescription(__('$F22Remove this map from server', $login), 70);
             $this->removeButton->setAction($action);
@@ -142,9 +140,15 @@ class Mapitem extends Control implements OptimizedPagerElement
         if (is_object($this->queueButton)) {
             $this->queueButton->destroy();
         }
-        if (is_object($this->goButton)) $this->goButton->destroy();
-        if (is_object($this->removeButton)) $this->removeButton->destroy();
-        if (is_object($this->showRecsButton)) $this->showRecsButton->destroy();
+        if (is_object($this->goButton)) {
+            $this->goButton->destroy();
+        }
+        if (is_object($this->removeButton)) {
+            $this->removeButton->destroy();
+        }
+        if (is_object($this->showRecsButton)) {
+            $this->showRecsButton->destroy();
+        }
 
         $this->destroyComponents();
         parent::destroy();
@@ -155,4 +159,3 @@ class Mapitem extends Control implements OptimizedPagerElement
         return 6;
     }
 }
-

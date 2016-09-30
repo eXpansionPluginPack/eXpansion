@@ -52,8 +52,9 @@ class MXRating extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
 
     public function append($object)
     {
-        if (!is_object($object))
+        if (!is_object($object)) {
             throw new \Exception("MXVote consturctor got non object", 1, null);
+        }
         $this->votecount = $object->votecount;
         $this->voteaverage = $object->voteaverage;
         if ($object->modevotecount != -1) {

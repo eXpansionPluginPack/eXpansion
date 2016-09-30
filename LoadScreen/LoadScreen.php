@@ -58,7 +58,9 @@ class LoadScreen extends ExpPlugin
         }
         Gui::preloadUpdate();
 
-        if (Config::getInstance()->screensMx) $this->syncMxImage();
+        if (Config::getInstance()->screensMx) {
+            $this->syncMxImage();
+        }
     }
 
     public function onSettingsChanged(Variable $var)
@@ -89,7 +91,11 @@ class LoadScreen extends ExpPlugin
                 $url = $config->screens[$index];
             }
 
-            if (Config::getInstance()->screensMx) if (!empty($this->mxImage)) $url = $this->mxImage;
+            if (Config::getInstance()->screensMx) {
+                if (!empty($this->mxImage)) {
+                    $url = $this->mxImage;
+                }
+            }
 
             $widget = LScreen::Create(null);
             $widget->setName("loading Screen");
@@ -118,7 +124,9 @@ class LoadScreen extends ExpPlugin
         Gui::preloadRemove($this->mxImage);
         Gui::preloadUpdate();
 
-        if (Config::getInstance()->screensMx) $this->syncMxImage();
+        if (Config::getInstance()->screensMx) {
+            $this->syncMxImage();
+        }
     }
 
     private function syncMxImage()
@@ -139,7 +147,9 @@ class LoadScreen extends ExpPlugin
 
     public function xGetImage($data, $code, $params = null)
     {
-        if ($code != 200) return;
+        if ($code != 200) {
+            return;
+        }
         try {
             $json = json_decode($data, true);
             if ($json === null) {
@@ -151,7 +161,8 @@ class LoadScreen extends ExpPlugin
             $game = strtolower($this->expStorage->simpleEnviTitle);
 
             if ($map->hasScreenshot) {
-                $this->mxImage = "http://" . $game . ".mania-exchange.com/tracks/screenshot/normal/" . $map->trackID . "?.png";
+                $this->mxImage = "http://" . $game . ".mania-exchange.com/tracks/screenshot/normal/"
+                    . $map->trackID . "?.png";
                 Gui::preloadImage($this->mxImage);
                 Gui::preloadUpdate();
             } else {
