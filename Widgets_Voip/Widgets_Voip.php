@@ -69,7 +69,7 @@ class Widgets_Voip extends ExpPlugin
 
             $varActive = $provider . "Active";
             if (isset($this->config->$varActive) && $this->config->$varActive) {
-                $widget = Widget::Create($login, true);
+                $widget = Widget::Create($login, false);
 
                 $varX = $provider . "X";
                 $varY = $provider . "Y";

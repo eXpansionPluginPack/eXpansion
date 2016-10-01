@@ -79,7 +79,7 @@ class PlainPanel extends Widget
         $this->setSize($sizeX, $sizeY);
     }
 
-    protected function onResize($oldX, $oldY)
+    public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->_windowFrame->setSize($this->sizeX, $this->sizeY);
