@@ -44,13 +44,13 @@ class Database extends ExpPlugin
         $this->setPublicMethod('getPlayer');
         $this->setPublicMethod('getDatabaseVersion');
         $this->setPublicMethod('setDatabaseVersion');
-        $this->setPublicMethod('showDbMaintainance');
+        $this->setPublicMethod('showDbMaintenance');
         $this->updateServerChallenges();
         // add admin command ;)
         $cmd = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::addAdminCommand(
             'dbtools',
             $this,
-            'showDbMaintainance',
+            'showDbMaintenance',
             Permission::SERVER_DATABASE
         );
         $cmd->setHelp('shows administrative window for database');

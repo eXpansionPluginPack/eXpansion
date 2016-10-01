@@ -310,7 +310,7 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     {
         if (AdminGroups::hasPermission($login, Permission::SERVER_DATABASE)) {
             if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Database\\Database")) {
-                $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Database\\Database", "showDbMaintainance", $login);
+                $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Database\\Database", "showDbMaintenance", $login);
             } else {
                 $this->eXpChatSendServerMessage($this->msgDatabasePlugin, $login);
             }
