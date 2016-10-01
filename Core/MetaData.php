@@ -216,11 +216,11 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $var = new TypeString(
             'quitDialogManialink',
-            'Quit dialog customization,
-             use url with custom manialink.xml',
+            'Quit dialog customization, use url with custom manialink.xml',
             $config,
             false
         );
+        $var->setDescription('Customize quit dialog with your own manialink!');
         $var->setGroup('GUI');
         $var->setDefaultValue('');
         $this->registerVariable($var);

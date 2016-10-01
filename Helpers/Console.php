@@ -58,7 +58,7 @@ class Console
             $msg = self::white . $message . self::white . "\e[0m";
         }
 
-        self::eco($msg);
+        echo self::ansiString($msg);
     }
 
     /**
@@ -94,7 +94,7 @@ class Console
      */
     public static function out_error($message)
     {
-        self::eco(
+        echo self::ansiString(
             self::white . "[ " . self::b_red . "Error" . "\e[0m" . self::white . " ] " . self::error . $message . "\n"
         );
     }
@@ -110,7 +110,7 @@ class Console
      */
     public static function ok($nl = true)
     {
-        self::eco(self::white . "[ " . self::b_green . "Ok" . self::white . " ]\n");
+        echo self::ansiString(self::white . "[ " . self::b_green . "Ok" . self::white . " ]\n");
     }
 
     /**
@@ -123,7 +123,7 @@ class Console
      */
     public static function success($nl = true)
     {
-        self::eco(self::white . "[ " . self::b_green . "Success" . self::white . " ]\n");
+        echo self::ansiString(self::white . "[ " . self::b_green . "Success" . self::white . " ]\n");
     }
 
     /**
@@ -137,17 +137,16 @@ class Console
      */
     public static function fail($nl = true)
     {
-        self::eco(self::white . "[ " . self::b_red . "Fail" . self::white . " ]\n");
+        echo self::ansiString(self::white . "[ " . self::b_red . "Fail" . self::white . " ]\n");
     }
 
-    private static function eco($msg)
+    private static function ansiString($msg)
     {
         if (Storage::getInstance()->serverOs == "Windows") {
-            $msg = str_replace("\\e", "", $msg);
+            $msg = str_replace("\e", "", $msg);
             $msg = preg_replace("/\[(\d{1,2}\;){0,1}\d{1,2}m/", "", $msg);
         }
-
-        echo $msg;
+        return $msg;
     }
 
 
@@ -204,9 +203,9 @@ class Console
         $out = self::white . Formatting::stripStyles(reset($split)) . $out . $end;
 
         if ($return) {
-            return $out;
+            return self::ansiString($out);
         }
-        self::eco($out . "\n");
+        echo self::ansiString($out . "\n");
     }
 
     public static function fix($r, $g, $b)
