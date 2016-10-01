@@ -31,24 +31,24 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->addComponent($this->frm);
 
         $this->inputbox = new Inputbox("parameter", 100);
-        $this->inputbox->setLabel("Give reason");
+        $this->inputbox->setLabel("Give a reason");
         $this->inputbox->setText("Bad Behavior");
         $this->inputbox->setAlign("left", "top");
         $this->inputbox->setSize(100, 6);
         $this->frm->addComponent($this->inputbox);
 
         $items = array(
+            "permanent",
             "30 seconds",
             "5 min",
             "10 min",
             "15 min",
-            "30min",
+            "30 min",
             "1 hour",
             "1 day",
             "5 day",
             "week",
-            "month",
-            "permanent"
+            "month"
         );
         $this->compobox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("select", $items);
         $this->compobox->setAlign("left", "top");
