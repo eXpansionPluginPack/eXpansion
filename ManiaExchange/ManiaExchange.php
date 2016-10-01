@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\Helpers\GBXChallMapFetcher;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Widgets\MxWidget;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Windows\MxSearch;
@@ -100,7 +101,7 @@ class ManiaExchange extends ExpPlugin
             default:
                 $msg = eXpGetMessage(
                     "usage /mx add [id], /mx queue [id],"
-                    ." /mx search \"terms here\"  \"authorname\" ,/mx author \"name\" "
+                    . " /mx search \"terms here\"  \"authorname\" ,/mx author \"name\" "
                 );
                 $this->eXpChatSendServerMessage($msg, $login);
                 break;
@@ -209,12 +210,21 @@ class ManiaExchange extends ExpPlugin
             $dir = "Downloaded/" . $game->titleId;
         }
 
-        $file = $dir . "/" . $mxId . ".Map.Gbx";
 
-        if ($this->expStorage->isRemoteControlled) {
-            $this->saveMapRemotelly($file, $dir, $data, $login);
-        } else {
-            $this->saveMapLocally($file, $dir, $data, $login);
+        try {
+            $gbxReader = new GBXChallMapFetcher(true, false, false);
+            $gbxReader->processData($data);
+            $name = $gbxReader->authorLogin . "_" . trim(mb_convert_encoding(substr(\ManiaLib\Utils\Formatting::stripStyles($gbxReader->name), 0, 40), "7bit", "UTF-8"));
+            $name = str_replace(array("/", "\\", ":", ".", "?", "*", '"', "|", "<", ">", "'"), "", $name);
+            $file = $dir . "/" . $name . "_" . $mxId . ".Map.Gbx";
+
+            if ($this->expStorage->isRemoteControlled) {
+                $this->saveMapRemotelly($file, $dir, $data, $login);
+            } else {
+                $this->saveMapLocally($file, $dir, $data, $login);
+            }
+        } catch (\Exception $ex) {
+            $this->console('Error while adding map from mx:' . $ex->getMessage());
         }
     }
 
@@ -290,7 +300,7 @@ class ManiaExchange extends ExpPlugin
                     $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
                 }
             } else {
-                $this->eXpChatSendServerMessage("Error while saving a map file. ", $login);
+                $this->eXpChatSendServerMessage("Error while saving a map file: " . $file, $login);
             }
         } catch (\Exception $ex) {
             $this->eXpChatSendServerMessage("Error while saving a map file : " . $ex->getMessage(), $login);
