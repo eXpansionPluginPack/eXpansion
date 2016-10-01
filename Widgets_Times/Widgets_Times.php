@@ -65,7 +65,9 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onPlayerInfoChanged($playerInfo)
     {
         $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
-        $this->showPanel($player->login, $player);
+        if ($player) {
+            $this->showPanel($player->login, $player);
+        }
     }
 
     public function onBeginMatch()
