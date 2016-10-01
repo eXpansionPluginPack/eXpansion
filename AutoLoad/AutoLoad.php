@@ -225,11 +225,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         try {
             if (!$pHandler->isLoaded($pname)) {
                 if (in_array($pname, $disabled)) {
-                    $this->console("[" . $pname . "]..............................Disabled -> not loading");
+                    $this->console("[" . $pname . "]...Disabled -> not loading");
                 } else {
-                    $status = true;
                     if (!class_exists($pname)) {
-                        $this->console("[" . $pname . "]..............................Doesen't exist -> not loading");
+                        $this->console("[" . $pname . "]...Doesen't exist -> not loading");
                         throw new PluginNotFoundException($pname);
 
                         return false;
@@ -240,7 +239,13 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     $this->availablePlugins[$pname] = $metaData;
                     self::$allAvailablePlugins[$pname] = $metaData;
 
-                    if ($metaData->checkAll()) {
+                    if (!$metaData->checkForPluginIncompatibility($pHandler->getLoadedPluginsList())) {
+                        $this->console("[" . $pname . "]...Disabled -> Not Compatible : either can't run with a certain plugin or a loaded plugin can't with this plugin");
+
+                        die('SUCESS');
+
+                        return false;
+                    } else if ($metaData->checkAll()) {
                         try {
                             $status = $pHandler->load($pname, false);
                         } catch (\Exception $ex) {
@@ -254,26 +259,23 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         }
 
                         if (!$status) {
-                            $this->console("[" . $pname . "]..............................FAIL -> will retry");
+                            $this->console("[" . $pname . "]...FAIL -> will retry");
                             //Helper::log("[AutoLoad]".ErrorHandling::computeMessage($ex));
                             $recheck[] = $pname;
                         } else {
-                            $this->debug("[" . $pname . "]..............................SUCCESS");
+                            $this->debug("[" . $pname . "]...SUCCESS");
                             //   $this->connection->chatSendServerMessage('Starting ' . $pname . '........$0f0 Success');
                         }
                     } else {
                         $otherCheckResults = $metaData->checkAll();
-                        if (!empty($otherCheckResults)) {
-                            return false;
-                        }
-                        $this->console("[" . $pname . "]..............................Disabled -> Not Compatible");
+                        $this->console("[" . $pname . "]...Disabled -> Not Compatible");
                     }
                 }
             }
         } catch (PluginNotFoundException $ex) {
             throw $ex;
         } catch (\Exception $ex) {
-            $this->console("[" . $pname . "]..............................FAIL -> will retry");
+            $this->console("[" . $pname . "]...FAIL -> will retry");
 
             //Helper::log("[AutoLoad]".ErrorHandling::computeMessage($ex));
             return false;

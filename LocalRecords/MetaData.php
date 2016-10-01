@@ -52,6 +52,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $this->addTitleSupport("TM");
         $this->addTitleSupport("Trackmania");
+
+        $this->addIncompatiblePlugin('\ManiaLivePlugins\eXpansion\\Widgets_LocalRecords\\Widgets_LocalRecords');
     }
 
     protected function initSettings()

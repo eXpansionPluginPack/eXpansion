@@ -62,7 +62,7 @@ abstract class MetaData
     private $variables = array();
 
     /**
-     * @var String[] The List of GameModes the plugins support
+     * @var Bool[] The List of GameModes the plugins support
      */
     private $gameModeSupport = array();
 
@@ -96,6 +96,11 @@ abstract class MetaData
      * @var bool use environment name instead of title
      */
     private $enviAsTitle = true;
+
+    /**
+     * @var string[] List of incompatible plugin ids
+     */
+    private $incompatiblePlugins = [];
 
     /**
      * @param string $pluginId The Id of the plugin the meta data is working for
@@ -395,6 +400,60 @@ abstract class MetaData
     }
 
     /**
+     * Get the id of the plugin this meta is attached to.
+     *
+     * @return String
+     */
+    public function getPluginId()
+    {
+        return $this->pluginId;
+    }
+
+    /**
+     * Set a plugin that is incompatible with this plugin. This will prevent this plugin from starting if that
+     * plugin is already running & vice versa.
+     *
+     * @param $pluginId
+     */
+    public function addIncompatiblePlugin($pluginId)
+    {
+        $this->incompatiblePlugins[] = $pluginId;
+    }
+
+    /**
+     * Get the list of plugins this plugin is incompatible with.
+     *
+     * @return array
+     */
+    public function getIncompatiblePlugins() {
+        return $this->incompatiblePlugins;
+    }
+
+    /**
+     * Check if this plugin has any incompatibility issue with the list of plugins.
+     *
+     * @param string[] $pluginList List of loaded plugins to test with.
+     *
+     * @return bool
+     */
+    public function checkForPluginIncompatibility($pluginList)
+    {
+        foreach ($pluginList as $pluginId) {
+            if (in_array($pluginId, $this->incompatiblePlugins)) {
+                return false;
+            }
+
+            /** @var MetaData $metaData */
+            $incompatiblePlugins = $pluginId::getMetaData()->getIncompatiblePlugins();
+            if (in_array($this->pluginId, $incompatiblePlugins)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * See if this plugin is compatible with the current game mode.
      * You can pass a game mod in parameter to check if it is compatible with that one
      *
@@ -429,6 +488,13 @@ abstract class MetaData
         }
     }
 
+    /**
+     * Check if the plugin is compatible with that script name.
+     *
+     * @param string $scriptName The name of the script to check if compatible with.
+     *
+     * @return bool
+     */
     protected function checkScriptGameModeCompatibility($scriptName)
     {
         if ($this->scriptCompatibiliyMode) {
@@ -452,6 +518,14 @@ abstract class MetaData
         return false;
     }
 
+    /**
+     * Check if the plugin is compatible with a certain title.
+     *
+     * @param string|null $titleName The name of the title to check with. If null then will check
+     *                               with the current title.
+     *
+     * @return bool
+     */
     public function checkTitleCompatibility($titleName = null)
     {
 
@@ -490,6 +564,11 @@ abstract class MetaData
         return true;
     }
 
+    /**
+     * Check for custom compatibility issues.
+     *
+     * @return array
+     */
     public function checkOtherCompatibility()
     {
         if (eXpStorage::getInstance()->isRelay && !$this->getRelaySupport()) {
@@ -499,6 +578,11 @@ abstract class MetaData
         return array();
     }
 
+    /**
+     * Check for all possible compatibility issues.
+     *
+     * @return bool
+     */
     public function checkAll()
     {
         $errors = $this->checkOtherCompatibility();
