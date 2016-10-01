@@ -1,0 +1,4 @@
+Real roundFloat(Real number) {
+    declare Integer int = ML::NearestInteger(number*1000);
+    return ML::NearestReal(int/10)/100;
+}

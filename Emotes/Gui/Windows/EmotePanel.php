@@ -6,21 +6,21 @@ use ManiaLivePlugins\eXpansion\Emotes\Config;
 
 class EmotePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
-    private $connection;
-    private $storage;
-    private $_windowFrame;
-    private $_mainWindow;
-    private $_minButton;
-    private $servername;
+    protected $connection;
+    protected $storage;
+    protected $_windowFrame;
+    protected $_mainWindow;
+    protected $_minButton;
+    protected $servername;
 
-    private $btnBG;
-    private $btnGG;
-    private $btnLOL;
-    private $btnAfk;
-    private $actionGG;
-    private $actionBG;
-    private $actionLOL;
-    private $actionAfk;
+    protected $btnBG;
+    protected $btnGG;
+    protected $btnLOL;
+    protected $btnAfk;
+    protected $actionGG;
+    protected $actionBG;
+    protected $actionLOL;
+    protected $actionAfk;
     public static $emotePlugin;
 
 

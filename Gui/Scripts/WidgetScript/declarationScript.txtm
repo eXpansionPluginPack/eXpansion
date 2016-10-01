@@ -1,29 +1,12 @@
-/**
- * @author      oliverde8 (oliverde8 at tm-teams.com)
- * @author      reaby (petri.jarvisalo at gmail.com)
- *
- * @copyright    GNU GENERAL PUBLIC LICENSE
- *                     Version 3, 29 June 2007
-
- *
- * LICENSE: This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see {http://www.gnu.org/licenses/}.
- */
-
 declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");
 // set hidden to reduce flicker
 declare MoveWindow = False;
-declare CMlQuad  quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);
+declare CMlQuad quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);
+declare CMlLabel coordLabel <=> (Page.GetFirstChild("coordLabel") as CMlLabel);
+declare CMlLabel coordButton <=> (Page.GetFirstChild("coordButton") as CMlLabel);
+declare CMlEntry coordInput <=> (Page.GetFirstChild("coordinates") as CMlEntry);
+
+
 declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, -3.0>;
 declare Vec3 DeltaPos = <0.0, 0.0, -3.0>;
 declare Real lastMouseX = 0.0;
@@ -125,7 +108,7 @@ if(!disablePersonalHud){
     }else {
 	    quad.Hide();
     }
-}else{
+} else {
     exp_widgetLayersBuffered = visibleLayerInit;
     exp_widgetCurrentVisible = True;
     exp_widgetVisibleBuffered = True;

@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Widgets;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Widgets as WConfig;
 
@@ -11,19 +13,23 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets as WConfig;
 class Widget extends PlainWidget
 {
 
-    private $move;
-    private $axisDisabled = "";
-    private $script;
+    protected $move;
+    protected $_coord;
+    protected $_input;
+    protected $_save;
+
+    protected $axisDisabled = "";
+    protected $script;
 
     /** @var Array */
-    private $positions = array();
+    protected $positions = array();
 
     /** @var Array */
-    private $widgetVisible = array();
-    private $visibleLayerInit = "normal";
+    protected $widgetVisible = array();
+    protected $visibleLayerInit = "normal";
 
     /** @var \ManiaLive\Data\Storage */
-    private $storage;
+    protected $storage;
     private static $config;
     public $currentSettings = array();
 
@@ -43,9 +49,37 @@ class Widget extends PlainWidget
         $this->addComponent($this->move);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
+
+        $this->_coord = new Label();
+        $this->_coord->setAlign("center", "center");
+        $this->_coord->setId("coordLabel");
+        $this->_coord->setAttribute('hidden', "true");
+        $this->addComponent($this->_coord);
+
+        $this->_input = new Inputbox("coordinates");
+        $this->_input->setAlign("center", "center");
+        $this->_input->setAttribute('hidden', "true");
+        $this->addComponent($this->_input);
+
+        $this->_save = new Label();
+        $this->_save->setStyle('CardButtonSmallXS');
+        $this->_save->setText("Save");
+        $this->_save->setAlign("center", "center");
+        $this->_save->setId("coordButton");
+        $this->_save->setAttribute('hidden', "true");
+        $this->_save->setAction($this->createAction(array($this, "_save")));
+        $this->addComponent($this->_save);
+
         $this->eXpOnEndConstruct();
         $this->eXpLoadSettings();
     }
+
+    public function _save($login, $entries)
+    {
+        echo $login . "\n";
+        print_r($entries);
+    }
+
 
     /**
      * When the Widget is being constructed.
@@ -147,6 +181,9 @@ class Widget extends PlainWidget
     {
         parent::onResize($oldX, $oldY);
         $this->move->setSize($this->getSizeX(), $this->getSizeY());
+        $this->_coord->setPosition($this->getSizeX() / 2, -$this->getSizeY() / 2);
+        $this->_save->setPosition($this->getSizeX() / 2, -($this->getSizeY() / 2) - 5);
+        $this->_save->setScale(0.7);
     }
 
     protected function autoSetPositions()
