@@ -12,18 +12,21 @@ use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\Events\ConfigLoadEvent;
 use ManiaLivePlugins\eXpansion\Core\types\config\MetaData as MetaDataType;
 
+
 class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
-
+    /**
+     * @var string[] Plugins to be loaded.
+     */
     private $plugins;
 
     /**
-     * @var  \ManiaLivePlugins\eXpansion\Core\types\config\MetaData[]
+     * @var MetaDataType[] List of all plugins that can be autoloaded.
      */
     private $availablePlugins;
 
     /**
-     * @var \ManiaLivePlugins\eXpansion\Core\types\config\MetaData[]
+     * @var MetaDataType[] List of all plugins that can be autoloaded.
      */
     private static $allAvailablePlugins;
 
@@ -32,10 +35,19 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     private $config;
 
+    /**
+     * @var string[] List of plugins that needs to be unloaded
+     */
     private $toBeRemoved = array();
 
+    /**
+     * @var string[] List o plugins to be loaded according the configuration;
+     */
     private $configPlugins = array();
 
+    /**
+     * @inheritdoc
+     */
     public function eXpOnLoad()
     {
         $this->setPublicMethod('showPluginsWindow');
@@ -58,7 +70,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             ConfigManager::getInstance()->loadSettings();
 
             //We Need the plugin Handler
-            $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+            $pHandler = PluginHandler::getInstance();
 
             $this->autoLoadPlugins($this->plugins, $pHandler);
 
@@ -71,10 +83,13 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         Dispatcher::dispatch(new \ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent(\ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent::ON_AUTOLOAD_COMPLETE));
     }
 
+    /**
+     * @inheritdoc
+     */
     public function eXpOnReady()
     {
         //We Need the plugin Handler
-        $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+        $pHandler = PluginHandler::getInstance();
 
         // Normalize plugin names.
         $plugins = array();
@@ -118,9 +133,11 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         AdminGroups::addAdminCommand('plugins', $this, 'showPluginsWindow', Permission::EXPANSION_PLUGIN_START_STOP);
     }
 
+    /**
+     * Called when the config file is loaded.
+     */
     public function onConfigFileLoaded()
     {
-
         $toRemove = array();
         foreach ($this->configPlugins as $plugin) {
             if (!in_array($plugin, $this->config->plugins)) {
@@ -135,7 +152,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
         }
 
-        $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+        $pHandler = PluginHandler::getInstance();
 
         if (!empty($toRemove)) {
             foreach ($toRemove as $plugin) {
@@ -151,9 +168,15 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->configPlugins = $this->config->plugins;
     }
 
+    /**
+     * Removed from a plugin list plugins that needs to be removed
+     *
+     * @param string[] $plugins List of plugins
+     *
+     * @param string[] $toRemove List pf plugins to be removed
+     */
     private function cleanPluginsArray(&$plugins, $toRemove)
     {
-
         for ($i = 0; $i < count($plugins); $i++) {
             if (isset($plugins[$i]) && in_array($plugins[$i], $toRemove)) {
                 array_splice($plugins, $i, 1);
@@ -161,12 +184,25 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
+    /**
+     * Autoload a list plugins.
+     *
+     * This method will try and solve dependecies, so start plugins needed to start the plugins asked.
+     *
+     * @param string[]      $plugins  List of plugins to autoload
+     * @param PluginHandler $pHandler The manialive plugin handler
+     *
+     * @throws \Maniaplanet\DedicatedServer\InvalidArgumentException
+     *
+     * @return bool
+     */
     public function autoLoadPlugins($plugins, PluginHandler $pHandler)
     {
         //First attempt to load plugins
         $recheck = $this->loadPlugins($plugins, $pHandler);
 
-        //New attempts to load plugins.
+        // New attempts to load plugins. If the list of plugins that needs checking don't change 
+        // it means we can't resolve the remaining dependencies.
         do {
             $lastSize = sizeof($recheck);
             $recheck = $this->loadPlugins($plugins, $pHandler);
@@ -185,20 +221,25 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $this->console($pname);
                 $this->connection->chatSendServerMessage('Starting ' . $pname . '........$f00 Failure');
             }
+
+            return false;
         }
+
+        return true;
     }
 
     /**
-     * @param                                        $list        List of plugins to load
-     * @param \ManiaLive\PluginHandler\PluginHandler $pHandler The manialive plugin handler
+     * Try to load multiple plugins.
      *
-     * @return array list of plugins that coudln't be loaded due to dependencies
+     * @param string[]      $list     List of plugins to load.
+     * @param PluginHandler $pHandler The manialive plugin handler.
+     *
+     * @return array list of plugins that couldn't be loaded due to dependencies
      */
-    public function loadPlugins($list, \ManiaLive\PluginHandler\PluginHandler $pHandler)
+    public function loadPlugins($list, PluginHandler $pHandler)
     {
         //List of plugins that we coudln't load that we will recheck
         $recheck = array();
-
 
         foreach ($list as $pname) {
             try {
@@ -213,9 +254,17 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return $recheck;
     }
 
-    public function loadPlugin($pname, \ManiaLive\PluginHandler\PluginHandler $pHandler)
+    /**
+     * Try and load a plugin. Will check for dependecies all the other criteries that allows a plugin to start.
+     *
+     * @param string        $pname    The name of the plugin to load
+     * @param PluginHandler $pHandler The manialive plugin handler.
+     *
+     * @return bool
+     * @throws PluginNotFoundException
+     */
+    public function loadPlugin($pname, PluginHandler $pHandler)
     {
-
         //List of plugins that were disabled
         $disabled = Config::getInstance()->disable;
         if (!is_array($disabled)) {
@@ -230,8 +279,6 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     if (!class_exists($pname)) {
                         $this->console("[" . $pname . "]...Doesen't exist -> not loading");
                         throw new PluginNotFoundException($pname);
-
-                        return false;
                     }
                     /** @var MetaDataType $metaData */
                     $metaData = $pname::getMetaData();
@@ -241,9 +288,6 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
                     if (!$metaData->checkForPluginIncompatibility($pHandler->getLoadedPluginsList())) {
                         $this->console("[" . $pname . "]...Disabled -> Not Compatible : either can't run with a certain plugin or a loaded plugin can't with this plugin");
-
-                        die('SUCESS');
-
                         return false;
                     } else if ($metaData->checkAll()) {
                         try {
@@ -254,20 +298,17 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                             } catch (\Exception $ex) {
 
                             }
-                            //ErrorHandling::displayAndLogError($ex);
                             $status = false;
                         }
 
                         if (!$status) {
                             $this->console("[" . $pname . "]...FAIL -> will retry");
-                            //Helper::log("[AutoLoad]".ErrorHandling::computeMessage($ex));
                             $recheck[] = $pname;
                         } else {
                             $this->debug("[" . $pname . "]...SUCCESS");
-                            //   $this->connection->chatSendServerMessage('Starting ' . $pname . '........$0f0 Success');
                         }
                     } else {
-                        $otherCheckResults = $metaData->checkAll();
+                        // @TODO display in the logs why not compatible.
                         $this->console("[" . $pname . "]...Disabled -> Not Compatible");
                     }
                 }
@@ -276,25 +317,24 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             throw $ex;
         } catch (\Exception $ex) {
             $this->console("[" . $pname . "]...FAIL -> will retry");
-
-            //Helper::log("[AutoLoad]".ErrorHandling::computeMessage($ex));
             return false;
         }
-
 
         return true;
     }
 
     /**
-     * @param              $login
-     * @param MetaDataType $metaData
+     * Start or stop a certain plugin.
+     *
+     * @param string       $login    Login of the user that tries to start or stop the process.
+     * @param MetaDataType $metaData The metadata of the plugin we try to start.
      */
     public function togglePlugin($login, MetaDataType $metaData)
     {
         /**
          * @var PluginHandler $pHandler
          */
-        $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+        $pHandler = PluginHandler::getInstance();
         $pluginId = $metaData->getPlugin();
 
         if ($this->isInStartList($pluginId) || $pHandler->isLoaded($pluginId)) {
@@ -313,8 +353,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 $this->eXpChatSendServerMessage("#admin_action#Plugin stopped with success", $login);
             }
         } else {
-            if ($this->loadPlugin($pluginId, $pHandler)) {
-                $pHandler->ready($pluginId);
+            if ($this->autoLoadPlugins(array($pluginId), $pHandler)) {
                 $this->eXpChatSendServerMessage("#admin_action#Plugin started with success", $login);
             } else {
                 $this->eXpChatSendServerMessage("#admin_error#This plugin contains errors that prevented it from starting", $login);
@@ -414,6 +453,14 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
+    /**
+     * Compare 2 plugins to sort them properly.
+     *
+     * @param MetaDataType $a Metadata of the first plugin
+     * @param MetaDataType $b Metadata of the second plugin
+     *
+     * @return int
+     */
     public function pluginNameCmp(MetaDataType $a, MetaDataType $b)
     {
         if ($a->getName() == $b->getName()) {
@@ -423,6 +470,11 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         return ($a->getName() < $b->getName()) ? -1 : 1;
     }
 
+    /**
+     * Show list of plugins window
+     *
+     * @param string $login The user to show the list to.
+     */
     public function showPluginsWindow($login)
     {
         PluginList::Erase($login);
@@ -434,11 +486,23 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $win->show();
     }
 
+    /**
+     * Check if a plugin is in the list of plugins to be used on start.
+     *
+     * @param string $pluginId The plugin to check
+     *
+     * @return bool
+     */
     public function isInStartList($pluginId)
     {
         return in_array($pluginId, $this->plugins) || in_array($pluginId, Config::getInstance()->plugins);
     }
 
+    /**
+     * Get all available metadata.
+     *
+     * @return MetaDataType[]
+     */
     public static function getAvailablePlugins()
     {
         return self::$allAvailablePlugins;
