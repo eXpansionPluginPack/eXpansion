@@ -1525,7 +1525,7 @@ Other server might use the same blacklist file!!'
         }
     }
 
-    public function blacklist($fromLogin, $params)
+    public function blacklist($fromLogin, $params, $showBlacklistDialog = false)
     {
         $target = array_shift($params);
         $reason = implode(" ", $params);
@@ -1562,6 +1562,10 @@ Other server might use the same blacklist file!!'
             );
         } catch (Exception $e) {
             $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+
+        if ($showBlacklistDialog) {
+            $this->showBlackList($fromLogin);
         }
     }
 
@@ -2490,8 +2494,7 @@ Other server might use the same blacklist file!!'
 
     public function addBlack($login, $entries)
     {
-        $this->blacklist($login, array($entries['login']));
-        $this->showBlackList($login);
+        $this->blacklist($login, array($entries['login']), true);
     }
 
     public function addIgnore($login, $entries)
