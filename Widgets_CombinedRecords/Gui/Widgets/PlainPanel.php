@@ -18,6 +18,7 @@ class PlainPanel extends \ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Wi
         parent::eXpOnBeginConstruct();
         $this->setName("Combined Panel");
         $this->timeScript->setParam('varName', 'CombiTime1');
+
     }
 
     public function update()
