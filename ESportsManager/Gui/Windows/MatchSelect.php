@@ -74,7 +74,7 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->Erase($login);
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->line->setPosX($this->sizeX / 2);
@@ -201,7 +201,7 @@ class MatchSelect extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         return null;
     }
 
-    function onDraw()
+    protected function onDraw()
     {
         $this->line->clearComponents();
         $this->line->addComponent(

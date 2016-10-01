@@ -16,7 +16,6 @@ use ManiaLivePlugins\eXpansion\Widgets_Voip\Gui\Widgets\Widget;
  */
 class Widgets_Voip extends ExpPlugin
 {
-
     /** @var Config */
     private $config;
 
@@ -52,7 +51,7 @@ class Widgets_Voip extends ExpPlugin
         }
     }
 
-    function onPreLoop()
+    public function onPreLoop()
     {
         if ($this->settingsChanged) {
             $this->displayWidget(null);

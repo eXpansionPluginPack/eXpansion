@@ -14,7 +14,7 @@ class Small extends AbsControl
     protected $bg;
     protected $label_name;
 
-    function __construct($i, $ctr, Server $server)
+    public function __construct($i, $ctr, Server $server)
     {
         $sizeX = 20;
         $sizeY = 4;

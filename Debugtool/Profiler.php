@@ -82,12 +82,12 @@ class Profiler implements ApplicationListener
         }
     }
 
-    function getClassName($class)
+    protected function getClassName($class)
     {
         return str_replace('\\', '', $class);
     }
 
-    function getCurrentTimeStamp($time)
+    protected function getCurrentTimeStamp($time)
     {
         return date('Y-m-d', ($time)) . 'T' . date('H:i:s', ($time)) . 'Z';
     }

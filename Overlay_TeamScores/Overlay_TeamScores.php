@@ -100,7 +100,7 @@ class Overlay_TeamScores extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $this->showWidget();
     }
 
-    function syncWidget($team)
+    protected function syncWidget($team)
     {
         if (empty($this->clublinks[$team])) {
             return;

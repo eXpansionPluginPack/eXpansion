@@ -27,7 +27,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Speedometer\Gui\Widgets;
 class Speedmeter extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
 
-    function eXpOnBeginConstruct()
+    public function eXpOnBeginConstruct()
     {
         $this->setName("Speed'o'meter");
 

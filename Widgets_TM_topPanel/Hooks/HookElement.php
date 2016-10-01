@@ -34,7 +34,7 @@ class HookElement
      * @param Element $gui
      * @param int $priority
      */
-    function __construct($gui, $priority = 0)
+    public function __construct($gui, $priority = 0)
     {
         $this->gui = $gui;
         $this->priority = $priority;

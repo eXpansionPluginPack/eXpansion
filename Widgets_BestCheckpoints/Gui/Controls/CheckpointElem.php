@@ -20,7 +20,7 @@ class CheckpointElem extends Control
 
     protected $time;
 
-    function __construct($x, Checkpoint $cp = null)
+    public function __construct($x, Checkpoint $cp = null)
     {
         $sizeX = 35;
         $sizeY = 5;

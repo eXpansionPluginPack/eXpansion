@@ -11,7 +11,7 @@ class Minimap extends \ManiaLib\Gui\Element
     protected $mapPosZ = 0;
     protected $zoom = 1.0;
 
-    function __construct($sizeX = 20, $sizeY = 6)
+    public function __construct($sizeX = 20, $sizeY = 6)
     {
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;

@@ -11,7 +11,7 @@ class GenericItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $time;
     protected $frame;
 
-    function __construct($index, $item)
+    public function __construct($index, $item)
     {
         $sizeX = 36;
         $sizeY = 3;

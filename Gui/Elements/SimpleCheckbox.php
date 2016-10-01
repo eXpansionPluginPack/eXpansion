@@ -11,7 +11,7 @@ class SimpleCheckbox extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $active = false;
     protected $action;
 
-    function __construct($sizeX = 4, $sizeY = 4)
+    public function __construct($sizeX = 4, $sizeY = 4)
     {
         $this->action = $this->createAction(array($this, 'toggleActive'));
         $config = Config::getInstance();
@@ -32,10 +32,8 @@ class SimpleCheckbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->button->setPosition(0, -0.5);
     }
 
-    function onDraw()
+    protected function onDraw()
     {
-        $config = Config::getInstance();
-
         if ($this->active) {
             $this->button->setColorize("0f0");
         } else {
@@ -43,28 +41,28 @@ class SimpleCheckbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         }
     }
 
-    function setStatus($boolean)
+    public function setStatus($boolean)
     {
         $this->active = $boolean;
     }
 
-    function getStatus()
+    public function getStatus()
     {
         return $this->active;
     }
 
-    function toggleActive($login)
+    public function toggleActive($login)
     {
         $this->active = !$this->active;
         $this->redraw();
     }
 
-    function setAction($action)
+    public function setAction($action)
     {
         $this->button->setAction($action);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         parent::destroy();

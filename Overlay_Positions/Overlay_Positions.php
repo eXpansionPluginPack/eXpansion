@@ -17,7 +17,7 @@ class Overlay_Positions extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $isPodium = false;
     private $wasWarmup = false;
 
-    function eXpOnInit()
+    public function eXpOnInit()
     {
         $this->exp_addTitleSupport("TM");
         $this->exp_addTitleSupport("Trackmania");

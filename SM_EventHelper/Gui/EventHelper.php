@@ -19,6 +19,7 @@
 
 namespace ManiaLivePlugins\eXpansion\SM_EventHelper\Gui;
 
+use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget;
 
 /**
@@ -28,12 +29,14 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget;
  */
 class EventHelper extends PlainWidget
 {
-
+    /**
+     * @var Script
+     */
     private $script;
 
     public static $actions = array();
 
-    function onConstruct()
+    protected function onConstruct()
     {
         parent::onConstruct();
         $this->setName("EventHelper");
@@ -51,7 +54,7 @@ class EventHelper extends PlainWidget
         $entry->setName("index");
         $this->addComponent($entry);
 
-        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("SM_EventHelper\Gui\Script");
+        $this->script = new Script("SM_EventHelper\Gui\Script");
         $this->script->setParam("cpAction", self::$actions['checkpoint']);
         $this->script->setParam("finishAction", self::$actions['finish']);
         $this->registerScript($this->script);

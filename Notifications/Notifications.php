@@ -14,12 +14,12 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     private $personalMessages = array(array());
 
-    function eXpOnInit()
+    public function eXpOnInit()
     {
         $this->setPublicMethod("send");
     }
 
-    function eXpOnReady()
+    public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
 
@@ -33,7 +33,7 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         } // force update...
     }
 
-    function send($login, $message, $icon = null, $callback = null, $pluginid = null)
+    public function send($login, $message, $icon = null, $callback = null, $pluginid = null)
     {
         if (is_callable($callback) || $callback === null) {
             if ($login == null) {
@@ -55,7 +55,7 @@ class Notifications extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    function reDraw()
+    protected function reDraw()
     {
         try {
             foreach (NotificationPanel::GetAll() as $window) {

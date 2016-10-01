@@ -291,12 +291,12 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
     }
 
 
-    function getButtonId()
+    public function getButtonId()
     {
         return $this->buttonId;
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         parent::destroy();

@@ -10,7 +10,7 @@ class Checkpoint extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
     public $nickname = "";
     public $index;
 
-    function __construct($index, $login, $nickname, $time)
+    public function __construct($index, $login, $nickname, $time)
     {
         $this->time = $time;
         $this->login = $login;

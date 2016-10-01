@@ -86,11 +86,10 @@ class InGameHud extends \ManiaLib\Utils\Singleton
 
     public $wampupPosition = array(170, 27, 0);
 
-    function update()
+    public function update()
     {
         /** @var  \Maniaplanet\DedicatedServer\Connection $connection */
         $connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-
         $connection->triggerModeScriptEvent("UI_SetProperties", $this->genXml());
     }
 

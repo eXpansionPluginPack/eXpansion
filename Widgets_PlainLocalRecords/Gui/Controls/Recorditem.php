@@ -19,7 +19,7 @@ class Recorditem extends Control
     private $time;
     private $frame;
 
-    function __construct($index, Record $record, $highlite = false)
+    public function __construct($index, Record $record, $highlite = false)
     {
         $sizeX = 38;
         $sizeY = 4;

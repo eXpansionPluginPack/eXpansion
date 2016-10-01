@@ -101,7 +101,7 @@ class Editbox extends Control
         return $this->label->getText();
     }
 
-    function setLabel($text)
+    public function setLabel($text)
     {
         $this->label->setText($text);
     }

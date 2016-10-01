@@ -10,10 +10,9 @@ class Marker extends \ManiaLib\Gui\Element
     protected $posY = 0;
     protected $posZ = 0;
 
-    function __construct($sizeX = 20, $sizeY = 6)
+    public function __construct($sizeX = 20, $sizeY = 6)
     {
-        $this->sizeX = $sizeX;
-        $this->sizeY = $sizeY;
+        parent::__construct($sizeX, $sizeY);
     }
 
     protected function postFilter()

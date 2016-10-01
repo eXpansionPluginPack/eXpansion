@@ -55,7 +55,7 @@ class MatchWait extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->setAlign("center");
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         $this->label_halt->setPosX($this->sizeX / 2);
         $this->label_reason->setPosX($this->sizeX / 2);
@@ -65,7 +65,7 @@ class MatchWait extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onResize($oldX, $oldY);
     }
 
-    function setAdminAction($select, $continue)
+    public function setAdminAction($select, $continue)
     {
         $this->admin = true;
         $this->btn_select->setAction($select);

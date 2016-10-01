@@ -50,10 +50,9 @@ class MapWish extends Window
      */
     protected $plugin;
 
-    function onConstruct()
+    protected function onConstruct()
     {
         parent::onConstruct();
-
 
         $login = $this->getRecipient();
         $player = Storage::getInstance()->getPlayerObject($login);

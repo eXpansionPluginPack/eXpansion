@@ -36,7 +36,7 @@ class MapInfoItem extends Control implements ScriptedContainer
     protected $map;
     protected $author;
 
-    function __construct($sizeX, $sizeY = 9)
+    public function __construct($sizeX, $sizeY = 9)
     {
 
         $this->quad = new Quad($sizeY, $sizeY);

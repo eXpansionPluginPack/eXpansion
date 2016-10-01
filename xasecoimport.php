@@ -12,7 +12,7 @@ class Ximporter
     private $config;
     private $conn;
 
-    function __construct()
+    public function __construct()
     {
         $this->welcome();
         $this->readconfig();
@@ -22,14 +22,14 @@ class Ximporter
         $this->theEnd();
     }
 
-    function welcome()
+    protected function welcome()
     {
         $this->hr();
         $this->c("from Xaseco to eXpansion", true);
         $this->hr();
     }
 
-    function readconfig()
+    protected function readconfig()
     {
         if (!file_exists("xaseco_migration.ini")) {
             die("Cannot locate main configuration file: xaseco_migration.ini.");
@@ -40,7 +40,7 @@ class Ximporter
         }
     }
 
-    function connectdb()
+    protected function connectdb()
     {
         $this->c(" Connecting to database.... hold on...");
         $this->conn = mysql_connect(
@@ -55,14 +55,14 @@ class Ximporter
         $this->c(' Connected successfully');
     }
 
-    function disconnect()
+    protected function disconnect()
     {
         mysql_close($this->conn);
         $this->hr();
         $this->c("* All done! * ", true);
     }
 
-    function dothejob()
+    protected function dothejob()
     {
         $this->hr();
         $this->c("* By now you are aware that this is ONE TIME operation * ", true);
@@ -316,7 +316,7 @@ AND Donations >0;",
         $this->c("done.");
     }
 
-    function query($query, $link)
+    protected function query($query, $link)
     {
         $result = mysql_query($query, $link);
         if (!$result) {
@@ -328,12 +328,12 @@ AND Donations >0;",
         return $result;
     }
 
-    function theEnd()
+    protected function theEnd()
     {
         $this->hr();
     }
 
-    function hr()
+    protected function hr()
     {
         for ($x = 0; $x < 79; $x++) {
             print "#";
@@ -341,7 +341,7 @@ AND Donations >0;",
         print "\n";
     }
 
-    function c($string, $center = false)
+    protected function c($string, $center = false)
     {
         if ($center) {
             $len = (80 / 2) - (strlen($string) / 2);

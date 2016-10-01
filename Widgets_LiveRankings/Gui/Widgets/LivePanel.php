@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Gui\Widgets;
 
 class LivePanel extends PlainLivePanel
 {
-    function eXpOnBeginConstruct()
+    public function eXpOnBeginConstruct()
     {
         parent::eXpOnBeginConstruct();
     }

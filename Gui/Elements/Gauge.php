@@ -22,7 +22,7 @@ class Gauge extends \ManiaLib\Gui\Element
     protected $drawBg = false;
     protected $drawBlockBg = true;
 
-    function __construct($sizeX = 20, $sizeY = 6)
+    public function __construct($sizeX = 20, $sizeY = 6)
     {
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;
@@ -31,38 +31,38 @@ class Gauge extends \ManiaLib\Gui\Element
     /**
      * @param string $color
      */
-    function setColorize($color)
+    public function setColorize($color)
     {
         $this->colorize = $color;
     }
 
-    function getColorize()
+    public function getColorize()
     {
         return $this->colorize;
     }
 
     /**
-     * @param string $color
+     * @param string $grading
      */
-    function setGrading($grading)
+    public function setGrading($grading)
     {
         $this->grading = $grading;
     }
 
-    function getGrading()
+    public function getGrading()
     {
         return $this->grading;
     }
 
     /**
-     * @param string $color
+     * @param string $ratio
      */
-    function setRatio($ratio)
+    public function setRatio($ratio)
     {
         $this->ratio = $ratio;
     }
 
-    function getRatio()
+    public function getRatio()
     {
         return $this->ratio;
     }

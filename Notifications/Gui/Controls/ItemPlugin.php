@@ -12,7 +12,7 @@ class ItemPlugin extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public $pluginId;
 
-    function __construct($pluginId, \ManiaLivePlugins\eXpansion\Core\types\config\MetaData $meta)
+    public function __construct($pluginId, \ManiaLivePlugins\eXpansion\Core\types\config\MetaData $meta)
     {
         $this->sizeX = 100;
         $this->sizeY = 6;

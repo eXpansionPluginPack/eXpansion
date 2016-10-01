@@ -12,7 +12,7 @@ class Mimporter
     private $config;
     private $conn;
 
-    function __construct()
+    public function __construct()
     {
         $this->welcome();
         $this->readconfig();
@@ -22,14 +22,14 @@ class Mimporter
         $this->theEnd();
     }
 
-    function welcome()
+    protected function welcome()
     {
         $this->hr();
         $this->c("from Mlepp to eXpansion", true);
         $this->hr();
     }
 
-    function readconfig()
+    protected function readconfig()
     {
         if (!file_exists("mlepp_migration.ini")) {
             die("Cannot locate main configuration file: mlepp_migration.ini.");
@@ -40,7 +40,7 @@ class Mimporter
         }
     }
 
-    function connectdb()
+    protected function connectdb()
     {
         $this->c(" Connecting to database.... hold on...");
         $this->conn = mysql_connect(
@@ -55,14 +55,14 @@ class Mimporter
         $this->c(' Connected successfully');
     }
 
-    function disconnect()
+    public function disconnect()
     {
         mysql_close($this->conn);
         $this->hr();
         $this->c("* All done! * ", true);
     }
 
-    function dothejob()
+    protected function dothejob()
     {
         print_r($this->config);
 
@@ -163,7 +163,7 @@ class Mimporter
         mysql_query($query, $this->conn);
     }
 
-    function merge($tableName1, $tableName2, $map, $specials = array())
+    protected function merge($tableName1, $tableName2, $map, $specials = array())
     {
 
         $data1 = array();
@@ -219,7 +219,7 @@ class Mimporter
         }
     }
 
-    function query($query, $link)
+    protected function query($query, $link)
     {
         $result = mysql_query($query, $link);
         if (!$result) {
@@ -231,12 +231,12 @@ class Mimporter
         return $result;
     }
 
-    function theEnd()
+    protected function theEnd()
     {
         $this->hr();
     }
 
-    function hr()
+    protected function hr()
     {
         for ($x = 0; $x < 79; $x++) {
             print "#";
@@ -244,7 +244,7 @@ class Mimporter
         print "\n";
     }
 
-    function c($string, $center = false)
+    protected function c($string, $center = false)
     {
         if ($center) {
             $len = (80 / 2) - (strlen($string) / 2);

@@ -17,7 +17,7 @@ class MXKarmaEvent extends \ManiaLive\Event\Event
 
     protected $params;
 
-    function __construct($onWhat)
+    public function __construct($onWhat)
     {
         parent::__construct($onWhat);
         $params = func_get_args();
@@ -25,7 +25,7 @@ class MXKarmaEvent extends \ManiaLive\Event\Event
         $this->params = $params;
     }
 
-    function fireDo($listener)
+    public function fireDo($listener)
     {
         $p = $this->params;
         switch ($this->onWhat) {

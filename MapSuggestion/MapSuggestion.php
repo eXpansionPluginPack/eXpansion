@@ -27,7 +27,7 @@ class MapSuggestion extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin imp
         $window->show();
     }
 
-    function addMapToWish($login, $mxid, $description = null)
+    public function addMapToWish($login, $mxid, $description = null)
     {
 
         if (is_array($mxid)) {

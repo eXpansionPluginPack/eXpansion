@@ -44,7 +44,7 @@ class HaltMatch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->setAlign("center");
     }
 
-    function onResize($oldX, $oldY)
+    protected function onResize($oldX, $oldY)
     {
         $this->label_halt->setPosX($this->sizeX / 2);
         $this->label_reason->setPosX($this->sizeX / 2);
@@ -52,7 +52,7 @@ class HaltMatch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onResize($oldX, $oldY);
     }
 
-    function setReason($reason = "Admin has requested to stop the match!")
+    public function setReason($reason = "Admin has requested to stop the match!")
     {
         $this->label_reason->setText($reason);
     }

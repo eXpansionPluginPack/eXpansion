@@ -51,7 +51,7 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
     /** @var \ManiaLive\Data\Player */
     private $player;
 
-    function __construct(
+    public function __construct(
         $indexNumber,
         \ManiaLive\Data\Player $player,
         $controller,
@@ -236,7 +236,7 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
     }
 
     // manialive 3.1 override to do nothing.
-    function destroy()
+    public function destroy()
     {
 
     }
@@ -244,7 +244,7 @@ class OptimizedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
     /*
      * custom function to remove contents.
      */
-    function erase()
+    public function erase()
     {
         if (is_object($this->banButton)) {
             $this->banButton->destroy();

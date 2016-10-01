@@ -18,7 +18,7 @@ class TextEdit extends \ManiaLib\Gui\Element
     protected $autonewline = false;
     protected $name = "";
 
-    function __construct($name, $sizeX = 100, $sizeY = 100)
+    public function __construct($name, $sizeX = 100, $sizeY = 100)
     {
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;

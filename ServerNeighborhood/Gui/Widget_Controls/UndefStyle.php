@@ -10,7 +10,6 @@ use ManiaLivePlugins\eXpansion\ServerNeighborhood\Server;
  */
 class UndefStyle extends AbsControl
 {
-
     protected $bg;
     protected $label_name;
 
@@ -23,7 +22,7 @@ class UndefStyle extends AbsControl
     protected $label_nbSpecs;
     protected $label_ladder;
 
-    function __construct($i, $ctr, Server $server)
+    public function __construct($i, $ctr, Server $server)
     {
 
         $sizeX = $this->getSizeX();

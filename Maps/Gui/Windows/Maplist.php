@@ -596,7 +596,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         return substr($haystack, $start, $end - $start);
     }
 
-    static function sortByRankingAsc(&$array)
+    protected static function sortByRankingAsc(&$array)
     {
         usort(
             $array,
@@ -614,7 +614,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         );
     }
 
-    static function sortByRankingDesc(&$array)
+    protected static function sortByRankingDesc(&$array)
     {
         usort(
             $array,
@@ -632,7 +632,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         );
     }
 
-    static function sortByRecordDesc(&$array, $login)
+    protected static function sortByRecordDesc(&$array, $login)
     {
         usort(
             $array,
@@ -656,7 +656,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         );
     }
 
-    static function sortByRecordAsc(&$array, $login)
+    protected static function sortByRecordAsc(&$array, $login)
     {
         usort(
             $array,

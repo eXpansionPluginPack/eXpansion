@@ -33,7 +33,7 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
     /** @var Config */
     private $config;
 
-    function eXpOnLoad()
+    public function eXpOnLoad()
     {
         $this->enableDedicatedEvents();
         $this->enableApplicationEvents();
@@ -68,7 +68,7 @@ class Irc extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin implements Cl
         }
     }
 
-    function onPreLoop()
+    public function onPreLoop()
     {
         $this->irc->onTick();
     }

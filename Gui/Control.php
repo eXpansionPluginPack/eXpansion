@@ -27,7 +27,7 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 class Control extends \ManiaLive\Gui\Control
 {
 
-    function destroy()
+    public function destroy()
     {
         parent::destroy();
 

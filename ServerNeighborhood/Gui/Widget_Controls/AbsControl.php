@@ -14,7 +14,7 @@ abstract class AbsControl extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public $server;
 
-    function __construct(Server $server)
+    public function __construct(Server $server)
     {
         $this->server = $server;
         $this->onSetData($server);

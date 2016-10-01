@@ -57,7 +57,7 @@ class WidgetBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg->setAction($action);
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();

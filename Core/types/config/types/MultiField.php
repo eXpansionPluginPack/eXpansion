@@ -58,7 +58,7 @@ class MultiField extends Variable
         return isset($this->variableType[$name]) ? $this->variableType[$name] : null;
     }
 
-    function getPreviewValues()
+    public function getPreviewValues()
     {
         return '';
     }

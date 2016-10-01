@@ -10,9 +10,9 @@ namespace ManiaLivePlugins\eXpansion\ServerStatistics\Stats;
 interface AbstractStat
 {
 
-    function getAvgLoad();
+    public function getAvgLoad();
 
-    function getFreeMemory();
+    public function getFreeMemory();
 
-    function getUptime();
+    public function getUptime();
 }

@@ -21,7 +21,6 @@ class PlainWindow extends \ManiaLive\Gui\Window
 
     }
 
-
     private function detectElements($components)
     {
         $buttonScript = null;
@@ -68,7 +67,7 @@ class PlainWindow extends \ManiaLive\Gui\Window
         \ManiaLive\Gui\Manialinks::appendXML($dico->getXml());
     }
 
-    function destroy()
+    public function destroy()
     {
         $this->destroyComponents();
         parent::destroy();

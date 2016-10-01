@@ -8,7 +8,7 @@ class PlayerVote extends \Maniaplanet\DedicatedServer\Structures\AbstractStructu
     public $login;
     public $vote;
 
-    function __construct($login = null, $vote = null)
+    public function __construct($login = null, $vote = null)
     {
         $this->login = $login;
         $this->vote = $vote;

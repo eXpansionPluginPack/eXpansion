@@ -35,7 +35,7 @@ class BarElements extends \ManiaLive\Event\Event
      * @param $buttons
      * @param $login
      */
-    function __construct($onWhat, $buttons, $login)
+    public function __construct($onWhat, $buttons, $login)
     {
         parent::__construct($onWhat);
 
@@ -43,7 +43,7 @@ class BarElements extends \ManiaLive\Event\Event
         $this->login = $login;
     }
 
-    function fireDo($listener)
+    public function fireDo($listener)
     {
         switch ($this->onWhat) {
             case self::ON_LEFT_CREATE:

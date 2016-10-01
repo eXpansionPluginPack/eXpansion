@@ -24,7 +24,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Scripts;
 
 class PlayerFinish extends CommonScript
 {
-    function __construct()
+    public function __construct()
     {
         parent::__construct("Widgets_LocalRecords/Gui/Scripts/PlayerFinish");
     }

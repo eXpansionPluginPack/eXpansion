@@ -10,7 +10,7 @@ class Graph extends \ManiaLib\Gui\Element
     protected $posY = 0;
     protected $posZ = 0;
 
-    function __construct($sizeX = 100, $sizeY = 100)
+    public function __construct($sizeX = 100, $sizeY = 100)
     {
         $this->sizeX = $sizeX;
         $this->sizeY = $sizeY;

@@ -42,7 +42,7 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
             $this->items[$x] = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(18, 6);
             $this->items[$x]->setText($text . "p");
             $this->items[$x]->setScale(0.55);
-            $this->items[$x]->setAction($this->createAction(array($this, "Donate"), $text));
+            $this->items[$x]->setAction($this->createAction(array($this, "donate"), $text));
             $frame->addComponent($this->items[$x]);
         }
 
@@ -70,12 +70,12 @@ class DonatePanelWindow extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->registerScript($script);
     }
 
-    function Donate($login, $amount)
+    public function donate($login, $amount)
     {
         self::$donatePlugin->Donate($login, $amount);
     }
 
-    function destroy()
+    public function destroy()
     {
         foreach ($this->items as $item) {
             $item->destroy();

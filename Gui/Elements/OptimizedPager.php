@@ -33,11 +33,8 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
 
     protected $rowPerPage = 1;
 
-    function __construct()
+    public function __construct()
     {
-
-        $config = Config::getInstance();
-
         $this->bg = new \ManiaLib\Gui\Elements\Quad();
         $this->bg->setBgcolor('$f00');
         $this->bg->setId("menuBg");
@@ -94,7 +91,7 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
         $this->myScript = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\OptimizedPager");
     }
 
-    function handleClick($login, $entries)
+    public function handleClick($login, $entries)
     {
         if (!empty($entries['item'])) {
             // do some magic
@@ -108,7 +105,7 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
         }
     }
 
-    function clearItems()
+    public function clearItems()
     {
         $this->iitems = array();
         $this->data = array();
@@ -124,7 +121,7 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
         $this->index++;
     }
 
-    function setSize()
+    public function setSize()
     {
         $args = func_get_args();
         $this->sizeX = $args[0];
@@ -175,7 +172,7 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
         parent::destroy();
     }
 
-    function onIsRemoved(\ManiaLive\Gui\Container $target)
+    public function onIsRemoved(\ManiaLive\Gui\Container $target)
     {
         parent::onIsRemoved($target);
         $this->destroy();
@@ -210,7 +207,6 @@ class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements 
         $this->myScript->setParam("itemsPerRow", $this->nbElemParColumn);
         $this->myScript->setParam("totalRows", $totalRows);
         $this->myScript->setParam("rowPerPage", $this->rowPerPage);
-
 
         return $this->myScript;
     }

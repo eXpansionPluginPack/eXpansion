@@ -19,7 +19,7 @@ class Group
     private $permissions;
     private $inherits = array();
 
-    function __construct($groupName, $master)
+    public function __construct($groupName, $master)
     {
         $this->groupName = $groupName;
         $this->master = $master;

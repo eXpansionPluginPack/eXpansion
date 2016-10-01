@@ -107,7 +107,7 @@ class Webaccess
         $this->WebaccessList = array();
     }
 
-    function request(
+    public function request(
         $url,
         $callback,
         $datas,
@@ -162,7 +162,7 @@ class Webaccess
         return false;
     }
 
-    function retry($url)
+    public function retry($url)
     {
         list($host, $port, $path) = getHostPortPath($url);
         if ($host === false) {
@@ -175,7 +175,7 @@ class Webaccess
         }
     }
 
-    function select(&$read, &$write, &$except, $tv_sec, $tv_usec = 0)
+    public function select(&$read, &$write, &$except, $tv_sec, $tv_usec = 0)
     {
         $timeout = (int)($tv_sec * 1000000 + $tv_usec);
         if ($read == null) {

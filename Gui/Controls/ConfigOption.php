@@ -13,7 +13,7 @@ class ConfigOption extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $cb_item;
     private $status;
 
-    function __construct($x, \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem $status, $login, $sizeX)
+    public function __construct($x, \ManiaLivePlugins\eXpansion\Gui\Structures\ConfigItem $status, $login, $sizeX)
     {
         $this->status = $status;
         $this->setSize(60, 5);

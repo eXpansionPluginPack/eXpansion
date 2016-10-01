@@ -375,5 +375,5 @@ abstract class Variable
         return false;
     }
 
-    abstract function getPreviewValues();
+    public abstract function getPreviewValues();
 }

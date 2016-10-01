@@ -16,7 +16,7 @@ class Run extends AbstractStructure
 
     public $checkpoints = array();
 
-    function __construct(PlayerRanking $player)
+    public function __construct(PlayerRanking $player)
     {
         $this->player = $player;
         $this->totalTime = $player->bestTime;

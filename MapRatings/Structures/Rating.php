@@ -8,7 +8,7 @@ class Rating extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
     public $totalvotes;
     public $uid;
 
-    function __construct($rating, $total, $uid = "")
+    public function __construct($rating, $total, $uid = "")
     {
         $this->rating = $rating;
         $this->totalvotes = $total;

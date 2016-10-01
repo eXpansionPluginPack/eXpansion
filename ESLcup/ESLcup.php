@@ -55,7 +55,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $cmd = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::addAdminCommand(
             'game eslcup',
             $this,
-            'chat_eslcup',
+            'chatEslcup',
             'game_settings'
         );
         $admingroup->addShortAlias($cmd, 'eslcup');
@@ -75,18 +75,18 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->scoreTable(true, "scorestable");
     }
 
-    public function check_gameSettings_Cup()
+    public function checkGameSettingsCup()
     {
         return $this->connection->getNextGameInfo()->gameMode
         == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_CUP;
     }
 
-    public function check_eslCup()
+    public function checkEslCup()
     {
         return $this->enabled;
     }
 
-    function chat_eslcup($fromLogin, $params)
+    public function chatEslcup($fromLogin, $params)
     {
 
         try {
@@ -152,7 +152,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * SyncScores from player rankings
      */
-    public function syncScores()
+    protected function syncScores()
     {
         if (!$this->enabled) {
             return;
@@ -180,7 +180,7 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->Scoretable(true, "scorestable");
     }
 
-    function testData($login, $nb)
+    protected function testData($login, $nb)
     {
         if (!$this->enabled) {
             return;
