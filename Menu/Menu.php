@@ -67,25 +67,20 @@ class Menu extends ExpPlugin implements Listener
     public function onPlayerConnect($login, $isSpectator)
     {
         $name = AdminGroups::getGroupName($login);
+
+        if ($name == 'Player') {
+            $name = 'Guest';
+        }
+
         if (!array_key_exists($name, $this->menuGroups)) {
             $group = null;
-            if ($name == 'Player') {
-                $name = 'Guest';
-                $group = AdminGroups::getInstance()->getGuestGroup();
-                $this->menuGroups[$name]->add((string)$login, true);
-
-            } else {
-                $group = AdminGroups::getAdmin($login)->getGroup();
-                $this->menuGroups[$name]->add((string)$login, true);
-            }
+            $group = AdminGroups::getInstance()->getGuestGroup();
+            $this->menuGroups[$name]->add((string)$login, true);
             $this->createMenu($group);
 
         } else {
             $this->menuGroups[$name]->add((string)$login, true);
         }
-
-        $this->menuWindows[$name]->show((string)$login);
-
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason)
