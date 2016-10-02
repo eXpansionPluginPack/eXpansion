@@ -152,6 +152,13 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_DISCONNECT);
         Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_INFO_CHANGED);
         Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_BEGIN_MAP);
+        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_END_MAP);
+        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_BEGIN_ROUND);
+        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_END_ROUND);
+        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_BEGIN_MATCH);
+        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_END_MAP);
+        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_CHECKPOINT);
+        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_FINISH);
 
         $this->connection = Singletons::getInstance()->getDediConnection();
 
