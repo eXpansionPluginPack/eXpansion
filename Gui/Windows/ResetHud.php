@@ -30,7 +30,8 @@ class ResetHud extends \ManiaLive\Gui\Window
                         declare persistent Boolean[Text][Text][Text] eXp_widgetVisible;
 			declare persistent Text[Text][Text][Text] eXp_widgetLayers;
 			declare Boolean exp_needToCheckPersistentVars for UI = False;
-			
+			declare persistent Boolean exp_chatVisible = True;
+			exp_chatVisible = True;
                         declare Text version = "' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . '";
 			
 			if (exp_windowLastPos.existskey(version)) {
