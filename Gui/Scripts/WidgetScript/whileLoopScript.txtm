@@ -60,10 +60,8 @@ if(!disablePersonalHud){
 
 
     if (eXp_widgetVisible[version][id][gameMode] == True && eXp_widgetLayers[version][id][gameMode] == visibleLayerInit && exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode]) {
-	    if (!_isWindowHid) {
 	    Window.Show();
 	    exp_widgetCurrentVisible = True;
-	    }
 	} else if(exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode] || eXp_widgetLayers[version][id][gameMode] != activeLayer) {
 	    Window.Hide();
 	    exp_widgetCurrentVisible = False;
