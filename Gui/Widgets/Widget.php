@@ -57,8 +57,7 @@ class Widget extends PlainWidget
         $this->addComponent($this->_coord);
 
         $this->_input = new Inputbox("coordinates");
-        $this->_input->setAlign("center", "center");
-        $this->_input->setAttribute('hidden', "true");
+        $this->_input->setPosition(900,900);
         $this->addComponent($this->_input);
 
         $this->_save = new Label();

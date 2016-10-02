@@ -4,7 +4,6 @@ namespace ManiaLivePlugins\eXpansion\LocalRecords;
 
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Gui\ActionHandler;
-use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Core\Events\ExpansionEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ExpansionEventListener;
@@ -168,7 +167,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             array($this, 'showSectorWindow')
         );
         LocalBase::$openRecordsAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(
-            array($this, 'showRecsWindow')
+            array($this, 'showRecsWindowExternal')
         );
         LocalBase::$openCpsAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(
             array($this, 'showCpWindow')
@@ -339,7 +338,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             } catch (\Exception $e) {
                 $this->console(
                     "There was error while updating database structure to version 3, "
-                    ."setting version 3 as mostlikely it's already converted.."
+                    . "setting version 3 as mostlikely it's already converted.."
                 );
             }
             $this->callPublicMethod(
@@ -399,6 +398,11 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     }
 
     public function showRecsMenuItem($login)
+    {
+        $this->showRecsWindow($login);
+    }
+
+    public function showRecsWindowExternal($login, $entries = null)
     {
         $this->showRecsWindow($login);
     }
@@ -1168,7 +1172,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
         $q = "DELETE FROM `exp_records` WHERE `exp_records`.`record_challengeuid` = "
             . $this->db->quote($challenge->uId) . " and "
-            ."`exp_records`.`record_playerlogin` = " . $this->db->quote($login) . ";";
+            . "`exp_records`.`record_playerlogin` = " . $this->db->quote($login) . ";";
         try {
             $this->db->execute($q);
 

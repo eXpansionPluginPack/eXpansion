@@ -81,6 +81,8 @@ class Menu extends ExpPlugin implements Listener
         } else {
             $this->menuGroups[$name]->add((string)$login, true);
         }
+
+        $this->menuWindows[$name]->show((string)$login);
     }
 
     public function onPlayerDisconnect($login, $disconnectionReason)
