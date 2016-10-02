@@ -162,6 +162,30 @@ class PlainWidget extends \ManiaLive\Gui\Window
     {
         $this->_scripts = array();
         $this->destroyComponents();
+
+        foreach ($this as $index => $value) {
+            if (\is_object($value)) {
+
+                if ($value instanceof \ManiaLive\Gui\Containable || $value instanceof \ManiaLive\Gui\Container) {
+                    $value->destroyComponents();
+                    $value->destroy();
+                    unset($this->$index);
+                    continue;
+                }
+                if ($value instanceof \ManiaLive\Gui\Control) {
+                    $value->destroy();
+                    unset($this->$index);
+                    continue;
+                }
+                unset($this->$index);
+            } else {
+                // base window class still needs this at this point...
+                if ($index != "id") {
+                    unset($this->$index);
+                }
+            }
+        }
+
         parent::destroy();
     }
 
