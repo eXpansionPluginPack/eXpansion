@@ -54,7 +54,6 @@ class GenericPanel extends Widget
         $this->totalLines = $value;
         $this->sizeX = 40;
         $this->sizeY = ($this->lineHeight * $this->totalLines) + 5;
-
         $this->setSize($this->sizeX, ($this->lineHeight * $this->totalLines) + 5);
     }
 

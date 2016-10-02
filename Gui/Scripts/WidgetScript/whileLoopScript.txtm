@@ -11,12 +11,13 @@
 ?>
 
 if(!disablePersonalHud){
+
     //Check if persistent variables needs to be checked, or first loop
     if(exp_needToCheckPersistentVars || !eXp_firstPersistentCheckDone) {
 	exp_multipleCheckCount += 1;
 	eXp_firstPersistentCheckDone = True;
 
-	if(exp_multipleCheckCount > 10) {
+	if(exp_multipleCheckCount > 2) {
 	    exp_needToCheckPersistentVars = False;
 	    exp_multipleCheckCount = 0;
 	}
@@ -45,32 +46,24 @@ if(!disablePersonalHud){
 		    eXp_widgetLayers[version][id][gameMode] = activeLayer;
 	    }
 
-	    if (!eXp_widgetLastPos.existskey(version)) {
-		    eXp_widgetLastPos[version] = Vec3[Text][Text];
-	    }
+	   if (!eXp_widgetLastPosRel.existskey(version)) {
+       	    eXp_widgetLastPosRel[version] = Vec3[Text][Text];
+       }
 
-	    if (!eXp_widgetLastPos[version].existskey(id) || forceReset) {
-		    eXp_widgetLastPos[version][id] = Vec3[Text];
-	    }
-	    if (!eXp_widgetLastPos[version][id].existskey(gameMode) ) {
-		    eXp_widgetLastPos[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, -3.0>;
-	    }
+       if (!eXp_widgetLastPosRel[version].existskey(id) || forceReset) {
+           eXp_widgetLastPosRel[version][id] = Vec3[Text];
+       }
 
-	    if (!eXp_widgetLastPosRel.existskey(version)) {
-		    eXp_widgetLastPosRel[version] = Vec3[Text][Text];
-	    }
+       if (!eXp_widgetLastPosRel[version][id].existskey(gameMode)) {
+       	eXp_widgetLastPosRel[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, -3.0>;
+       }
 
-	    if (!eXp_widgetLastPosRel[version].existskey(id) || forceReset) {
-		eXp_widgetLastPosRel[version][id] = Vec3[Text];
-	    }
 
-	    if (!eXp_widgetLastPosRel[version][id].existskey(gameMode)) {
-		    eXp_widgetLastPosRel[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, -3.0>;
-	    }
-
-	 if (eXp_widgetVisible[version][id][gameMode] == True && eXp_widgetLayers[version][id][gameMode] == visibleLayerInit && exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode]) {
+    if (eXp_widgetVisible[version][id][gameMode] == True && eXp_widgetLayers[version][id][gameMode] == visibleLayerInit && exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode]) {
+	    if (!_isWindowHid) {
 	    Window.Show();
 	    exp_widgetCurrentVisible = True;
+	    }
 	} else if(exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode] || eXp_widgetLayers[version][id][gameMode] != activeLayer) {
 	    Window.Hide();
 	    exp_widgetCurrentVisible = False;
@@ -103,6 +96,7 @@ if(!disablePersonalHud){
 	yield;
 	continue;
     }
+
     if(PageIsVisible == False){
 	yield;
 	continue;
@@ -127,8 +121,7 @@ if(!disablePersonalHud){
 	    LastDelta += DeltaPos;
 	    LastDelta.Z = 0.0;
 	    Window.RelativePosition = LastDelta;
-	    eXp_widgetLastPos[version][id][gameMode] = Window.AbsolutePosition;
-	    eXp_widgetLastPosRel[version][id][gameMode] = Window.RelativePosition;
+        eXp_widgetLastPosRel[version][id][gameMode] = Window.RelativePosition;
 	    coordLabel.Value = roundFloat(Window.RelativePosition.X) ^ "x" ^ roundFloat(Window.RelativePosition.Y);
         coordInput.Value = coordLabel.Value;
 	    lastMouseX = MouseX;

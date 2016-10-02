@@ -13,23 +13,23 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets as WConfig;
 class Widget extends PlainWidget
 {
 
-    protected $move;
-    protected $_coord;
-    protected $_input;
-    protected $_save;
+    private $move;
+    private $_coord;
+    private $_input;
+    private $_save;
 
-    protected $axisDisabled = "";
-    protected $script;
-
-    /** @var Array */
-    protected $positions = array();
+    private $axisDisabled = "";
+    private $script;
 
     /** @var Array */
-    protected $widgetVisible = array();
-    protected $visibleLayerInit = "normal";
+    private $positions = array();
+
+    /** @var Array */
+    private $widgetVisible = array();
+    private $visibleLayerInit = "normal";
 
     /** @var \ManiaLive\Data\Storage */
-    protected $storage;
+    private $storage;
     private static $config;
     public $currentSettings = array();
 
@@ -68,6 +68,7 @@ class Widget extends PlainWidget
         $this->_save->setId("coordButton");
         $this->_save->setAttribute('hidden', "true");
         $this->_save->setAction($this->createAction(array($this, "_save")));
+        $this->_save->setScale(0.7);
         $this->addComponent($this->_save);
 
         $this->eXpOnEndConstruct();
@@ -183,7 +184,6 @@ class Widget extends PlainWidget
         $this->move->setSize($this->getSizeX(), $this->getSizeY());
         $this->_coord->setPosition($this->getSizeX() / 2, -$this->getSizeY() / 2);
         $this->_save->setPosition($this->getSizeX() / 2, -($this->getSizeY() / 2) - 5);
-        $this->_save->setScale(0.7);
     }
 
     protected function autoSetPositions()

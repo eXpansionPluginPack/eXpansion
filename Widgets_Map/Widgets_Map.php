@@ -24,7 +24,7 @@ class Widgets_Map extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function displayWidget($login)
     {
-        $info = Gui\Widgets\Map::Create(null);
+        $info = Gui\Widgets\Map::Create();
         $info->setSize(60, 15);
         $info->setScale(0.75);
         $info->show();

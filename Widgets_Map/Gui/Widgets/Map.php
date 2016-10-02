@@ -92,9 +92,4 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $window->show($login);
     }
 
-    public function destroy()
-    {
-        $this->destroyComponents();
-        parent::destroy();
-    }
 }

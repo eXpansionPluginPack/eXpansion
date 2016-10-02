@@ -9,7 +9,7 @@ foreach (Event in PendingEvents) {
     }
     if (Event.Type == CMlEvent::Type::KeyPress  && Event.KeyCode == 48) {
         exp_chatVisible = !exp_chatVisible;
-        ClientUI.OverlayHideChat = !exp_chatVisible;
+        ClientUI.OverlayHideChat = exp_chatVisible;
     }
 }
 

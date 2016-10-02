@@ -3,7 +3,7 @@
 #Include "MathLib" as MathLib
 #Include "AnimLib" as AnimLib
 
-// do not remvove, this is for animation and draggable libraries
+// do not remove, this is for animation and draggable libraries
 #Include "MathLib" as ML
 #Include "TextLib" as TL
 #Include "AnimLib" as AL
@@ -12,14 +12,26 @@
 <?php echo $this->scriptLib ?>
 
 main () {
+
      // external declares
      <?php echo $this->dDeclares ?>
 
      // external declares ends
      while(True) {
-	yield;
+        yield;
 
-	// external loop stuff
+
+
+
+     foreach (Event in PendingEvents) {
+           // @todo on F8 hide manialinks
+           if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 44) {
+
+                }
+           }
+
+
+       // external loop stuff
         <?php echo  $this->wLoop ?>
     }
 }

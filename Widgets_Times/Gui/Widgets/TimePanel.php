@@ -170,9 +170,4 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         parent::onDraw();
     }
 
-    public function destroy()
-    {
-        $this->destroyComponents();
-        parent::destroy();
-    }
 }

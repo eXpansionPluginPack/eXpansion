@@ -46,7 +46,6 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public function onResize($oldX, $oldY)
     {
-        parent::onResize($oldX, $oldY);
         switch ($this->direction) {
             case "left":
                 $this->bg->setSize(4, $this->sizeY);
@@ -70,6 +69,7 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
                 $this->lbl_title->setAttribute("rot", 0);
                 break;
         }
+        parent::onResize($oldX, $oldY);
     }
 
     /**

@@ -64,17 +64,6 @@ if (!eXp_widgetLayers[version][id].existskey(gameMode)) {
 	eXp_widgetLayers[version][id][gameMode] = activeLayer; 
 }
 
-if (!eXp_widgetLastPos.existskey(version)) {
-	eXp_widgetLastPos[version] = Vec3[Text][Text];
-}
-
-if (!eXp_widgetLastPos[version].existskey(id) || forceReset) {
-	eXp_widgetLastPos[version][id] = Vec3[Text];
-}
-if (!eXp_widgetLastPos[version][id].existskey(gameMode) ) {
-	eXp_widgetLastPos[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, -3.0>;
-}
-
 if (!eXp_widgetLastPosRel.existskey(version)) {
 	eXp_widgetLastPosRel[version] = Vec3[Text][Text];
 } 
@@ -88,8 +77,6 @@ if (!eXp_widgetLastPosRel[version][id].existskey(gameMode)) {
 }
 
 if(!disablePersonalHud){
-    Window.RelativePosition.X = eXp_widgetLastPos[version][id][gameMode][0];
-    Window.RelativePosition.Y = eXp_widgetLastPos[version][id][gameMode][1];
     LastDelta = eXp_widgetLastPosRel[version][id][gameMode];
     Window.RelativePosition = eXp_widgetLastPosRel[version][id][gameMode];
 
