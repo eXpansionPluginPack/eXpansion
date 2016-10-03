@@ -10,8 +10,6 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 {
     public static $me = null;
     public static $secondMap = false;
-    private $forceUpdate = false;
-    private $needUpdate = false;
     private $widgetIds = array();
     public static $raceOn;
     public static $roundPoints;
@@ -111,7 +109,6 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-
         self::$raceOn = false;
         $this->hideLivePanel();
     }
@@ -120,7 +117,6 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     {
         if ($wasWarmUp) {
             self::$raceOn = false;
-            $this->forceUpdate = true;
             $this->updateLivePanel();
             self::$secondMap = true;
             self::$raceOn = true;
@@ -152,7 +148,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
         $this->getRoundsPoints();
         self::$raceOn = false;
-        $this->forceUpdate = true;
+
         $this->hideLivePanel();
         $this->updateLivePanel();
         self::$secondMap = true;
@@ -166,7 +162,6 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         }
 
         self::$raceOn = false;
-        $this->forceUpdate = true;
         $this->hideLivePanel();
         $this->updateLivePanel();
         self::$secondMap = true;
@@ -189,7 +184,6 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function onPlayerConnect($login, $isSpectator)
     {
-
         $this->showLivePanel($login);
     }
 

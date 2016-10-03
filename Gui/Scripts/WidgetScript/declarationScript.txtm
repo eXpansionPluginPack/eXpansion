@@ -4,7 +4,7 @@ declare MoveWindow = False;
 declare CMlQuad quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);
 declare CMlLabel coordLabel <=> (Page.GetFirstChild("coordLabel") as CMlLabel);
 declare CMlLabel coordButton <=> (Page.GetFirstChild("coordButton") as CMlLabel);
-declare CMlEntry coordInput <=> (Page.GetFirstChild("coordinates") as CMlEntry);
+declare CMlEntry coordInput <=> (Page.GetFirstChild("coordLocation") as CMlEntry);
 
 
 declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, -3.0>;

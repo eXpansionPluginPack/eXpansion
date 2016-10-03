@@ -21,6 +21,7 @@
 namespace ManiaLivePlugins\eXpansion\Debugtool;
 
 use ManiaLive\Event\Dispatcher;
+use ManiaLivePlugins\eXpansion\Database\SettingsBag;
 
 /**
  * Description of Debugtool
@@ -35,7 +36,6 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function eXpOnReady()
     {
-        $this->enableDedicatedEvents();
         $this->enableDedicatedEvents();
         $this->registerChatCommand(
             "connect",
@@ -59,17 +59,9 @@ class Debugtool extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::get()
         );
         $this->mem(null);
-        $this->registerChatCommand("te", "team", 0, false);
 
-    }
 
-    public function team()
-    {
-        $outScores = [];
-        $outScores[] = array("PlayerId" => 0, "Score" => 1);
-        $outScores[] = array("PlayerId" => 1, "Score" => 2);
-
-        $this->connection->forceScores($outScores, false);
+        SettingsBag::getInstance()->set($this, "asd", "Value", null);
     }
 
     public function eXpOnUnload()

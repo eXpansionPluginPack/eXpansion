@@ -8,6 +8,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
+use ManiaLivePlugins\eXpansion\Database\SettingsBag;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 use Maniaplanet\DedicatedServer\Structures\ServerOptions;
@@ -289,6 +290,8 @@ EOT;
 
         //Started paralel download utility, thanks to xymph and other devs to have coded it. it rocks
         DataAccess::getInstance()->start();
+        // initialize settingsbag class
+        SettingsBag::getInstance();
     }
 
 

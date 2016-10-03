@@ -205,7 +205,7 @@ class Bets extends ExpPlugin
     }
 
     /**
-     *    this called when player accepts a bet
+     * this called when player accepts a bet
      *
      * @param \ManiaLivePlugins\eXpansion\Core\types\Bill $bill
      */

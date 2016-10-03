@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Gui\Widgets;
 
 use ManiaLib\Gui\Elements\Label;
+use ManiaLivePlugins\eXpansion\Database\SettingsBag;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Gui\Widgets as WConfig;
@@ -12,7 +13,6 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets as WConfig;
  */
 class Widget extends PlainWidget
 {
-
     private $move;
     private $_coord;
     private $_input;
@@ -42,10 +42,12 @@ class Widget extends PlainWidget
         $this->registerScript($this->script);
 
         $this->move = new \ManiaLib\Gui\Elements\Quad(45, 7);
-        $this->move->setStyle("Icons128x128_1");
-        $this->move->setSubStyle("ShareBlink");
+        $this->move->setStyle("Bgs1");
+        $this->move->setSubStyle("BgTitle");
+        $this->move->setOpacity(0.8);
         $this->move->setScriptEvents();
         $this->move->setId("enableMove");
+        $this->move->setPosZ(3);
         $this->addComponent($this->move);
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
@@ -54,10 +56,12 @@ class Widget extends PlainWidget
         $this->_coord->setAlign("center", "center");
         $this->_coord->setId("coordLabel");
         $this->_coord->setAttribute('hidden', "true");
+        $this->_coord->setPosZ(3);
         $this->addComponent($this->_coord);
 
-        $this->_input = new Inputbox("coordinates");
-        $this->_input->setPosition(900,900);
+        $this->_input = new Inputbox("location");
+        $this->_input->setId('coordLocation');
+        $this->_input->setPosition(900, 900);
         $this->addComponent($this->_input);
 
         $this->_save = new Label();
@@ -68,16 +72,27 @@ class Widget extends PlainWidget
         $this->_save->setAttribute('hidden', "true");
         $this->_save->setAction($this->createAction(array($this, "_save")));
         $this->_save->setScale(0.7);
+        $this->_save->setPosZ(3);
         $this->addComponent($this->_save);
 
         $this->eXpOnEndConstruct();
+
+
+
         $this->eXpLoadSettings();
+
+
+
     }
 
     public function _save($login, $entries)
     {
         echo $login . "\n";
-        print_r($entries);
+        $location = explode("x", $entries['location']);
+
+        $bag = SettingsBag::getInstance();
+        $bag->set($this, "location", $location, $login);
+
     }
 
 
