@@ -38,7 +38,10 @@ class Widget extends PlainWidget
         parent::onConstruct();
         $this->eXpOnBeginConstruct();
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WidgetScript");
-        $this->script->setParam('disablePersonalHud', \ManiaLivePlugins\eXpansion\Gui\Config::getInstance()->disablePersonalHud ? 'True' : 'False');
+        $this->script->setParam(
+            'disablePersonalHud',
+            \ManiaLivePlugins\eXpansion\Gui\Config::getInstance()->disablePersonalHud ? 'True' : 'False'
+        );
         $this->registerScript($this->script);
 
         $this->move = new \ManiaLib\Gui\Elements\Quad(45, 7);
@@ -57,7 +60,7 @@ class Widget extends PlainWidget
         $this->addComponent($this->_coord);
 
         $this->_input = new Inputbox("coordinates");
-        $this->_input->setPosition(900,900);
+        $this->_input->setPosition(900, 900);
         $this->addComponent($this->_input);
 
         $this->_save = new Label();

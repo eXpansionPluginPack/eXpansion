@@ -33,7 +33,6 @@ use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use ManiaLivePlugins\eXpansion\Notifications\Gui\Controls\ItemPlugin;
 use ManiaLivePlugins\eXpansion\Notifications\MetaData;
 
-
 class ConfPluginList extends Window
 {
 

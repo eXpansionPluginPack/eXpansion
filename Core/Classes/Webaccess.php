@@ -117,8 +117,7 @@ class Webaccess
         $waittimeout = 5,
         $agent = 'XMLaccess',
         $mimeType = "text/html"
-    )
-    {
+    ) {
         global $_web_access_keepalive;
         global $_web_access_keepalive_timeout;
         global $_web_access_keepalive_max;
@@ -380,8 +379,7 @@ class WebaccessUrl
         $keepalive_max = 300,
         $agent = 'XMLaccess',
         $mimeType = "text/html"
-    )
-    {
+    ) {
         global $_web_access_compress_xmlrpc_request;
         global $_web_access_retry_timeout;
         $this->wa = &$wa;

@@ -12,4 +12,3 @@ class CombiPanel2 extends PlainPanel
         $this->timeScript->setParam('varName', 'CombiTime2');
     }
 }
-

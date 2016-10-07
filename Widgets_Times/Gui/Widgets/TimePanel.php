@@ -169,5 +169,4 @@ class TimePanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
         parent::onDraw();
     }
-
 }

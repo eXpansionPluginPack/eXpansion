@@ -8,7 +8,6 @@ use ManiaLive\Gui\Container;
 use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 
-
 class Recorditem extends Control
 {
 

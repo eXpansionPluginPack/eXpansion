@@ -43,7 +43,6 @@ use Maniaplanet\DedicatedServer\Structures\Version;
 use ManiaLive\Database\Connection as DbConnection;
 use Maniaplanet\DedicatedServer\Xmlrpc\IndexOutOfBoundException;
 
-
 class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerListener
 {
 

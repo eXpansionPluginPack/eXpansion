@@ -926,8 +926,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public static function addPermissionTitleMessage(
         $permissionName,
         \ManiaLivePlugins\eXpansion\Core\I18n\Message $msg
-    )
-    {
+    ) {
         self::$txt_permissions[$permissionName] = $msg;
     }
 

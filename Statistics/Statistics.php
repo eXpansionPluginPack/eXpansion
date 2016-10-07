@@ -8,7 +8,9 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function eXpOnInit()
     {
         //The Database plugin is needed.
-        $this->addDependency(new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Database\\Database"));
+        $this->addDependency(
+            new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Database\\Database")
+        );
     }
 
     public function eXpOnReady()
@@ -71,12 +73,14 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function showTopIncome($login)
     {
 
-        if (!empty($this->donateConfig->toLogin))
+        if (!empty($this->donateConfig->toLogin)) {
             $toLogin = $this->donateConfig->toLogin;
-        else
+        } else {
             $toLogin = $this->storage->serverLogin;
+        }
 
-        $sql = 'SELECT transaction_plugin as plugin, transaction_subject as subject, SUM(transaction_amount) as totalPlanets'
+        $sql = 'SELECT transaction_plugin as plugin, transaction_subject as subject, '
+            .'SUM(transaction_amount) as totalPlanets'
             . ' FROM exp_planet_transaction'
             . ' WHERE transaction_toLogin = ' . $this->db->quote($toLogin)
             . ' GROUP BY transaction_plugin, transaction_subject'
@@ -98,7 +102,8 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
 
         $this->storage->serverLogin;
-        $sql = 'SELECT transaction_fromLogin as login, player_nickname as nickname, SUM(transaction_amount) as totalPlanets'
+        $sql = 'SELECT transaction_fromLogin as login, player_nickname as nickname, '
+            .'SUM(transaction_amount) as totalPlanets'
             . ' FROM exp_planet_transaction, exp_players'
             . ' WHERE transaction_subject = \'server_donation\''
             . ' AND transaction_fromLogin = player_login'
@@ -121,7 +126,8 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
 
         $this->storage->serverLogin;
-        $sql = 'SELECT transaction_fromLogin as login, player_nickname as nickname, SUM(transaction_amount) as totalPlanets'
+        $sql = 'SELECT transaction_fromLogin as login, player_nickname as nickname, '
+            .'SUM(transaction_amount) as totalPlanets'
             . ' FROM exp_planet_transaction, exp_players'
             . ' WHERE transaction_toLogin = ' . $this->db->quote($this->storage->serverLogin) . ''
             . ' AND transaction_subject = \'server_donation\''
@@ -233,7 +239,8 @@ class Statistics extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
 
         $this->storage->serverLogin;
-        $sql = 'SELECT player_login as login, player_nickname as nickname, SUM(record_nbFinish * record_avgScore)/1000 as time'
+        $sql = 'SELECT player_login as login, player_nickname as nickname, '
+            .'SUM(record_nbFinish * record_avgScore)/1000 as time'
             . ' FROM exp_records, exp_players'
             . ' WHERE record_playerlogin = player_login'
             . '	AND record_nbFinish > 0'

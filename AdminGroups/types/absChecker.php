@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\types;
+
 use ManiaLib\Utils\Singleton;
 
 /**

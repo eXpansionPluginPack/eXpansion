@@ -5,7 +5,6 @@ namespace ManiaLivePlugins\eXpansion\Widgets_ResSkip;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\SortedList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 
-
 /**
  * Description of MetaData
  *

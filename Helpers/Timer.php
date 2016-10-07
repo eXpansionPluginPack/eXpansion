@@ -18,13 +18,13 @@ class Timer
 
     public static $time;
 
-    static public function set()
+    public static function set()
     {
         self::$time = -microtime(true);
         Cnsole::println("Profiler timer started.");
     }
 
-    static public function get()
+    public static function get()
     {
         if (empty(self::$time)) {
             self::set();
@@ -35,7 +35,7 @@ class Timer
         }
     }
 
-    static public function startNewTimer($message, $print = true, $log = true)
+    public static function startNewTimer($message, $print = true, $log = true)
     {
         $id = self::$nbTimers++;
         self::$times[$id] = microtime();
@@ -49,7 +49,7 @@ class Timer
         return $id;
     }
 
-    static public function endTimer($id, $message, $print = true, $log = true)
+    public static function endTimer($id, $message, $print = true, $log = true)
     {
         if (isset(self::$times[$id])) {
             $time = microtime() - self::$times[$id];

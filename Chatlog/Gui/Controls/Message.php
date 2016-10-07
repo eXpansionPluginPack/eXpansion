@@ -26,8 +26,7 @@ class Message extends \ManiaLivePlugins\eXpansion\Gui\Control
         \ManiaLivePlugins\eXpansion\Chatlog\Structures\ChatMessage $message,
         $widths,
         $sizeX
-    )
-    {
+    ) {
         $sizeY = 6;
         $this->widths = $widths;
 

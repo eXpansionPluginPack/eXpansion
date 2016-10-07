@@ -425,7 +425,8 @@ abstract class MetaData
      *
      * @return array
      */
-    public function getIncompatiblePlugins() {
+    public function getIncompatiblePlugins()
+    {
         return $this->incompatiblePlugins;
     }
 

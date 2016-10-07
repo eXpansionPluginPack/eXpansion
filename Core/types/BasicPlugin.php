@@ -203,7 +203,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * $this->enableScriptEvents("LibXmlRpc_OnStunt");
          * $this->enableScriptEvents(array("LibXmlRpc_OnStunt", "LibXmlRpc_OnWaypoint"));
          *
-         * @param string|array $callback this can be either one callback or array of callbacks
+         * @param boolean|string|array $callback this can be either one callback or array of callbacks
          *
          * @throws Exception
          */
@@ -417,8 +417,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         /**
          * Sends a chat message to the server or redirect to another plugin
          *
-         * @param type $msg The message
-         * @param type $login The login to whom it needs to be sent
+         * @param string $msg The message
+         * @param string $login The login to whom it needs to be sent
          */
         private function eXpRedirectedChatSendServerMessage($msg, $login)
         {
@@ -640,8 +640,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             $msg,
             $callback = array(),
             $params = array()
-        )
-        {
+        ) {
             $bill = new Bill($source_login, $destination_login, $amount, $msg);
             self::$eXpBillManager->sendBill($bill);
             $bill->setValidationCallback($callback, $params);
@@ -679,7 +678,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
         /**
          *
-         * @param type $scriptName
+         * @param string $scriptName
          *
          * @return int The gamemode which is compatible with the script. 0 if none
          */
@@ -786,7 +785,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
         /**
          * Returns player object from given playerId
          *
-         * @param mix $id
+         * @param mixed $id
          *
          * @return Player
          *

@@ -93,13 +93,13 @@ r.score as record_avgScore
 FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;",
             $this->conn
         );
-        while ($xaseco_recs[] = mysql_fetch_object($records)) ;
+        while ($xaseco_recs[] = mysql_fetch_object($records));
         unset($records);
         $this->query("USE " . $this->config['exp_db'] . ";", $this->conn);
 
 
         $mplayers = $this->query("SELECT * FROM exp_players p;", $this->conn);
-        while ($exp_players[] = mysql_fetch_assoc($mplayers)) ;
+        while ($exp_players[] = mysql_fetch_assoc($mplayers));
 
         $total = count($xaseco_recs);
         $x = 1;
@@ -153,7 +153,7 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;",
             $this->conn
         );
 
-        while ($xaseco_players[] = mysql_fetch_object($xplayers)) ;
+        while ($xaseco_players[] = mysql_fetch_object($xplayers));
         unset($xplayer);
 
         $this->query("USE " . $this->config['exp_db'] . ";", $this->conn);
@@ -207,7 +207,7 @@ FROM maps c, players p, records r where r.Playerid = p.id and r.mapid = c.id;",
 where r.Playerid = p.id and r.MapId = c.id;",
             $this->conn
         );
-        while ($xaseco_karma[] = mysql_fetch_object($xkarma)) ;
+        while ($xaseco_karma[] = mysql_fetch_object($xkarma));
         unset($xkarma);
         $this->query("USE " . $this->config['exp_db'] . ";", $this->conn);
 
@@ -273,7 +273,7 @@ WHERE r.Playerid = p.id
 AND Donations >0;",
             $this->conn
         );
-        while ($xaseco_dons[] = mysql_fetch_object($xdons)) ;
+        while ($xaseco_dons[] = mysql_fetch_object($xdons));
         unset($xdons);
         $this->query("USE " . $this->config['exp_db'] . ";", $this->conn);
         $total = count($xaseco_dons);

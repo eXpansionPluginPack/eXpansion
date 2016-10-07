@@ -180,7 +180,7 @@ class Helper
             }
         }
 
-        $start = sizeof($info) - 1;;
+        $start = sizeof($info) - 1;
 
         $stop = $start - $nbDetails;
         if ($stop < 0) {

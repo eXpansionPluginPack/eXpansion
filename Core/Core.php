@@ -563,7 +563,7 @@ EOT;
     /**
      * Fixes error message on chat command /serverlogin
      *
-     * @param type $login
+     * @param strin $login
      */
     public function serverlogin($login)
     {
@@ -650,9 +650,9 @@ EOT;
     /**
      * Compares the values  in 2 objects recursively.
      *
-     * @param       $obj1       First object
-     * @param       $obj2       Object to compare with
-     * @param array $ignoreList Keys to ignore while comparing
+     * @param object $obj1       First object
+     * @param object $obj2       Object to compare with
+     * @param array  $ignoreList Keys to ignore while comparing
      *
      * @return array List keys that has a different value. this is an array that has the same structure
      *               as the objects that were compared
@@ -694,8 +694,7 @@ EOT;
         \Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings,
         \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings,
         $changes
-    )
-    {
+    ) {
         $this->saveMatchSettings();
     }
 
@@ -822,8 +821,8 @@ EOT;
      * We have already done what needs to be done on game mode change
      * Just show a notification
      *
-     * @param $oldGameMode the old game mode
-     * @param $newGameMode the new game mode
+     * @param mixed $oldGameMode the old game mode
+     * @param mixed $newGameMode the new game mode
      */
     public function onGameModeChange($oldGameMode, $newGameMode)
     {
@@ -833,7 +832,7 @@ EOT;
     /**
      * Show a notification message in the console
      *
-     * @param $message the message to show
+     * @param string $message the message to show
      */
     private function showNotice($message)
     {

@@ -50,7 +50,9 @@ class LocalRecords extends LocalBase
 
             //If laps mode we need to ignore. Laps has it's own end map event(end finish lap)
             //Laps mode has it own on Player finish event
-            if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS && $this->config->lapsModeCount1lap) {
+            if ($gamemode == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_LAPS
+                && $this->config->lapsModeCount1lap
+            ) {
                 return;
             }
 

@@ -12,7 +12,6 @@ use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\Events\ConfigLoadEvent;
 use ManiaLivePlugins\eXpansion\Core\types\config\MetaData as MetaDataType;
 
-
 class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
     /**
@@ -62,7 +61,16 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->config = $config;
 
             //List of plugins that must be loaded always !!
-            $this->plugins = array('\ManiaLivePlugins\eXpansion\Core\Core', '\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups', '\ManiaLivePlugins\eXpansion\AutoUpdate\AutoUpdate', '\ManiaLivePlugins\eXpansion\ChatAdmin\ChatAdmin', '\ManiaLivePlugins\eXpansion\Gui\Gui', '\ManiaLivePlugins\eXpansion\Adm\Adm', '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad', '\ManiaLivePlugins\eXpansion\Database\Database');
+            $this->plugins = array(
+                '\ManiaLivePlugins\eXpansion\Core\Core',
+                '\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups',
+                '\ManiaLivePlugins\eXpansion\AutoUpdate\AutoUpdate',
+                '\ManiaLivePlugins\eXpansion\ChatAdmin\ChatAdmin',
+                '\ManiaLivePlugins\eXpansion\Gui\Gui',
+                '\ManiaLivePlugins\eXpansion\Adm\Adm',
+                '\ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad',
+                '\ManiaLivePlugins\eXpansion\Database\Database'
+            );
 
             $this->findAvailablePlugins();
 
@@ -76,11 +84,19 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         } catch (\exception $ex) {
             $this->console("[AutoLoad] Error while loading Core plugins!" . $ex->getMessage());
-            AdminGroups::getInstance()->announceToPermission('[AutoLoad] Error while starting expansion core. See console for more info.', Permission::SERVER_ADMIN);
+            AdminGroups::getInstance()
+                ->announceToPermission(
+                    '[AutoLoad] Error while starting expansion core. See console for more info.',
+                    Permission::SERVER_ADMIN
+                );
         }
 
         // do event to inform autoload is complete;
-        Dispatcher::dispatch(new \ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent(\ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent::ON_AUTOLOAD_COMPLETE));
+        Dispatcher::dispatch(
+            new \ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent(
+                \ManiaLivePlugins\eXpansion\Core\Events\GlobalEvent::ON_AUTOLOAD_COMPLETE
+            )
+        );
     }
 
     /**
@@ -118,7 +134,11 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->autoLoadPlugins($this->config->plugins, $pHandler);
         } catch (\exception $ex) {
             $this->console("[AutoLoad] Error while AutoLoading additional plugins!" . $ex->getMessage());
-            AdminGroups::getInstance()->announceToPermission('[AutoLoad] Error while starting optional plugins. See console for more info.', Permission::SERVER_ADMIN);
+            AdminGroups::getInstance()
+                ->announceToPermission(
+                    '[AutoLoad] Error while starting optional plugins. See console for more info.',
+                    Permission::SERVER_ADMIN
+                );
         }
 
         $this->autoLoadPlugins(array('\\ManiaLivePlugins\\eXpansion\\Menu\\Menu'), $pHandler);
@@ -201,7 +221,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         //First attempt to load plugins
         $recheck = $this->loadPlugins($plugins, $pHandler);
 
-        // New attempts to load plugins. If the list of plugins that needs checking don't change 
+        // New attempts to load plugins. If the list of plugins that needs checking don't change
         // it means we can't resolve the remaining dependencies.
         do {
             $lastSize = sizeof($recheck);
@@ -214,9 +234,13 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         //If all plugins couldn't be loaded
         if (!empty($recheck)) {
-            //$this->dumpException("Couldn't Autoload all required plugins", new \Maniaplanet\WebServices\Exception("Autoload failed."));
-            $this->eXpChatSendServerMessage("couldn't Autoload all required plugins, see console log for more details.");
-            $this->console("Not all required plugins were loaded, due to unmet dependencies or errors. list of not loaded plugins: ");
+            $this->eXpChatSendServerMessage(
+                "couldn't Autoload all required plugins, see console log for more details."
+            );
+            $this->console(
+                "Not all required plugins were loaded, "
+                ."due to unmet dependencies or errors. list of not loaded plugins: "
+            );
             foreach ($recheck as $pname) {
                 $this->console($pname);
                 $this->connection->chatSendServerMessage('Starting ' . $pname . '........$f00 Failure');
@@ -287,9 +311,12 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     self::$allAvailablePlugins[$pname] = $metaData;
 
                     if (!$metaData->checkForPluginIncompatibility($pHandler->getLoadedPluginsList())) {
-                        $this->console("[" . $pname . "]...Disabled -> Not Compatible : either can't run with a certain plugin or a loaded plugin can't with this plugin");
+                        $this->console(
+                            "[" . $pname . "]...Disabled -> Not Compatible : either can't run with a certain plugin "
+                            ."or a loaded plugin can't with this plugin"
+                        );
                         return false;
-                    } else if ($metaData->checkAll()) {
+                    } elseif ($metaData->checkAll()) {
                         try {
                             $status = $pHandler->load($pname, false);
                         } catch (\Exception $ex) {
@@ -339,7 +366,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if ($this->isInStartList($pluginId) || $pHandler->isLoaded($pluginId)) {
             if (in_array($pluginId, $this->plugins)) {
-                $this->eXpChatSendServerMessage("#admin_error#This plugin is a core element of eXpansion. It can't be unloaded", $login);
+                $this->eXpChatSendServerMessage(
+                    "#admin_error#This plugin is a core element of eXpansion. It can't be unloaded",
+                    $login
+                );
             } else {
                 $pos = array_search($pluginId, Config::getInstance()->plugins);
                 if ($pos !== false) {
@@ -356,7 +386,10 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if ($this->autoLoadPlugins(array($pluginId), $pHandler)) {
                 $this->eXpChatSendServerMessage("#admin_action#Plugin started with success", $login);
             } else {
-                $this->eXpChatSendServerMessage("#admin_error#This plugin contains errors that prevented it from starting", $login);
+                $this->eXpChatSendServerMessage(
+                    "#admin_error#This plugin contains errors that prevented it from starting",
+                    $login
+                );
             }
 
             $this->config->plugins[] = $pluginId;

@@ -10,7 +10,6 @@ use ManiaLivePlugins\eXpansion\Quiz\Gui\Windows\HiddenQuestionWindow;
 use ManiaLivePlugins\eXpansion\Quiz\Gui\Windows\QuestionWindow;
 use ManiaLivePlugins\eXpansion\Quiz\Structures\Question;
 
-
 class Quiz extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
 

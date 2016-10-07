@@ -12,4 +12,3 @@ class DediPanel2 extends PlainPanel
         $this->timeScript->setParam('varName', 'DediTime2');
     }
 }
-

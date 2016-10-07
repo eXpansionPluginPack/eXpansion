@@ -5,7 +5,6 @@ namespace ManiaLivePlugins\eXpansion\Widgets_LocalScores\Gui\Controls;
 use ManiaLivePlugins\eXpansion\LocalRecords\Structures\Record;
 use ManiaLivePlugins\eXpansion\Widgets_Record\Config;
 
-
 class Recorditem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
 

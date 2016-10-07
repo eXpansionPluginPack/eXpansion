@@ -317,7 +317,9 @@ abstract class Variable
                     Console::println("error on settings change!" . $ex->getMessage());
                 }
 
-                Dispatcher::dispatch(new PluginSettingChange(PluginSettingChange::ON_SETTINGS_CHANGE, $this->pluginId, $this));
+                Dispatcher::dispatch(
+                    new PluginSettingChange(PluginSettingChange::ON_SETTINGS_CHANGE, $this->pluginId, $this)
+                );
             }
         } else {
             $this->value = $value;
@@ -375,5 +377,5 @@ abstract class Variable
         return false;
     }
 
-    public abstract function getPreviewValues();
+    abstract public function getPreviewValues();
 }

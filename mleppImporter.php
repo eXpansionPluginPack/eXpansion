@@ -183,7 +183,7 @@ class Mimporter
         $query1 = $this->query("SELECT $select FROM $tableName1", $this->conn);
         echo "SELECT $select FROM $tableName1\n\n";
 
-        while ($data1[] = mysql_fetch_array($query1)) ;
+        while ($data1[] = mysql_fetch_array($query1));
 
         $i = 0;
         $columns = implode(', ', array_values($map));

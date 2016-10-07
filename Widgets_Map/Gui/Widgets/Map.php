@@ -91,5 +91,4 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $window->setSize(160, 90);
         $window->show($login);
     }
-
 }
