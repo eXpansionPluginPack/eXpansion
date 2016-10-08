@@ -28,6 +28,7 @@ use ManiaLive\Data\Player;
 use ManiaLive\DedicatedApi\Callback\base64;
 use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
 use ManiaLive\DedicatedApi\Callback\Listener as ServerListener;
+use ManiaLive\Application\Listener as AppListener;
 use ManiaLive\DedicatedApi\Callback\SMapInfo;
 use ManiaLive\DedicatedApi\Callback\SPlayerInfo;
 use ManiaLive\DedicatedApi\Callback\SPlayerRanking;
@@ -43,7 +44,8 @@ use Maniaplanet\DedicatedServer\Structures\Version;
 use ManiaLive\Database\Connection as DbConnection;
 use Maniaplanet\DedicatedServer\Xmlrpc\IndexOutOfBoundException;
 
-class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerListener
+
+class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerListener, AppListener
 {
 
     /**  for testing stuff */
@@ -151,13 +153,7 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_DISCONNECT);
         Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_INFO_CHANGED);
         Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_BEGIN_MAP);
-        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_END_MAP);
-        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_BEGIN_ROUND);
-        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_END_ROUND);
-        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_BEGIN_MATCH);
-        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_END_MATCH);
-        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_CHECKPOINT);
-        Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_FINISH);
+        Dispatcher::register(\ManiaLive\Application\Event::getClass(), $this, \ManiaLive\Application\Event::ON_PRE_LOOP);
 
         $this->connection = Singletons::getInstance()->getDediConnection();
 
@@ -389,6 +385,7 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         return $this->currentRankings;
     }
 
+
     /**
      * Method called when a Player chat on the server
      *
@@ -448,8 +445,6 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onBeginMatch()
     {
-        // Reset current rankings
-        $this->currentRankings = array();
     }
 
     /**
@@ -475,8 +470,6 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
-        // Reset current rankings
-        $this->currentRankings = array();
     }
 
     /**
@@ -490,8 +483,6 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
-        // Reset current rankings
-        $this->currentRankings = array();
     }
 
     /**
@@ -499,8 +490,6 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onBeginRound()
     {
-        // Reset current rankings
-        $this->currentRankings = array();
     }
 
     /**
@@ -508,8 +497,6 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onEndRound()
     {
-        // Reset current rankings
-        $this->currentRankings = array();
     }
 
     /**
@@ -534,8 +521,6 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onPlayerCheckpoint($playerUid, $login, $timeOrScore, $curLap, $checkpointIndex)
     {
-        // Reset current rankings
-        $this->currentRankings = array();
     }
 
     /**
@@ -547,8 +532,6 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
      */
     public function onPlayerFinish($playerUid, $login, $timeOrScore)
     {
-        // Reset current rankings
-        $this->currentRankings = array();
     }
 
     /**
@@ -658,5 +641,27 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
             $config->type,
             $config->port
         );
+    }
+
+    function onInit()
+    {
+    }
+
+    function onRun()
+    {
+    }
+
+    function onPreLoop()
+    {
+        // Reset current rankings
+        $this->currentRankings = array();
+    }
+
+    function onPostLoop()
+    {
+    }
+
+    function onTerminate()
+    {
     }
 }
