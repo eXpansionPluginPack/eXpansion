@@ -157,7 +157,7 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 
         $this->connection = Singletons::getInstance()->getDediConnection();
 
-        $this->relay = RelayLink::getInstance();
+//        $this->relay = RelayLink::getInstance();
 
         $this->storage = \ManiaLive\Data\Storage::getInstance();
 

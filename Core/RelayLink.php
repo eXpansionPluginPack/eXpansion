@@ -50,7 +50,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
             $this->storage->currentMap->playerModel = $infoNext->playerModel;
         } catch (\Exception $e) {
             Helper::log("error while reading map: " . $dir . DIRECTORY_SEPARATOR . $this->storage->currentMap->fileName, array('eXpansion', 'Core', 'RelayLink'));
-            Helper::log("mapreader said: " . $e->getMesage(), array('eXpansion', 'Core', 'RelayLink'));
+            Helper::log("mapreader said: " . $e->getMessage(), array('eXpansion', 'Core', 'RelayLink'));
         }
     }
 
