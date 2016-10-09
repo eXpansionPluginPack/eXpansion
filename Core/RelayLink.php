@@ -36,18 +36,21 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
     public function syncCarData()
     {
+        $dir = $this->connection->getMapsDirectory();
         try {
+
             $gbxMap = new \ManiaLivePlugins\eXpansion\Helpers\GbxReader\Map();
             $infoCurrent = $gbxMap->read(
-                $this->connection->getMapsDirectory() . DIRECTORY_SEPARATOR . $this->storage->currentMap->fileName
+                $dir . DIRECTORY_SEPARATOR . $this->storage->currentMap->fileName
             );
             $this->storage->currentMap->playerModel = $infoCurrent->playerModel;
             $infoNext = $gbxMap->read(
-                $this->connection->getMapsDirectory() . DIRECTORY_SEPARATOR . $this->storage->nextMap->fileName
+                $dir . DIRECTORY_SEPARATOR . $this->storage->nextMap->fileName
             );
             $this->storage->currentMap->playerModel = $infoNext->playerModel;
         } catch (\Exception $e) {
-            Helper::log("error while reading mapData " . $e->getMessage(), array('eXpansion', 'Core', 'RelayLink'));
+            Helper::log("error while reading map: " . $dir . DIRECTORY_SEPARATOR . $this->storage->currentMap->fileName, array('eXpansion', 'Core', 'RelayLink'));
+            Helper::log("mapreader said: " . $e->getMesage(), array('eXpansion', 'Core', 'RelayLink'));
         }
     }
 
@@ -61,6 +64,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
     public function queryMaster($method, $value, $callback)
     {
+
     }
 
     public function queryRelay($method, $data, $callback)

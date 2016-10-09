@@ -445,8 +445,8 @@ class ManiaExchange extends ExpPlugin
         $this->connection
             ->callVote(
                 $vote,
-                $this->config->mxVote_ratio,
-                ($this->config->mxVote_timeout * 1000),
+                $this->config->mxVote_ratios,
+                ($this->config->mxVote_timeouts * 1000),
                 $this->config->mxVote_voters
             );
     }
