@@ -13,3 +13,6 @@ File d'attente
 #music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s
 #music#Prochaine chanson: $z$s#variable# %1$s #music#by#variable# %2$s
 
+MusicBox error http-code: %s
+#translate# MusicBox error http-code: %s
+

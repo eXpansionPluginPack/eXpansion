@@ -16,3 +16,9 @@ Sélectionner un jouer pour envoyer un message
 #personalmessage#Usage /pm [login] your personal message here
 #personalmessage#Utilisation /pm [login] votre message personnalisé
 
+#personalmessage#Player with login  is not found at server!
+#translate# #personalmessage#Player with login  is not found at server!
+
+#personalmessage#You can
+#translate# #personalmessage#You can
+

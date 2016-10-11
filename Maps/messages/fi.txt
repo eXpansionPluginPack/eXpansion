@@ -202,3 +202,39 @@ Poistaa nykyisen kartan karttalistalta.
 #admin_error#Can't continue, since this instance of eXpansion is running remote agains the server
 #admin_error#Ei voitu jatkaa, tämä eXpansion-instanssi on etäkäytössä palvelimeen nähden
 
+Map Info
+#translate# Map Info
+
+Show Records
+#translate# Show Records
+
+$F22Remove this map from server
+#translate# $F22Remove this map from server
+
+Map %s $z$s$fffadded to playlist.
+#translate# Map %s $z$s$fffadded to playlist.
+
+#admin_error#This instance of eXpansion is runnin remotelly! Can%s, $this->getRecipient(
+#translate# #admin_error#This instance of eXpansion is runnin remotelly! Can%s, $this->getRecipient(
+
+File  deleted from filesystem!
+#translate# File  deleted from filesystem!
+
+$f00$oError $z$s$fff%s
+#translate# $f00$oError $z$s$fff%s
+
+Maps on server
+#translate# Maps on server
+
+History of Maps
+#translate# History of Maps
+
+Error:
+#translate# Error:
+
+Adds previous map back to the Jukebox.
+#translate# Adds previous map back to the Jukebox.
+
+#admin_error# $iThere are no previously played challenge!
+#translate# #admin_error# $iThere are no previously played challenge!
+

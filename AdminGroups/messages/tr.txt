@@ -103,3 +103,6 @@ Permission_
 Select
 #translate# Select
 
+#admin_error#
+#translate# #admin_error#
+

@@ -64,3 +64,57 @@ Ban List
 Black List
 #translate# Black List
 
+Ignore player %1$s 
+#translate# Ignore player %1$s 
+
+UnIgnore player %1$s 
+#translate# UnIgnore player %1$s 
+
+Kick player %1$s 
+#translate# Kick player %1$s 
+
+Ban player %1$s 
+#translate# Ban player %1$s 
+
+Blacklist player %1$s 
+#translate# Blacklist player %1$s 
+
+Force %1$s to play
+#translate# Force %1$s to play
+
+Add to guest list
+#translate# Add to guest list
+
+Force %1$s to spectate
+#translate# Force %1$s to spectate
+
+Ignore player
+#translate# Ignore player
+
+UnIgnore player
+#translate# UnIgnore player
+
+Kick player
+#translate# Kick player
+
+Ban player
+#translate# Ban player
+
+Blacklist player
+#translate# Blacklist player
+
+Force to play
+#translate# Force to play
+
+Force to spectate
+#translate# Force to spectate
+
+%s$z$s$fff was ignored by admin %s
+#translate# %s$z$s$fff was ignored by admin %s
+
+%s$z$s$fff was unignored by admin %s
+#translate# %s$z$s$fff was unignored by admin %s
+
+Admin has forced you to specate!
+#translate# Admin has forced you to specate!
+

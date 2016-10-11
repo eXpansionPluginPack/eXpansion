@@ -13,3 +13,12 @@ Audio: desactive
 Audio: on
 Audio: Actif
 
+#error# is not a numeric value!
+#translate# #error# is not a numeric value!
+
+#error# is less than 1!
+#translate# #error# is less than 1!
+
+#info#New time reference point set to %s
+#translate# #info#New time reference point set to %s
+

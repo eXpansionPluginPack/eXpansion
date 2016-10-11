@@ -16,3 +16,9 @@ Select Player to send message
 #personalmessage#Usage /pm [login] your personal message here
 #personalmessage#Usage /pm [login] your personal message here
 
+#personalmessage#Player with login  is not found at server!
+#personalmessage#Player with login  is not found at server!
+
+#personalmessage#You can
+#personalmessage#You can
+

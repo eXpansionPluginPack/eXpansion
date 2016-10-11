@@ -1,4 +1,4 @@
-#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+﻿#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 #variable#%1$s  #record#varmistaa #rank#%2$s#record#.sijan parantaen aikaansa! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 
 #variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #time#%3$s
@@ -88,3 +88,17 @@ Checkpoint ajat
 Cps
 Cps
 
+Records on a Map
+Kartan Tulokset
+
+Server Ranks
+Palvelimen rankit
+
+CheckPoints on Map
+Checkpointit kartassa
+
+Sector Times on Map
+Sektoriajat kartassa
+
+Login
+Login

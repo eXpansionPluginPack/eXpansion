@@ -61,3 +61,9 @@ The Map is not compatible with current server settings, map not added.
 Map is not compatible with current server settings, map not added.
 #translate# Map is not compatible with current server settings, map not added.
 
+$iYou don't have permission to do that!
+#translate# $iYou don't have permission to do that!
+
+ is not a numeric value.
+#translate#  is not a numeric value.
+

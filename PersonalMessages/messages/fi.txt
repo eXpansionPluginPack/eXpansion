@@ -16,3 +16,9 @@ Valitse pelaaja lähettääksesi
 #personalmessage#Usage /pm [login] your personal message here
 #personalmessage#Käyttö /pm [login] yksityisviesti tähän
 
+#personalmessage#Player with login  is not found at server!
+#translate# #personalmessage#Player with login  is not found at server!
+
+#personalmessage#You can
+#translate# #personalmessage#You can
+

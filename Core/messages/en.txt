@@ -24,3 +24,37 @@ Settings are now saved!
 
 Close
 Close
+
+Load
+Load
+
+Wiil load this configuration into current one
+Wiil load this configuration into current one
+
+Will save current configuration
+Will save current configuration
+
+Choose
+Choose
+
+Will load this configuration and use it
+Will load this configuration and use it
+
+Change
+Change
+
+Allows you to edit values
+Allows you to edit values
+
+Reset the settings !
+Reset the settings !
+
+Remove
+Remove
+
+Removes this value
+Removes this value
+
+Add to Fav, $login
+Add to Fav, $login
+

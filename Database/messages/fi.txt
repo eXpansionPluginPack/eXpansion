@@ -10,3 +10,6 @@ Tietokannan ylläpito
 Database Backup and Restore
 Tietokannan varmuuskopio ja palautus
 
+Database Maintenance
+#translate# Database Maintenance
+

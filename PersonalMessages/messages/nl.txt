@@ -16,3 +16,9 @@ Selecteer Speler om bericht te versturen
 #personalmessage#Usage /pm [login] your personal message here
 #translate# #personalmessage#Usage /pm [login] your personal message here
 
+#personalmessage#Player with login  is not found at server!
+#translate# #personalmessage#Player with login  is not found at server!
+
+#personalmessage#You can
+#translate# #personalmessage#You can
+

@@ -49,9 +49,6 @@ Oikein
 New question
 Kysymys
 
-Question
-Kysymys
-
 Url for image
 Kuvan www-osoite
 
@@ -60,4 +57,7 @@ Kuvan www-osoite
 
 #quiz#$Displaying image not possible, due unsupported media type was detected.
 #quiz#Kuvan näyttäminen ei valitettavasi onnistu, väärä kuvaformaatti havaittu.
+
+Ask hidden
+#translate# Ask hidden
 

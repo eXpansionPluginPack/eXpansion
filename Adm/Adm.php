@@ -425,7 +425,8 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
             } else {
                 $this->connection->setRoundCustomPoints($intPoints);
             }
-            $msg = eXpGetMessage('#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s');
+            $msg = eXpGetMessage('#admin_action#Admin %s $z$s#admin_action#sets custom ' .
+			"round points to #variable#%s" );
             $this->eXpChatSendServerMessage($msg, null, array($nick, implode(",", $intPoints)));
         } catch (Exception $e) {
             $this->connection->chatSendServerMessage(__('#admin_error#Error: %s', $login, $e->getMessage()), $login);

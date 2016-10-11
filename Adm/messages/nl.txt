@@ -340,3 +340,39 @@ Keep Player Slots
 Settings not changed.
 #translate# Settings not changed.
 
+Server Control
+#translate# Server Control
+
+Custom Round Points
+#translate# Custom Round Points
+
+Script Settings
+#translate# Script Settings
+
+#admin_error#Error: %s
+#translate# #admin_error#Error: %s
+
+Reset scores
+#translate# Reset scores
+
+Skip & reset
+#translate# Skip & reset
+
+Restart & reset
+#translate# Restart & reset
+
+Rounds: Points Limit (NewRules
+#translate# Rounds: Points Limit (NewRules
+
+Team: Points Limit (NewRules
+#translate# Team: Points Limit (NewRules
+
+$f00$oError $z$s$fff%s
+#translate# $f00$oError $z$s$fff%s
+
+File  deleted from filesystem!
+#translate# File  deleted from filesystem!
+
+Control Panel
+#translate# Control Panel
+

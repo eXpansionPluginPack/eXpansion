@@ -40,3 +40,12 @@ Close
 Notice
 Notice
 
+Auto hide
+Auto hide
+
+Show Diff
+Show Diff
+
+Error
+Error
+

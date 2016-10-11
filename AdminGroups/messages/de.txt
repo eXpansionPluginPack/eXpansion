@@ -1,4 +1,4 @@
-This command expect at least one parameter
+﻿This command expect at least one parameter
 Dieser Aufruf benötigt mindestens einen Parameter
 
 #admin_error#You need to be an Admin to use that command
@@ -102,3 +102,6 @@ Permission_
 
 Select
 Auswählen
+
+#admin_error#
+#translate# #admin_error#

@@ -58,3 +58,6 @@ Url de l'image
 #quiz#$Displaying image not possible, due unsupported media type was detected.
 #quiz#$Impossible d'afficher l'image, type de support non pris en charge.
 
+Ask hidden
+#translate# Ask hidden
+

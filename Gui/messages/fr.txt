@@ -40,3 +40,12 @@ Fermer
 Notice
 Notice
 
+Auto hide
+#translate# Auto hide
+
+Show Diff
+#translate# Show Diff
+
+Error
+#translate# Error
+

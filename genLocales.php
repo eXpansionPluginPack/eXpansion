@@ -15,6 +15,10 @@ foreach ($files as $data2) {
         continue;
     }
 
+    if (strstr($data2->getPath(), ".") ) {
+        continue;
+    }
+	
     $messageCount = 0;
 
     $plugin = str_replace(__DIR__ . DIRECTORY_SEPARATOR, "", $data2->getPath());
@@ -25,42 +29,21 @@ foreach ($files as $data2) {
         $pluginMessages[$plugin] = array();
     }
 
-    $data = file($filename);
-    foreach ($data as $row) {
-        if (strstr($row, "__(")) {
-            preg_match('/__\(\"(([^\\\"]|\\.)*)\"/', $row, $matches);
+    $row = file_get_contents($filename);
+    //foreach ($data as $row) {
+        
+			$matches = "";          
+			preg_match_all('/__\((?:\'|")(?P<matches>.*?)(?:\'|")*\)/s', $row, $matches);
             if (sizeof($matches) > 1) {
-                $messageCount++;
-                $matches[1] = str_replace("\'", "'", $matches[1]);
-                $matches[1] = str_replace('\"', '"', $matches[1]);
-                $pluginMessages[$plugin][$matches[1]] = $matches[1] . "\n" . $matches[1] . "\n\n";
+				processMatch($plugin, $matches);
             }
-
-            preg_match('/__\(\'(([^\']|.)*?)\'\)/', $row, $matches);
+        
+  			preg_match_all('/eXpGetMessage\((?:\'|")(?P<matches>.*?)(?:\'|")*\)/s', $row, $matches);
+	
             if (sizeof($matches) > 1) {
-                $messageCount++;
-                $matches[1] = str_replace("\'", "'", $matches[1]);
-                $matches[1] = str_replace('\"', '"', $matches[1]);
-                $pluginMessages[$plugin][$matches[1]] = $matches[1] . "\n" . $matches[1] . "\n\n";
-            }
-        }
-        if (strstr($row, "exp_getMessage(")) {
-            preg_match('/exp_getMessage\(\"(([^\\\"]|\\.)*)\"/', $row, $matches);
-            if (sizeof($matches) > 1) {
-                $messageCount++;
-                $matches[1] = str_replace("\'", "'", $matches[1]);
-                $matches[1] = str_replace('\"', '"', $matches[1]);
-                $pluginMessages[$plugin][$matches[1]] = $matches[1] . "\n" . $matches[1] . "\n\n";
-            }
-            preg_match('/exp_getMessage\(\'(([^\']|.)*?)\'\)/', $row, $matches);
-            if (sizeof($matches) > 1) {
-                $messageCount++;
-                $matches[1] = str_replace("\'", "'", $matches[1]);
-                $matches[1] = str_replace('\"', '"', $matches[1]);
-                $pluginMessages[$plugin][$matches[1]] = $matches[1] . "\n" . $matches[1] . "\n\n";
-            }
-        }
-    }
+                processMatch($plugin, $matches);
+            }        
+       
 
     if (!is_dir(__DIR__ . "/" . $plugin . "/messages")) {
         mkdir(__DIR__ . "/" . $plugin . "/messages", 755);
@@ -70,9 +53,39 @@ foreach ($files as $data2) {
     $totalMessages += $messageCount;
     $string = implode("", $pluginMessages[$plugin]);
     file_put_contents($plugin . "/messages/diff.txt", $string);
+
 }
+
+function processMatch($plugin, $matches) {
+	global $pluginMessages, $messageCount;	
+	foreach ($matches['matches'] as $match) {
+		
+		$match = str_replace("\n", "", $match);
+		$match = str_replace("\r", "", $match);
+		$match = str_replace("\'", "¤", $match);
+		$match = str_replace('\"', '½', $match);
+		//print_r($match);
+		
+		preg_match_all('/(?:\'|")(?P<matches>.*?)(?:\'|")/s', '"'.$match.'"', $matches2);
+		    if (sizeof($matches2) > 1) {
+			$out = implode("", $matches2['matches']);
+			$out = str_replace("¤", "'", $out);
+			$out = str_replace("½", '"', $out);
+			}
+			
+		$pluginMessages[$plugin][$out] = $out . "\n" . $out . "\n\n";
+		$messageCount++;	
+	 } 
+	
+}
+
+
 
 foreach ($pluginMessages as $key => $messages) {
     echo "\n$key messages count: " . sizeof($messages);
 }
 print "\nTotal Message count: " . $totalMessages;
+
+
+
+

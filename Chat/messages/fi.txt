@@ -1,5 +1,14 @@
-[eXpansion|Chat] Couldn't initialize chat. Error from server: %s
+﻿[eXpansion|Chat] Couldn't initialize chat. Error from server: %s
 [eXpansion|Chat] Chat-pluginia ei voitu initialisoida. Virhe serverin puolesta: %s
 
 [eXpansion|Chat] error sending chat from %s: %s with folloing error %s
 [eXpansion|Chat] virhe lähetettäessä viestiä %s: %s seuraava virhe: %s
+
+Chat messages enabled.
+Chat päällä.
+
+Chat messages disabled.
+Chat pois päältä.
+
+Usage: /chat on or /chat off.
+Käyttö: /chat on tai /chat off.

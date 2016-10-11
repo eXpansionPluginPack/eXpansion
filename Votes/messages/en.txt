@@ -46,3 +46,12 @@ Vote limit reached.
 Configure Votes
 Configure Votes
 
+#error#Restart vote is disabled!
+#error#Restart vote is disabled!
+
+#error#Map limit for voting restart reached.
+#error#Map limit for voting restart reached.
+
+#error#Skip vote is disabled!
+#error#Skip vote is disabled!
+

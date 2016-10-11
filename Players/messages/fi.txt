@@ -1,4 +1,4 @@
-Ignore
+﻿Ignore
 Hiljennä
 
 Kick
@@ -66,4 +66,55 @@ Ban-lista
 
 Black List
 Mustalista
+
+Ignore player %1$s 
+Hiljennä pelaaja %1$s 
+
+UnIgnore player %1$s 
+Poista hiljennys pelaajalta %1$s 
+
+Kick player %1$s 
+Potkaise pelaaja %1$s 
+
+Ban player %1$s 
+Bännää pelaaja %1$s 
+
+Blacklist player %1$s 
+Blacklistaa pelaaja %1$s 
+
+Force %1$s to play
+Pakota %1$s pelaamaan
+
+Add to guest list
+Lisää vierailijat-listaan
+
+Force %1$s to spectate
+Pakota %1$s spektaamaan
+
+Ignore player
+Hiljennä pelaaja
+
+UnIgnore player
+Poista hiljennys pelaajalta
+
+Kick player
+Potkaise
+
+Ban player
+Bännää
+
+Blacklist player
+Blacklistaa
+
+Force to play
+Pakota pelaamaan
+
+Force to spectate
+Pakota spektaamaan
+
+%s$z$s$fff was ignored by admin %s
+%s$z$s$fff on hiljennetty: admin %s
+
+%s$z$s$fff was unignored by admin %s
+%s$z$s$fff voi puhua. admin: %s
 

@@ -16,3 +16,9 @@ Wähle den Spieler, an den die Nachrichten gehn soll
 #personalmessage#Usage /pm [login] your personal message here
 #personalmessage#Verwendung.. /pm [login] Deine persönliche Nachricht hier.
 
+#personalmessage#Player with login  is not found at server!
+#translate# #personalmessage#Player with login  is not found at server!
+
+#personalmessage#You can
+#translate# #personalmessage#You can
+

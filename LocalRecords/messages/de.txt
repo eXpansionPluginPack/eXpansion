@@ -1,4 +1,4 @@
-#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+﻿#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 #variable#%1$s  #record#erreicht den #rank#%2$s#record#. lokalen Rekord!  #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 
 #variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #time#%3$s
@@ -88,3 +88,17 @@ Zwischenzeiten
 Cps
 Cps
 
+Records on a Map
+#translate# Records on a Map
+
+Server Ranks
+#translate# Server Ranks
+
+CheckPoints on Map
+#translate# CheckPoints on Map
+
+Sector Times on Map
+#translate# Sector Times on Map
+
+Login
+#translate# Login

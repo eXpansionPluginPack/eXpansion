@@ -13,3 +13,12 @@ Audio: off
 Audio: on
 Audio: on
 
+#error# is not a numeric value!
+#error# is not a numeric value!
+
+#error# is less than 1!
+#error# is less than 1!
+
+#info#New time reference point set to %s
+#info#New time reference point set to %s
+

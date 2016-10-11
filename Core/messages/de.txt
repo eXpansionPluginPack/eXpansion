@@ -25,3 +25,36 @@ Settings are now saved!
 Close
 #translate# Close
 
+Load
+#translate# Load
+
+Wiil load this configuration into current one
+#translate# Wiil load this configuration into current one
+
+Will save current configuration
+#translate# Will save current configuration
+
+Choose
+#translate# Choose
+
+Will load this configuration and use it
+#translate# Will load this configuration and use it
+
+Change
+#translate# Change
+
+Allows you to edit values
+#translate# Allows you to edit values
+
+Reset the settings !
+#translate# Reset the settings !
+
+Remove
+#translate# Remove
+
+Removes this value
+#translate# Removes this value
+
+Add to Fav, $login
+#translate# Add to Fav, $login
+

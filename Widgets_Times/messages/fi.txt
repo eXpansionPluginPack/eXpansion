@@ -1,4 +1,4 @@
-Top1
+﻿Top1
 Top1
 
 Personal Best
@@ -12,3 +12,13 @@ Audio: off
 
 Audio: on
 Äänet: päällä
+
+#error# is not a numeric value!
+#error# arvo ei ole numeerinen!
+
+#error# is less than 1!
+#error# arvo on vähemmän kuin yksi!
+
+#info#New time reference point set to %s
+#info#Ajan referenssi asetettu sijalle %s 
+

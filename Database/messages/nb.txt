@@ -10,3 +10,6 @@ Database vedlikehold
 Database Backup and Restore
 Database Sikkerhetskopi og gjennopprett
 
+Database Maintenance
+#translate# Database Maintenance
+

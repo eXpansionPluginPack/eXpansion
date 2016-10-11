@@ -88,3 +88,18 @@ CheckPoint Times
 Cps
 Cps
 
+Records on a Map
+#translate# Records on a Map
+
+Server Ranks
+#translate# Server Ranks
+
+CheckPoints on Map
+#translate# CheckPoints on Map
+
+Sector Times on Map
+#translate# Sector Times on Map
+
+Login
+#translate# Login
+

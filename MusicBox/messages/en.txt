@@ -13,3 +13,6 @@ Queue
 #music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s
 #music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s
 
+MusicBox error http-code: %s
+MusicBox error http-code: %s
+

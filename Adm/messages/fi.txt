@@ -339,3 +339,31 @@ Pidä pelaajapaikat
 
 Settings not changed.
 Asetuksia ei tallennettu.
+
+Server Control
+Palvelimen Säädöt
+
+Custom Round Points
+Omavalintaiset Round-pisteet
+
+#admin_error#Error: %s
+#admin_error#Virhe: %s
+
+Reset scores
+Nollaa pisteet
+
+Skip & reset
+Skip & nollaus
+
+Restart & reset
+Aloita Uudelleen & nollaus
+
+$f00$oError $z$s$fff%s
+$f00$oVirhe $z$s$fff%s
+
+File  deleted from filesystem!
+Tiedosto poistettu!
+
+Control Panel
+Control Panel
+

@@ -202,3 +202,39 @@ Erases current map from the playlist.
 #admin_error#Can't continue, since this instance of eXpansion is running remote agains the server
 #admin_error#Can't continue, since this instance of eXpansion is running remote agains the server
 
+Map Info
+Map Info
+
+Show Records
+Show Records
+
+$F22Remove this map from server
+$F22Remove this map from server
+
+Map %s $z$s$fffadded to playlist.
+Map %s $z$s$fffadded to playlist.
+
+#admin_error#This instance of eXpansion is runnin remotelly! Can%s, $this->getRecipient(
+#admin_error#This instance of eXpansion is runnin remotelly! Can%s, $this->getRecipient(
+
+File  deleted from filesystem!
+File  deleted from filesystem!
+
+$f00$oError $z$s$fff%s
+$f00$oError $z$s$fff%s
+
+Maps on server
+Maps on server
+
+History of Maps
+History of Maps
+
+Error:
+Error:
+
+Adds previous map back to the Jukebox.
+Adds previous map back to the Jukebox.
+
+#admin_error# $iThere are no previously played challenge!
+#admin_error# $iThere are no previously played challenge!
+

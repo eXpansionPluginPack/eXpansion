@@ -13,3 +13,6 @@ Warteschlange
 #music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s
 #music#Nächstes Lied: $z$s#variable# %1$s #music#von#variable# %2$s
 
+MusicBox error http-code: %s
+#translate# MusicBox error http-code: %s
+
