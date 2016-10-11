@@ -1,2 +1,0 @@
-declare Integer stamp = <?php echo $this->stamp; ?>;
-declare counter = (Page.GetFirstChild("countdown") as CMlLabel);
