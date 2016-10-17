@@ -2,13 +2,18 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
+use ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
-use ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Additem;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Controls\DirectoryItem;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Controls\NewAddItem;
 
 class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
 
     protected $pager;
+
+    /** @const integer limits the number of fetched maps at the list */
+    const MAPLIMIT = 150;
 
     public static $mapsPlugin = null;
 
@@ -20,6 +25,8 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     protected $items = array();
 
+    protected $infoLabel;
+
     protected $gbx;
 
     protected $btnAddAll;
@@ -28,14 +35,21 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     protected $label;
 
+    protected $allMapsPath = "";
+
+
     protected function onConstruct()
     {
         parent::onConstruct();
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
-        $this->gbx = new \ManiaLivePlugins\eXpansion\Helpers\GbxReader\Map();
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+
+        $label = new DicoLabel(90, 6);
+        $label->setPosY(4);
+        $label->setText(eXpGetMessage('Display is limiting to first %1$s maps.'), array(self::MAPLIMIT));
+        $this->mainFrame->addComponent($label);
+
         $this->mainFrame->addComponent($this->pager);
 
         $this->actionAddAll = $this->createAction(array($this, "addAllMaps"));
@@ -44,13 +58,15 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->btnAddAll->setText(__("Add all", $this->getRecipient()));
         $this->btnAddAll->setAction($this->actionAddAll);
         $this->mainFrame->addComponent($this->btnAddAll);
+        $this->allMapsPath = Helper::getPaths()->getDownloadMapsPath();
     }
 
-    public function addMap($login, $array)
+    public function addMap($login, $filename)
     {
         try {
-            $this->connection->addMap($array[0]);
-            $this->connection->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.', $this->getRecipient(), $array[1]));
+            $this->connection->addMap($filename);
+            $info = $this->connection->getMapInfo($filename);
+            $this->connection->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.', $this->getRecipient(), $info->name));
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage("Error: " . $e->getMessage(), $login);
         }
@@ -71,7 +87,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->populateList();
     }
 
-    public function populateList()
+    public function populateList($folder = "")
     {
         foreach ($this->items as $item) {
             $item->erase();
@@ -82,23 +98,53 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $login = $this->getRecipient();
 
-
         if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
-
             $this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(1, __("File listing disabled since you are running eXpansion remote", $this->getRecipient()), $this->sizeX);
             $this->pager->addItem($this->items[0]);
-
             return;
         }
-        /** @var \Maniaplanet\DedicatedServer\Structures\Version */
-        $game = $this->connection->getVersion();
-        $path = Helper::getPaths()->getDownloadMapsPath() . $game->titleId . "/*.Map.Gbx";
 
-        $maps = glob($path);
+        $mapPath = Helper::getPaths()->getDownloadMapsPath() . $folder;
+        if ($folder) {
+            $mapPath = $folder;
+            $this->allMapsPath = $folder;
+        }
+
         $x = 0;
-        if (count($maps) >= 1) {
-            foreach ($maps as $map) {
-                $this->items[$x] = new Additem($x, $map, $this, $this->gbx, $login, $this->sizeX);
+
+        foreach (new \DirectoryIterator($mapPath) as $dir) {
+            if ($dir->isDir()) {
+                $file = $dir->getPathname();
+                $label = str_replace(DIRECTORY_SEPARATOR, "", str_replace($mapPath, "", $dir->getPathname()));
+                if ((\realpath(Helper::getPaths()->getDownloadMapsPath()) == $dir->getPath())) {
+                    if ($dir->isDot()) {
+                        continue;
+                    }
+                } else {
+                    if ($dir->isDot()) {
+                        if ($dir->getBasename() == "..") {
+                            $label = "Parent directory (..)";
+                            $file = $dir->getRealPath();
+                        } else {
+                            continue;
+                        }
+                    }
+                }
+                $this->items[$x] = new DirectoryItem($x, $label, $file, $this, $login, $this->sizeX);
+                $this->pager->addItem($this->items[$x]);
+                $x++;
+            }
+        }
+
+
+        $x = 0;
+        foreach (new \DirectoryIterator($mapPath) as $dir) {
+            if ($dir->isFile()) {
+                if ($x > self::MAPLIMIT) return;
+                $file = str_replace($mapPath, "", $dir->getBasename());
+
+                $path = $dir->getRealPath();
+                $this->items[$x] = new NewAddItem($x, $file, $path, $this, $login, $this->sizeX);
                 $this->pager->addItem($this->items[$x]);
                 $x++;
             }
@@ -108,8 +154,7 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function deleteMap($login, $filename)
     {
         if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
-            $this->connection->chatSendServerMessage(__("#admin_error#This instance of eXpansion is runnin remotelly! Can't delete file #variable#'%s'", $this->getRecipient(), end($file)));
-
+            $this->connection->chatSendServerMessage(__("#admin_error#This instance of eXpansion is running remote! Can't delete file #variable#'%s'", $this->getRecipient(), end($file)));
             return;
         }
         try {
@@ -125,19 +170,17 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function addAllMaps($login)
     {
-        $game = $this->connection->getVersion();
-        $path = Helper::getPaths()->getDownloadMapsPath() . $game->titleId . "/*.Map.Gbx";
-
-        $mapsAtDisk = glob($path);
-//        $mapsAtServer = array();
-//        foreach ($this->storage->maps as $map) {
-//            $mapsAtServer[] = str_replace("\\", "/", $mapsDir . $map->fileName);
-//        }
-//        $mapDiff = array_diff($mapsAtServer, $mapsAtDisk);
-
+        $mapsAtDisk = glob($this->allMapsPath . "/*.Map.Gbx");
         $this->connection->addMapList($mapsAtDisk);
         $this->connection->chatSendServerMessage("Added " . count($mapsAtDisk) . " maps to playlist.", $login);
     }
+
+    public function changeDirectory($login, $dir)
+    {
+        $this->populateList($dir);
+        $this->redraw($login);
+    }
+
 
     public function destroy()
     {

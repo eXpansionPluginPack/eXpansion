@@ -38,7 +38,7 @@ class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
             Helper::log("Error processing file : " . $e->getMessage(), array('eXpansion', 'Maps', 'AddItem'));
             return;
         }
-        $this->addMapAction = $this->createAction(array($controller, 'addMap'), array($filename, $gbx->name));
+        $this->addMapAction = $this->createAction(array($controller, 'addMap'), $filename);
         $this->deleteActionf = $this->createAction(array($controller, 'deleteMap'), $filename);
         $this->deleteAction = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->deleteActionf);
 
@@ -65,7 +65,7 @@ class Additem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->label = new \ManiaLib\Gui\Elements\Label(90, 4);
         $this->label->setAlign('left', 'center');
-        $this->label->setText(Gui::fixString($map->name));
+        $this->label->setText(Gui::fixString($filename));
         $this->label->setScale(0.8);
         $this->frame->addComponent($this->label);
 

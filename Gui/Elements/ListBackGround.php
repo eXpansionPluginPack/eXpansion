@@ -47,6 +47,11 @@ class ListBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->setSize($sizeX, $sizeY);
     }
 
+    public function setAction($action)
+    {
+        $this->bg->setAction($action);
+    }
+
     public function onResize($oldX, $oldY)
     {
         $this->bg->setSize(

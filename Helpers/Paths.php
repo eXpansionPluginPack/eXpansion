@@ -38,7 +38,7 @@ class Paths
          */
         $config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
 
-        return ($config->mapBase == "" ? "" : $config->mapBase . '/');
+        return ($config->mapBase == "" ? "" : $config->mapBase . DIRECTORY_SEPARATOR);
     }
 
     public function getMapPath()
@@ -53,12 +53,12 @@ class Paths
 
     public function getMatchSettingPath()
     {
-        return $this->mapsDirectory . $this->getBaseMap() . 'MatchSettings/';
+        return $this->mapsDirectory . $this->getBaseMap() . 'MatchSettings' . DIRECTORY_SEPARATOR;
     }
 
     public function getDownloadMapsPath()
     {
-        return $this->mapsDirectory . $this->getBaseMap() . 'Downloaded/';
+        return $this->mapsDirectory . $this->getBaseMap() . 'Downloaded'. DIRECTORY_SEPARATOR;
     }
 
     /**
