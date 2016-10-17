@@ -33,7 +33,9 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         /* @var $label \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel */
         $label = $this->genLabel($itemName);
         $label->setAttribute("class", "sub item");
-        $label->setAction($this->createAction(array($plugin, "actionHandler"), $handle));
+        if ($handle) {
+            $label->setAction($this->createAction(array($plugin, "actionHandler"), $handle));
+        }
         $this->frame->addComponent($label);
     }
 
@@ -52,13 +54,13 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $label->setTextColor("fff");
         $label->setAlign("left", "center");
         if (strlen($config->style_widget_bgColorize) == 6) {
-            $label->setFocusAreaColor1($config->style_widget_bgColorize . "aa");
+            $label->setFocusAreaColor1($config->style_widget_bgColorize . "66");
         } else {
             $label->setFocusAreaColor1($config->style_widget_bgColorize);
         }
 
         if (strlen($config->style_widget_title_bgColorize) == 6) {
-            $label->setFocusAreaColor2($config->style_widget_title_bgColorize . "aa");
+            $label->setFocusAreaColor2($config->style_widget_title_bgColorize . "66");
         } else {
             $label->setFocusAreaColor2($config->style_widget_title_bgColorize);
         }

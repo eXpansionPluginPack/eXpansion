@@ -160,9 +160,8 @@ class Menu extends ExpPlugin implements Listener
         }
         if ($group->hasPermission(Permission::MAP_REMOVE_MAP)) {
             if ($this->pluginLoaded("Maps")) {
+                $mapsGroup->addItem('', null, $this);
                 $mapsGroup->addItem('$f00Remove this', "!admremovemap", $this);
-            }
-            if ($this->pluginLoaded("Maps")) {
                 $mapsGroup->addItem('$f00Trash this', "!admtrashmap", $this);
             }
         }
