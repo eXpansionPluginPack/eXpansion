@@ -72,8 +72,9 @@ class RecItem extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaL
             $this->button_delete->setAlign('left', 'center');
             $this->button_delete->setAttribute('class', "eXpOptimizedPagerAction");
             $this->button_delete->setAction($action);
+            $this->button_delete->setStyle("CardButtonMediumS");
             $this->button_delete->setScriptEvents(true);
-            $this->button_delete->setTextColor("F22");
+            $this->button_delete->setScale(0.5);
             $this->frame->addComponent($this->button_delete);
         }
 

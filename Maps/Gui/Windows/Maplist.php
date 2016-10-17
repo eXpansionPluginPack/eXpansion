@@ -403,7 +403,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $rate => -1,
                 "Info" => $showInfoAction,
                 "Recs" => $showRecsAction,
-                "remove" => $removeMapAction,
+                "x" => $removeMapAction,
             ));
             $x++;
         }
