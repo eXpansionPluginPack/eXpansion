@@ -195,7 +195,6 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $this->pager->addItem($this->items[0]);
         } else {
             $path = Helper::getPaths()->getMatchSettingPath() . "*.txt";
-
             $settings = glob($path);
             $x = 0;
             if (count($settings) > 1) {

@@ -65,7 +65,7 @@ class MatchSettingsFile extends Control
 
         $this->label = new \ManiaLib\Gui\Elements\Label(90, 4);
         $this->label->setAlign('left', 'center');
-        $file = explode('/', $filename);
+        $file = explode(DIRECTORY_SEPARATOR, $filename);
         $text = utf8_encode(end($file));
         //$text = str_replace(".txt", "", $text);
         $this->label->setText($text);

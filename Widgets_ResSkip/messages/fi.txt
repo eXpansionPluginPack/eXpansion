@@ -48,3 +48,9 @@ Kartta on jo lisätty pelattavaksi uudelleen!
 
 #error#You have skipped to many maps already!
 #error#Olet ohittanut liian monta karttaa jo!
+
+#error#Player can
+#translate# #error#Player can
+
+#error#You can
+#translate# #error#You can

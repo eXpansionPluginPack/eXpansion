@@ -1233,3 +1233,57 @@ $o$f03Eek! What a devilish time!$z$fff %s $z$o$f03($z$fff%s$o$f03
 
 Add to Fav
 Add to Fav
+
+#variable#%1$s #record#secures #rank#%2$s. #record#Local Record!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+#variable#%1$s #record#secures #rank#%2$s. #record#Local Record!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+
+#variable#%1$s #record#new #rank#%2$s.#record# Local Record! #time#%3$s
+#variable#%1$s #record#new #rank#%2$s.#record# Local Record! #time#%3$s
+
+#record#Oops! #variable#%1$s #record#equals #rank#%2$s#record#. Local Record! #time#%3$s
+#record#Oops! #variable#%1$s #record#equals #rank#%2$s#record#. Local Record! #time#%3$s
+
+#variable#%1$s #record#improves #rank#%2$s. #record#Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+#variable#%1$s #record#improves #rank#%2$s. #record#Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+
+#variable#%1$s #record_top#secures #rank#%2$s.#record_top# Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#
+#variable#%1$s #record_top#secures #rank#%2$s.#record_top# Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#
+
+#variable#%1$s #record_top#new #rank#%2$s.#record_top# Local Record! #time#%3$s
+#variable#%1$s #record_top#new #rank#%2$s.#record_top# Local Record! #time#%3$s
+
+#record_top#Oops! #variable#%1$s #record_top#equals #rank#%2$s#record_top#. Local Record! #time#%3$s
+#record_top#Oops! #variable#%1$s #record_top#equals #rank#%2$s#record_top#. Local Record! #time#%3$s
+
+#variable#%1$s #record_top#improves #rank#%2$s.#record_top# Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#
+#variable#%1$s #record_top#improves #rank#%2$s.#record_top# Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#
+
+$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$f90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s $f90(#rank#%4$s #time#-%5$s$F90
+$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$f90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s $f90(#rank#%4$s #time#-%5$s$F90
+
+$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$f90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s
+$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$f90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s
+
+$o$0CFO$2DFo$3DFo$5EFo$6EFp$8FFs$9FF!$fff %1$s $z$s$9ff$oequals #rank#%2$s.$9ff$o Local Record! #time#%3$s
+$o$0CFO$2DFo$3DFo$5EFo$6EFp$8FFs$9FF!$fff %1$s $z$s$9ff$oequals #rank#%2$s.$9ff$o Local Record! #time#%3$s
+
+$z$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$F90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s $f90(#rank#%4$s #time#-%5$s$F90
+$z$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$F90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s $f90(#rank#%4$s #time#-%5$s$F90
+
+#variable#%1$s  #record#is a new Map. Currently no record!
+#variable#%1$s  #record#is a new Map. Currently no record!
+
+#record#Current record on #variable#%1$s  #record#is #time#%2$s #record#by #variable#%3$s
+#record#Current record on #variable#%1$s  #record#is #time#%2$s #record#by #variable#%3$s
+
+#record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#
+#record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#
+
+#admin_error# $iYou have not finished this map yet..
+#admin_error# $iYou have not finished this map yet..
+
+#record#Server rank: #rank#%1$s#record#/#rank#%2$s
+#record#Server rank: #rank#%1$s#record#/#rank#%2$s
+
+#admin_error#$iNot enough local records to obtain ranking yet..
+#admin_error#$iNot enough local records to obtain ranking yet..

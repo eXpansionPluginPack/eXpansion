@@ -1,30 +1,3 @@
-#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
-#variable#%1$s  #record#secured their #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
-
-#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #time#%3$s
-#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #time#%3$s
-
-#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #rank#%2$s: #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
-#variable#%1$s  #record#claimed the #rank#%2$s#record#. Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
-
-#variable#%1$s  #record_top#secured their #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-#variable#%1$s  #record_top#secured the #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-
-#variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s
-#variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s
-
-#variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-#variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-
-$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#secured their #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#secured the #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-
-$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s
-$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s
-
-$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #rank#%2$s: #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s! #variable#%1$s  #record_top#claimed the #rank#%2$s#record_top#. Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)
-
 #variable#%1$s  #record#is a new Map. Currently no record!
 #variable#%1$s  #record#is a new Map. Currently no record!
 
@@ -102,3 +75,45 @@ Sector Times on Map
 
 Login
 Login
+
+#variable#%1$s #record#secures #rank#%2$s. #record#Local Record!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+#variable#%1$s #record#secures #rank#%2$s. #record#Local Record!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+
+#variable#%1$s #record#new #rank#%2$s.#record# Local Record! #time#%3$s
+#variable#%1$s #record#new #rank#%2$s.#record# Local Record! #time#%3$s
+
+#record#Oops! #variable#%1$s #record#equals #rank#%2$s#record#. Local Record! #time#%3$s
+#record#Oops! #variable#%1$s #record#equals #rank#%2$s#record#. Local Record! #time#%3$s
+
+#variable#%1$s #record#improves #rank#%2$s. #record#Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+#variable#%1$s #record#improves #rank#%2$s. #record#Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+
+#variable#%1$s #record_top#secures #rank#%2$s.#record_top# Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#
+#variable#%1$s #record_top#secures #rank#%2$s.#record_top# Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#
+
+#variable#%1$s #record_top#new #rank#%2$s.#record_top# Local Record! #time#%3$s
+#variable#%1$s #record_top#new #rank#%2$s.#record_top# Local Record! #time#%3$s
+
+#record_top#Oops! #variable#%1$s #record_top#equals #rank#%2$s#record_top#. Local Record! #time#%3$s
+#record_top#Oops! #variable#%1$s #record_top#equals #rank#%2$s#record_top#. Local Record! #time#%3$s
+
+#variable#%1$s #record_top#improves #rank#%2$s.#record_top# Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#
+#variable#%1$s #record_top#improves #rank#%2$s.#record_top# Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#
+
+$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$f90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s $f90(#rank#%4$s #time#-%5$s$F90
+$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$f90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s $f90(#rank#%4$s #time#-%5$s$F90
+
+$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$f90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s
+$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$f90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s
+
+$o$0CFO$2DFo$3DFo$5EFo$6EFp$8FFs$9FF!$fff %1$s $z$s$9ff$oequals #rank#%2$s.$9ff$o Local Record! #time#%3$s
+$o$0CFO$2DFo$3DFo$5EFo$6EFp$8FFs$9FF!$fff %1$s $z$s$9ff$oequals #rank#%2$s.$9ff$o Local Record! #time#%3$s
+
+$z$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$F90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s $f90(#rank#%4$s #time#-%5$s$F90
+$z$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$F90!$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s $f90(#rank#%4$s #time#-%5$s$F90
+
+#record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#
+#record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#
+
+#record#Server rank: #rank#%1$s#record#/#rank#%2$s
+#record#Server rank: #rank#%1$s#record#/#rank#%2$s

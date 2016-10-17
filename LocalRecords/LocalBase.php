@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\LocalRecords;
 
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Gui\ActionHandler;
+use ManiaLive\Utilities\Time;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\Core\Events\ExpansionEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ExpansionEventListener;
@@ -188,36 +189,64 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
         //The Database plugin is needed.
         $this->addDependency(
-            new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\Database\Database")
+            new \ManiaLive\PluginHandler\Dependency("\\ManiaLivePlugins\\eXpansion\\Database\\Database")
         );
     }
 
     public function eXpOnLoad()
     {
-
         //Recovering the multi language messages
-        $this->msg_secure = eXpGetMessage($this->config->msg_secure);
-        $this->msg_new = eXpGetMessage($this->config->msg_new);
-        $this->msg_equals = eXpGetMessage($this->config->msg_equals);
-        $this->msg_improved = eXpGetMessage($this->config->msg_improved);
+
+        // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
+        $this->msg_secure = eXpGetMessage('#variable#%1$s #record#secures #rank#%2$s. #record#Local Record!'
+            . '#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)');
+        // %1$s - nickname; %2$s - rank; %3$s - time
+        $this->msg_new = eXpGetMessage('#variable#%1$s #record#new #rank#%2$s.#record# Local Record! #time#%3$s');
+        // %1$s - nickname; %2$s - rank; %3$s - time
+        $this->msg_equals = eXpGetMessage('#record#Oops! #variable#%1$s #record#equals #rank#%2$s#record#. '
+            . 'Local Record! #time#%3$s');
+        // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
+        $this->msg_improved = eXpGetMessage('#variable#%1$s #record#improves #rank#%2$s. #record#Local Record! ' .
+            '#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)');
+
+        // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
+        $this->msg_secure_top5 = eXpGetMessage('#variable#%1$s #record_top#secures #rank#%2$s.#record_top# '
+            . 'Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)');
+        // %1$s - nickname; %2$s - rank; %3$s - time
+        $this->msg_new_top5 = eXpGetMessage('#variable#%1$s #record_top#new #rank#%2$s.#record_top# '
+            . 'Local Record! #time#%3$s');
+        // %1$s - nickname; %2$s - rank; %3$s - time
+        $this->msg_equals_top5 = eXpGetMessage('#record_top#Oops! #variable#%1$s #record_top#equals #rank#%2$s#record_top#. '
+            . 'Local Record! #time#%3$s');
+        // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
+        $this->msg_improved_top5 = eXpGetMessage('#variable#%1$s #record_top#improves #rank#%2$s.#record_top# '
+            . 'Local Record! #time#%3$s #record_top#(#rank#%4$s #time#-%5$s#record_top#)');
 
 
-        $this->msg_secure_top5 = eXpGetMessage($this->config->msg_secure_top5);
-        $this->msg_new_top5 = eXpGetMessage($this->config->msg_new_top5);
-        $this->msg_equals_top5 = eXpGetMessage($this->config->msg_equals_top5);
-        $this->msg_improved_top5 = eXpGetMessage($this->config->msg_improved_top5);
+        // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
+        $this->msg_secure_top1 = eXpGetMessage('$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$f90!'
+            . '$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s $f90(#rank#%4$s #time#-%5$s$F90)');
+        // %1$s - nickname; %2$s - rank; %3$s - time
+        $this->msg_new_top1 = eXpGetMessage('$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$f90!'
+            . '$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s');
+        // %1$s - nickname; %2$s - rank; %3$s - time
 
-        $this->msg_secure_top1 = eXpGetMessage($this->config->msg_secure_top1);
-        $this->msg_new_top1 = eXpGetMessage($this->config->msg_new_top1);
-        $this->msg_equals_top1 = eXpGetMessage($this->config->msg_equals_top1);
-        $this->msg_improved_top1 = eXpGetMessage($this->config->msg_improved_top1);
+        $this->msg_equals_top1 = eXpGetMessage('$o$0CFO$2DFo$3DFo$5EFo$6EFp$8FFs$9FF!$fff %1$s $z$s$9ff$oequals '
+            . '#rank#%2$s.$9ff$o Local Record! #time#%3$s');
+        // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
+        $this->msg_improved_top1 = eXpGetMessage('$z$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$F90!'
+            . '$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s $f90(#rank#%4$s #time#-%5$s$F90)');
 
-        $this->msg_newMap = eXpGetMessage($this->config->msg_newMap);
-        $this->msg_BeginMap = eXpGetMessage($this->config->msg_BeginMap);
-        $this->msg_personalBest = eXpGetMessage($this->config->msg_personalBest);
-        $this->msg_noPB = eXpGetMessage($this->config->msg_noPB);
-        $this->msg_showRank = eXpGetMessage($this->config->msg_showRank);
-        $this->msg_noRank = eXpGetMessage($this->config->msg_noRank);
+        // %1$s - map name,
+        $this->msg_newMap = eXpGetMessage('#variable#%1$s  #record#is a new Map. Currently no record!');
+        // %1$s - map name, %2$s - record, %3$s - nickname
+        $this->msg_BeginMap = eXpGetMessage('#record#Current record on #variable#%1$s  #record#is #time#%2$s #record#by #variable#%3$s');
+        // %1$s - pb, %2$s - place (if any), %3$s - average, %4$s - # of finishes
+        $this->msg_personalBest = eXpGetMessage('#record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#)  Average: #time#%3$s #record#($n #variable#%4$s #record#$n finishes $n)');
+        $this->msg_noPB = eXpGetMessage('#admin_error# $iYou have not finished this map yet..');
+        // %1$s - server rank, %2$s - total # of ranks
+        $this->msg_showRank = eXpGetMessage('#record#Server rank: #rank#%1$s#record#/#rank#%2$s');
+        $this->msg_noRank = eXpGetMessage('#admin_error#$iNot enough local records to obtain ranking yet..');
         $this->msg_admin_savedRecs = eXpGetMessage('#admin_action#Records saved sucessfully into the database');
 
         self::$txt_rank = eXpGetMessage("#");
@@ -271,7 +300,48 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $cmd = AdminGroups::addAdminCommand("delrec", $this, "chat_delRecord", "records_save");
         $cmd->setHelp("Deletes all records by login");
 
+        $this->previewRecordMessages();
     }
+
+    public function previewRecordMessages()
+    {
+
+        $messages = array(
+            $this->msg_improved_top1, $this->msg_improved_top5, $this->msg_improved,
+            $this->msg_secure_top1, $this->msg_secure_top5, $this->msg_secure
+        );
+
+        $messages2 = array($this->msg_equals_top1, $this->msg_equals_top5, $this->msg_equals,
+            $this->msg_new_top1, $this->msg_new_top5, $this->msg_new);
+
+        foreach ($messages as $msg) {
+            $this->eXpChatSendServerMessage(
+                $msg,
+                null,
+                array(
+                    \ManiaLib\Utils\Formatting::stripCodes("test", 'wosnm'),
+                    rand(1, 100),
+                    Time::fromTM(rand(10000, 100000)),
+                    rand(1, 100),
+                    Time::fromTM(rand(10000, 100000))
+                )
+            );
+        }
+
+        foreach ($messages2 as $msg) {
+            $this->eXpChatSendServerMessage(
+                $msg,
+                null,
+                array(
+                    \ManiaLib\Utils\Formatting::stripCodes("test", 'wosnm'),
+                    rand(1, 100),
+                    Time::fromTM(rand(10000, 100000))
+                )
+            );
+        }
+
+    }
+
 
     public function eXpOnReady()
     {

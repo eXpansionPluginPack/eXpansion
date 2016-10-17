@@ -57,3 +57,6 @@ Removes this value
 
 Add to Fav
 Add to Fav
+
+Add to Fav, $login
+Add to Fav, $login
