@@ -26,34 +26,34 @@ Close
 Sulje
 
 Load
-#translate# Load
+Lataa
 
 Wiil load this configuration into current one
-#translate# Wiil load this configuration into current one
+Lataa nämä asetukset 
 
 Will save current configuration
-#translate# Will save current configuration
+Tallenna nykyiset asetukset
 
 Choose
-#translate# Choose
+Valitse
 
 Will load this configuration and use it
-#translate# Will load this configuration and use it
+Lataa asetukset ja käytä sitä
 
 Change
-#translate# Change
+Muuta
 
 Allows you to edit values
-#translate# Allows you to edit values
+Mahdollistaa arvojen muuttamisen
 
 Reset the settings !
-#translate# Reset the settings !
+Nollaa asetukset!
 
 Remove
-#translate# Remove
+Poista
 
 Removes this value
-#translate# Removes this value
+Poista tämä arvo
 
-Add to Fav, $login
-#translate# Add to Fav, $login
+Add to Fav
+Lisää Suosik.

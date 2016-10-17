@@ -1,0 +1,8 @@
+#player#Will start in #variable#%s#player# sec
+#player#Matsi alkaa #variable#%s#player# sek kuluttua
+
+#player# Start of match!
+#player# Aloitetaan!
+
+#player#Match start will be delayed #variable#%s
+#player#Matsin aloitusta on viivästetty #variable#%s sek

@@ -1,0 +1,29 @@
+You got free spot, good luck and have fun!
+You got free spot, good luck and have fun!
+
+Admin has removed you from queue!
+Admin has removed you from queue!
+
+Removed player %s $z$ffffrom queue
+Removed player %s $z$ffffrom queue
+
+Join
+Join
+
+Hide
+Hide
+
+Join Queue
+Join Queue
+
+Click the button to \njoin the waiting queue!
+Click the button to \njoin the waiting queue!
+
+Leave
+Leave
+
+Remove
+Remove
+
+Waiting Queue
+Waiting Queue

@@ -18,3 +18,27 @@ Ryhmä
 
 Search
 Etsi
+
+This plugin is running on the server at the moment
+Tämä plugin on ajossa.
+
+This plugin isn't compatible with game mode or title. It is therefor pending
+Tämä plugin ei ole yhteensopiva pelimoodin tai titlen kanssa, ja on siksi pysäytetty.
+
+This plugin isn't running
+Tämä plugin ei ole ajossa.
+
+This plugin is compatible with the current Title
+Plugin on yhteensopiva nykyisen Titlen kanssa
+
+This plugin isn't compatible with the current Title
+Plugin ei ole yhteensopiva nykyisen Titlen kanssa
+
+This plugin is compatible with the current Game mode
+Plugin on yhteensopiva nykyisen pelimoodin kanssa
+
+This plugin isn't compatible with the current Game mode
+Plugin ei ole yhteensopivan nykyisen pelimoodin kanssa
+
+This plugin is is compatible with current installation
+Plugin ei ole yhteensopiva nykyisen asennuksen kanssa

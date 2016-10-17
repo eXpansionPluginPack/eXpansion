@@ -1,0 +1,29 @@
+You got free spot, good luck and have fun!
+Sait vapaan paikan! Onnea ja pidä hauskaa!
+
+Admin has removed you from queue!
+Amin poisti sinut jonosta!
+
+Removed player %s $z$ffffrom queue
+Poistettiin pelaaja %s $z$fffjonosta
+
+Join
+Liity
+
+Hide
+Piilota
+
+Join Queue
+Liity jonoon
+
+Click the button to \njoin the waiting queue!
+Klikkaa painiketta \nliittyäksesi jonoon!
+
+Leave
+Poistu
+
+Remove
+Poista
+
+Waiting Queue
+Odotusjono

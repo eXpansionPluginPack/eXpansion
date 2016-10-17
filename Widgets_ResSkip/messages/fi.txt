@@ -1,0 +1,50 @@
+AddToFav:$s$fffAdd
+AddToFav:$s$fffLisää
+
+AddToFav:$s$fffto
+AddToFav:$s$fff
+
+AddToFav:$s$fffFav's
+AddToFav:$s$fffSuosik.
+
+AddToFav:$ff0Buy
+AddToFav:$ff0Osta
+
+AddToFav:$fffRestart
+AddToFav:$fffAloitus
+
+AddToFav:$ff0Max
+AddToFav:$ff0Max
+
+AddToFav:$fffrestarts
+AddToFav:$fffaloitusta
+
+AddToFav:$ff0reached
+AddToFav:$ff0saavutettu
+
+AddToFav:$fffSkip
+AddToFav:$fffSkip
+
+AddToFav:$fffskips
+AddToFav:$fffskips
+
+Are you sure you want to restart this map
+Oletko varma, että haluat pelata kartan uudelleen
+
+Are you sure you want to skip this map
+Oletko varma, että haluat ohittaa kartan
+
+The restart of this track is in progress!
+Kartta on jo lisätty pelattavaksi uudelleen!
+
+#player#Player #variable# %s #player#pays and restarts the challenge!
+#player#Pelaaja #variable# %s #player#maksaa ja kartta pelataan uudelleen!
+
+#player#Player#variable# %s #player#pays and skips the challenge!
+#player#Pelaaja#variable# %s #player#maksaa ja siirrytään seuraavan karttaan!
+
+#error#The map has already been restarted. Limit reached!
+#error#Huom! Rajoitus tullut vastaan. Kartta on jo pelattu uudestaan!
+
+#error#You have skipped to many maps already!
+#error#Olet ohittanut liian monta karttaa jo!

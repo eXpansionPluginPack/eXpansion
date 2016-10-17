@@ -1,0 +1,8 @@
+MX Map Rating
+MX Map Rating
+
+MXKarma error %1$s: %2$s
+MXKarma error %1$s: %2$s
+
+MXKarma connection Success!
+MXKarma connection Success!

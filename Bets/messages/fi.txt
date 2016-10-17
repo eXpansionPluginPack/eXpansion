@@ -1,0 +1,20 @@
+#donate#No planets billed
+#donate#Veto peruttu
+
+#donate#Error: %1$s
+#donate#Virhe: %1$s
+
+#donate#The server was unable to pay your winning bet. Sorry.
+#donate#Pahoittelut, Palvelin ei onnistunut maksamaan planeettoja.
+
+#donate#Bet accepted for#variable# %1$s #donate#planets
+#donate#Veto hyväksytty: #variable# %1$s #donate#planets
+
+Accept Bet
+Hyväksy veto
+
+Accept bet for %1$s planets ?
+Hyväksy veto: %1$s planetasta ?
+
+Start Bet
+Aloita vedonlyönti

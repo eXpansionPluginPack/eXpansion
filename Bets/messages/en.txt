@@ -1,0 +1,20 @@
+#donate#No planets billed
+#donate#No planets billed
+
+#donate#Error: %1$s
+#donate#Error: %1$s
+
+#donate#The server was unable to pay your winning bet. Sorry.
+#donate#The server was unable to pay your winning bet. Sorry.
+
+#donate#Bet accepted for#variable# %1$s #donate#planets
+#donate#Bet accepted for#variable# %1$s #donate#planets
+
+Accept Bet
+Accept Bet
+
+Accept bet for %1$s planets ?
+Accept bet for %1$s planets ?
+
+Start Bet
+Start Bet

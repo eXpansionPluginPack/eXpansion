@@ -1,0 +1,20 @@
+Number of Players statistics
+Number of Players statistics
+
+Memory usage statistics
+Memory usage statistics
+
+Cpu  usage statistic
+Cpu  usage statistic
+
+Close
+Close
+
+Players
+Players
+
+Memory usage
+Memory usage
+
+Cpu usage
+Cpu usage

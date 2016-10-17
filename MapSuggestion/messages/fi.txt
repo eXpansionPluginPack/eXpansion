@@ -1,0 +1,23 @@
+Wish a map
+Toivo karttaa
+
+From
+Mistä
+
+Mania-Exchange ID-number for map wish
+Toivomasi kartan Mania-Exchange ID numero
+
+Why you would like this map to be added ?
+Miksi haluaisit tämän kartan lisättävän ?
+
+Apply
+Toteuta
+
+Cancel
+Peruuta
+
+Looks like you have not entered any description.
+Näyttäisi siltä, ettet täyttänyt toiveen teksti-kenttää.
+
+Looks like mx id is missing or is invalid.
+Näyttäisi siltä, että mx id puuttuu tai on epäkelpo.

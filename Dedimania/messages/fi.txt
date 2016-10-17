@@ -17,13 +17,13 @@ Cps
 Cps
 
 Dedimania -records for
-#translate# Dedimania -records for
+Dedimania -ennätykset
 
 Dedimania cps for 
-#translate# Dedimania cps for 
+Dedimania CP:t
 
 Checkpoints
-#translate# Checkpoints
+Tarkistuspisteet
 
 Visit Dedimania at Web
-#translate# Visit Dedimania at Web
+Vieraile Dedimanian kotisivuilla

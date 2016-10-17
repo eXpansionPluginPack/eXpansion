@@ -59,4 +59,4 @@ Kuvan www-osoite
 #quiz#Kuvan näyttäminen ei valitettavasi onnistu, väärä kuvaformaatti havaittu.
 
 Ask hidden
-#translate# Ask hidden
+Kysy piilokuvana

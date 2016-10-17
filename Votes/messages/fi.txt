@@ -47,10 +47,10 @@ Configure Votes
 Säädä Äänestyksiä
 
 #error#Restart vote is disabled!
-#translate# #error#Restart vote is disabled!
+#error#Uudelleen pelaamisen äänestys on poistettu käytöstä!
 
 #error#Map limit for voting restart reached.
-#translate# #error#Map limit for voting restart reached.
+#error#Kartan uudelleen pelaamisen rajoitus saavutettu.
 
 #error#Skip vote is disabled!
-#translate# #error#Skip vote is disabled!
+#error#Seuraava kartta -äänestys on poistettu käytöstä!

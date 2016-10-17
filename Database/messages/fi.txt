@@ -4,11 +4,8 @@
 #rank#Congratulations for your #variable#%1$s#rank# win!
 #rank#Onnittelut #variable#%1$s#rank# voiton johdosta!
 
-Database Maintainance
-Tietokannan ylläpito
-
 Database Backup and Restore
 Tietokannan varmuuskopio ja palautus
 
 Database Maintenance
-#translate# Database Maintenance
+Tietokannan Ylläpito

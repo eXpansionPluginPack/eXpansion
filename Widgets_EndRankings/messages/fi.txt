@@ -2,10 +2,10 @@ Server Ranks
 Sijoitukset
 
 Generic Panel
-#translate# Generic Panel
+Generic Panel
 
 Top Playtime
-#translate# Top Playtime
+Top Peliaika
 
 Top Donators
-#translate# Top Donators
+Top Lahjoitukset

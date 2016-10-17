@@ -1,0 +1,20 @@
+Number of Players statistics
+Pelaajat palvelimella
+
+Memory usage statistics
+Muistin käyttö
+
+Cpu  usage statistic
+Prosessorin käyttö
+
+Close
+Sulje
+
+Players
+Pelaajat
+
+Memory usage
+Muistin käyttö
+
+Cpu usage
+CPU käyttö

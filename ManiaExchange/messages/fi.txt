@@ -53,7 +53,7 @@ Map %s $z$s$fff added from MX Succesfully
 Onnistui! Kartta %s $z$s$fff lisätty MX:stä 
 
 Author
-#translate# Author
+Tekijä
 
 Map is not compatible with current server settings, map not added.
 Karttaa ei lisätty, sillä se ei ole yhteensopiva nykyisten palvelimen asetusten kanssa. 
@@ -62,7 +62,7 @@ The Map is not compatible with current server settings, map not added.
 Kartta ei ole yhteensopiva palvelinasetusten kanssa, joten sitä ei lisätty.
 
 $iYou don't have permission to do that!
-#translate# $iYou don't have permission to do that!
+$iSinulla ei ole oikeutta tehdä tätä!
 
  is not a numeric value.
-#translate#  is not a numeric value.
+ ei ole numeerinen arvo.

@@ -55,5 +55,5 @@ Remove
 Removes this value
 #translate# Removes this value
 
-Add to Fav, $login
-#translate# Add to Fav, $login
+Add to Fav
+#translate# Add to Fav

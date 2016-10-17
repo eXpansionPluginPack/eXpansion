@@ -1,0 +1,8 @@
+#player#Will start in #variable#%s#player# sec
+#player#Will start in #variable#%s#player# sec
+
+#player# Start of match!
+#player# Start of match!
+
+#player#Match start will be delayed #variable#%s
+#player#Match start will be delayed #variable#%s

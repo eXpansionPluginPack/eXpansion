@@ -41,10 +41,10 @@ Notice
 Huomio
 
 Auto hide
-#translate# Auto hide
+Autom. piilotus
 
 Show Diff
-#translate# Show Diff
+Näytä erot 
 
 Error
-#translate# Error
+Virhe

@@ -55,5 +55,5 @@ Remove
 Removes this value
 Removes this value
 
-Add to Fav, $login
-Add to Fav, $login
+Add to Fav
+Add to Fav

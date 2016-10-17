@@ -203,46 +203,43 @@ Poistaa nykyisen kartan karttalistalta.
 #admin_error#Ei voitu jatkaa, tämä eXpansion-instanssi on etäkäytössä palvelimeen nähden
 
 Map Info
-#translate# Map Info
+Kartan tiedot
 
 Show Records
-#translate# Show Records
+Näytä ennätykset
 
 $F22Remove this map from server
-#translate# $F22Remove this map from server
+$F22Poista kartta palvelimelta
 
 Map %s $z$s$fffadded to playlist.
-#translate# Map %s $z$s$fffadded to playlist.
-
-#admin_error#This instance of eXpansion is runnin remotelly! Can%s, $this->getRecipient(
-#translate# #admin_error#This instance of eXpansion is runnin remotelly! Can%s, $this->getRecipient(
+Kartta %s $z$s$ffflistätty karttalistalle.
 
 File  deleted from filesystem!
-#translate# File  deleted from filesystem!
+Tiedosto poistettu palvelimelta!
 
 $f00$oError $z$s$fff%s
-#translate# $f00$oError $z$s$fff%s
+$f00$oVirhe $z$s$fff%s
 
 Maps on server
-#translate# Maps on server
+Kartat palvelimella
 
 History of Maps
-#translate# History of Maps
+Karttojen historia
 
 Error:
-#translate# Error:
+Virhe:
 
 Adds previous map back to the Jukebox.
-#translate# Adds previous map back to the Jukebox.
+Lisää edellisen kartan takaisin jukeboksiin.
 
 #admin_error# $iThere are no previously played challenge!
-#translate# #admin_error# $iThere are no previously played challenge!
+#admin_error# $iEi löydä aikaisemmin pelattua karttaa!
 
 Open
-#translate# Open
+Avaa
+
+Display is limiting to first %1$s maps.
+Lista on rajoitettu %1$s karttaan.
 
 #admin_error#This instance of eXpansion is running remote! Can%s, $this->getRecipient(
 #translate# #admin_error#This instance of eXpansion is running remote! Can%s, $this->getRecipient(
-
-Display is limiting to first %1$s maps.
-#translate# Display is limiting to first %1$s maps.

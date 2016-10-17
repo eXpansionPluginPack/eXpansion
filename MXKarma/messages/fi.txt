@@ -1,0 +1,8 @@
+MX Map Rating
+MX Kartan arvio
+
+MXKarma error %1$s: %2$s
+MXKarma virhe %1$s: %2$s
+
+MXKarma connection Success!
+MXKarma: Yhteys muodostettu!

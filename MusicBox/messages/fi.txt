@@ -14,4 +14,4 @@ Toivo
 #music#Seuraava kappale: $z$s#variable# %1$s #music#tekijä#variable# %2$s
 
 MusicBox error http-code: %s
-#translate# MusicBox error http-code: %s
+MusicBox virhe (http-koodilla %s)
