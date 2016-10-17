@@ -1,0 +1,1232 @@
+Server Options
+Server Options
+
+Force Scores
+Force Scores
+
+Game Options
+Game Options
+
+Server Control
+Server Control
+
+Custom Round Points
+Custom Round Points
+
+Match Settings
+Match Settings
+
+Script Settings
+Script Settings
+
+#admin_error#Error: %s
+#admin_error#Error: %s
+
+ForceScores can be used only with rounds or team mode
+ForceScores can be used only with rounds or team mode
+
+ScriptSettings available only in script mode
+ScriptSettings available only in script mode
+
+Database plugin not loaded!
+Database plugin not loaded!
+
+#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
+#admin_action#Admin %s $z$s#admin_action#sets custom round points to #variable#%s
+
+Set
+Set
+
+Custom point
+Custom point
+
+Load
+Load
+
+Save
+Save
+
+Delete
+Delete
+
+Reset scores
+Reset scores
+
+Skip & reset
+Skip & reset
+
+Restart & reset
+Restart & reset
+
+Apply
+Apply
+
+Cancel
+Cancel
+
+Podium: Chat Time
+Podium: Chat Time
+
+All: Warmup Duration
+All: Warmup Duration
+
+All: Finish Timeout
+All: Finish Timeout
+
+TimeAttack: Time Limit
+TimeAttack: Time Limit
+
+TimeAttack: Synch Start Period
+TimeAttack: Synch Start Period
+
+Rounds: Points Limit
+Rounds: Points Limit
+
+Rounds: Set Number of Forced Laps
+Rounds: Set Number of Forced Laps
+
+Rounds: Points Limit (NewRules
+Rounds: Points Limit (NewRules
+
+Team: Points Limit
+Team: Points Limit
+
+Team: Max Points For a Round
+Team: Max Points For a Round
+
+Team: Points Limit (NewRules
+Team: Points Limit (NewRules
+
+Cup: Points Limit
+Cup: Points Limit
+
+Cup: Number of Winners
+Cup: Number of Winners
+
+cup Rounds Per Map
+cup Rounds Per Map
+
+Laps: Number of Laps
+Laps: Number of Laps
+
+Laps: Time Limit
+Laps: Time Limit
+
+Choose Gamemode:
+Choose Gamemode:
+
+Time Attack
+Time Attack
+
+Rounds
+Rounds
+
+Cup
+Cup
+
+Laps
+Laps
+
+Team
+Team
+
+Additional Options:
+Additional Options:
+
+Rounds: use new rules
+Rounds: use new rules
+
+Team: use new rules
+Team: use new rules
+
+Disable Respawn
+Disable Respawn
+
+Force Show All Opponents
+Force Show All Opponents
+
+Save MatchSettings as
+Save MatchSettings as
+
+Load MatchSettings by name
+Load MatchSettings by name
+
+Error in filename
+Error in filename
+
+$f00$oError $z$s$fff%s
+$f00$oError $z$s$fff%s
+
+File  deleted from filesystem!
+File  deleted from filesystem!
+
+Saved MatchSettings to file: %s
+Saved MatchSettings to file: %s
+
+Loaded MatchSettings from file: %s
+Loaded MatchSettings from file: %s
+
+File listing disabled since you are running remote
+File listing disabled since you are running remote
+
+You can tho save and load files from server by the filename!
+You can tho save and load files from server by the filename!
+
+Close
+Close
+
+Control Panel
+Control Panel
+
+Deciated Control
+Deciated Control
+
+Server options
+Server options
+
+Game options
+Game options
+
+Admin Groups
+Admin Groups
+
+Match settings
+Match settings
+
+ScriptMode settings
+ScriptMode settings
+
+Round points
+Round points
+
+Database tools
+Database tools
+
+eXpansion Settings
+eXpansion Settings
+
+Plugin Management
+Plugin Management
+
+Configure Votes
+Configure Votes
+
+Stop Server
+Stop Server
+
+Stop Manialive
+Stop Manialive
+
+Server Name
+Server Name
+
+Players
+Players
+
+Spectators
+Spectators
+
+Ladderpoints minimum
+Ladderpoints minimum
+
+Ladderpoints Maximum
+Ladderpoints Maximum
+
+Password for server
+Password for server
+
+Password for spectators
+Password for spectators
+
+Referee password
+Referee password
+
+Show Server in public server list
+Show Server in public server list
+
+Ladder server
+Ladder server
+
+Allow map download using ingame menu
+Allow map download using ingame menu
+
+Allow Peer-2-Peer download
+Allow Peer-2-Peer download
+
+Allow Peer-2-Peer upload
+Allow Peer-2-Peer upload
+
+Enable Referee-mode
+Enable Referee-mode
+
+Disable Horns
+Disable Horns
+
+Disable Announces
+Disable Announces
+
+Autosave All Replays
+Autosave All Replays
+
+Autosave Validation Replays
+Autosave Validation Replays
+
+Keep Player Slots
+Keep Player Slots
+
+Settings not changed.
+Settings not changed.
+
+This command expect at least one parameter
+This command expect at least one parameter
+
+#admin_error#
+#admin_error#
+
+#admin_error#You need to be an Admin to use that command
+#admin_error#You need to be an Admin to use that command
+
+#admin_error#You don't have the permission to use that admin command
+#admin_error#You don't have the permission to use that admin command
+
+#admin_error#Player #variable#%1$s #admin_action#isn't in the group
+#admin_error#Player #variable#%1$s #admin_action#isn't in the group
+
+#admin_error#Master Admins has all rights. You can't change that!
+#admin_error#Master Admins has all rights. You can't change that!
+
+Admin Commands Help
+Admin Commands Help
+
+Admin Group Permission - %1$s
+Admin Group Permission - %1$s
+
+Admin Group Players - %1$s
+Admin Group Players - %1$s
+
+New Group Name :
+New Group Name :
+
+Add
+Add
+
+Inherits
+Inherits
+
+Admin Group Inherits - %1$s
+Admin Group Inherits - %1$s
+
+Group Name
+Group Name
+
+Nb Players
+Nb Players
+
+Player List
+Player List
+
+Change Permissions
+Change Permissions
+
+Delete Group
+Delete Group
+
+Remove Player
+Remove Player
+
+Command
+Command
+
+Description
+Description
+
+More
+More
+
+Aliases
+Aliases
+
+Permission_
+Permission_
+
+OK
+OK
+
+Login : 
+Login : 
+
+Select
+Select
+
+Settings
+Settings
+
+Name
+Name
+
+Author
+Author
+
+Group
+Group
+
+Search
+Search
+
+You got free spot, good luck and have fun!
+You got free spot, good luck and have fun!
+
+Admin has removed you from queue!
+Admin has removed you from queue!
+
+Removed player %s $z$ffffrom queue
+Removed player %s $z$ffffrom queue
+
+Join
+Join
+
+Hide
+Hide
+
+Join Queue
+Join Queue
+
+Click the button to \njoin the waiting queue!
+Click the button to \njoin the waiting queue!
+
+Leave
+Leave
+
+Remove
+Remove
+
+Waiting Queue
+Waiting Queue
+
+#donate#No planets billed
+#donate#No planets billed
+
+#donate#Error: %1$s
+#donate#Error: %1$s
+
+#donate#The server was unable to pay your winning bet. Sorry.
+#donate#The server was unable to pay your winning bet. Sorry.
+
+#donate#Bet accepted for#variable# %1$s #donate#planets
+#donate#Bet accepted for#variable# %1$s #donate#planets
+
+Accept Bet
+Accept Bet
+
+Accept bet for %1$s planets ?
+Accept bet for %1$s planets ?
+
+Start Bet
+Start Bet
+
+Chat messages enabled.
+Chat messages enabled.
+
+Chat messages disabled.
+Chat messages disabled.
+
+Usage: /chat on or /chat off.
+Usage: /chat on or /chat off.
+
+blacklist
+blacklist
+
+ban
+ban
+
+kick
+kick
+
+Blacklisted Players on the server
+Blacklisted Players on the server
+
+Guest Players on the server
+Guest Players on the server
+
+Ignored Players on the server
+Ignored Players on the server
+
+possible parameters: limit, dynamic, wu
+possible parameters: limit, dynamic, wu
+
+possible parameters: laps, limit, wu, fto, ftimeout
+possible parameters: laps, limit, wu, fto, ftimeout
+
+possible parameters: pointslimit, newrules, wu, fto, ftimeout
+possible parameters: pointslimit, newrules, wu, fto, ftimeout
+
+possible parameters: limit, rounds, nbwin, wu, fto, ftimeout
+possible parameters: limit, rounds, nbwin, wu, fto, ftimeout
+
+#admin_action#Admin #variable#%1$s $z$s#admin_action#shuffles the maps list!
+#admin_action#Admin #variable#%1$s $z$s#admin_action#shuffles the maps list!
+
+add
+add
+
+Ok
+Ok
+
+Chatlog
+Chatlog
+
+You are being ignored. Message not sent.
+You are being ignored. Message not sent.
+
+Wiil load this configuration into current one
+Wiil load this configuration into current one
+
+Will save current configuration
+Will save current configuration
+
+Choose
+Choose
+
+Will load this configuration and use it
+Will load this configuration and use it
+
+Change
+Change
+
+Allows you to edit values
+Allows you to edit values
+
+Reset the settings !
+Reset the settings !
+
+Global Setting, Saved for all servers sharing this configuration
+Global Setting, Saved for all servers sharing this configuration
+
+Server Setting, Saved for this server only
+Server Setting, Saved for this server only
+
+Removes this value
+Removes this value
+
+Settings are now saved!
+Settings are now saved!
+
+Server Stats
+Server Stats
+
+Copy
+Copy
+
+Add to Fav, $login
+Add to Fav, $login
+
+Database Maintenance
+Database Maintenance
+
+Database Backup and Restore
+Database Backup and Restore
+
+#rank#Congratulations for your #variable#%1$s#rank# win!
+#rank#Congratulations for your #variable#%1$s#rank# win!
+
+Dedimania -records for
+Dedimania -records for
+
+Dedimania cps for 
+Dedimania cps for 
+
+#dedirecord#No dedimania records found for the map!
+#dedirecord#No dedimania records found for the map!
+
+Checkpoints
+Checkpoints
+
+Visit Dedimania at Web
+Visit Dedimania at Web
+
+#player#Will start in #variable#%s#player# sec
+#player#Will start in #variable#%s#player# sec
+
+#player# Start of match!
+#player# Start of match!
+
+#player#Match start will be delayed #variable#%s
+#player#Match start will be delayed #variable#%s
+
+Score Rankings
+Score Rankings
+
+Notice: a help page is displayed by an admin!
+Notice: a help page is displayed by an admin!
+
+Notice: Displaying a help page  to 
+Notice: Displaying a help page  to 
+
+$o$18fWhat a precise time! $z$fff %s $z$o$18f($z$fff%s$o$18f)
+$o$18fWhat a precise time! $z$fff %s $z$o$18f($z$fff%s$o$18f)
+
+$o$6f0What a funny time!$z$fff %s $z$o$6f0($z$fff%s$o$6f0)
+$o$6f0What a funny time!$z$fff %s $z$o$6f0($z$fff%s$o$6f0)
+
+$o$f03Eek! What a devilish time!$z$fff %s $z$o$f03($z$fff%s$o$f03)
+$o$f03Eek! What a devilish time!$z$fff %s $z$o$f03($z$fff%s$o$f03)
+
+possible parameters: move, lock, reset
+possible parameters: move, lock, reset
+
+#error#Server Admin has disabled personal huds. Sorry!
+#error#Server Admin has disabled personal huds. Sorry!
+
+Hud reset done!
+Hud reset done!
+
+Starting hud reset, please wait
+Starting hud reset, please wait
+
+Auto hide
+Auto hide
+
+Show Diff
+Show Diff
+
+Configure HUD
+Configure HUD
+
+Yes
+Yes
+
+No
+No
+
+Really do this ?
+Really do this ?
+
+Error
+Error
+
+Notice
+Notice
+
+#ko#KnockOut #variable#starts #ko#after next map
+#ko#KnockOut #variable#starts #ko#after next map
+
+#ko#KnockOut has been #variable#stopped.
+#ko#KnockOut has been #variable#stopped.
+
+#ko#KnockOut! #variable# %1$s $z$s#ko# knocked out, since no finish!
+#ko#KnockOut! #variable# %1$s $z$s#ko# knocked out, since no finish!
+
+#ko#KnockOut! #variable# %1$s $z$s#ko# is the CHAMP!!! congrats
+#ko#KnockOut! #variable# %1$s $z$s#ko# is the CHAMP!!! congrats
+
+Records
+Records
+
+Map Records
+Map Records
+
+Records on a Map
+Records on a Map
+
+Server Ranks
+Server Ranks
+
+CheckPoints on Map
+CheckPoints on Map
+
+Sector Times on Map
+Sector Times on Map
+
+#admin_action#Records saved sucessfully into the database
+#admin_action#Records saved sucessfully into the database
+
+#
+#
+
+NickName
+NickName
+
+Score
+Score
+
+Sector
+Sector
+
+CheckPoint Times
+CheckPoint Times
+
+Average Score
+Average Score
+
+Finishes
+Finishes
+
+Nb Wins
+Nb Wins
+
+Last Rec Date
+Last Rec Date
+
+Play Time
+Play Time
+
+nb Rec
+nb Rec
+
+Login
+Login
+
+Map name
+Map name
+
+Length
+Length
+
+ManiaExchange
+ManiaExchange
+
+Search Maps
+Search Maps
+
+$iYou don't have permission to do that!
+$iYou don't have permission to do that!
+
+Error: %s
+Error: %s
+
+ is not a numeric value.
+ is not a numeric value.
+
+Unable to retrieve track info from MX..  wrong ID..?
+Unable to retrieve track info from MX..  wrong ID..?
+
+Wrong environment!
+Wrong environment!
+
+Map %s $z$s$fff added from MX Succesfully
+Map %s $z$s$fff added from MX Succesfully
+
+The Map is not compatible with current server settings, map not added.
+The Map is not compatible with current server settings, map not added.
+
+Map is not compatible with current server settings, map not added.
+Map is not compatible with current server settings, map not added.
+
+#admin_error# $iYou already have a map in the queue...
+#admin_error# $iYou already have a map in the queue...
+
+#record# $iVote passed!
+#record# $iVote passed!
+
+#admin_error# $iVote failed!
+#admin_error# $iVote failed!
+
+Did you like the map ?
+Did you like the map ?
+
+Map Rating
+Map Rating
+
+Ratings Manager
+Ratings Manager
+
+#rating# $iMap has not been rated yet!
+#rating# $iMap has not been rated yet!
+
+Maps with bad rating removed successfully.
+Maps with bad rating removed successfully.
+
+Open
+Open
+
+Map Info
+Map Info
+
+Show Records
+Show Records
+
+$F22Remove this map from server
+$F22Remove this map from server
+
+Drop
+Drop
+
+Now Playing
+Now Playing
+
+Next Map
+Next Map
+
+Add all
+Add all
+
+Map %s $z$s$fffadded to playlist.
+Map %s $z$s$fffadded to playlist.
+
+File listing disabled since you are running eXpansion remote
+File listing disabled since you are running eXpansion remote
+
+#admin_error#This instance of eXpansion is running remote! Can%s, $this->getRecipient(
+#admin_error#This instance of eXpansion is running remote! Can%s, $this->getRecipient(
+
+Display is limiting to first %1$s maps.
+Display is limiting to first %1$s maps.
+
+Title
+Title
+
+Record
+Record
+
+Rating
+Rating
+
+Actions
+Actions
+
+Search maps
+Search maps
+
+Search Map
+Search Map
+
+Search Author
+Search Author
+
+Sort By Add Date
+Sort By Add Date
+
+Clear Maplist
+Clear Maplist
+
+Jukebox
+Jukebox
+
+Maps on server
+Maps on server
+
+History of Maps
+History of Maps
+
+Are you sure you want to wish this map to be played
+Are you sure you want to wish this map to be played
+
+Error:
+Error:
+
+Removes current map from the playlist.
+Removes current map from the playlist.
+
+Erases current map from the playlist.
+Erases current map from the playlist.
+
+Sets current challenge to replay at end of match
+Sets current challenge to replay at end of match
+
+Adds previous map back to the Jukebox.
+Adds previous map back to the Jukebox.
+
+#queue#/jb uses next params: drop, reset and show
+#queue#/jb uses next params: drop, reset and show
+
+#admin_error#Error downloading, or MX is down!
+#admin_error#Error downloading, or MX is down!
+
+#admin_error#The map is to large to be added to a server
+#admin_error#The map is to large to be added to a server
+
+#admin_error#You must include a MX map ID!
+#admin_error#You must include a MX map ID!
+
+#admin_error# $iYOu can't wish for a map at the moment.
+#admin_error# $iYOu can't wish for a map at the moment.
+
+#admin_error# $iThis map is currently playing...
+#admin_error# $iThis map is currently playing...
+
+#admin_error# $iThis map is already in the queue...
+#admin_error# $iThis map is already in the queue...
+
+#admin_error# $iMap has been played too recently...
+#admin_error# $iMap has been played too recently...
+
+#admin_error# $iYou are not allowed to do that!
+#admin_error# $iYou are not allowed to do that!
+
+#variable#%1$s #queue#removed #variable#%2$s #queue#from the queue..
+#variable#%1$s #queue#removed #variable#%2$s #queue#from the queue..
+
+#admin_action#Admin #variable#%1$s #admin_action#emptied the map queue list
+#admin_action#Admin #variable#%1$s #admin_action#emptied the map queue list
+
+#admin_error# $iChallenge already set to be replayed!
+#admin_error# $iChallenge already set to be replayed!
+
+#queue#Challenge set to be replayed!
+#queue#Challenge set to be replayed!
+
+#admin_error# $iThere are no previously played challenge!
+#admin_error# $iThere are no previously played challenge!
+
+Wish a map
+Wish a map
+
+From
+From
+
+Mania-Exchange ID-number for map wish
+Mania-Exchange ID-number for map wish
+
+Why you would like this map to be added ?
+Why you would like this map to be added ?
+
+Looks like you have not entered any description.
+Looks like you have not entered any description.
+
+Looks like mx id is missing or is invalid.
+Looks like mx id is missing or is invalid.
+
+Queue
+Queue
+
+MusicBox error http-code: %s
+MusicBox error http-code: %s
+
+#music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s
+#music#Next song: $z$s#variable# %1$s #music#by#variable# %2$s
+
+MX Map Rating
+MX Map Rating
+
+MXKarma error %1$s: %2$s
+MXKarma error %1$s: %2$s
+
+MXKarma connection Success!
+MXKarma connection Success!
+
+Kick
+Kick
+
+#personalmessage#Player with login  is not found at server!
+#personalmessage#Player with login  is not found at server!
+
+#personalmessage#No message to send to!
+#personalmessage#No message to send to!
+
+#personalmessage#No one to reply back!
+#personalmessage#No one to reply back!
+
+#personalmessage#You can
+#personalmessage#You can
+
+#personalmessage#Usage /pm [login] your personal message here
+#personalmessage#Usage /pm [login] your personal message here
+
+Ignore player %1$s 
+Ignore player %1$s 
+
+UnIgnore player %1$s 
+UnIgnore player %1$s 
+
+Kick player %1$s 
+Kick player %1$s 
+
+Ban player %1$s 
+Ban player %1$s 
+
+Blacklist player %1$s 
+Blacklist player %1$s 
+
+Force %1$s to play
+Force %1$s to play
+
+Add to guest list
+Add to guest list
+
+Force %1$s to spectate
+Force %1$s to spectate
+
+Ignore player
+Ignore player
+
+UnIgnore player
+UnIgnore player
+
+Kick player
+Kick player
+
+Ban player
+Ban player
+
+Blacklist player
+Blacklist player
+
+Force to play
+Force to play
+
+Force to spectate
+Force to spectate
+
+Ignore List
+Ignore List
+
+Guest List
+Guest List
+
+Ban List
+Ban List
+
+Black List
+Black List
+
+$ff3$iYou are not allowed to do that!
+$ff3$iYou are not allowed to do that!
+
+%s$z$s$fff was ignored by admin %s
+%s$z$s$fff was ignored by admin %s
+
+%s$z$s$fff was unignored by admin %s
+%s$z$s$fff was unignored by admin %s
+
+Admin has forced you to specate!
+Admin has forced you to specate!
+
+Admin has released you from specate to play.
+Admin has released you from specate to play.
+
+Show Players
+Show Players
+
+Question
+Question
+
+Answer
+Answer
+
+Url for image
+Url for image
+
+Ask hidden
+Ask hidden
+
+New question
+New question
+
+#quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2
+#quiz#Question number:#variable# %s$1 #quiz#    Asker:#variable# %s$2
+
+#question#%s?
+#question#%s?
+
+#error#Question needs to be at the right format!
+#error#Question needs to be at the right format!
+
+#quiz#Quiz has been reset!
+#quiz#Quiz has been reset!
+
+Correct from
+Correct from
+
+#quiz#Right answers: $o#question#%s
+#quiz#Right answers: $o#question#%s
+
+#error#Aswer is missing from the question!
+#error#Aswer is missing from the question!
+
+#error#Question is missing from the question!
+#error#Question is missing from the question!
+
+%s #quiz#cancels the question.
+%s #quiz#cancels the question.
+
+#quiz#Current point holders:
+#quiz#Current point holders:
+
+#quiz#$oPoint added for #variable#%s
+#quiz#$oPoint added for #variable#%s
+
+#quiz#$oPoint removed from #variable#%s
+#quiz#$oPoint removed from #variable#%s
+
+Number of Players statistics
+Number of Players statistics
+
+Memory usage statistics
+Memory usage statistics
+
+Cpu  usage statistic
+Cpu  usage statistic
+
+Memory usage
+Memory usage
+
+Cpu usage
+Cpu usage
+
+Top Planet Incomes
+Top Planet Incomes
+
+Top Donators(Amount
+Top Donators(Amount
+
+Top Server Donators(Amount
+Top Server Donators(Amount
+
+Top Server Winners
+Top Server Winners
+
+Top Online Time
+Top Online Time
+
+Top Play Time
+Top Play Time
+
+Top Number tracks played
+Top Number tracks played
+
+Top Finish
+Top Finish
+
+Country with top Finish
+Country with top Finish
+
+Country with top Online Time
+Country with top Online Time
+
+Most winning country
+Most winning country
+
+Country with most players
+Country with most players
+
+#error#Restart vote is disabled!
+#error#Restart vote is disabled!
+
+#error#Map limit for voting restart reached.
+#error#Map limit for voting restart reached.
+
+#variable#%s #vote#initiated restart map vote..
+#variable#%s #vote#initiated restart map vote..
+
+#error#Skip vote is disabled!
+#error#Skip vote is disabled!
+
+#variable#%1$s #vote#initiated skip map vote..
+#variable#%1$s #vote#initiated skip map vote..
+
+Vote limit reached.
+Vote limit reached.
+
+#vote_success# $iVote passed!
+#vote_success# $iVote passed!
+
+#vote_failure# $iVote failed!
+#vote_failure# $iVote failed!
+
+#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
+#admin_action#Admin #variable#%1$s #admin_action# cancelled the vote!
+
+Dedimania Records
+Dedimania Records
+
+Generic Panel
+Generic Panel
+
+Top Playtime
+Top Playtime
+
+Top Donators
+Top Donators
+
+Live Rankings
+Live Rankings
+
+Local Records
+Local Records
+
+Best Scores
+Best Scores
+
+Personal Best
+Personal Best
+
+Average
+Average
+
+Server Rank
+Server Rank
+
+AddToFav:$s$fffAdd
+AddToFav:$s$fffAdd
+
+AddToFav:$s$fffto
+AddToFav:$s$fffto
+
+AddToFav:$s$fffFav's
+AddToFav:$s$fffFav's
+
+AddToFav:$ff0Buy
+AddToFav:$ff0Buy
+
+AddToFav:$fffRestart
+AddToFav:$fffRestart
+
+AddToFav:$ff0Max
+AddToFav:$ff0Max
+
+AddToFav:$fffrestarts
+AddToFav:$fffrestarts
+
+AddToFav:$ff0reached
+AddToFav:$ff0reached
+
+AddToFav:$fffSkip
+AddToFav:$fffSkip
+
+AddToFav:$fffskips
+AddToFav:$fffskips
+
+Are you sure you want to restart this map
+Are you sure you want to restart this map
+
+Are you sure you want to skip this map
+Are you sure you want to skip this map
+
+The restart of this track is in progress!
+The restart of this track is in progress!
+
+#player#Player #variable# %s #player#pays and restarts the challenge!
+#player#Player #variable# %s #player#pays and restarts the challenge!
+
+#player#Player#variable# %s #player#pays and skips the challenge!
+#player#Player#variable# %s #player#pays and skips the challenge!
+
+#error#Player can
+#error#Player can
+
+#error#The map has already been restarted. Limit reached!
+#error#The map has already been restarted. Limit reached!
+
+#error#You can
+#error#You can
+
+#error#You have skipped to many maps already!
+#error#You have skipped to many maps already!
+
+#error# is not a numeric value!
+#error# is not a numeric value!
+
+#error# is less than 1!
+#error# is less than 1!
+
+#info#New time reference point set to %s
+#info#New time reference point set to %s
+
+$o$18fWhat a precise time! $z$fff %s $z$o$18f($z$fff%s$o$18f
+$o$18fWhat a precise time! $z$fff %s $z$o$18f($z$fff%s$o$18f
+
+$o$6f0What a funny time!$z$fff %s $z$o$6f0($z$fff%s$o$6f0
+$o$6f0What a funny time!$z$fff %s $z$o$6f0($z$fff%s$o$6f0
+
+$o$f03Eek! What a devilish time!$z$fff %s $z$o$f03($z$fff%s$o$f03
+$o$f03Eek! What a devilish time!$z$fff %s $z$o$f03($z$fff%s$o$f03

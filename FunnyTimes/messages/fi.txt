@@ -1,0 +1,17 @@
+$o$18fWhat a precise time! $z$fff %s $z$o$18f($z$fff%s$o$18f)
+$o$18fHeh, kuinka tarkka aika! $z$fff %s $z$o$18f($z$fff%s$o$18f)
+
+$o$6f0What a funny time!$z$fff %s $z$o$6f0($z$fff%s$o$6f0)
+$o$6f0Heh, Kuinka hauska aika!$z$fff %s $z$o$6f0($z$fff%s$o$6f0)
+
+$o$f03Eek! What a devilish time!$z$fff %s $z$o$f03($z$fff%s$o$f03)
+$o$f03Iik! Pirullinen aika!$z$fff %s $z$o$f03($z$fff%s$o$f03)
+
+$o$18fWhat a precise time! $z$fff %s $z$o$18f($z$fff%s$o$18f
+#translate# $o$18fWhat a precise time! $z$fff %s $z$o$18f($z$fff%s$o$18f
+
+$o$6f0What a funny time!$z$fff %s $z$o$6f0($z$fff%s$o$6f0
+#translate# $o$6f0What a funny time!$z$fff %s $z$o$6f0($z$fff%s$o$6f0
+
+$o$f03Eek! What a devilish time!$z$fff %s $z$o$f03($z$fff%s$o$f03
+#translate# $o$f03Eek! What a devilish time!$z$fff %s $z$o$f03($z$fff%s$o$f03

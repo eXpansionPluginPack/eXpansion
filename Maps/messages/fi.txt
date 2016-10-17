@@ -238,3 +238,11 @@ Adds previous map back to the Jukebox.
 #admin_error# $iThere are no previously played challenge!
 #translate# #admin_error# $iThere are no previously played challenge!
 
+Open
+#translate# Open
+
+#admin_error#This instance of eXpansion is running remote! Can%s, $this->getRecipient(
+#translate# #admin_error#This instance of eXpansion is running remote! Can%s, $this->getRecipient(
+
+Display is limiting to first %1$s maps.
+#translate# Display is limiting to first %1$s maps.

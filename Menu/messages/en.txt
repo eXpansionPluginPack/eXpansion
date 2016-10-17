@@ -76,9 +76,6 @@ Instant Res
 Replay
 Replay
 
-Skip
-Skip
-
 End Round
 End Round
 

@@ -12,4 +12,3 @@ Tietokannan varmuuskopio ja palautus
 
 Database Maintenance
 #translate# Database Maintenance
-

@@ -89,7 +89,7 @@ Login :
 Login : 
 
 Permission_server_admin
-General Server Administration Permissions ..........
+General Server Administration Permissions 
 
 Permission_player_kick
 Can Kick a Player

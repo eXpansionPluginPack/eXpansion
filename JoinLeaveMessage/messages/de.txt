@@ -24,4 +24,3 @@
 
 #joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# joins! #variable#%4$s #joinmsg#Total Playtime: #variable#%6$s
 #translate# #joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# joins! #variable#%4$s #joinmsg#Total Playtime: #variable#%6$s
-

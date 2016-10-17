@@ -21,4 +21,3 @@ Ton: An
 
 #info#New time reference point set to %s
 #translate# #info#New time reference point set to %s
-

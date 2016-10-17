@@ -67,9 +67,6 @@ Sofort neustarten
 Replay
 Erneut spielen
 
-Skip
-Überspringen
-
 End Round
 Runde beenden
 

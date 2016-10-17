@@ -39,4 +39,3 @@ No
 
 Yes
 #translate# Yes
-

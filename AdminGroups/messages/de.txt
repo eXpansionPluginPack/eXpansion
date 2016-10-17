@@ -104,4 +104,7 @@ Select
 Auswählen
 
 #admin_error#
-#translate# #admin_error#
+#admin_error#
+
+This command expect at least one parameter
+#translate# This command expect at least one parameter

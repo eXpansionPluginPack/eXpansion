@@ -54,4 +54,3 @@ Configure Votes
 
 #error#Skip vote is disabled!
 #error#Skip vote is disabled!
-

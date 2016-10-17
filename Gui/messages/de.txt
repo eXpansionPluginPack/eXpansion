@@ -48,4 +48,3 @@ Show Diff
 
 Error
 #translate# Error
-

@@ -117,4 +117,3 @@ Force to spectate
 
 %s$z$s$fff was unignored by admin %s
 #translate# %s$z$s$fff was unignored by admin %s
-

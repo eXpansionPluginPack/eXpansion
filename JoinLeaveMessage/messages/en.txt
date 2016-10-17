@@ -18,4 +18,3 @@
 
 #player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s
 #player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s
-

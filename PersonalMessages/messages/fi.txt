@@ -21,4 +21,3 @@ Valitse pelaaja lähettääksesi
 
 #personalmessage#You can
 #translate# #personalmessage#You can
-

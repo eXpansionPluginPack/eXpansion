@@ -18,4 +18,3 @@ $n(Katsojana)
 
 #joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# joins! #variable#%4$s #joinmsg#Total Playtime: #variable#%6$s
 #joinmsg#%5$s #variable#%1$s #joinmsg# (#variable#%2$s#joinmsg#) from #variable#%3$s #joinmsg# liittyi peliin! #variable#%4$s #joinmsg#Peliaika yhteensä: #variable#%6$s
-

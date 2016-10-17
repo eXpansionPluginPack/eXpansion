@@ -39,4 +39,3 @@ Yes
 
 Did you like the map ?
 #translate# Did you like the map ?
-

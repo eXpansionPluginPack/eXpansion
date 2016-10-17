@@ -18,4 +18,3 @@
 
 #player#This session play time:#variable# %1$s#player#, Total played on server: #variable#%2$s
 #player#temps de jeu de cette session:#variable# %1$s#player#, Temps total joué sur le serveur: #variable#%2$s
-

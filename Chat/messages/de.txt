@@ -9,4 +9,3 @@ Chat messages disabled.
 
 Usage: /chat on or /chat off.
 #translate# Usage: /chat on or /chat off.
-

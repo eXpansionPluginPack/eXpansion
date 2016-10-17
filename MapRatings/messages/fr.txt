@@ -39,4 +39,3 @@ Circuits avec mauvaise évaluation supprimés.
 
 Ratings Manager
 Gestionnaire d'évaluations
-

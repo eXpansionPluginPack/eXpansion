@@ -15,4 +15,3 @@ File d'attente
 
 MusicBox error http-code: %s
 #translate# MusicBox error http-code: %s
-

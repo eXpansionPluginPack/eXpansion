@@ -12,4 +12,3 @@ Datenbank sichern und wiederherstellen
 
 Database Maintenance
 #translate# Database Maintenance
-

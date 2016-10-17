@@ -21,7 +21,8 @@ foreach ($iterator as $dir) {
             }
         }
 
-        $localefiles = glob($messagedir . DIRECTORY_SEPARATOR . "*.txt");
+        $localefiles = array_merge(["en.txt"], glob($messagedir . DIRECTORY_SEPARATOR . "*.txt"));
+
         foreach ($localefiles as $localefile) {
             $pluginMessages = array();
             $difference = array();
@@ -54,7 +55,7 @@ foreach ($iterator as $dir) {
 
             $outputBuffer = "";
             if (trim($lastRow) != "") {
-                $outBuffer = "\r\n";
+                $outBuffer = "\n";
             }
 
             foreach ($newmessages as $newmessage) {
@@ -75,9 +76,9 @@ foreach ($iterator as $dir) {
             echo $filename . "  old: " . $old . " new:" . $new . "\n";
             // save file
             foreach ($pluginMessages as $key => $value) {
-                $outputBuffer .= $key . "\r\n" . $value . "\r\n\r\n";
+                $outputBuffer .= $key . "\n" . $value . "\n\n";
             }
-            file_put_contents($localefile, $outputBuffer);
+            file_put_contents($localefile, rtrim($outputBuffer, "\n") . "\n");
         }
         echo "Removing the temporarily diff file..\n";
         unlink($messagedir . DIRECTORY_SEPARATOR . $newMessagesFileName);
@@ -86,7 +87,7 @@ foreach ($iterator as $dir) {
 
 function fixMessage($message)
 {
-    $message = rtrim($message, "\r\n");
+    $message = rtrim($message, "\n");
     $message = str_replace("\'", "'", $message);
     $message = str_replace('\"', '"', $message);
 

@@ -21,4 +21,3 @@ Selecteer Speler om bericht te versturen
 
 #personalmessage#You can
 #translate# #personalmessage#You can
-

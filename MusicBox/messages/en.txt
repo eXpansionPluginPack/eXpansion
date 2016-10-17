@@ -15,4 +15,3 @@ Queue
 
 MusicBox error http-code: %s
 MusicBox error http-code: %s
-

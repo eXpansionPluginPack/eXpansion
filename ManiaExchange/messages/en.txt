@@ -66,4 +66,3 @@ $iYou don't have permission to do that!
 
  is not a numeric value.
  is not a numeric value.
-

@@ -117,4 +117,3 @@ Pakota spektaamaan
 
 %s$z$s$fff was unignored by admin %s
 %s$z$s$fff voi puhua. admin: %s
-

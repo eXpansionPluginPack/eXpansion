@@ -54,4 +54,3 @@ Säädä Äänestyksiä
 
 #error#Skip vote is disabled!
 #translate# #error#Skip vote is disabled!
-

@@ -367,3 +367,8 @@ Tiedosto poistettu!
 Control Panel
 Control Panel
 
+Rounds: Points Limit (NewRules
+#translate# Rounds: Points Limit (NewRules
+
+Team: Points Limit (NewRules
+#translate# Team: Points Limit (NewRules

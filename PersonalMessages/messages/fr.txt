@@ -21,4 +21,3 @@ Sélectionner un jouer pour envoyer un message
 
 #personalmessage#You can
 #translate# #personalmessage#You can
-

@@ -57,4 +57,3 @@ Configurer les votes
 
 #error#Skip vote is disabled!
 #translate# #error#Skip vote is disabled!
-

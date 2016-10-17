@@ -21,4 +21,3 @@ Wähle den Spieler, an den die Nachrichten gehn soll
 
 #personalmessage#You can
 #translate# #personalmessage#You can
-

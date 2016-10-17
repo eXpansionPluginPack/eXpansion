@@ -120,4 +120,3 @@ Force to spectate
 
 Admin has forced you to specate!
 #translate# Admin has forced you to specate!
-
