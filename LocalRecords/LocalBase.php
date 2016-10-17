@@ -300,7 +300,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $cmd = AdminGroups::addAdminCommand("delrec", $this, "chat_delRecord", "records_save");
         $cmd->setHelp("Deletes all records by login");
 
-        $this->previewRecordMessages();
+       // $this->previewRecordMessages();
     }
 
     public function previewRecordMessages()
