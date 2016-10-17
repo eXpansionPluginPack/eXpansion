@@ -1,17 +1,17 @@
-Help...
-Ohje...
+Help
+Ohje
 
-Map
+Maps
 Kartat
 
-List Maps...
-Listaa kartat...
+Show Maps
+Listaa kartat
 
-Add local map...
-Lisää paikallinen...
+Add Local Maps
+Lisää kartta
 
-Mania-Exchange...
-Mania-Exchange...
+ManiaExchange
+ManiaExchange
 
 Remove this
 Poista tämä
@@ -19,53 +19,53 @@ Poista tämä
 Trash this
 Poista pysyvästi
 
-Stats
-Stats
+Records
+Ennätykset
 
-Show Records...
-Näytä ennätykset...
+Dedimania
+Dedimania
 
-Top 100 Ranks...
-Top 100 Rankit...
+Local
+Ennätykset
 
-Statistics...
-Statistiikat...
+Hall of Fame
+Parhaat pelaajat
 
-Server info...
-Palvelimen tiedot...
+Server ranks
+Palvelimen rankit
+
+Statistics
+Tilastot
+
+Server Info
+Tietoja...
 
 Players
 Pelaajat
 
-List Players...
-Pelaajalista...
-
-Rage Quit...
-Lopeta karjuen...
-
 Hud
 Widgetit
 
-Move Positions
-Siirrä paikkoja
+Move
+Siirrä
 
-Lock Positions
-Lukitse paikat
+Lock
+Lukitse
 
-Show/Hide elements...
-Näytä/Piilota näkymää...
+Config...
+Asetukset...
 
-Reset Positions
-Palauta oletusarvot
+Reset
+Palauta
 
 Votes
 Äänestys
 
-Vote Restart
-Uudelleenaloitus
+Restart
+Uudelleen aloitus
 
-Vote Skip
-Vaihda kartta seuraavaan
+Skip
+Seuraava kartta
 
 Cancel Vote
 Peruuta äänestys
@@ -74,13 +74,10 @@ Admin
 Admin
 
 Instant Restart
-Aloita heti!
+Aloita heti
 
 Replay
 Aloita viiveellä
-
-Skip
-Seuraava kartta
 
 End Round
 Päätä kierros
@@ -88,84 +85,5 @@ Päätä kierros
 Server Controls
 Palvelimen asetukset
 
-Help
-Ohje
-
-Show Maplist
-Näytä Karttalista
-
-Show Records
-Kartan Ennätykset
-
-Show Players
-Näytä Pelaajat
-
-Add local map
-Lisää paikallinen kartta
-
-Mania-Exchange
-Mania-Exchange
-
-Statistics
-Statistiikat
-
-Maps
-Kartat
-
-Records
-Ennätykset
-
-Hall of Fame
-Hall of Fame
-
-Server Ranks
-Palvelimen ranking
-
-Dedimania
-Dedimania
-
-Move
-Siirrä
-
-Lock
-Lukitse
-
-Reset
-Nollaa
-
-Config...
-Asetukset...
-
-Vote
-Äänestys
-
-Restart
-Uudestaan
-
-Cancel
-Peruuta
-
-Config
-Asetukset
-
 Balance Teams
-Balansoi Tiimit
-
-Server Control
-Palvelinasetukset
-
-Admin Groups
-Ylläpitoryhmät
-
-Plugins
-Pluginit
-
-Settings
-Asetukset
-
-Update
-Päivitä
-
-Server Info
-Tietoja
-
+Balansoi tiimit

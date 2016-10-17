@@ -1,17 +1,20 @@
-Help...
-Help...
+Help
+Help
 
-Map
-Map
+Players
+Players
 
-List Maps...
-List Maps...
+Maps
+Maps
 
-Add local map...
-Add local map...
+Show Maps
+Show Maps
 
-Mania-Exchange...
-Mania-Exchange...
+Add Local Maps
+Add Local Maps
+
+ManiaExchange
+ManiaExchange
 
 Remove this
 Remove this
@@ -19,110 +22,41 @@ Remove this
 Trash this
 Trash this
 
-Stats
-Stats
-
-Show Records...
-Show Records...
-
-Top 100 Ranks...
-Top 100 Ranks...
-
-Statistics...
-Statistics...
-
-Server info...
-Server info...
-
-Players
-Players
-
-List Players...
-List Players...
-
-Rage Quit...
-Rage Quit...
-
-Hud
-Hud
-
-Move Positions
-Move Positions
-
-Lock Positions
-Lock Positions
-
-Show/Hide elements...
-Show/Hide elements...
-
-Reset Positions
-Reset Positions
-
-Votes
-Votes
-
-Vote Restart
-Vote Restart
-
-Vote Skip
-Vote Skip
-
-Cancel Vote
-Cancel Vote
-
-Admin
-Admin
-
-Instant Restart
-Instant Restart
-
-Replay
-Replay
-
-Skip
-Skip
-
-End Round
-End Round
-
-Server Controls
-Server Controls
-
-Help
-Help
-
-Show Maplist
-Show Maplist
-
-Show Records
-Show Records
-
-Show Players
-Show Players
-
-Add local map
-Add local map
-
-Mania-Exchange
-Mania-Exchange
-
-Statistics
-Statistics
-
-Maps
-Maps
-
 Records
 Records
+
+Dedimania
+Dedimania
+
+Local
+Local
 
 Hall of Fame
 Hall of Fame
 
-Server Ranks
-Server Ranks
+Server ranks
+Server ranks
 
-Dedimania
-Dedimania
+Statistics
+Statistics
+
+Vote
+Vote
+
+Skip
+Skip
+
+Res
+Res
+
+Config...
+Config...
+
+Cancel
+Cancel
+
+Hud
+Hud
 
 Move
 Move
@@ -133,39 +67,29 @@ Lock
 Reset
 Reset
 
-Config...
-Config...
+Admin
+Admin
 
-Vote
-Vote
+Instant Res
+Instant Res
 
-Restart
-Restart
+Replay
+Replay
 
-Cancel
-Cancel
+Skip
+Skip
 
-Config
-Config
+End Round
+End Round
 
-Balance Teams
-Balance Teams
+Balance teams
+Balance teams
 
 Server Control
 Server Control
 
-Admin Groups
-Admin Groups
+Control Panel
+Control Panel
 
-Plugins
-Plugins
-
-Settings
-Settings
-
-Update
-Update
-
-Server Info
-Server Info
-
+Plugin Manager
+Plugin Manager

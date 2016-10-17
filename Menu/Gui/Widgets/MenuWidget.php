@@ -55,7 +55,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 
         /* @var $label \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel */
         $label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(30, 5);
-        $label->setText("    " . \eXpGetMessage($itemName, null));
+        $label->setText(eXpGetMessage($itemName));
         $label->setAttribute("class", "menu item");
         $label->setScriptEvents();
         $label->setTextSize(1);

@@ -1,17 +1,17 @@
-Help...
-Aide...
+Help
+Aide
 
 Map
 Circuit
 
-List Maps...
-Liste des Circuits...
+Maps
+Circuits
 
-Add local map...
-Ajout circuit local...
+Add Local Maps
+Ajout circuit local
 
-Mania-Exchange...
-Mania-Exchange...
+ManiaExchange
+ManiaExchange
 
 Remove this
 Enlever celle-ci
@@ -19,41 +19,21 @@ Enlever celle-ci
 Trash this
 Effacer celle-ci
 
-Stats
-Stats
 
-Show Records...
-Afficher les Record...
+Records
+Afficher les Record
 
-Top 100 Ranks...
-Top 100 Ranks...
-
-Statistics...
-Statistics...
-
-Server info...
-Info Serveur...
+Server Info
+Info Serveur
 
 Players
 Joueurs
 
-List Players...
-List des Joueurs...
-
-Rage Quit...
-Rage Quit...
-
 Hud
 Hud
 
-Move Positions
-Bouger les éléments
-
-Lock Positions
-Bloquer les éléments
-
-Show/Hide elements...
-Afficher/Cacher elements...
+Lock
+Bloquer
 
 Reset Positions
 Mettre a zéro
@@ -61,17 +41,14 @@ Mettre a zéro
 Votes
 Votes
 
-Vote Restart
-Redémarrer le vote
+Restart
+Redémarrer
 
-Vote Skip
-Passer le vote
+Skip
+Passer
 
 Cancel Vote
 Annuler le vote
-
-Admin
-Admin
 
 Instant Restart
 Redémarrage Instantané 
@@ -83,34 +60,19 @@ Skip
 Passer
 
 End Round
-Fin du ROund
+Fin du Round
 
 Server Controls
-Control du ServeurHelp
-
-Help
-Aide
+Control du Serveur
 
 Maps
 Circuits
 
-Add local map
-Ajouter un circuit local
-
-Mania-Exchange
-Mania-Exchange
-
-Records
-Records
-
 Hall of Fame
 Panthéon
 
-Server Ranks
+Server ranks
 Rangs Serveur
-
-Dedimania
-Dedimania
 
 Statistics
 Statistiques
@@ -124,8 +86,8 @@ Bloquer
 Reset
 Réinitialiser
 
-Config...
-Config...
+Config
+Config
 
 Vote
 Vote

@@ -1,17 +1,17 @@
-Help...
-Hilfe...
+Help
+Hilfe
 
 Map
 Strecke
 
-List Maps...
-Strecken anzeigen...
+Show Maps
+Strecken anzeigen
 
-Add local map...
-Strecke lokal hinzufügen...
+Add Local Maps
+Strecke lokal hinzufügen
 
-Mania-Exchange...
-Mania-Exchange...
+ManiaExchange
+ManiaExchange
 
 Remove this
 Diese Strecke entfernen
@@ -19,53 +19,41 @@ Diese Strecke entfernen
 Trash this
 Diese Strecke löschen
 
-Stats
+Statistics
 Statistiken
 
-Show Records...
-Rekorde anzeigen...
+Records
+Rekorde
 
-Top 100 Ranks...
-Top 100 Ränge...
-
-Statistics...
-Statistiken...
-
-Server info...
-Server Infos...
+Server Info
+Server Infos
 
 Players
 Spieler
 
-List Players...
-Spieler anzeigen...
-
-Rage Quit...
-Ragequit...
-
 Hud
 HUD
 
-Move Positions
-Positionen bewegen
+Move
+Bewegen
 
-Lock Positions
-Positionen halten
+Lock
+Halten
 
-Show/Hide elements...
-Elemente anzeigen/verstecken...
+Config...
+#translate#Config...
 
-Reset Positions
-Positionen zurücksetzen
+Reset
+Zurücksetzen
 
 Votes
 Abstimmungen
 
-Vote Restart
-Für Neustart stimmen
+Res
+Neustart
 
-Vote Skip
-Für Überspringen stimmen
+Skip
+Überspringen
 
 Cancel Vote
 Abstimmung abbrechen
@@ -87,85 +75,3 @@ Runde beenden
 
 Server Controls
 Server-Steuerung
-
-Help
-#translate# Help
-
-Show Maplist
-Mapliste anzeigen
-
-Show Records
-Rekorde anzeigen
-
-Show Players
-Spieler anzigen
-
-Add local map
-Lokale Map hinzufg.
-
-Mania-Exchange
-Mania-Exchange
-
-Statistics
-Statistiken
-
-Maps
-#translate# Maps
-
-Records
-#translate# Records
-
-Hall of Fame
-#translate# Hall of Fame
-
-Server Ranks
-#translate# Server Ranks
-
-Dedimania
-#translate# Dedimania
-
-Move
-#translate# Move
-
-Lock
-#translate# Lock
-
-Reset
-#translate# Reset
-
-Config...
-#translate# Config...
-
-Vote
-#translate# Vote
-
-Restart
-#translate# Restart
-
-Cancel
-#translate# Cancel
-
-Config
-#translate# Config
-
-Balance Teams
-#translate# Balance Teams
-
-Server Control
-#translate# Server Control
-
-Admin Groups
-#translate# Admin Groups
-
-Plugins
-#translate# Plugins
-
-Settings
-#translate# Settings
-
-Update
-#translate# Update
-
-Server Info
-#translate# Server Info
-

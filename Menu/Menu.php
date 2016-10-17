@@ -219,7 +219,7 @@ class Menu extends ExpPlugin implements Listener
             }
 
             if ($group->hasPermission(Permission::TEAM_BALANCE)) {
-                $admGroup->addItem("Balance teams", "!teambalance", $this);
+                $admGroup->addItem("Balance Teams", "!teambalance", $this);
             }
         }
 
