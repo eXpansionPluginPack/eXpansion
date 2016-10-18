@@ -300,7 +300,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $cmd = AdminGroups::addAdminCommand("delrec", $this, "chat_delRecord", "records_save");
         $cmd->setHelp("Deletes all records by login");
 
-       // $this->previewRecordMessages();
+        //$this->previewRecordMessages();
     }
 
     public function previewRecordMessages()
@@ -319,7 +319,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 $msg,
                 null,
                 array(
-                    \ManiaLib\Utils\Formatting::stripCodes("test", 'wosnm'),
+                    \ManiaLib\Utils\Formatting::stripCodes('test', 'wosnm'),
                     rand(1, 100),
                     Time::fromTM(rand(10000, 100000)),
                     rand(1, 100),

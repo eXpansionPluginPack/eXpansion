@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Dedimania;
 
 use ManiaLive\Application\ErrorHandling;
 use ManiaLive\Event\Dispatcher;
+use ManiaLive\Utilities\Time;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection as DediConnection;
 use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as DediEvent;
@@ -58,15 +59,16 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
     {
         $this->setPublicMethod("isRunning");
         $this->config = Config::getInstance();
+
     }
 
     public function eXpOnLoad()
     {
         $helpText = "\n\nPlease correct your config with these instructions: \nEdit and add following configuration "
-            ."lines to manialive config.ini\n\n ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config."
-            ."login = 'your_server_login_here' \n "
-            ."ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config.code = 'your_server_code_here' \n\n "
-            ."Visit http://dedimania.net/tm2stats/?do=register to get code for your server.";
+            . "lines to manialive config.ini\n\n ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config."
+            . "login = 'your_server_login_here' \n "
+            . "ManiaLivePlugins\\eXpansion\\Dedimania_Script\\Config.code = 'your_server_code_here' \n\n "
+            . "Visit http://dedimania.net/tm2stats/?do=register to get code for your server.";
         if (empty($this->config->login)) {
             $this->console("Server login is not configured for dedimania plugin!");
             $this->running = false;
@@ -78,11 +80,11 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         Dispatcher::register(DediEvent::getClass(), $this);
         $this->dedimania = DediConnection::getInstance();
         $this->msg_record = eXpGetMessage(
-            '%1$s #rank#%2$s.#dedirecord# '
-            .'Dedimania Record!  #rank#%2$s: #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)'
+            '%1$s #dedirecord#claims #rank#%2$s.#dedirecord# '
+            . 'Dedimania Record! #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)'
         );
         $this->msg_newRecord = eXpGetMessage(
-            '%1$s #rank#%2$s.#dedirecord# Dedimania Record! #time#%3$s'
+            '%1$s #dedirecord#new #rank#%2$s.#dedirecord# Dedimania Record! #time#%3$s'
         );
         $this->msg_norecord = eXpGetMessage('#dedirecord#No dedimania records found for the map!');
     }
@@ -100,7 +102,35 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         );
 
         $this->tryConnection();
+       // $this->previewDediMessages();
     }
+
+    public function previewDediMessages()
+    {
+
+        $this->eXpChatSendServerMessage(
+            $this->msg_record,
+            null,
+            array(
+                \ManiaLib\Utils\Formatting::stripCodes('test', 'wosnm'),
+                rand(1, 100),
+                Time::fromTM(rand(10000, 100000)),
+                rand(1, 100), Time::fromTM(rand(10000, 100000))
+            )
+        );
+
+        $this->eXpChatSendServerMessage(
+            $this->msg_newRecord,
+            null,
+            array(
+                \ManiaLib\Utils\Formatting::stripCodes('test', 'wosnm'),
+                rand(1, 100),
+                Time::fromTM(rand(10000, 100000))
+            )
+        );
+
+    }
+
 
     private $settingsChanged = array();
 
