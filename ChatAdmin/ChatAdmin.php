@@ -392,15 +392,16 @@ Other server might use the same blacklist file!!'
         AdminGroups::addAlias($cmd, 'stop dedi');
 
         $cmd = AdminGroups::addAdminCommand(
-            'stop manialive',
+            'manialive stop',
             $this,
             'stopManiaLive',
             Permission::SERVER_STOP_MANIALIVE
         );
         $cmd->setHelp("Stops the Manialive instance running on for the server.");
-        AdminGroups::addAlias($cmd, 'stop exp');
-        AdminGroups::addAlias($cmd, 'stop expansion');
+        AdminGroups::addAlias($cmd, 'exp stop');
+        AdminGroups::addAlias($cmd, 'expansion stop');
         AdminGroups::addAlias($cmd, 'manialive stop');
+
         $cmd = AdminGroups::addAdminCommand(
             'manialive restart',
             $this,
@@ -408,8 +409,11 @@ Other server might use the same blacklist file!!'
             Permission::SERVER_STOP_MANIALIVE
         );
         $cmd->setHelp("Restart the Manialive instance running on for the server.");
-        AdminGroups::addAlias($cmd, 'res exp');
-        AdminGroups::addAlias($cmd, 'res expansion');
+        AdminGroups::addAlias($cmd, 'manialive res');
+        AdminGroups::addAlias($cmd, 'exp restart');
+        AdminGroups::addAlias($cmd, 'exp res');
+        AdminGroups::addAlias($cmd, 'expansion res');
+        AdminGroups::addAlias($cmd, 'expansion restart');
 
         /*
          * *************************

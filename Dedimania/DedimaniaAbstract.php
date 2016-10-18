@@ -82,7 +82,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
             .'Dedimania Record!  #rank#%2$s: #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)'
         );
         $this->msg_newRecord = eXpGetMessage(
-            '%1$s #rank#%2.$s#dedirecord# Dedimania Record! #time#%3$s'
+            '%1$s #rank#%2$s.#dedirecord# Dedimania Record! #time#%3$s'
         );
         $this->msg_norecord = eXpGetMessage('#dedirecord#No dedimania records found for the map!');
     }
