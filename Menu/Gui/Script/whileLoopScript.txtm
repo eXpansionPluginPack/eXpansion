@@ -81,8 +81,7 @@ if (toggleSubmenu) {
                         declare subFrame = (Page.GetFirstChild(Event.Control.DataAttributeGet("label")) as CMlFrame);
                         Page.GetClassChildren("sub" , subFrame , True);
                         foreach (control in Page.GetClassChildren_Result) {
-                            declare lbl = (control as CMlLabel);
-                            lbl.Show();
+                            control.Show();
                         }
                     }
 
@@ -103,9 +102,10 @@ if (toggleSubmenu) {
 if (needUpdate) {
     needUpdate = False;
 
-    if (showStatus) {
+ if (showStatus) {
         Menu.Show();
-         outText = "";
+        showStamp = Now;
+        outText = "";
                 foreach (idd => dump in eXp_widgetVisible[version]) {
                     if (!eXp_widgetVisible[version][idd].existskey(gameMode)) {
                         continue;
@@ -116,24 +116,72 @@ if (needUpdate) {
                                 bool = "1";
                             }
                             outText = outText ^ idd ^ ":" ^ gameMode ^ ":" ^ bool ^ "|";
-
                     }
                     // log(outText);
                     widgetStatus.Value = outText;
                     needHidden = True;
-
-    } else {
-        if (needHidden) {
-            hideStamp = Now;
-            needHidden = False;
-            toggleSubmenu = False;
-            Menu.Hide();
-           }
+} else {
+    if (needHidden) {
+        showStamp = 0;
+        hideStamp = Now;
+        needHidden = False;
+        toggleSubmenu = False;
+        hideSubMenu();
+       }
     }
 }
 
-if(!toggleSubmenu && Menu.Visible && (Now - hideStamp) > 300) {
+if(!toggleSubmenu && Menu.Visible && (Now - hideStamp) > 1000) {
     Menu.Hide();
+}
+
+if (hideStamp != 0) {
+
+    if ((Now - hideStamp) > 600) {
+        hideStamp = 0;
+    }
+       declare delay = 340;
+       for (i, 1, itemCount ) {
+           declare quad = (Page.GetFirstChild("quad_"^i) as CMlQuad);
+   	       declare item = (Page.GetFirstChild("item_"^i) as CMlLabel);
+   	       declare quad2 = (Page.GetFirstChild("mQuad_"^i) as CMlQuad);
+   	       declare time = (Now - hideStamp);
+           if (time < 0) {
+               time = 0;
+           }
+           if (quad != Null) {
+                quad.Scale = AL::Ease("LinearOut", (time - delay) * 1., .75, -.75, 350.);
+           }
+           if (quad2 != Null) {
+                quad2.Opacity = AL::Ease("LinearOut", (time - delay) * 1., .75, -.75, 350.);
+           }
+           item.Opacity = AL::Ease("LinearOut", (time -delay) * 1., 1., -1., 350.);
+           delay -= 40;
+       }
+}
+
+if (showStamp != 0) {
+    if ((Now - showStamp) > 600) {
+        showStamp = 0;
+    }
+      declare delay = 0;
+          for (i, 1, itemCount ) {
+              declare quad = (Page.GetFirstChild("quad_"^i) as CMlQuad);
+      	      declare item = (Page.GetFirstChild("item_"^i) as CMlLabel);
+      	      declare quad2 = (Page.GetFirstChild("mQuad_"^i) as CMlQuad);
+      	      declare time = (Now - showStamp);
+              if (time < 0) {
+                  time = 0;
+              }
+              if (quad != Null) {
+               quad.Scale = AL::Ease("LinearOut", (time - delay) * 1.,  0., 0.75, 350.);
+              }
+              if (quad2 != Null) {
+                quad2.Opacity = AL::Ease("LinearOut", (time-delay) * 1., 0., 0.75, 350.);
+              }
+              item.Opacity = AL::Ease("LinearOut", (time-delay) * 1., 0., 1., 350.);
+              delay += 40;
+          }
 }
 
 if (MouseLeftButton) {

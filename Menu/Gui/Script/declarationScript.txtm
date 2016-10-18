@@ -13,6 +13,7 @@ declare Text version = "<?php echo $this->version ?>";
 declare Text id = "<?php echo $this->name ?>";
 declare Text gameMode = "<?php echo $this->gameMode; ?>";
 declare Boolean forceReset = <?php echo $this->forceReset ?>;
+declare Integer itemCount = <?php echo $this->itemCount ?>;
 
 declare Boolean eXp_mouseRightState = False;
 declare eXp_mouseRightTime = 0;
@@ -23,6 +24,7 @@ declare Boolean eXp_mouseMiddleState = False;
 declare eXp_mouseMiddleTime = 0;
 declare lastMousePos = <0., 0.>;
 declare hideStamp = 0;
+declare showStamp = 0;
 
 declare Boolean exp_enableHudMove for UI = False;
 declare Boolean exp_needToCheckPersistentVars for UI = False;
@@ -48,9 +50,7 @@ Menu.RelativePosition.Z = 30.0;
 
 Page.GetClassChildren("sub" , Menu , True);
 foreach (control in Page.GetClassChildren_Result) {
-    declare lbl = (control as CMlLabel);
-    //   log(lbl);
-       lbl.Hide();
+   control.Hide();
 }
 
 ClientUI.OverlayHideChat = !exp_chatVisible;

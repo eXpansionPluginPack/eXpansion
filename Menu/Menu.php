@@ -35,6 +35,7 @@ class Menu extends ExpPlugin implements Listener
         Dispatcher::register(Event::getClass(), $this);
         $this->prepareMenu();
         $this->enableDedicatedEvents();
+        $this->registerChatCommand("menu", "prepareMenu", 0, false);
     }
 
     public function eXpAdminAdded($login)
