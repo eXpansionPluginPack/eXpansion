@@ -102,7 +102,7 @@ class ConfPluginList extends Window
         $outArray = array();
         // sync checkboxes
         foreach ($this->items as $item) {
-            foreach ($item->getComponents() as &$component) {
+            foreach ($item->getComponents() as $component) {
                 if ($component instanceof CheckboxScripted) {
                     $component->setArgs($args);
                 }
