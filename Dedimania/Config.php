@@ -11,4 +11,6 @@ class Config extends \ManiaLib\Utils\Singleton
     public $show_welcome_msg = true;
     public $disableMessages = false;
     public $noRedirectTreshold = 30;
+    public $allowBannedPlayersToJoin = false;
+
 }

@@ -402,7 +402,6 @@ class Connection extends \ManiaLib\Utils\Singleton implements AppListener, TickL
 
         if ($player->login == $this->storage->serverLogin) {
             $this->debug("Abort. tried to send server login.");
-
             return;
         }
 

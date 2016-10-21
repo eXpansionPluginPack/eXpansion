@@ -8,6 +8,7 @@ use ManiaLive\Utilities\Time;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Dedimania\Classes\Connection as DediConnection;
 use ManiaLivePlugins\eXpansion\Dedimania\Events\Event as DediEvent;
+use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediPlayer;
 use ManiaLivePlugins\eXpansion\Dedimania\Structures\DediRecord;
 
 /**
@@ -52,6 +53,10 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
     protected $msg_newRecord;
     protected $msg_norecord;
     protected $msg_record;
+    protected $msg_welcome;
+    protected $msg_premium;
+    protected $msg_regular;
+
     public static $actionOpenRecs = -1;
     public static $actionOpenCps = -1;
 
@@ -83,6 +88,10 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
             '%1$s #dedirecord#claims #rank#%2$s.#dedirecord# '
             . 'Dedimania Record! #time#%3$s #dedirecord#(#rank#%4$s #time#-%5$s#dedirecord#)'
         );
+        $this->msg_welcome = eXpGetMessage('#variable#Dedimania $0f0Connected! #variable#Top #rank#%1$s #variable#records enabled for you (%2$s #variable#account)');
+        $this->msg_premium = eXpGetMessage('$FC3p$FD2r$FE1e$FF0m$FF0i$FE2u$FC3m');
+        $this->msg_regular = eXpGetMessage('regular');
+
         $this->msg_newRecord = eXpGetMessage(
             '%1$s #dedirecord#new #rank#%2$s.#dedirecord# Dedimania Record! #time#%3$s'
         );
@@ -423,7 +432,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
      *
      * @param Structures\DediRecord $record
      * @param Structures\DediRecord $oldRecord
-     */
+         */
     public function onDedimaniaRecord($record, $oldRecord)
     {
         $this->debug("improved dedirecord:");
@@ -475,9 +484,20 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         }
     }
 
-    public function onDedimaniaPlayerConnect($data)
+    /**
+     * @param DediPlayer $playerData
+     */
+    public function onDedimaniaPlayerConnect($playerData)
     {
+        if ($playerData->banned && !$this->config->allowBannedPlayersToJoin) {
+            $this->connection->kick($playerData->login, "Can't join server, you're banned from dedimania!");
+        }
 
+        $out = $this->msg_regular;
+        if ($playerData->maxRank > 15) {
+            $out = $this->msg_premium;
+        }
+        $this->eXpChatSendServerMessage($this->msg_welcome, $playerData->login, array($playerData->maxRank, $out), true);
     }
 
     public function onDedimaniaPlayerDisconnect($login)

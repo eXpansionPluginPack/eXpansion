@@ -8,6 +8,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Dedimania;
 
+use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
@@ -52,6 +53,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         );
         $var->setDescription('For server code: click the header or visit http://dedimania.net');
         $var->setDefaultValue("");
+        $this->registerVariable($var);
+
+        $var = new Boolean("allowBannedPlayersToJoin", "Allow dedimania gloabal banned player to join server ?", $config, false, false);
+        $var->setDefaultValue(false);
         $this->registerVariable($var);
 
         $var = new TypeInt("noRedirectTreshold", "If you use notifications plugin, show normal chat message for top records", $config, false, false);
