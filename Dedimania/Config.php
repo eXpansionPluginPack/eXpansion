@@ -10,4 +10,5 @@ class Config extends \ManiaLib\Utils\Singleton
     public $show_record_msg_to_all = true;
     public $show_welcome_msg = true;
     public $disableMessages = false;
+    public $noRedirectTreshold = 30;
 }

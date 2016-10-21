@@ -14,5 +14,5 @@ class Config extends \ManiaLib\Utils\Singleton
     public $ranking = true;
     public $resetRanks = false;
     public $saveRecFrequency = 0;
-
+    public $noRedirectTreshold = 30;
 }

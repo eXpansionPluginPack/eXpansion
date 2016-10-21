@@ -697,6 +697,14 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         }
     }
 
+    private function checkRecordTreshold($place)
+    {
+        if ($place <= Config::getInstance()->noRedirectTreshold) {
+            return true;
+        }
+        return false;
+    }
+
     public function onPlayerDisconnect($login, $reason = null)
     {
         if (isset($this->player_ranks[$login]) && $this->player_ranks[$login] > 100) {
@@ -867,14 +875,16 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                         }
                     }
                     if ($nrecord->place <= $this->config->recordPublicMsgTreshold) {
+
                         $this->eXpChatSendServerMessage(
                             $msg,
                             null,
                             array(
                                 \ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'),
                                 $nrecord->place,
-                                $time
-                            )
+                                $time,
+                            ),
+                            $this->checkRecordTreshold($nrecord->place)
                         );
                     } else {
                         $this->eXpChatSendServerMessage(
@@ -884,7 +894,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                                 \ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'),
                                 $nrecord->place,
                                 $time
-                            )
+                            ),
+                            $this->checkRecordTreshold($nrecord->place)
                         );
                     }
                     // improves time
@@ -906,7 +917,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                                 $time,
                                 $recordrank_old,
                                 $securedBy
-                            )
+                            ),
+                            $this->checkRecordTreshold($nrecord->place)
                         );
                     } else {
                         $this->eXpChatSendServerMessage(
@@ -918,7 +930,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                                 $time,
                                 $recordrank_old,
                                 $securedBy
-                            )
+                            ),
+                            $this->checkRecordTreshold($nrecord->place)
                         );
                     }
                 }
@@ -948,7 +961,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                                 $time,
                                 $recordrank_old,
                                 $securedBy
-                            )
+                            ),
+                            $this->checkRecordTreshold($nrecord->place)
                         );
                     } else {
                         $this->eXpChatSendServerMessage(
@@ -960,7 +974,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                                 $time,
                                 $recordrank_old,
                                 $securedBy
-                            )
+                            ),
+                            $this->checkRecordTreshold($nrecord->place)
                         );
                     }
 
@@ -984,7 +999,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                                     \ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'),
                                     $nrecord->place,
                                     $time
-                                )
+                                ),
+                                $this->checkRecordTreshold($nrecord->place)
                             );
                         } else {
                             $this->eXpChatSendServerMessage(
@@ -994,7 +1010,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                                     \ManiaLib\Utils\Formatting::stripCodes($nrecord->nickName, 'wosnm'),
                                     $nrecord->place,
                                     $time
-                                )
+                                ),
+                                $this->checkRecordTreshold($nrecord->place)
                             );
                         }
 

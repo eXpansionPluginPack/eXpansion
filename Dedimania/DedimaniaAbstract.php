@@ -102,7 +102,7 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
         );
 
         $this->tryConnection();
-       // $this->previewDediMessages();
+        // $this->previewDediMessages();
     }
 
     public function previewDediMessages()
@@ -404,11 +404,15 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
                     $time = substr($time, 2);
                 }
             }
-
+            $noRedirect = false;
+            if ($record->place <= Config::getInstance()->noRedirectTreshold) {
+                $noRedirect = true;
+            }
             $this->eXpChatSendServerMessage(
                 $this->msg_newRecord,
                 $recepient,
-                array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time)
+                array(\ManiaLib\Utils\Formatting::stripCodes($record->nickname, "wos"), $record->place, $time),
+                $noRedirect
             );
         } catch (\Exception $e) {
             $this->console("Error: couldn't show dedimania message" . $e->getMessage());
@@ -450,6 +454,10 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
                 }
             }
 
+            $noRedirect = false;
+            if ($record->place <= Config::getInstance()->noRedirectTreshold) {
+                $noRedirect = true;
+            }
             $this->eXpChatSendServerMessage(
                 $this->msg_record,
                 $recepient,
@@ -458,7 +466,8 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
                     $record->place,
                     $time,
                     $oldRecord->place, $diff
-                )
+                ),
+                $noRedirect
             );
             $this->debug("message sent.");
         } catch (\Exception $e) {

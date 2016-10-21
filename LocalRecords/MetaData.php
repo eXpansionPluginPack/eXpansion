@@ -97,6 +97,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(500);
         $this->registerVariable($var);
 
+        $var = new TypeInt("noRedirectTreshold", "If you use notifications plugin, show normal chat message for top records", $config, false, false);
+        $var->setDefaultValue(30);
+        $this->registerVariable($var);
+
         $var = new Boolean("resetRanks", "Reset rankings(May take time)", $config);
         $var->setDescription(
             "Will delete ranks for this server in order to recreate them. It may take time!!!",

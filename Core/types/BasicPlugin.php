@@ -389,8 +389,9 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param string|MultiLangMsg $msg string or MultiLangMsg to sent
          * @param null|string $login null for everybody, string for individual
          * @param array $args simple array of parameters
+         * @param boolean $forceNoRedirect force no redirect
          */
-        public function eXpChatSendServerMessage($msg, $login = null, $args = array())
+        public function eXpChatSendServerMessage($msg, $login = null, $args = array(), $forceNoRedirect = false)
         {
             if (!($msg instanceof MultiLangMsg)) {
                 if (DEBUG) {
@@ -404,13 +405,13 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                   $msg = call_user_func_array('sprintf', $args);
                   $this->eXpAnnounce($msg);
                  */
-                $this->eXpMultilangAnnounce($msg, $args);
+                $this->eXpMultilangAnnounce($msg, $args, $forceNoRedirect);
             } else {
                 array_unshift($args, $msg, $login);
                 $msgString = call_user_func_array('__', $args);
 
                 //Check if it needs to be redirected
-                $this->eXpRedirectedChatSendServerMessage($msgString, $login, get_class($this));
+                $this->eXpRedirectedChatSendServerMessage($msgString, $login, $forceNoRedirect);
             }
         }
 
@@ -419,8 +420,9 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          *
          * @param string $msg The message
          * @param string $login The login to whom it needs to be sent
+         * @param boolean $forceNoRedirect forces no redirect
          */
-        private function eXpRedirectedChatSendServerMessage($msg, $login)
+        private function eXpRedirectedChatSendServerMessage($msg, $login, $forceNoRedirect = false)
         {
             $sender = get_class($this);
             $fromPlugin = explode("\\", $sender);
@@ -428,6 +430,16 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
             if (isset(self::$eXpChatRedirected[$sender])) {
                 $message = $msg;
+                if ($forceNoRedirect) {
+                    try {
+                        $this->connection->chatSendServerMessage($this->colorParser->parseColors($msg), (string)$login);
+                    } catch (Exception $e) {
+                        $this->console("Error while sending chat message to '" . $login
+                            . "'\n Server said:" . $e->getMessage()
+                        );
+                    }
+                    return;
+                }
                 if (is_object(self::$eXpChatRedirected[$sender][0])) {
                     call_user_func_array(
                         self::$eXpChatRedirected[$sender],
@@ -441,7 +453,6 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                     );
                 }
             } else {
-
                 try {
                     $this->connection->chatSendServerMessage($this->colorParser->parseColors($msg), (string)$login);
                 } catch (Exception $e) {
@@ -456,7 +467,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
 
         /**
          * Sends announcement through chat to the server or redirects it to another plugin
-         *
+         *  @deprecated
          * @param MultiLangMsg $msg The message to send to all users
          * @param string $icon Icon for the message (might be used by some plugins)
          * @param callable $callback
@@ -486,7 +497,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             } else {
                 try {
                     $this->connection->chatSendServerMessage(
-                        '$n' . $fromPlugin . '$z$s$ff0 〉$fff' . $this->colorParser->parseColors($msg)
+                        $this->colorParser->parseColors($msg)
                     );
                 } catch (UnknownPlayerException $ex) {
                     $this->console('Attempt to send Announce to a login failed. Login unknown');
@@ -502,11 +513,22 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
          * @param MultiLangMsg $msg
          * @param array $args
          */
-        protected function eXpMultilangAnnounce(MultiLangMsg $msg, array $args)
+        protected function eXpMultilangAnnounce(MultiLangMsg $msg, array $args, $forceNoRedirect = false)
         {
             $sender = get_class($this);
 
             if (isset(self::$eXpChatRedirected[$sender])) {
+                if ($forceNoRedirect) {
+                    try {
+                        $msg->setArgs($args);
+                        $this->connection->chatSendServerMessage($msg->getMultiLangArray(), null);
+                    } catch (LoginUnknownException $ex) {
+                        $this->console("Attempt to send Multilang Announce to a login failed. Login unknown");
+                    } catch (Exception $e) {
+                        $this->console("Error while sending Multilang Announce message => Server said:" . $e->getMessage());
+                    }
+                    return;
+                }
                 $message = clone $msg;
                 $message->setArgs($args);
                 if (is_object(self::$eXpChatRedirected[$sender][0])) {
@@ -521,7 +543,6 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             } else {
                 try {
                     $msg->setArgs($args);
-
                     $this->connection->chatSendServerMessage($msg->getMultiLangArray(), null);
                 } catch (LoginUnknownException $ex) {
                     $this->console("Attempt to send Multilang Announce to a login failed. Login unknown");
@@ -640,7 +661,8 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             $msg,
             $callback = array(),
             $params = array()
-        ) {
+        )
+        {
             $bill = new Bill($source_login, $destination_login, $amount, $msg);
             self::$eXpBillManager->sendBill($bill);
             $bill->setValidationCallback($callback, $params);
