@@ -53,6 +53,9 @@ class Widget extends PlainWidget
         $this->storage = \ManiaLive\Data\Storage::getInstance();
         $this->xml = new \ManiaLive\Gui\Elements\Xml();
 
+        // @todo enable this when saving coordinates is redone.
+
+        /*
         $this->_coord = new Label();
         $this->_coord->setAlign("center", "center");
         $this->_coord->setId("coordLabel");
@@ -71,7 +74,7 @@ class Widget extends PlainWidget
         $this->_save->setAttribute('hidden', "true");
         $this->_save->setAction($this->createAction(array($this, "_save")));
         $this->_save->setScale(0.7);
-        $this->addComponent($this->_save);
+        $this->addComponent($this->_save); */
 
         $this->eXpOnEndConstruct();
         $this->eXpLoadSettings();
@@ -184,8 +187,8 @@ class Widget extends PlainWidget
     {
         parent::onResize($oldX, $oldY);
         $this->move->setSize($this->getSizeX(), $this->getSizeY());
-        $this->_coord->setPosition($this->getSizeX() / 2, -$this->getSizeY() / 2);
-        $this->_save->setPosition($this->getSizeX() / 2, -($this->getSizeY() / 2) - 5);
+     /*   $this->_coord->setPosition($this->getSizeX() / 2, -$this->getSizeY() / 2);
+        $this->_save->setPosition($this->getSizeX() / 2, -($this->getSizeY() / 2) - 5); */
     }
 
     protected function autoSetPositions()
