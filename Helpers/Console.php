@@ -142,7 +142,7 @@ class Console
 
     private static function ansiString($msg)
     {
-        if (Storage::getInstance()->serverOs == "Windows") {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $msg = str_replace("\e", "", $msg);
             $msg = preg_replace("/\[(\d{1,2}\;){0,1}\d{1,2}m/", "", $msg);
         }
