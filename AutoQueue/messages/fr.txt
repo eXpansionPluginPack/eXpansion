@@ -1,0 +1,29 @@
+You got free spot, good luck and have fun!
+Vous avez obtenu une place libre, bonne chance et amusez-vous!
+
+Admin has removed you from queue!
+L'Administrateur vous a retiré de la file d'attente!
+
+Removed player %s $z$ffffrom queue
+Le joueur %s $z$ffffrom a été retiré de la file d'attente
+
+Join
+Joindre
+
+Hide
+Cacher
+
+Join Queue
+Joignez la file d'attente
+
+Click the button to \njoin the waiting queue!
+Clique sur le bouton pour joindre la file d'attentes!
+
+Leave
+Laisser
+
+Remove
+Retirer
+
+Waiting Queue
+File d'attente

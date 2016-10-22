@@ -1,0 +1,8 @@
+#player#Will start in #variable#%s#player# sec
+#player#Va commencer dans #variable#%s#player# sec
+
+#player# Start of match!
+#player# Début du match!
+
+#player#Match start will be delayed #variable#%s
+#player#Le début de match sera retardé #variable#%s

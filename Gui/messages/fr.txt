@@ -41,10 +41,11 @@ Notice
 Notice
 
 Auto hide
-#translate# Auto hide
+
+Masquage automatique
 
 Show Diff
-#translate# Show Diff
+Afficher Diff
 
 Error
-#translate# Error
+Erreur

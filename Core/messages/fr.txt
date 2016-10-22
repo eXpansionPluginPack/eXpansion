@@ -26,37 +26,37 @@ Close
 Fermer
 
 Load
-#translate# Load
+Chargé
 
 Wiil load this configuration into current one
-#translate# Wiil load this configuration into current one
+Chargera cette configuration dans la configuration courante
 
 Will save current configuration
-#translate# Will save current configuration
+Sauvgardera cette configuration
 
 Choose
-#translate# Choose
+Choisir
 
 Will load this configuration and use it
-#translate# Will load this configuration and use it
+Chargera cette configuration pour l'utiliser
 
 Change
-#translate# Change
+Changer
 
 Allows you to edit values
-#translate# Allows you to edit values
+Permet de modifier des valeurs
 
 Reset the settings !
-#translate# Reset the settings !
+Réinitialiser les réglages!
 
 Remove
-#translate# Remove
+Retirer
 
 Removes this value
-#translate# Removes this value
+Retirer cette valeur
 
 Add to Fav, $login
-#translate# Add to Fav, $login
+Ajouter aux Fav, $login
 
 Add to Fav
-#translate# Add to Fav
+Ajouter aux Fav

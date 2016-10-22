@@ -200,46 +200,43 @@ Efface le circuit actuelle de la playlist.
 #admin_error#Vous ne pouvez pas continuer, car cette instance de eXpansion utilise une connection distante
 
 Map Info
-#translate# Map Info
+Info Carte
 
 Show Records
-#translate# Show Records
+Voir les Records
 
 $F22Remove this map from server
-#translate# $F22Remove this map from server
+Retirez cette carte du serveur
 
 Map %s $z$s$fffadded to playlist.
-#translate# Map %s $z$s$fffadded to playlist.
+Carte %s $z$s$fffrajoute a la playlist
 
-#admin_error#This instance of eXpansion is runnin remotelly! Can%s, $this->getRecipient(
-#translate# #admin_error#This instance of eXpansion is runnin remotelly! Can%s, $this->getRecipient(
+#admin_error#This instance of eXpansion is runnin remotelly! Can%s, $this->getRecipient()
+#admin_error#Cette instance d'eXpansion This instance of eXpansion a une exécution à distance!
 
-File  deleted from filesystem!
-#translate# File  deleted from filesystem!
+File deleted from filesystem!
+Fichier supprimé du système de fichiers!
 
 $f00$oError $z$s$fff%s
-#translate# $f00$oError $z$s$fff%s
+$f00$oErreur $z$s$fff%s
 
 Maps on server
-#translate# Maps on server
+Carte sur le servuer
 
 History of Maps
-#translate# History of Maps
+Historique des cartes
 
 Error:
-#translate# Error:
+#translate# Erreur:
 
 Adds previous map back to the Jukebox.
-#translate# Adds previous map back to the Jukebox.
+Ajouter la carte précédente dans la Jukebox
 
 #admin_error# $iThere are no previously played challenge!
-#translate# #admin_error# $iThere are no previously played challenge!
+#admin_error# $iThere are no previously played challenge!
 
 Open
-#translate# Open
-
-#admin_error#This instance of eXpansion is running remote! Can%s, $this->getRecipient(
-#translate# #admin_error#This instance of eXpansion is running remote! Can%s, $this->getRecipient(
+#translate# Ouvrir
 
 Display is limiting to first %1$s maps.
-#translate# Display is limiting to first %1$s maps.
+Affichage limité au premier cartes %1$s maps.

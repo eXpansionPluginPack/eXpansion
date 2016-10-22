@@ -14,4 +14,4 @@ File d'attente
 #music#Prochaine chanson: $z$s#variable# %1$s #music#by#variable# %2$s
 
 MusicBox error http-code: %s
-#translate# MusicBox error http-code: %s
+MusicBox erreur http-code: %s

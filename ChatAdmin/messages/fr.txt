@@ -50,7 +50,7 @@ les paramètres possibles: balance, limit, maxpoint, newrules, wu, fto, ftimeout
 #admin_action#L'Admin #variable#%1$s $z$s#admin_action#mélange les la liste des circuits!
 
 Blacklisted Players on the server
-#translate# Blacklisted Players on the server
+Joueurs Blacklisté sur le serveur
 
 add
-#translate# add
+ajouter

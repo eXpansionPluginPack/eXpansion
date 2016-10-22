@@ -1,0 +1,11 @@
+[eXpansion|Chat] Couldn't initialize chat. Error from server: %s
+[eXpansion|Chat] Impossible d'initialiser le chat. Erreur serveur: %s
+
+Chat messages enabled.
+Les messages de chat sont activés.
+
+Chat messages disabled.
+Les messages de chat sont desactivés.
+
+Usage: /chat on or /chat off.
+Utilisation: /chat on or /chat off.

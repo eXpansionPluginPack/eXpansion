@@ -1,0 +1,45 @@
+Start
+Démarrer
+
+Stop
+Arrêter
+
+This plugin is running on the server at the moment
+Ce plugin est exécuté sur le serveur en ce moment
+
+This plugin isn't compatible with game mode or title. It is therefor pending
+Ce plugin n'est pas compatible avec le mode de jeux ou le titre. Il est en attente.
+
+This plugin isn't running
+Ce plugin n'est pas exécuté.
+
+This plugin is compatible with the current Title
+Ce plugin est compatible avec le Titre courent
+
+This plugin isn't compatible with the current Title
+Ce plugin n'est pas compatible avec le Titre courent
+
+This plugin is compatible with the current Game mode
+Ce plugin est compatible avec le mode de jeux courant
+
+This plugin isn't compatible with the current Game mode
+Ce plugin n'est pas compatible avec le mode de jeux courant
+
+This plugin is is compatible with current installation
+This plugin is is compatible with current installation
+Ce plugin est compatible avec l'installation courante
+
+Settings
+Configuration
+
+Name
+Nom
+
+Author
+Auteur
+
+Group
+Groupe
+
+Search
+Recherche

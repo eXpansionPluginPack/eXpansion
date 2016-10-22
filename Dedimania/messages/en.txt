@@ -27,3 +27,12 @@ Checkpoints
 
 Visit Dedimania at Web
 Visit Dedimania at Web
+
+#variable#Dedimania $0f0Connected! #variable#Top #rank#%1$s #variable#records enabled for you (%2$s #variable#account
+#variable#Dedimania $0f0Connected! #variable#Top #rank#%1$s #variable#records enabled for you (%2$s #variable#account
+
+$FC3p$FD2r$FE1e$FF0m$FF0i$FE2u$FC3m
+$FC3p$FD2r$FE1e$FF0m$FF0i$FE2u$FC3m
+
+regular
+regular

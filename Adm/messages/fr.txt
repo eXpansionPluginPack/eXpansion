@@ -353,28 +353,22 @@ Custom Round Points
 #translate# Custom Round Points
 
 #admin_error#Error: %s
-#translate# #admin_error#Error: %s
+#admin_error#Erreur: %s
 
 Reset scores
-#translate# Reset scores
+Réinitialiser les scores
 
 Skip & reset
-#translate# Skip & reset
+Passer & réinitialiser
 
 Restart & reset
-#translate# Restart & reset
-
-Rounds: Points Limit (NewRules
-#translate# Rounds: Points Limit (NewRules
-
-Team: Points Limit (NewRules
-#translate# Team: Points Limit (NewRules
+Redémarré & réinitialiser
 
 $f00$oError $z$s$fff%s
-#translate# $f00$oError $z$s$fff%s
+$f00$oErreur $z$s$fff%s
 
 File  deleted from filesystem!
-#translate# File  deleted from filesystem!
+Fichier supprimé du système de fichiers!
 
 Control Panel
-#translate# Control Panel
+Panneau de contrôle

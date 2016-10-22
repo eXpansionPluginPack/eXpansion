@@ -1287,3 +1287,12 @@ $z$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$F90!$z$s$o$fff %2$s.$f9
 
 #admin_error#$iNot enough local records to obtain ranking yet..
 #admin_error#$iNot enough local records to obtain ranking yet..
+
+#variable#Dedimania $0f0Connected! #variable#Top #rank#%1$s #variable#records enabled for you (%2$s #variable#account
+#variable#Dedimania $0f0Connected! #variable#Top #rank#%1$s #variable#records enabled for you (%2$s #variable#account
+
+$FC3p$FD2r$FE1e$FF0m$FF0i$FE2u$FC3m
+$FC3p$FD2r$FE1e$FF0m$FF0i$FE2u$FC3m
+
+regular
+regular

@@ -27,3 +27,12 @@ Tarkistuspisteet
 
 Visit Dedimania at Web
 Vieraile Dedimanian kotisivuilla
+
+#variable#Dedimania $0f0Connected! #variable#Top #rank#%1$s #variable#records enabled for you (%2$s #variable#account
+#translate# #variable#Dedimania $0f0Connected! #variable#Top #rank#%1$s #variable#records enabled for you (%2$s #variable#account
+
+$FC3p$FD2r$FE1e$FF0m$FF0i$FE2u$FC3m
+#translate# $FC3p$FD2r$FE1e$FF0m$FF0i$FE2u$FC3m
+
+regular
+#translate# regular

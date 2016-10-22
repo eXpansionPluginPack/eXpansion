@@ -17,13 +17,22 @@ Cps
 Cps
 
 Dedimania -records for
-#translate# Dedimania -records for
+Records Dedimania pour
 
 Dedimania cps for 
-#translate# Dedimania cps for 
+Cps Dedimania pour
 
 Checkpoints
-#translate# Checkpoints
+Checkpoints
 
 Visit Dedimania at Web
-#translate# Visit Dedimania at Web
+Visitez Dedimania Web
+
+#variable#Dedimania $0f0Connected! #variable#Top #rank#%1$s #variable#records enabled for you (%2$s #variable#account)
+#variable#Dedimania Connecté! #variable#Top #rank#%1$s #variable#des record sont activés pour vous (%2$s #variable#account)
+
+$FC3p$FD2r$FE1e$FF0m$FF0i$FE2u$FC3m
+$FC3p$FD2r$FE1e$FF0m$FF0i$FE2u$FC3m
+
+regular
+ordinaire

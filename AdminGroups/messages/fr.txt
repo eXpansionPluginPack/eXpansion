@@ -102,6 +102,3 @@ Permission_
 
 Select
 Sélectionner
-
-#admin_error#
-#translate# #admin_error#

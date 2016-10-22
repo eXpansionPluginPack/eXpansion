@@ -62,7 +62,7 @@ The Map is not compatible with current server settings, map not added.
 Le circuit n'est pas compatible avec les paramètres du serveur actuels, pas ajouté.
 
 $iYou don't have permission to do that!
-#translate# $iYou don't have permission to do that!
+$iVous n'êtes pas autorisé faire cela!
 
  is not a numeric value.
-#translate#  is not a numeric value.
+ n'est pas une valeur numérique.

@@ -1,0 +1,5 @@
+Notice: a help page is displayed by an admin!
+Notice: une page d'aide est affiché par un admin!
+
+Notice: Displaying a help page  to 
+Notice: Affichage d'une page d'aide pour
