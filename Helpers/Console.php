@@ -197,7 +197,11 @@ class Console
             $end = Formatting::stripStyles($split[$i + 1]);
         }
 
-        if ($end == Formatting::stripStyles(end($split))) {
+        if (!empty($end)) {
+            if ($end == Formatting::stripStyles(end($split))) {
+                $end = "";
+            }
+        } else {
             $end = "";
         }
         $out = self::white . Formatting::stripStyles(reset($split)) . $out . $end;
