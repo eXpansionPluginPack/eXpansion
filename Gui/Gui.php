@@ -334,7 +334,7 @@ class Gui extends ExpPlugin
     /**
      * Preload image
      *
-     * @param type $url
+     * @param string $url
      */
     public static function preloadImage($url)
     {

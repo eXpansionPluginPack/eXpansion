@@ -135,28 +135,33 @@ class LoadScreen extends ExpPlugin
 
         switch ($this->expStorage->simpleEnviTitle) {
             case "SM":
-                $query = 'http://sm.mania-exchange.com/api/tracks/get_track_info/uid/' . $uid;
+                $query = 'https://sm.mania-exchange.com/api/tracks/get_track_info/uid/' . $uid;
                 break;
             case "TM":
-                $query = 'http://tm.mania-exchange.com/api/tracks/get_track_info/uid/' . $uid;
+                $query = 'https://tm.mania-exchange.com/api/tracks/get_track_info/uid/' . $uid;
                 break;
         }
-
-        $this->dataAccess->httpGet($query, array($this, "xGetImage"), null, "MX", "application/json");
+        $options = array(CURLOPT_HTTPHEADER => array(
+            "X-ManiaPlanet-ServerLogin" => $this->storage->serverLogin,
+            "Content-Type" => 'application/json',
+        ));
+        $this->dataAccess->httpCurl($query, array($this, 'xGetImage'), array(), $options);
     }
 
-    public function xGetImage($data, $code, $params = null)
+    public function xGetImage($job, $jobData)
     {
+        $info = $job->getCurlInfo();
+        $code = $info['http_code'];
         if ($code != 200) {
             return;
         }
         try {
-            $json = json_decode($data, true);
+            $json = json_decode($job->getResponse(), true);
             if ($json === null) {
                 $this->mxImage = "";
-
                 return;
             }
+
             $map = MxMap::fromArray($json);
             $game = strtolower($this->expStorage->simpleEnviTitle);
 
