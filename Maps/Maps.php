@@ -473,11 +473,11 @@ class Maps extends ExpPlugin
         $window->setCurrentMap($this->storage->currentMap);
 
         if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
-            $this->callPublicMethod(
+            $window->setRecords($this->callPublicMethod(
                 '\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords',
                 'getPlayersRecordsForAllMaps',
                 $login
-            );
+            ));
             Maplist::$localrecordsLoaded = true;
         } else {
             Maplist::$localrecordsLoaded = false;

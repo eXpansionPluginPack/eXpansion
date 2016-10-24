@@ -502,15 +502,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $count = 0;
         $uids = "";
         foreach ($this->storage->maps as $map) {
-            if (!isset($map->localRecords)) {
-                $map->localRecords = array();
-            }
-            if (!isset($map->localRecords[$login])) {
-                $count++;
-
-                $uids .= $this->db->quote($map->uId) . ",";
-                $mapsByUid[$map->uId] = $map;
-            }
+            $uids .= $this->db->quote($map->uId) . ",";
+            $count++;
         }
 
         if ($count > 0) {
@@ -522,10 +515,13 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 . '	AND rank_playerlogin = ' . $this->db->quote($login);
             $data = $this->db->execute($q);
 
+            $mapsByUid = array();
             while ($row = $data->fetchObject()) {
+                $mapsByUid[$row->uid] = new \stdClass();
                 $mapsByUid[$row->uid]->localRecords[$login] = $row->rank;
             }
         }
+        return $mapsByUid;
     }
 
     public function onTick()

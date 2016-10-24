@@ -2,11 +2,13 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
+use ManiaLib\Utils\Formatting;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Mapitem;
 use ManiaLivePlugins\eXpansion\Maps\Maps;
+use Maniaplanet\DedicatedServer\Structures\Map;
 
 class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
@@ -34,6 +36,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $btn_sortNewest;
     protected $actionRemoveAll;
     protected $actionRemoveAllf;
+    /** @var Map */
     protected $currentMap = null;
     protected $titlebg;
 
@@ -274,7 +277,6 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         foreach ($this->items as $item) {
             $item->erase();
         }
-
         $this->items = array();
 
 
@@ -284,8 +286,6 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         );
 
         $this->maps = array();
-
-        $maxrec = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
 
         foreach ($maps as $map) {
             if (!isset($map->strippedName)) {
@@ -368,7 +368,6 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         // add items to display
         $x = 0;
 
-
         foreach ($this->maps as $sortableMap) {
             $isHistory = false;
             if (array_key_exists($sortableMap->uId, $this->history)) {
@@ -391,12 +390,26 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             }
 
             $localrecord = "-";
-            if (isset($sortableMap->localRecords) && isset($sortableMap->localRecords[$login])) {
-                $localrecord = $sortableMap->localRecords[$login] + 1;
+
+            if (isset($this->records[$sortableMap->uId]) && isset($this->records[$sortableMap->uId]->localRecords[$login])) {
+                $localrecord = $this->records[$sortableMap->uId]->localRecords[$login] + 1;
             }
 
-            $this->pager->addSimpleItems(array(Gui::fixString($sortableMap->name) => $queueMapAction,
-                Gui::fixString($sortableMap->author) => -1,
+            if ($isHistory) {
+                $name = '$d00' . Formatting::stripStyles($sortableMap->name);
+                $author = '$d00' .Formatting::stripStyles($sortableMap->author);
+            } else {
+                $name = $sortableMap->name;
+                $author = $sortableMap->author;
+            }
+            if ($sortableMap->uId == $this->currentMap->uId) {
+                $name = '$0d0' . Formatting::stripStyles($sortableMap->name);
+                $author = '$0d0' .Formatting::stripStyles($sortableMap->author);
+            }
+
+            $this->pager->addSimpleItems(array(
+                Gui::fixString($name) => $queueMapAction,
+                Gui::fixString($author) => -1,
                 $sortableMap->environnement => -1,
                 \ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime) => -1,
                 $localrecord => -1,
