@@ -63,7 +63,7 @@ class Maps extends ExpPlugin
     public static $playerSortModes = array();
     public static $searchTerm = array();
     public static $searchField = array();
-
+    public static $actionOpenMapList = -1;
 
     /**
      * @var AdminCmd
@@ -143,6 +143,7 @@ class Maps extends ExpPlugin
         $this->actionShowMapList = $action->createAction(array($this, "showMapList"));
         $this->actionShowJukeList = $action->createAction(array($this, "showJukeList"));
         $this->actionShowHistoryList = $action->createAction(array($this, "showHistoryList"));
+        self::$actionOpenMapList = $this->actionShowMapList;
 
         CustomUI::HideForAll(CustomUI::CHALLENGE_INFO);
         $this->showCurrentMapWidget(null);

@@ -83,7 +83,7 @@ class Widgets_ResSkip extends ExpPlugin
         $widget = ResSkipButtons::Create(null, true);
         $widget->setActions($this->actions['res'], $this->actions['skip']);
         $widget->setServerInfo($this->storage->serverLogin);
-        $widget->setSize(32.0, 10.0);
+        $widget->setSize(42.0, 10.0);
 
 
         $nbSkips = isset($this->skipCount[$login]) ? $this->skipCount[$login] : 0;
