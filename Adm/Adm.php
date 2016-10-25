@@ -62,7 +62,12 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
         AdminPanel::$mainPlugin = $this;
 
 
-        $cmd = AdminGroups::addAdminCommand('server control', $this, 'serverControlMain', Permission::SERVER_CONTROL_PANEL);
+        $cmd = AdminGroups::addAdminCommand(
+            'server control',
+            $this,
+            'serverControlMain',
+            Permission::SERVER_CONTROL_PANEL
+        );
         $cmd->setHelp('Displays the main control panel for the server');
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "server");
@@ -151,7 +156,10 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     {
         if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
             $gamemode = $this->storage->gameInfos->gameMode;
-            if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM || GameInfos::GAMEMODE_CUP) {
+            if ($gamemode == GameInfos::GAMEMODE_ROUNDS
+                || $gamemode == GameInfos::GAMEMODE_TEAM
+                || GameInfos::GAMEMODE_CUP
+            ) {
                 $window = ForceScores::Create($login);
                 $window->setTitle(__('Force Scores', $login));
                 $window->centerOnScreen();
@@ -198,7 +206,9 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
      */
     public function serverManagement($login)
     {
-        if (AdminGroups::hasPermission($login, Permission::SERVER_STOP_DEDICATED) || AdminGroups::hasPermission($login, Permission::SERVER_STOP_MANIALIVE)) {
+        if (AdminGroups::hasPermission($login, Permission::SERVER_STOP_DEDICATED)
+            || AdminGroups::hasPermission($login, Permission::SERVER_STOP_MANIALIVE)
+        ) {
             $window = ServerManagement::Create($login);
             $window->setTitle(__('Server Control', $login));
             $window->setSize(90, 30);
@@ -272,7 +282,9 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
      */
     public function matchSettings($login)
     {
-        if (AdminGroups::hasPermission($login, Permission::GAME_MATCH_SAVE) || AdminGroups::hasPermission($login, 'game_matchDelete') || AdminGroups::hasPermission($login, 'game_match')) {
+        if (AdminGroups::hasPermission($login, Permission::GAME_MATCH_SAVE) || AdminGroups::hasPermission($login, 'game_matchDelete')
+            || AdminGroups::hasPermission($login, 'game_match')
+        ) {
             $window = MatchSettings::Create($login);
             $window->setTitle(__('Match Settings', $login));
             $window->centerOnScreen();
@@ -310,7 +322,11 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     {
         if (AdminGroups::hasPermission($login, Permission::SERVER_DATABASE)) {
             if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Database\\Database")) {
-                $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Database\\Database", "showDbMaintenance", $login);
+                $this->callPublicMethod(
+                    "\\ManiaLivePlugins\\eXpansion\\Database\\Database",
+                    "showDbMaintenance",
+                    $login
+                );
             } else {
                 $this->eXpChatSendServerMessage($this->msgDatabasePlugin, $login);
             }
@@ -347,7 +363,11 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
 
             $this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
             $admin = $this->storage->getPlayerObject($login);
-            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage(
+                '#admin_action#Admin#variable# %s #admin_action#restarts the challenge!',
+                null,
+                array($admin->nickName)
+            );
         }
     }
 

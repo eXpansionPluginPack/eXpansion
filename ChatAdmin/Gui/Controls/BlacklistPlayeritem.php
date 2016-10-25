@@ -17,8 +17,12 @@ class BlacklistPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected $bg;
 
-    public function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login)
-    {
+    public function __construct(
+        $indexNumber,
+        \Maniaplanet\DedicatedServer\Structures\Player $player,
+        $controller,
+        $login
+    ) {
         $sizeX = 80;
         $sizeY = 6;
         $this->player = $player;

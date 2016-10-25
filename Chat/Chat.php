@@ -302,14 +302,16 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         );
                     } else {
                         $this->eXpChatSendServerMessage(
-                            "#error#Chat is disabled at at the moment!!! You can chat when you retire or go spectator. You may still use PM messages",
+                            "#error#Chat is disabled at at the moment!!! "
+                            ."You can chat when you retire or go spectator. You may still use PM messages",
                             $login,
                             array()
                         );
                     }
                 } else {
                     $this->eXpChatSendServerMessage(
-                        "#error#Chat is disabled at at the moment!!! Only admins may chat. You may still use PM messages",
+                        "#error#Chat is disabled at at the moment!!! "
+                        ."Only admins may chat. You may still use PM messages",
                         $login,
                         array()
                     );

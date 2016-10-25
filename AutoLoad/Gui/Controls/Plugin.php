@@ -200,7 +200,8 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
             return "Plugin is running. Click to unload!";
         } else {
             if ($inStart) {
-                return "Plugin not compatible with game mode, title or server settings.\n Plugin will be enabled when possible.";
+                return "Plugin not compatible with game mode, title or server settings.\n "
+                ."Plugin will be enabled when possible.";
             } else {
                 return "Plugin not running. Click to load!";
             }

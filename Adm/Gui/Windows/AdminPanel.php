@@ -143,7 +143,8 @@ class AdminPanel extends Widget
         $this->btnRestart->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::MAP_RES));
         $this->btnSkip->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::MAP_SKIP));
         $this->btnEndRound->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::MAP_END_ROUND));
-        $this->btnCancelVote->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_VOTES));
+        $this->btnCancelVote
+            ->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_VOTES));
         $this->btnBalance->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::TEAM_BALANCE));
     }
 
