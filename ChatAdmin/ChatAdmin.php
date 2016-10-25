@@ -1560,7 +1560,8 @@ Other server might use the same blacklist file!!'
             $this->expStorage->saveBlackList();
 
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin #variable# %s #admin_action#blacklists the player #variable# %s reason: #admin_error#%s',
+                '#admin_action#Admin #variable# %s #admin_action#blacklists '
+                .'the player #variable# %s reason: #admin_error#%s',
                 null,
                 array($admin->nickName, $nickname, $reason)
             );
@@ -1716,7 +1717,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->ban($target, $reason);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin #variable# %s #admin_action# bans the player#variable# %s reason: #admin_error# %s',
+                '#admin_action#Admin #variable# %s #admin_action# bans '
+                .'the player#variable# %s reason: #admin_error# %s',
                 null,
                 array($admin->nickName, $nickname, $reason)
             );
@@ -1826,7 +1828,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->kick($player, $reason);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %1$s #admin_action#kicks the player#variable# %2$s (%3$s) #variable#Reason: #admin_error#%4$s',
+                '#admin_action#Admin#variable# %1$s #admin_action#kicks the '
+                .'player#variable# %2$s (%3$s) #variable#Reason: #admin_error#%4$s',
                 null,
                 array($admin->nickName, $player->nickName, $target, $reason)
             );

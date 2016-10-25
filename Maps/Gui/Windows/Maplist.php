@@ -235,7 +235,9 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->title_actions->setSizeX($scaledSizes[6]);
 
 
-        if (is_object($this->btnRemoveAll)) $this->btnRemoveAll->setPosition($this->getSizeX() - 25, 2);
+        if (is_object($this->btnRemoveAll)) {
+            $this->btnRemoveAll->setPosition($this->getSizeX() - 25, 2);
+        }
     }
 
     public function removeAllMaps($login)

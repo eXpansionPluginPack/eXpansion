@@ -214,7 +214,15 @@ class ManiaExchange extends ExpPlugin
         try {
             $gbxReader = new GBXChallMapFetcher(true, false, false);
             $gbxReader->processData($data);
-            $name = $gbxReader->authorLogin . "_" . trim(mb_convert_encoding(substr(\ManiaLib\Utils\Formatting::stripStyles($gbxReader->name), 0, 40), "7bit", "UTF-8"));
+            $name = $gbxReader->authorLogin
+                . "_"
+                . trim(
+                    mb_convert_encoding(
+                        substr(\ManiaLib\Utils\Formatting::stripStyles($gbxReader->name), 0, 40),
+                        "7bit",
+                        "UTF-8"
+                    )
+                );
             $name = str_replace(array("/", "\\", ":", ".", "?", "*", '"', "|", "<", ">", "'"), "", $name);
             $file = $dir . "/" . $name . "_" . $mxId . ".Map.Gbx";
 
@@ -353,7 +361,9 @@ class ManiaExchange extends ExpPlugin
 
     public function mxVote($login, $mxId)
     {
-        if (!$this->config->mxVote_enable) return;
+        if (!$this->config->mxVote_enable) {
+            return;
+        }
 
         if (!is_numeric($mxId)) {
             $this->connection->chatSendServerMessage(__('"%s" is not a numeric value.', $login, $mxId), $login);

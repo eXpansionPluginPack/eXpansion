@@ -282,7 +282,8 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
      */
     public function matchSettings($login)
     {
-        if (AdminGroups::hasPermission($login, Permission::GAME_MATCH_SAVE) || AdminGroups::hasPermission($login, 'game_matchDelete')
+        if (AdminGroups::hasPermission($login, Permission::GAME_MATCH_SAVE)
+            || AdminGroups::hasPermission($login, 'game_matchDelete')
             || AdminGroups::hasPermission($login, 'game_match')
         ) {
             $window = MatchSettings::Create($login);
@@ -445,8 +446,9 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
             } else {
                 $this->connection->setRoundCustomPoints($intPoints);
             }
-            $msg = eXpGetMessage('#admin_action#Admin %s $z$s#admin_action#sets custom ' .
-			"round points to #variable#%s" );
+            $msg = eXpGetMessage(
+                '#admin_action#Admin %s $z$s#admin_action#sets custom ' ."round points to #variable#%s"
+            );
             $this->eXpChatSendServerMessage($msg, null, array($nick, implode(",", $intPoints)));
         } catch (Exception $e) {
             $this->connection->chatSendServerMessage(__('#admin_error#Error: %s', $login, $e->getMessage()), $login);

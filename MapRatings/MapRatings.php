@@ -95,7 +95,9 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 );
             }
             $this->callPublicMethod(
-                '\ManiaLivePlugins\eXpansion\Database\Database', 'setDatabaseVersion', 'exp_ratings',
+                '\ManiaLivePlugins\eXpansion\Database\Database',
+                'setDatabaseVersion',
+                'exp_ratings',
                 2
             );
         }
