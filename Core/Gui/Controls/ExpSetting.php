@@ -84,8 +84,9 @@ class ExpSetting extends Control
         $this->button_reset->setIcon(Quad::Icons128x128_1, Icons128x128_1::DefaultIcon);
         $this->button_reset->setDescription(__('Reset the settings !', $login));
         $this->button_reset->setAction($this->createAction(array($this, 'reset')));
-        if ($var->getDefaultValue() != null)
+        if ($var->getDefaultValue() != null) {
             $this->addComponent($this->button_reset);
+        }
 
         if ($var instanceof HashList
             || $var instanceof BasicList

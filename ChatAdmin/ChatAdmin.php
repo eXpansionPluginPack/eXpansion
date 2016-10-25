@@ -1560,7 +1560,8 @@ Other server might use the same blacklist file!!'
             $this->expStorage->saveBlackList();
 
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin #variable# %s #admin_action#blacklists the player #variable# %s reason: #admin_error#%s',
+                '#admin_action#Admin #variable# %s #admin_action#blacklists '
+                .'the player #variable# %s reason: #admin_error#%s',
                 null,
                 array($admin->nickName, $nickname, $reason)
             );
@@ -1716,7 +1717,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->ban($target, $reason);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin #variable# %s #admin_action# bans the player#variable# %s reason: #admin_error# %s',
+                '#admin_action#Admin #variable# %s #admin_action# bans '
+                .'the player#variable# %s reason: #admin_error# %s',
                 null,
                 array($admin->nickName, $nickname, $reason)
             );
@@ -1826,7 +1828,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->kick($player, $reason);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %1$s #admin_action#kicks the player#variable# %2$s (%3$s) #variable#Reason: #admin_error#%4$s',
+                '#admin_action#Admin#variable# %1$s #admin_action#kicks the '
+                .'player#variable# %2$s (%3$s) #variable#Reason: #admin_error#%4$s',
                 null,
                 array($admin->nickName, $player->nickName, $target, $reason)
             );
@@ -1908,7 +1911,8 @@ Other server might use the same blacklist file!!'
             $this->connection->forceSpectator($player, 1);
             $this->connection->forceSpectator($player, 0);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#Forces the player #variable# %s #admin_action#to Spectator.',
+                '#admin_action#Admin#variable# %s #admin_action#Forces '
+                .'the player #variable# %s #admin_action#to Spectator.',
                 null,
                 array($admin->nickName, $player->nickName)
             );
@@ -2225,7 +2229,7 @@ Other server might use the same blacklist file!!'
             'manialive_cfg::', 'rpcport::', //Set the XML RPC Port to use
             'address::', //Set the adresse of the server
             'password::', //Set the User Password
-            'dedicated_cfg::', //Set the configuration file to use to define XML RPC Port, SuperAdmin, Admin and User passwords
+            'dedicated_cfg::',//Set the configuration file to use to define XMLRPC Port, SuperAdmin/Admin/User passwords
             'user::', //Set the user to use during the communication with the server
             'logsPrefix::', //Set the log prefix option
             'debug::' // Set up the debug option//Set a configuration file to load instead of config.ini

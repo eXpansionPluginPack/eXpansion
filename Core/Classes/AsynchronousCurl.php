@@ -58,7 +58,10 @@ class AsynchronousCurl extends \ManiaLib\Utils\Singleton implements \ManiaLive\A
         $curlJob->setCallback($callback);
         $curlJob->setUrl($url);
 
-        $options = array(CURLOPT_SSL_VERIFYPEER => false, CURLOPT_USERAGENT => "eXpansionPluginPack v " . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION,) + $options;
+        $options = array(
+                CURLOPT_SSL_VERIFYPEER => false,
+                CURLOPT_USERAGENT => "eXpansionPluginPack v " . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION,
+                ) + $options;
 
         $curlJob->setOptions($options);
         $curlJob->__additionalData = $additionalData;

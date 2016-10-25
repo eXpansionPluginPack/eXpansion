@@ -40,7 +40,8 @@ class MatchSettingsFile extends Control
         $this->saveAction = $this->createAction(array($controller, 'saveSettings'), $filename);
         $this->loadAction = $this->createAction(array($controller, 'loadSettings'), $filename);
 
-        $this->deleteActionf = ActionHandler::getInstance()->createAction(array($controller, "deleteSetting"), $filename);
+        $this->deleteActionf = ActionHandler::getInstance()
+            ->createAction(array($controller, "deleteSetting"), $filename);
         $this->deleteAction = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->deleteActionf);
 
         $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);

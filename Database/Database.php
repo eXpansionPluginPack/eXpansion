@@ -133,8 +133,9 @@ class Database extends ExpPlugin
     public function updatePlayTime($player)
     {
         $time = time();
-        if (empty($player) || (!$player->spectator && $this->expStorage->isRelay))
+        if (empty($player) || (!$player->spectator && $this->expStorage->isRelay)) {
             return;
+        }
 
         if (isset($player->lastTimeUpdate)) {
             $playtime = $time - $player->lastTimeUpdate;

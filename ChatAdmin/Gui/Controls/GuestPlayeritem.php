@@ -18,8 +18,12 @@ class GuestPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     protected $frame;
 
-    public function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login)
-    {
+    public function __construct(
+        $indexNumber,
+        \Maniaplanet\DedicatedServer\Structures\Player $player,
+        $controller,
+        $login
+    ) {
         $sizeX = 80;
         $sizeY = 6;
         $this->player = $player;

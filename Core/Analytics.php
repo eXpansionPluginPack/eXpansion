@@ -203,7 +203,8 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
             'build' => $this->getDateTime($buildDate),
             'game' => $this->expStorage->simpleEnviTitle,
             'title' => str_replace('@', '_', $this->expStorage->titleId),
-            'mode' => $this->storage->gameInfos->gameMode == 0 ? $this->storage->gameInfos->scriptName : $this->storage->gameInfos->gameMode,
+            'mode' => $this->storage->gameInfos->gameMode == 0
+                ? $this->storage->gameInfos->scriptName : $this->storage->gameInfos->gameMode,
             'plugins' => implode(',', $this->pluginHandler->getLoadedPluginsList()),
             'serverOs' => $this->expStorage->serverOs,
         );

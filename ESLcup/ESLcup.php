@@ -67,8 +67,9 @@ class ESLcup extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function eXpOnReady()
     {
-        if (!$this->enabled)
+        if (!$this->enabled) {
             return;
+        }
 
         $this->syncScores();
         $this->hideUI();

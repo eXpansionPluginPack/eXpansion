@@ -126,11 +126,19 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         try {
             unlink($filename);
             $file = explode("/", $filename);
-            $this->connection->chatSendServerMessage(__("File '%s' deleted from filesystem!", $this->getRecipient(), end($file)), $login);
+            $this->connection
+                ->chatSendServerMessage(
+                    __("File '%s' deleted from filesystem!", $this->getRecipient(), end($file)),
+                    $login
+                );
             $this->populateList();
             $this->RedrawAll();
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()), $login);
+            $this->connection
+                ->chatSendServerMessage(
+                    __('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()),
+                    $login
+                );
         }
     }
 
@@ -151,7 +159,10 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         try {
             $this->connection->loadMatchSettings($filename);
             $file = explode("/", $filename);
-            $this->connection->chatSendServerMessage(__("Loaded MatchSettings from file: %s", $login, end($file)), $login);
+            $this->connection->chatSendServerMessage(
+                __("Loaded MatchSettings from file: %s", $login, end($file)),
+                $login
+            );
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $login, $e->getMessage()), $login);
         }
@@ -189,9 +200,17 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->items = array();
 
         if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
-            $this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(1, __("File listing disabled since you are running remote", $this->getRecipient()), $this->sizeX);
+            $this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(
+                1,
+                __("File listing disabled since you are running remote", $this->getRecipient()),
+                $this->sizeX
+            );
             $this->pager->addItem($this->items[0]);
-            $this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(1, __("You can tho save and load files from server by the filename!", $this->getRecipient()), $this->sizeX);
+            $this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(
+                1,
+                __("You can tho save and load files from server by the filename!", $this->getRecipient()),
+                $this->sizeX
+            );
             $this->pager->addItem($this->items[0]);
         } else {
             $path = Helper::getPaths()->getMatchSettingPath() . "*.txt";

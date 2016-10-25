@@ -525,7 +525,9 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
                     } catch (LoginUnknownException $ex) {
                         $this->console("Attempt to send Multilang Announce to a login failed. Login unknown");
                     } catch (Exception $e) {
-                        $this->console("Error while sending Multilang Announce message => Server said:" . $e->getMessage());
+                        $this->console(
+                            "Error while sending Multilang Announce message => Server said:" . $e->getMessage()
+                        );
                     }
                     return;
                 }
@@ -661,8 +663,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types {
             $msg,
             $callback = array(),
             $params = array()
-        )
-        {
+        ) {
             $bill = new Bill($source_login, $destination_login, $amount, $msg);
             self::$eXpBillManager->sendBill($bill);
             $bill->setValidationCallback($callback, $params);

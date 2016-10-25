@@ -214,8 +214,9 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             return;
         }
 
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->pager->clearItems();
         $this->items = array();

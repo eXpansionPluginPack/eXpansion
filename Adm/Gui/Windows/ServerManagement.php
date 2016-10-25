@@ -42,7 +42,9 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->actions->stopServerf = ActionHandler::getInstance()->createAction(array($this, "stopServer"));
         $this->actions->stopServer = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions->stopServerf);
         $this->actions->stopManialivef = ActionHandler::getInstance()->createAction(array($this, "stopManialive"));
-        $this->actions->stopManialive = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions->stopManialivef);
+        $this->actions->stopManialive = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm(
+            $this->actions->stopManialivef
+        );
 
         $this->btn1 = new myButton(40, 6);
         $this->btn1->setText(__("Stop Server", $this->getRecipient()));
@@ -68,8 +70,12 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected function onDraw()
     {
 
-        $this->btn1->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_STOP_DEDICATED));
-        $this->btn2->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_STOP_MANIALIVE));
+        $this->btn1->setVisibility(
+            AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_STOP_DEDICATED)
+        );
+        $this->btn2->setVisibility(
+            AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_STOP_MANIALIVE)
+        );
 
         parent::onDraw();
     }
