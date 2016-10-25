@@ -125,7 +125,6 @@ class Maps extends ExpPlugin
 
         $this->registerChatCommand('list', "showMapList", 0, true);
         $this->registerChatCommand('maps', "showMapList", 0, true);
-        $this->registerChatCommand('history', "showHistoryList", 0, true);
         $this->registerChatCommand('mapinfo', "showMapInfo", 0, true);
 
         $this->registerChatCommand('nextmap', "chat_nextMap", 0, true);
