@@ -395,25 +395,29 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $localrecord = $this->records[$sortableMap->uId]->localRecords[$login] + 1;
             }
 
+            $color = '$fff';
             if ($isHistory) {
                 $name = '$d00' . Formatting::stripStyles($sortableMap->name);
                 $author = '$d00' .Formatting::stripStyles($sortableMap->author);
+                $color = '$d00';
             } else {
                 $name = $sortableMap->name;
                 $author = $sortableMap->author;
+                $color = '$fff';
             }
             if ($sortableMap->uId == $this->currentMap->uId) {
                 $name = '$0d0' . Formatting::stripStyles($sortableMap->name);
                 $author = '$0d0' .Formatting::stripStyles($sortableMap->author);
+                $color = '$0d0';
             }
 
             $this->pager->addSimpleItems(array(
                 Gui::fixString($name) => $queueMapAction,
                 Gui::fixString($author) => -1,
-                $sortableMap->environnement => -1,
-                \ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime) => -1,
-                $localrecord => -1,
-                $rate => -1,
+                $color.$sortableMap->environnement => -1,
+                $color.\ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime) => -1,
+                $color.$localrecord => -1,
+                $color.$rate => -1,
                 "Info" => $showInfoAction,
                 "Recs" => $showRecsAction,
                 "x" => $removeMapAction,

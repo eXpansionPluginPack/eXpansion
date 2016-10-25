@@ -64,6 +64,7 @@ class Maps extends ExpPlugin
     public static $searchTerm = array();
     public static $searchField = array();
 
+
     /**
      * @var AdminCmd
      */
@@ -124,6 +125,7 @@ class Maps extends ExpPlugin
 
         $this->registerChatCommand('list', "showMapList", 0, true);
         $this->registerChatCommand('maps', "showMapList", 0, true);
+        $this->registerChatCommand('history', "showHistoryList", 0, true);
         $this->registerChatCommand('mapinfo', "showMapInfo", 0, true);
 
         $this->registerChatCommand('nextmap', "chat_nextMap", 0, true);
@@ -141,7 +143,7 @@ class Maps extends ExpPlugin
         $action = \ManiaLive\Gui\ActionHandler::getInstance();
         $this->actionShowMapList = $action->createAction(array($this, "showMapList"));
         $this->actionShowJukeList = $action->createAction(array($this, "showJukeList"));
-
+        $this->actionShowHistoryList = $action->createAction(array($this, "showHistoryList"));
 
         CustomUI::HideForAll(CustomUI::CHALLENGE_INFO);
         $this->showCurrentMapWidget(null);
@@ -254,7 +256,10 @@ class Maps extends ExpPlugin
                     try {
                         $this->connection->removeMap($queue->map->fileName);
                     } catch (Exception $e) {
-                        $this->eXpChatSendServerMessage(__("Error: %s", $login, $e->getMessage()));
+                        $ac = AdminGroups::getInstance();
+                        $ac->announceToPermission(Permission::SERVER_ADMIN, "Error: %s", array($e->getMessage()));
+                        $this->console("Error while removing temporarily added map!");
+                        $this->console($e->getMessage());
                     }
                 }
                 if ($this->isRestartMap == false) {
@@ -286,14 +291,23 @@ class Maps extends ExpPlugin
 
         if ($this->isRestartMap == false) {
             array_unshift($this->history, $this->storage->currentMap);
-            if (count($this->history) > $this->config->historySize) {
+            if (count($this->history) > Config::getInstance()->historySize) {
                 array_pop($this->history);
             }
+
         }
         $this->isRestartMap = false;
         $this->showCurrentMapWidget(null);
         $this->showNextMapWidget(null);
     }
+
+
+    private function dumpHistory() {
+        foreach ($this->history as $map) {
+            echo $map->fileName . "\n";
+        }
+    }
+
 
     public function onBeginMap($map, $warmUp, $matchContinuation)
     {
@@ -306,7 +320,7 @@ class Maps extends ExpPlugin
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
-        $this->isRestartMap = $restartMap;
+
     }
 
     public function onBeginRound()
@@ -495,21 +509,6 @@ class Maps extends ExpPlugin
         $window = Maplist::Create($login);
         $window->setHistory($this->history);
         $window->setTitle(__('History of Maps', $login));
-        if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\LocalRecords\\LocalRecords')) {
-            $window->setRecords(
-                $this->callPublicMethod(
-                    '\\ManiaLivePlugins\\eXpansion\\LocalRecords',
-                    'getPlayersRecordsForAllMaps',
-                    $login
-                )
-            );
-        }
-        if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings')) {
-            $window->setRatings(
-                $this->callPublicMethod('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings', 'getRatings')
-            );
-        }
-
         $window->centerOnScreen();
         $window->setSize(180, 100);
         $window->updateList($login, 'name', 'null', $this->history);
@@ -949,6 +948,7 @@ class Maps extends ExpPlugin
                 $login = $window->getRecipient();
                 $this->showMapList($login);
             }
+            $this->preloadHistory();
         }
     }
 
@@ -975,8 +975,8 @@ class Maps extends ExpPlugin
         $i = $currentMapIndex - 1;
         $this->history = array();
 
-        $endIndex = $this->config->historySize - 1;
-        if (sizeof($mapList) < $this->config->historySize - 1) {
+        $endIndex = Config::getInstance()->historySize - 1;
+        if (sizeof($mapList) < Config::getInstance()->historySize - 1) {
             $endIndex = sizeof($mapList);
         }
         for ($j = 0; $j < $endIndex; $j++) {
@@ -1193,6 +1193,7 @@ class Maps extends ExpPlugin
             $widget->setMap($this->storage->currentMap);
             $widget->redraw($widget->getRecipient());
         }
+        $this->isRestartMap = true;
         $this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
     }
 
@@ -1204,6 +1205,7 @@ class Maps extends ExpPlugin
     public function replayScoreReset($login)
     {
         $this->instantReplay = true;
+        $this->isRestartMap = true;
         foreach (NextMapWidget::getAll() as $widget) {
             $widget->setMap($this->storage->currentMap);
             $widget->redraw($widget->getRecipient());
@@ -1230,11 +1232,11 @@ class Maps extends ExpPlugin
                     $login,
                     array(Formatting::stripCodes($player->nickName, 'wosnm'), $login)
                 );
-
                 return;
             }
         }
 
+        $this->isRestartMap = true;
         if (!$this->atPodium) {
             array_unshift($this->queue, new MapWish($player, $this->storage->currentMap, false));
         } else {
@@ -1248,6 +1250,7 @@ class Maps extends ExpPlugin
             $this->nextMap = $this->storage->currentMap;
             $this->redrawNextMapWidget();
         }
+
     }
 
     public function previousMap($login)
