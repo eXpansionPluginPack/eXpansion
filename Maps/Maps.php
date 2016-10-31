@@ -3,7 +3,6 @@
 namespace ManiaLivePlugins\eXpansion\Maps;
 
 use Exception;
-use ManiaLib\Gui\Elements\Icons128x128_1;
 use ManiaLib\Utils\Formatting;
 use ManiaLive\Gui\ActionHandler;
 use ManiaLive\Gui\CustomUI;
@@ -33,7 +32,7 @@ class Maps extends ExpPlugin
     /** @var DonateConfig */
     private $donateConfig;
 
-    /** var MapWish[] */
+    /** @var MapWish[] */
     private $queue = array();
 
     /** @var Map[] */
@@ -159,7 +158,7 @@ class Maps extends ExpPlugin
     {
         $this->msg_addQueue = eXpGetMessage(
             '#variable#%1$s  #queue#has been added to the map queue '
-            .'by #variable#%3$s#queue#, in the #variable#%5$s #queue#position'
+            . 'by #variable#%3$s#queue#, in the #variable#%5$s #queue#position'
         ); // '%1$s' = Map Name, '%2$s' = Map author %, '%3$s' = nickname, '%4$s' = login, '%5$s' = # in queue
         $this->msg_nextQueue = eXpGetMessage(
             '#queue#Next map will be #variable#%1$s  #queue#by #variable#%2$s#queue#, as requested by #variable#%3$s'
@@ -262,23 +261,13 @@ class Maps extends ExpPlugin
                         $this->console($e->getMessage());
                     }
                 }
-                if ($this->isRestartMap == false) {
-                    $this->console("Shifting queue!");
-                    array_shift($this->queue);
-                } else {
-                    $this->console("Not shifting queue, since restart!");
-                }
+                array_shift($this->queue);
             } else {
                 if ($this->tries < 3) {
                     $this->tries++;
                 } else {
                     $this->tries = 0;
-                    if ($this->isRestartMap == false) {
-                        $this->console("shifting queue!");
-                        array_shift($this->queue);
-                    } else {
-                        $this->console("not shifting queue, since restart!");
-                    }
+                    array_shift($this->queue);
                 }
             }
         }
@@ -294,17 +283,26 @@ class Maps extends ExpPlugin
             if (count($this->history) > Config::getInstance()->historySize) {
                 array_pop($this->history);
             }
-
         }
+
         $this->isRestartMap = false;
         $this->showCurrentMapWidget(null);
         $this->showNextMapWidget(null);
     }
 
 
-    private function dumpHistory() {
+    private function dumpHistory()
+    {
         foreach ($this->history as $map) {
             echo $map->fileName . "\n";
+        }
+    }
+
+    private function dumpQueue($msg = "")
+    {
+        echo $msg . "\n";
+        foreach ($this->queue as $i => $map) {
+            echo $i . ": " . $map->map->fileName . "\n";
         }
     }
 
@@ -805,7 +803,7 @@ class Maps extends ExpPlugin
             $player = $this->storage->getPlayerObject($login);
             $msg = eXpGetMessage(
                 '#admin_action#Admin #variable#%1$s #admin_action#removed '
-                .'the map #variable#%3$s #admin_action# from the playlist'
+                . 'the map #variable#%3$s #admin_action# from the playlist'
             );
             $this->eXpChatSendServerMessage(
                 $msg,
@@ -854,12 +852,12 @@ class Maps extends ExpPlugin
                 if ($found) {
                     $msg = eXpGetMessage(
                         '#admin_action#Admin #variable#%1$s #admin_action#removed '
-                        .'the map #variable#%3$s #admin_action# from playlist!'
+                        . 'the map #variable#%3$s #admin_action# from playlist!'
                     );
                 } else {
                     $msg = eXpGetMessage(
                         '#admin_error#Map #variable#%3$s #admin_error# '
-                        .'not found at playlist, perhaps it was already removed ?'
+                        . 'not found at playlist, perhaps it was already removed ?'
                     );
                     $recievers = $login;
                 }
@@ -892,7 +890,7 @@ class Maps extends ExpPlugin
                 if ($additions != "") {
                     $msg = eXpGetMessage(
                         '#admin_action#Admin #variable#%1$s #admin_action#erased '
-                        .'the map #variable#%3$s by %4$s #admin_action# from %5$s'
+                        . 'the map #variable#%3$s by %4$s #admin_action# from %5$s'
                     );
                     $this->eXpChatSendServerMessage(
                         $msg,
@@ -1278,7 +1276,7 @@ class Maps extends ExpPlugin
 
             $msg = eXpGetMessage(
                 '#admin_action#Admin #variable#%1$s #admin_action#added previous '
-                .'map #variable#%3$s #admin_action# to the playlist'
+                . 'map #variable#%3$s #admin_action# to the playlist'
             );
             $this->eXpChatSendServerMessage(
                 $msg,
