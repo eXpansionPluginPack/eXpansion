@@ -517,8 +517,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
             $mapsByUid = array();
             while ($row = $data->fetchObject()) {
-                $mapsByUid[$row->uid] = new \stdClass();
-                $mapsByUid[$row->uid]->localRecords[$login] = $row->rank;
+                $mapsByUid[$row->uid] = $row->rank;
             }
         }
         return $mapsByUid;
