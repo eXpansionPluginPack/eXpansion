@@ -5,10 +5,12 @@ namespace ManiaLivePlugins\eXpansion\ManiaExchange;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\Helpers\Console;
 use ManiaLivePlugins\eXpansion\Helpers\GBXChallMapFetcher;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Widgets\MxWidget;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Windows\MxSearch;
+use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap;
 use oliverde8\AsynchronousJobs\Job\Curl;
 
 class ManiaExchange extends ExpPlugin
@@ -97,6 +99,9 @@ class ManiaExchange extends ExpPlugin
             case "queue":
                 $this->mxVote($login, $param);
                 break;
+            case "update":
+                $this->mxUpdate($login);
+                break;
             case "help":
             default:
                 $msg = eXpGetMessage(
@@ -107,6 +112,16 @@ class ManiaExchange extends ExpPlugin
                 break;
         }
     }
+
+    public function mxUpdate($login)
+    {
+        $window = Gui\Windows\MxUpdate::Create($login);
+        $window->setMain($this);
+        $window->setTitle('Update Maps ');
+        $window->setSize(210, 100);
+        $window->show();
+    }
+
 
     public function mxSearch($login, $search = "", $author = "")
     {
@@ -262,6 +277,7 @@ class ManiaExchange extends ExpPlugin
                             false
                         );
                     }
+                    $this->updateMxInfo($map->uId);
                 } catch (\Exception $e) {
                     $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
                 }
@@ -272,6 +288,7 @@ class ManiaExchange extends ExpPlugin
             $this
                 ->eXpChatSendServerMessage("Error while saving a map file at remote host :" . $e->getMessage(), $login);
         }
+
     }
 
     public function saveMapLocally($file, $dir, $data, $login)
@@ -304,6 +321,7 @@ class ManiaExchange extends ExpPlugin
                             false
                         );
                     }
+                    $this->updateMxInfo($map->uId);
                 } catch (\Exception $e) {
                     $this->connection->chatSendServerMessage(__("Error: %s", $login, $e->getMessage()), $login);
                 }
@@ -313,6 +331,7 @@ class ManiaExchange extends ExpPlugin
         } catch (\Exception $ex) {
             $this->eXpChatSendServerMessage("Error while saving a map file : " . $ex->getMessage(), $login);
         }
+
     }
 
     /**
@@ -358,6 +377,106 @@ class ManiaExchange extends ExpPlugin
             $this->callPublicMethod('\ManiaLivePlugins\eXpansion\\Maps\\Maps', 'queueMxMap', $login, $file);
         }
     }
+
+    private function updateMxInfo($mapUid)
+    {
+        $storage = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance();
+        $title = "tm";
+        if ($storage->simpleEnviTitle == \ManiaLivePlugins\eXpansion\Helpers\Storage::TITLE_SIMPLE_SM) {
+            $title = "sm";
+        }
+
+        $query = 'https://api.mania-exchange.com/' . $title . '/maps?ids=' . $mapUid;
+
+        $access = DataAccess::getInstance();
+        $options = array(CURLOPT_HTTPHEADER => array("Content-Type" => "application/json"));
+        $access->httpCurl($query, array($this, "xUpdateInfo"), null, $options);
+
+    }
+
+
+    public function xUpdateInfo($job, $jobData)
+    {
+        $info = $job->getCurlInfo();
+        $code = $info['http_code'];
+        $data = $job->getResponse();
+
+        if ($code !== 200) {
+            return;
+        }
+
+        $json = json_decode($data, true);
+
+        if ($json !== false) {
+            self::addMxInfo(MxMap::fromArray($json));
+        }
+    }
+
+    /**
+     * @param MxMap $map
+     */
+    public static function addMxInfo($map)
+    {
+        if (is_array($map)) {
+            $map = MxMap::fromArray($map);
+        }
+
+        $config = \ManiaLive\Database\Config::getInstance();
+        $db = \ManiaLive\Database\Connection::getConnection(
+            $config->host,
+            $config->username,
+            $config->password,
+            $config->database,
+            $config->type,
+            $config->port
+        );
+
+        try {
+            $sql = "UPDATE `exp_maps` SET 
+                    `mx_trackID`=" . $db->quote($map->trackID) . ",
+                     `mx_userID`=" . $db->quote($map->userID) . ",
+                     `mx_username`=" . $db->quote($map->username) . ",
+                     `mx_uploadedAt`=" . $db->quote($map->uploadedAt) . ",
+                     `mx_updatedAt`=" . $db->quote($map->updatedAt) . ",
+                     `mx_typeName`=" . $db->quote($map->typeName) . ",
+                     `mx_mapType`=" . $db->quote($map->mapType) . ",
+                     `mx_titlePack`=" . $db->quote($map->titlePack) . ",
+                     `mx_styleName`=" . $db->quote($map->styleName) . ",
+                     `mx_displayCost`=" . $db->quote($map->displayCost) . ",
+                     `mx_modName`=" . $db->quote($map->modName) . ",
+                     `mx_lightMap`=" . $db->quote($map->lightmap) . ",
+                     `mx_exeVersion`=" . $db->quote($map->exeVersion) . ",
+                     `mx_exeBuild`=" . $db->quote($map->exeBuild) . ",
+                     `mx_environmentName`=" . $db->quote($map->environmentName) . ",
+                     `mx_vehicleName`=" . $db->quote($map->vehicleName) . ",
+                     `mx_unlimiterRequired`=" . $db->quote($map->unlimiterRequired) . ",
+                     `mx_routeName`=" . $db->quote($map->routeName) . ",
+                     `mx_lengthName`=" . $db->quote($map->lengthName) . ",
+                     `mx_laps`=" . $db->quote($map->laps) . ",
+                     `mx_difficultyName`=" . $db->quote($map->difficultyName) . ",
+                     `mx_replayTypeName`=" . $db->quote($map->replayTypeName) . ",
+                     `mx_replayWRID`=" . $db->quote($map->replayWRID) . ",
+                     `mx_replayWRTime`=" . $db->quote($map->replayWRTime) . ",
+                     `mx_replayWRUserID`=" . $db->quote($map->replayWRUserID) . ",
+                     `mx_replayWRUsername`=" . $db->quote($map->replayWRUsername) . ",
+                     `mx_ratingVoteCount`=" . $db->quote($map->ratingVoteCount) . ",
+                     `mx_ratingVoteAverage`=" . $db->quote($map->ratingVoteAverage) . ",
+                     `mx_replayCount`=" . $db->quote($map->replayCount) . ",
+                     `mx_trackValue`=" . $db->quote($map->trackValue) . ",
+                     `mx_comments`=" . $db->quote($map->comments) . ",
+                     `mx_commentsCount`=" . $db->quote($map->commentCount) . ",
+                     `mx_awardCount`=" . $db->quote($map->awardCount) . ",
+                     `mx_hasScreenshot`=" . $db->quote($map->hasScreenshot) . ",
+                     `mx_hasThumbnail`=" . $db->quote($map->hasThumbnail) . "                   
+                    WHERE `challenge_uid`=" . $db->quote($map->trackUID) . ";";
+
+            $db->execute($sql);
+        } catch (\Exception $ex) {
+            Console::out("Error: " . $ex->getMessage(), "Database", Console::b_red);
+        }
+
+    }
+
 
     public function mxVote($login, $mxId)
     {

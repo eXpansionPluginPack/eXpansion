@@ -51,6 +51,8 @@ class MxMap extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
 
     public $trackID;
 
+    public $trackUID;
+
     public $userID;
 
     public $username;

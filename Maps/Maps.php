@@ -19,6 +19,7 @@ use ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\AddMaps;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Jukelist;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
+use ManiaLivePlugins\eXpansion\Maps\Structures\DbMap;
 use ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode;
 use ManiaLivePlugins\eXpansion\Maps\Structures\MapWish;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
@@ -483,6 +484,7 @@ class Maps extends ExpPlugin
         $window->setTitle(__('Maps on server', $login), " (" . count($this->storage->maps) . ")");
         $window->setHistory($this->history);
         $window->setCurrentMap($this->storage->currentMap);
+        $window->setMaps($this->getMXdataForAllMaps());
 
         if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
             $window->setRecords($this->callPublicMethod(
@@ -496,10 +498,39 @@ class Maps extends ExpPlugin
         }
 
         $window->centerOnScreen();
-        $window->setSize(180, 100);
+        $window->setSize(220, 100);
         $window->updateList($login);
         $window->show();
     }
+
+
+    public function getMXdataForAllMaps()
+    {
+        $count = 0;
+        $uids = "";
+        foreach ($this->storage->maps as $map) {
+            $uids .= $this->db->quote($map->uId) . ",";
+            $count++;
+        }
+
+        if ($count > 0) {
+            $uids = trim($uids, ",");
+
+            $q = ' SELECT * '
+                . ' FROM `exp_maps` '
+                . ' WHERE `challenge_uid` IN (' . $uids . ');';
+            $data = $this->db->execute($q);
+
+            $mapsByUid = array();
+            while ($row = $data->fetchArray()) {
+                $map = DbMap::fromArray($row);
+                $mapsByUid[$map->uId] = $map;
+            }
+        }
+
+        return $mapsByUid;
+    }
+
 
     public function showHistoryList($login)
     {
