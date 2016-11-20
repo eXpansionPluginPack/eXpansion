@@ -97,6 +97,12 @@ class Dropdown extends \ManiaLivePlugins\eXpansion\Gui\Control implements \Mania
 
     }
 
+    public function getValueByIndex($index)
+    {
+        if (array_key_exists($index, $this->values))
+            return $this->values[$index];
+    }
+
     public function getDropdownItems()
     {
         return $this->values;

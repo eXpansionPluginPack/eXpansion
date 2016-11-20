@@ -18,6 +18,8 @@ class Mapitem extends Control implements OptimizedPagerElement
     protected $goButton;
     protected $showRecsButton;
     protected $removeButton;
+    protected $tagButton;
+
     public $label_map;
     public $label_envi;
     public $label_author;
@@ -33,7 +35,7 @@ class Mapitem extends Control implements OptimizedPagerElement
     public function __construct($indexNumber, $login, $action)
     {
         $sizeY = 6.5;
-        $sizeX = 210;
+        $sizeX = 220;
 
         $scaledSizes = Gui::getScaledSize(self::$ColumnWidths, ($sizeX) - 7);
 
@@ -130,6 +132,17 @@ class Mapitem extends Control implements OptimizedPagerElement
             $this->removeButton->setClass("eXpOptimizedPagerAction");
             $this->actionsFrame->addComponent($this->removeButton);
         }
+
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_ADMIN)) {
+            $this->tagButton = new MyButton(5, 5);
+            $this->tagButton->setDescription(__('$F22Set map tags', $login), 70);
+            $this->tagButton->setAction($action);
+            $this->tagButton->setIcon('Icons64x64_1', 'Save');
+            $this->tagButton->setId('column_' . $indexNumber . '_11');
+            $this->tagButton->setClass("eXpOptimizedPagerAction");
+            $this->actionsFrame->addComponent($this->tagButton);
+        }
+
 
         $this->addComponent($this->frame);
         $this->setSize($sizeX, $sizeY);

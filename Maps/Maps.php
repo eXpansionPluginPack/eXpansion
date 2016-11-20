@@ -19,6 +19,7 @@ use ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\AddMaps;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Jukelist;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\MapTag;
 use ManiaLivePlugins\eXpansion\Maps\Structures\DbMap;
 use ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode;
 use ManiaLivePlugins\eXpansion\Maps\Structures\MapWish;
@@ -71,6 +72,8 @@ class Maps extends ExpPlugin
     private $cmd_remove;
     private $cmd_erease;
     private $cmd_replay;
+    private $cmd_tag;
+
     private $isRestartMap = false;
     private $is_onBeginMatch = false;
     private $is_onEndMatch = false;
@@ -122,6 +125,11 @@ class Maps extends ExpPlugin
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "prev");
         $this->cmd_prev = $cmd;
+
+        $cmd = AdminGroups::addAdminCommand('tag', $this, 'tagMap', Permission::MAP_JUKEBOX_ADMIN);
+        $cmd->setHelp(eXpGetMessage('Tags a map'));
+        $cmd->setMinParam(0);
+        $this->cmd_tag = $cmd;
 
         $this->registerChatCommand('list', "showMapList", 0, true);
         $this->registerChatCommand('maps', "showMapList", 0, true);
@@ -498,7 +506,7 @@ class Maps extends ExpPlugin
         }
 
         $window->centerOnScreen();
-        $window->setSize(220, 100);
+        $window->setSize(230, 100);
         $window->updateList($login);
         $window->show();
     }
@@ -1330,6 +1338,14 @@ class Maps extends ExpPlugin
         }
     }
 
+    public function tagMap($login)
+    {
+        $window = MapTag::Create($login);
+        $window->setMap($this->storage->currentMap->uId);
+        $window->setSize(120,20);
+        $window->show();
+    }
+
     /**
      * Opens the local add maps window
      *
@@ -1451,12 +1467,14 @@ class Maps extends ExpPlugin
         Maplist::EraseAll();
         AddMaps::EraseAll();
         Jukelist::EraseAll();
+        MapTag::EraseAll();
         Gui\Windows\MapInfo::EraseAll();
         CustomUI::ShowForAll(CustomUI::CHALLENGE_INFO);
 
         AdminGroups::removeAdminCommand($this->cmd_replay);
         AdminGroups::removeAdminCommand($this->cmd_erease);
         AdminGroups::removeAdminCommand($this->cmd_remove);
+        AdminGroups::removeAdminCommand($this->cmd_tag);
 
         /** @var ActionHandler $action */
         $action = \ManiaLive\Gui\ActionHandler::getInstance();

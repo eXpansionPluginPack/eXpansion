@@ -52,7 +52,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     /** @var  \ManiaLive\Data\Storage */
     protected $storage;
-    protected $widths = array(5, 15, 4, 4, 4, 4, 3, 3, 3, .7);
+    protected $widths = array(5, 15, 4, 4, 4, 4, 3, 3, 4);
 
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap[] */
     protected $maps = array();
@@ -237,7 +237,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $this->searchframe->setPosition(2, -7);
 
-        $this->pager->setSize($this->getSizeX() - 6, $this->getSizeY() - 20);
+        $this->pager->setSize($this->getSizeX() - 2, $this->getSizeY() - 20);
 
         $this->pager->setPosition(3, -17);
 
@@ -410,6 +410,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $removeMapAction = Gui::createConfirm($this->createAction(array($this, 'removeMap'), $sortableMap));
             $showRecsAction = $this->createAction(array($this, 'showRec'), $sortableMap);
             $showInfoAction = $this->createAction(array($this, 'showInfo'), $sortableMap->uId);
+            $showTagAction = $this->createAction(array($this, 'showTag'), $sortableMap->uId);
 
             if (isset($sortableMap->mapRating)) {
                 $rate = ($sortableMap->mapRating->rating / 5) * 100;
@@ -464,7 +465,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $color . $style => -1,
                 "Info" => $showInfoAction,
                 "Recs" => $showRecsAction,
-                "x" => $removeMapAction
+                "x" => $removeMapAction,
+                "Tag" => $showTagAction
             );
 
             $this->pager->addSimpleItems($array);
@@ -486,6 +488,15 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $window->setSize(160, 90);
         $window->show($login);
     }
+
+    public function showTag($login, $uid)
+    {
+        $window = MapTag::create($login);
+        $window->setMap($uid);
+        $window->setSize(120, 20);
+        $window->show($login);
+    }
+
 
     public function setRecords($records)
     {
