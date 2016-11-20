@@ -45,6 +45,7 @@ class ManiaExchange extends ExpPlugin
     public function eXpOnReady()
     {
         $this->dataAccess = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
+
         $this->registerChatCommand("mx", "chatMX", 2, true);
         $this->registerChatCommand("mx", "chatMX", 1, true);
         $this->registerChatCommand("mx", "chatMX", 0, true);
@@ -393,9 +394,8 @@ class ManiaExchange extends ExpPlugin
 
         $query = 'https://api.mania-exchange.com/' . $title . '/maps?ids=' . $mapUid;
 
-        $access = DataAccess::getInstance();
         $options = array(CURLOPT_HTTPHEADER => array("Content-Type" => "application/json"));
-        $access->httpCurl($query, array($this, "xUpdateInfo"), null, $options);
+        $this->dataAccess->httpCurl($query, array($this, "xUpdateInfo"), null, $options);
 
     }
 
@@ -407,14 +407,18 @@ class ManiaExchange extends ExpPlugin
         $data = $job->getResponse();
 
         if ($code !== 200) {
+            Console::out("mx returned http code: " . $code);
             return;
         }
 
         $json = json_decode($data, true);
 
-        if ($json !== false) {
-            self::addMxInfo(MxMap::fromArray($json));
+        if ($json === false) {
+            Console::out("Error when parsing mx json.");
+            return;
         }
+
+        self::addMxInfo($json[0]);
     }
 
     /**
