@@ -115,6 +115,11 @@ class ManiaExchange extends ExpPlugin
 
     public function mxUpdate($login)
     {
+        if (!AdminGroups::hasPermission($login, Permission::MAP_ADD_MX)) {
+            $this->eXpChatSendServerMessage("#error#You don't have permission to run this command.");
+            return;
+        }
+
         $window = Gui\Windows\MxUpdate::Create($login);
         $window->setMain($this);
         $window->setTitle('Update Maps ');
