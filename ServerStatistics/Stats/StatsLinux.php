@@ -56,8 +56,13 @@ class StatsLinux implements AbstractStat
     public function getUptime()
     {
         $contents = file_get_contents('/proc/uptime', false);
-        list($seconds) = explode(' ', $contents, 1);
-
-        return $seconds;
+        $seconds = explode(' ', $contents, 2);
+		if (count($seconds) > 1) {
+			$seconds = round($seconds[0]);
+		}
+		else {
+			$seconds = 0;
+		}
+		return $seconds;
     }
 }
