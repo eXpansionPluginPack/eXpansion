@@ -52,7 +52,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     /** @var  \ManiaLive\Data\Storage */
     protected $storage;
-    protected $widths = array(5, 15, 4, 4, 4, 4, 3, 3, 4);
+    protected $widths = array(6, 12, 4, 4, 4, 4, 4, 3, 4);
 
     /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap[] */
     protected $maps = array();
@@ -135,7 +135,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $this->title_difficulty = new \ManiaLib\Gui\Elements\Label();
         $this->title_difficulty->setText(__("Difficulty", $login));
-        $this->title_difficulty->setAlign("center");
+        $this->title_difficulty->setAlign("left");
         $this->title_difficulty->setStyle($textStyle);
         $this->title_difficulty->setTextColor($textColor);
         $this->title_difficulty->setTextSize($textSize);
@@ -306,6 +306,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->maps = array();
 
         foreach ($maps as $map) {
+
             if (!isset($map->strippedName)) {
                 $map->strippedName = \ManiaLib\Utils\Formatting::stripStyles($map->name);
             }

@@ -25,8 +25,8 @@ class Config extends \ManiaLib\Utils\Singleton
     public $style_title_posYOffset = 0;
     public $style_title_sizeYOffset = 0;
     public $style_widget_bgColor = '';
-    public $style_widget_bgStyle = 'BgsPlayerCard';
-    public $style_widget_bgSubStyle = 'BgRacePlayerName'; // BgList
+    public $style_widget_bgStyle = 'Bgs1InRace';
+    public $style_widget_bgSubStyle = 'NavButtonBlink'; // BgList
     public $style_widget_bgColorize = '191919'; // BgList
     public $style_widget_bgOpacity = 0.6;
     public $style_widget_bgXOffset = 0;

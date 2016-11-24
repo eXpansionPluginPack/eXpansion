@@ -65,6 +65,7 @@ class Maps extends ExpPlugin
     public static $searchTerm = array();
     public static $searchField = array();
     public static $actionOpenMapList = -1;
+    public static $dbMapsByUid = array();
 
     /**
      * @var AdminCmd
@@ -161,6 +162,9 @@ class Maps extends ExpPlugin
 
         // this is for fixes to storm gamemodes
         $this->enableScriptEvents(array("LibXmlRpc_BeginMap", "LibXmlRpc_EndMap", "LibXmlRpc_BeginPodium"));
+
+        // update cache
+        $this->getMXdataForAllMaps();
     }
 
     public function eXpOnLoad()
@@ -323,6 +327,8 @@ class Maps extends ExpPlugin
         $this->showCurrentMapWidget(null);
         $this->showNextMapWidget(null);
         CustomUI::HideForAll(CustomUI::CHALLENGE_INFO);
+        // update cache
+        $this->getMXdataForAllMaps();
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
@@ -535,8 +541,24 @@ class Maps extends ExpPlugin
                 $mapsByUid[$map->uId] = $map;
             }
         }
-
+        self::$dbMapsByUid = $mapsByUid;
         return $mapsByUid;
+    }
+
+    /**
+     * @param string $uid
+     * @return DbMap
+     */
+    public function getMXdataForMap($uid)
+    {
+
+        $q = ' SELECT * '
+            . ' FROM `exp_maps` '
+            . ' WHERE `challenge_uid` = ' . $this->db->quote($uid) . ';';
+        $data = $this->db->execute($q);
+
+        return DbMap::fromArray($data->fetchArray());
+
     }
 
 
@@ -980,12 +1002,13 @@ class Maps extends ExpPlugin
         // update all open Maplist windows
         if ($isListModified) {
             $windows = Maplist::GetAll();
-
             foreach ($windows as $window) {
                 $login = $window->getRecipient();
                 $this->showMapList($login);
             }
             $this->preloadHistory();
+            // update local cache
+            $this->getMXdataForAllMaps();
         }
     }
 
@@ -1342,7 +1365,7 @@ class Maps extends ExpPlugin
     {
         $window = MapTag::Create($login);
         $window->setMap($this->storage->currentMap->uId);
-        $window->setSize(120,20);
+        $window->setSize(120, 20);
         $window->show();
     }
 
