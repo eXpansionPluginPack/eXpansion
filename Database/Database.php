@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Database;
 
 use ManiaLib\Utils\Formatting as StringFormatting;
+use ManiaLive\Data\Player;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
@@ -112,9 +113,15 @@ class Database extends ExpPlugin
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
         $firstFound = false;
-        foreach ($this->storage->players as $login => $player) { // get players
-            $this->updatePlayTime($player);
-            if ($player->rank == 1 && sizeof($this->storage->players) > 1 && !$firstFound) {
+
+        foreach ($rankings as $key => $playerArr) { // get players
+            /** @var Player $player */
+            $player = Player::fromArray($playerArr);
+            if (array_key_exists($player->login, $this->storage->players)) {
+                $this->updatePlayTime($this->storage->players[$player->login]);
+            }
+
+            if ($player->rank == 1 && $player->bestTime > 0 && sizeof($rankings) > 1 && !$firstFound) {
                 $this->incrementWins($player);
                 $firstFound = true;
             }
