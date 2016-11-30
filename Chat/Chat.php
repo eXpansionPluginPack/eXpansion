@@ -18,6 +18,8 @@ use ManiaLive\DedicatedApi\Callback\Event;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Chat\Gui\Widgets\ChatSelect;
+use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 
 /**
  * Redirects the chat in order to display it nicer.
@@ -35,6 +37,9 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     private $enabled = true;
 
+    public static $channels = array();
+    public static $playerChannels = array("Public");
+
     /** @var Config */
     private $config;
     private $exclude = array();
@@ -43,6 +48,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function eXpOnLoad()
     {
         $this->loadProfanityList();
+        self::$channels = array_merge(array("Public"), Config::getInstance()->channels);
     }
 
     public function eXpOnReady()
@@ -62,8 +68,19 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->console("Couldn't initialize chat. Error from server: " . $e->getMessage());
             $this->enabled = false;
         }
+        $this->initChat();
 
         $this->config = Config::getInstance();
+    }
+
+
+    public function initChat()
+    {
+        $all = $this->storage->players + $this->storage->spectators;
+        foreach ($all as $login => $player) {
+            self::$playerChannels[$login] = "Public";
+            $this->displayWidget($login);
+        }
     }
 
     private function loadProfanityList()
@@ -81,6 +98,22 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     foreach (file($file->getPathname()) as $line) {
                         $this->badWords[] = strtolower(trim($line, "\r\n"));
                     }
+                }
+            }
+        }
+    }
+
+    public function onSettingsChanged(Variable $var)
+    {
+        if ($var->getConfigInstance() instanceof Config) {
+            if ($var->getName() == "channels") {
+                self::$channels = array_merge(array("Public"), $var->getRawValue());
+                ChatSelect::EraseAll();
+                $all = $this->storage->players + $this->storage->spectators;
+                foreach ($all as $login => $player) {
+                    $window = ChatSelect::Create($login);
+                    $window->sync($login);
+                    $window->show();
                 }
             }
         }
@@ -146,12 +179,15 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function onPlayerConnect($login, $isSpectator)
     {
+        self::$playerChannels[$login] = "Public";
+        $this->displayWidget($login);
         $player = $this->storage->getPlayerObject($login);
         $nickLog = \ManiaLib\Utils\Formatting::stripStyles($player->nickName);
         \ManiaLive\Utilities\Logger::getLog('chat')->write(
             " (" . $player->iPAddress . ") [" . $login . "] Connect with nickname " . $nickLog
         );
     }
+
 
     /**
      * On player just disconnect
@@ -161,6 +197,9 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function onPlayerDisconnect($login, $reason = null)
     {
+        if (isset(self::$playerChannels['login'])) {
+            unset(self::$playerChannels['login']);
+        }
         $player = $this->storage->getPlayerObject($login);
         if (empty($player)) {
             return;
@@ -168,6 +207,15 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         \ManiaLive\Utilities\Logger::getLog('chat')->write(
             " (" . $player->iPAddress . ") [" . $login . "] Disconnected"
         );
+
+        ChatSelect::Erase($login);
+    }
+
+    public function displayWidget($login)
+    {
+        $widget = ChatSelect::Create($login);
+        $widget->sync();
+        $widget->show();
     }
 
     public function getRecepients()
@@ -245,6 +293,43 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $text = str_replace('$<', '', $text);
 
             if ($this->config->publicChatActive || AdminGroups::hasPermission($login, Permission::CHAT_ON_DISABLED)) {
+                $playersCombined = $this->storage->players + $this->storage->spectators;
+                $playersByCountry = array();
+                $channels = array();
+                $currentChannel = self::$playerChannels[$login];
+
+                foreach ($playersCombined as $localLogin => $player) {
+                    $playersByCountry[$this->getCountry($player)][] = $localLogin;
+                }
+                foreach (self::$playerChannels as $key => $value) {
+                    $channels[$value][] = $key;
+                }
+
+                // by default set global channel
+                $receivers = null;
+                $country = $this->getCountry($source_player);
+                $channel = "";
+
+                // if group
+                if (self::$playerChannels[$login] != "Public") {
+                    $channel = "[" . ucfirst($currentChannel) . "] ";
+                    $receivers = implode(",", array_intersect(array_keys($playersCombined),
+                            (AdminGroups::getAdminsByPermission(Permission::CHAT_ADMINCHAT)
+                                + $channels[$currentChannel]))
+                    );
+                }
+
+                // if local language
+                if (self::$playerChannels[$login] == "Local Language") {
+
+                    if (array_key_exists($country, $playersByCountry)) {
+                        $channel = "[" . ucfirst($country) . "] ";
+                        $receivers = implode(",", array_intersect(array_keys($playersCombined),
+                            (AdminGroups::getAdminsByPermission(Permission::CHAT_ADMINCHAT)
+                                + $playersByCountry[$country])));
+                    }
+                }
+
 
                 try {
                     // change text color, if admin is defined at admingroups
@@ -255,8 +340,10 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                             $color = $config->otherServerChatColor;
                         }
                         $this->connection->chatSendServerMessage(
+                            $channel .
                             $config->adminSign . '$fff$<' . $nick . '$z$s$> '
-                            . $config->chatSeparator . $color . $force . $text
+                            . $config->chatSeparator . $color . $force . $text,
+                            $receivers
                         );
                     } else {
                         $color = $config->publicChatColor;
@@ -265,7 +352,8 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                         }
 
                         $this->connection->chatSendServerMessage(
-                            '$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text
+                            $channel . '$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text,
+                            $receivers
                         );
                     }
                     $nickLog = \ManiaLib\Utils\Formatting::stripStyles($nick);
@@ -303,7 +391,7 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     } else {
                         $this->eXpChatSendServerMessage(
                             "#error#Chat is disabled at at the moment!!! "
-                            ."You can chat when you retire or go spectator. You may still use PM messages",
+                            . "You can chat when you retire or go spectator. You may still use PM messages",
                             $login,
                             array()
                         );
@@ -311,13 +399,26 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 } else {
                     $this->eXpChatSendServerMessage(
                         "#error#Chat is disabled at at the moment!!! "
-                        ."Only admins may chat. You may still use PM messages",
+                        . "Only admins may chat. You may still use PM messages",
                         $login,
                         array()
                     );
                 }
             }
         }
+    }
+
+    private function getCountry($player)
+    {
+        $path = str_replace("World|", "", $player->path);
+        $country = explode("|", $path);
+        if (sizeof($country) > 0) {
+            $country = $country[1];
+        } else {
+            $country = "Unknown";
+        }
+
+        return $country;
     }
 
     /**
@@ -330,5 +431,6 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     {
         Dispatcher::unregister(Event::getClass(), $this, Event::ON_PLAYER_CHAT);
         $this->connection->chatEnableManualRouting(false);
+        ChatSelect::EraseAll();
     }
 }
