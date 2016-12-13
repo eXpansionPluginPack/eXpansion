@@ -261,6 +261,12 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function onPlayerChat($playerUid, $login, $text, $isRegistredCmd)
     {
+
+        if ($playerUid != 0 && substr($text, 0, 2) == " /") {
+            Dispatcher::dispatch(new Event("PlayerChat", array($playerUid, $login, ltrim($text), true)));
+            return;
+        }
+
         if ($playerUid != 0 && substr($text, 0, 1) != "/" && $this->enabled) {
             $config = Config::getInstance();
             $force = "";
