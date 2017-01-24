@@ -1702,7 +1702,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 FROM exp_records r1
                 WHERE record_challengeuid = \'' . $challengeId . '\'
                                 AND record_nbLaps = ' . $nbLaps . '
-                GROUP BY record_playerlogin, record_challengeuid, record_nbLaps, record_score
+                GROUP BY record_playerlogin, record_challengeuid, record_nbLaps, record_score, record_date
                 ORDER BY ' . $this->getDbOrderCriteria() . '
                 LIMIT 0, ' . $this->config->recordsCount;
 
@@ -1849,7 +1849,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                             ' . $nbTrack . ' as nbMaps
                FROM exp_ranks
                WHERE rank_challengeuid IN (' . $uids . ')                                       
-               GROUP BY rank_playerlogin                            
+               GROUP BY login
                ORDER BY tscore ASC
                LIMIT 0,100';
 
