@@ -239,11 +239,10 @@ class ServerPanel extends Widget
 
     public function destroy()
     {
-        parent::destroy();
         foreach ($this->items as $item) {
             $item->destroy();
         }
         $this->items = array();
-        $this->frame->destroy();
+        parent::destroy();
     }
 }
