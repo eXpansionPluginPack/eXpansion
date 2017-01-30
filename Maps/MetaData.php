@@ -18,7 +18,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     {
         parent::onBeginLoad();
         $this->setName("Maps: Generic Management and Jukebox");
-        $this->setDescription("Provides common functions for maps, add,remove and list and jukebox");
+        $this->setDescription("Provides common functions for maps, add, remove, list and jukebox");
         $this->setGroups(array('Maps'));
 
         $config = Config::getInstance();
@@ -29,13 +29,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(array(0));
         $this->registerVariable($var);
 
-        $var = new TypeInt("bufferSize", "Map Buffer size", $config, false, false);
+        $var = new TypeInt("bufferSize", "Set jukebox total size", $config, false, false);
         $var->setGroup("Buffers");
         $var->setDefaultValue(5);
         $this->registerVariable($var);
 
 
-        $var = new TypeInt("historySize", "Map History size", $config, false, false);
+        $var = new TypeInt("historySize", "How many recent maps players can't jukebox", $config, false, false);
+        $var->setDescription('Will be shown color red at maps list. Note: Admins can jukebox every map anyway');
         $var->setGroup("Buffers");
         $var->setDefaultValue(7);
         $this->registerVariable($var);

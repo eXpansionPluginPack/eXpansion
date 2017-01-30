@@ -76,7 +76,7 @@ class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\CmdMore::Erase($login);
         $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\CmdMore::Create($login);
         $window->setCommand($cmd);
-        $window->setTitle(__(AdminGroups::$txt_helpTitle, $login));
+        $window->setTitle(__(\eXpGetMessage("Admin Commands Extended Help"), $login));
         $window->setSize(120, 100);
         $window->centerOnScreen();
         $window->show();

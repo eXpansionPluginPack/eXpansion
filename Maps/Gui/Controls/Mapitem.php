@@ -18,19 +18,24 @@ class Mapitem extends Control implements OptimizedPagerElement
     protected $goButton;
     protected $showRecsButton;
     protected $removeButton;
+    protected $tagButton;
+
     public $label_map;
     public $label_envi;
     public $label_author;
     public $label_authortime;
     public $label_localrec;
     public $label_rating;
+    public $label_difficultyName;
+    public $label_styleName;
+
     protected $frame;
     protected $actionsFrame;
 
     public function __construct($indexNumber, $login, $action)
     {
         $sizeY = 6.5;
-        $sizeX = 170;
+        $sizeX = 220;
 
         $scaledSizes = Gui::getScaledSize(self::$ColumnWidths, ($sizeX) - 7);
 
@@ -83,8 +88,19 @@ class Mapitem extends Control implements OptimizedPagerElement
         $this->label_rating->setId('column_' . $indexNumber . '_5');
         $this->frame->addComponent($this->label_rating);
 
+        $this->label_difficultyName = new \ManiaLib\Gui\Elements\Label($scaledSizes[6], 4);
+        $this->label_difficultyName->setAlign('center', 'center');
+        $this->label_difficultyName->setId('column_' . $indexNumber . '_6');
+        $this->frame->addComponent($this->label_difficultyName);
+
+        $this->label_styleName = new \ManiaLib\Gui\Elements\Label($scaledSizes[7], 4);
+        $this->label_styleName->setAlign('center', 'center');
+        $this->label_styleName->setId('column_' . $indexNumber . '_7');
+        $this->frame->addComponent($this->label_styleName);
+
+
         $this->actionsFrame = new \ManiaLive\Gui\Controls\Frame();
-        $this->actionsFrame->setSize($scaledSizes[5], 4);
+        $this->actionsFrame->setSize($scaledSizes[8], 4);
         $this->actionsFrame->setLayout(new \ManiaLib\Gui\Layouts\Line());
         $this->frame->addComponent($this->actionsFrame);
 
@@ -92,7 +108,7 @@ class Mapitem extends Control implements OptimizedPagerElement
         $this->showInfoButton->setDescription(__('Map Info', $login), 40);
         $this->showInfoButton->setAction($action);
         $this->showInfoButton->setIcon('Icons64x64_1', 'TrackInfo');
-        $this->showInfoButton->setId('column_' . $indexNumber . '_6');
+        $this->showInfoButton->setId('column_' . $indexNumber . '_8');
         $this->showInfoButton->setClass("eXpOptimizedPagerAction");
         $this->actionsFrame->addComponent($this->showInfoButton);
 
@@ -101,7 +117,7 @@ class Mapitem extends Control implements OptimizedPagerElement
             $this->showRecsButton->setDescription(__('Show Records', $login), 40);
             $this->showRecsButton->setAction($action);
             $this->showRecsButton->setIcon('BgRaceScore2', 'ScoreLink');
-            $this->showRecsButton->setId('column_' . $indexNumber . '_7');
+            $this->showRecsButton->setId('column_' . $indexNumber . '_9');
             $this->showRecsButton->setClass("eXpOptimizedPagerAction");
             $this->actionsFrame->addComponent($this->showRecsButton);
         }
@@ -112,10 +128,21 @@ class Mapitem extends Control implements OptimizedPagerElement
             $this->removeButton->setAction($action);
             $this->removeButton->colorize('a22');
             $this->removeButton->setIcon('Icons64x64_1', 'Close');
-            $this->removeButton->setId('column_' . $indexNumber . '_8');
+            $this->removeButton->setId('column_' . $indexNumber . '_10');
             $this->removeButton->setClass("eXpOptimizedPagerAction");
             $this->actionsFrame->addComponent($this->removeButton);
         }
+
+        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_ADMIN)) {
+            $this->tagButton = new MyButton(5, 5);
+            $this->tagButton->setDescription(__('$F22Set map tags', $login), 70);
+            $this->tagButton->setAction($action);
+            $this->tagButton->setIcon('Icons64x64_1', 'Save');
+            $this->tagButton->setId('column_' . $indexNumber . '_11');
+            $this->tagButton->setClass("eXpOptimizedPagerAction");
+            $this->actionsFrame->addComponent($this->tagButton);
+        }
+
 
         $this->addComponent($this->frame);
         $this->setSize($sizeX, $sizeY);
@@ -131,7 +158,10 @@ class Mapitem extends Control implements OptimizedPagerElement
         $this->label_authortime->setSizeX($scaledSizes[3]);
         $this->label_localrec->setSizeX($scaledSizes[4]);
         $this->label_rating->setSizeX($scaledSizes[5]);
-        $this->actionsFrame->setSizeX($scaledSizes[6]);
+        $this->label_difficultyName->setSizeX($scaledSizes[6]);
+        $this->label_styleName->setSizeX($scaledSizes[7]);
+        $this->actionsFrame->setSizeX($scaledSizes[8]);
+
         $this->frame->setSize($this->getSizeX() - 5, $this->getSizeY());
     }
 
@@ -156,6 +186,6 @@ class Mapitem extends Control implements OptimizedPagerElement
 
     public function getNbTextColumns()
     {
-        return 6;
+        return 8;
     }
 }

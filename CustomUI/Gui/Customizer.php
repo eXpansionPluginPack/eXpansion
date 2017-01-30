@@ -34,9 +34,9 @@ class Customizer extends PlainWidget
             $varName = 'ClientUI.' . ucfirst($variable->getName());
             if ($variable instanceof Boolean) {
                 $code .= $varName . ' = ' . (($variable->getRawValue()) ? 'True' : 'False') . ";\n";
-            } else if ($variable instanceof TypeInt) {
+            } elseif ($variable instanceof TypeInt) {
                 $code .= $varName . ' = ' . $variable->getRawValue() . ";\n";
-            } else if ($variable instanceof BasicList) {
+            } elseif ($variable instanceof BasicList) {
                 $value = $variable->getRawValue();
                 if (count($value) == 2) {
                     $code .= $varName . ".X" . ' = ' . Maniascript::convertType((float)$value[0]) . ";\n";

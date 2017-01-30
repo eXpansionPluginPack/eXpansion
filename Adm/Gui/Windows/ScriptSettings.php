@@ -73,7 +73,12 @@ class ScriptSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $settings = $this->connection->getModeScriptSettings();
 
         foreach ($settings as $var => $setting) {
-            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\ScriptSetting($x, $var, $setting, $this->sizeX);
+            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\ScriptSetting(
+                $x,
+                $var,
+                $setting,
+                $this->sizeX
+            );
             $this->pager->addItem($this->items[$x]);
             $x++;
         }

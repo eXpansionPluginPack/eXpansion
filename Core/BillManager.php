@@ -125,7 +125,8 @@ class BillManager implements \ManiaLive\DedicatedApi\Callback\Listener
                 //Sucess :D
 
                 //Insert bill into database
-                $q = 'INSERT INTO `exp_planet_transaction` (`transaction_fromLogin`, `transaction_toLogin`, `transaction_plugin`
+                $q = 'INSERT INTO `exp_planet_transaction` (`transaction_fromLogin`, `transaction_toLogin`
+                            ,`transaction_plugin`
                             ,`transaction_subject`, `transaction_amount`)
                         VALUES(' . $this->db->quote($bill->getSourceLogin()) . ',
                             ' . $this->db->quote($bill->getDestinationLogin()) . ',

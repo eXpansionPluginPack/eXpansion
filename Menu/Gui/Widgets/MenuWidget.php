@@ -66,7 +66,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
 
         $frame = new \ManiaLive\Gui\Controls\Frame();
-        $frame->setSize(30,5);
+        $frame->setSize(30, 5);
 
         /* @var $label \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel */
         $label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(30, 5);
@@ -86,7 +86,6 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $quad->setAlign("left", "center");
         $quad->setScriptEvents();
         $quad->setAction($action);
-        // $label->setAction($action);
 
         $frame->addComponent($quad);
         $frame->addComponent($label);

@@ -86,7 +86,9 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
             }
         }
 
-        if (AdminGroups::hasPermission($login, Permission::ADMINGROUPS_ADMIN_ALL_GROUPS) && !($group instanceof GuestGroup)) {
+        if (AdminGroups::hasPermission($login, Permission::ADMINGROUPS_ADMIN_ALL_GROUPS)
+            && !($group instanceof GuestGroup)
+        ) {
             $this->InheritButton = new MyButton(30, 6);
             $this->InheritButton->setAction($this->action_inherticances);
             $this->InheritButton->setText(__(AdminGroups::$txt_inherits, $login));

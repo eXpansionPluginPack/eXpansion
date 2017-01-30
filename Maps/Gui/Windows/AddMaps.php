@@ -66,7 +66,9 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         try {
             $this->connection->addMap($filename);
             $info = $this->connection->getMapInfo($filename);
-            $this->connection->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.', $this->getRecipient(), $info->name));
+            $this
+                ->connection
+                ->chatSendServerMessage(__('Map %s $z$s$fffadded to playlist.', $this->getRecipient(), $info->name));
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage("Error: " . $e->getMessage(), $login);
         }
@@ -99,7 +101,11 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $login = $this->getRecipient();
 
         if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
-            $this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(1, __("File listing disabled since you are running eXpansion remote", $this->getRecipient()), $this->sizeX);
+            $this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(
+                1,
+                __("File listing disabled since you are running eXpansion remote", $this->getRecipient()),
+                $this->sizeX
+            );
             $this->pager->addItem($this->items[0]);
             return;
         }
@@ -140,7 +146,9 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $x = 0;
         foreach (new \DirectoryIterator($mapPath) as $dir) {
             if ($dir->isFile()) {
-                if ($x > self::MAPLIMIT) return;
+                if ($x > self::MAPLIMIT) {
+                    return;
+                }
                 $file = str_replace($mapPath, "", $dir->getBasename());
 
                 $path = $dir->getRealPath();
@@ -154,17 +162,28 @@ class AddMaps extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function deleteMap($login, $filename)
     {
         if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
-            $this->connection->chatSendServerMessage(__("#admin_error#This instance of eXpansion is running remote! Can't delete file #variable#'%s'", $this->getRecipient(), end($file)));
+            $this->connection
+                ->chatSendServerMessage(
+                    __(
+                        "#admin_error#This instance of eXpansion is running remote! Can't delete file #variable#'%s'",
+                        $this->getRecipient(),
+                        end($file)
+                    )
+                );
             return;
         }
         try {
             unlink($filename);
             $file = explode("/", $filename);
-            $this->connection->chatSendServerMessage(__("File '%s' deleted from filesystem!", $this->getRecipient(), end($file)));
+            $this->connection->chatSendServerMessage(
+                __("File '%s' deleted from filesystem!", $this->getRecipient(), end($file))
+            );
             $this->populateList();
             $this->RedrawAll();
         } catch (\Exception $e) {
-            $this->connection->chatSendServerMessage(__('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage()));
+            $this->connection->chatSendServerMessage(
+                __('$f00$oError $z$s$fff%s', $this->getRecipient(), $e->getMessage())
+            );
         }
     }
 

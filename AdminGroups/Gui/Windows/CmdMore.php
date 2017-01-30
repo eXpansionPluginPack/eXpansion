@@ -191,8 +191,7 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function destroy()
     {
-        parent::destroy();
-        $this->bg_aliases->destroy();
+		$this->bg_aliases->destroy();
         $this->bg_desc->destroy();
         $this->bg_descm->destroy();
         $this->bg_cmd->destroy();
@@ -211,5 +210,6 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->bgt_desc = null;
         $this->bgt_descm = null;
         $this->bgt_cmd = null;
-    }
+        parent::destroy();
+		}
 }

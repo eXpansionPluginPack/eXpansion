@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Chat;
 
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BasicList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
@@ -26,6 +27,15 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var = new Boolean('useProfanityFilter', 'Use profanity filter ?', $config, false, false);
         $var->setDescription("use this if you wish to filter out badwords / cursewords ?");
         $var->setDefaultValue(false);
+        $this->registerVariable($var);
+
+        $var = new Boolean('useChannels', 'Use chat channels', $config, false, false);
+        $var->setDefaultValue(false);
+        $this->registerVariable($var);
+
+        $var = new BasicList('channels', 'Chat channels', $config, false, false);
+        $var->setType(new TypeString(''));
+        $var->setDefaultValue(array("English", "French", "German"));
         $this->registerVariable($var);
 
         $var = new Boolean('publicChatActive', 'Enable public chat for players', $config, false, false);
@@ -68,5 +78,6 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var = new TypeString('chatSeparator', 'Separator for between nickname and message', $config, false, false);
         $var->setDefaultValue('$0af»$z$s ');
         $this->registerVariable($var);
+
     }
 }

@@ -14,4 +14,6 @@ class Config extends \ManiaLib\Utils\Singleton
     public $publicChatActive = true;
     public $enableSpectatorChat = false;
     public $useProfanityFilter = false;
+    public $useChannels = false;
+    public $channels = array("English", "German", "French");
 }
