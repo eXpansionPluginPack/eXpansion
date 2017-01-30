@@ -90,9 +90,9 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         if ($this->isPluginLoaded('\ManiaLivePlugins\\eXpansion\\Maps\\Maps') && $this->config->restartVote_useQueue) {
             $this->useQueue = true;
-            $this->debug("[exp\Votes] Restart votes set to queue");
+            $this->debug("[exp\\Votes] Restart votes set to queue");
         } else {
-            $this->debug("[exp\Votes] Restart vote set to normal");
+            $this->debug("[exp\\Votes] Restart vote set to normal");
         }
 
         $this->update = true;
@@ -159,13 +159,13 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             if (!array_key_exists('RestartMap', $managedVotes)) {
                 return;
             }
+
             // if vote is not managed...
             if ($managedVotes['RestartMap']->managed == false) {
                 return;
             }
             if ($managedVotes['RestartMap']->ratio == -1.) {
                 $this->eXpChatSendServerMessage(eXpGetMessage("#error#Restart vote is disabled!"), $login);
-
                 return;
             }
             $config = Config::getInstance();
@@ -213,13 +213,12 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             }
             if ($managedVotes['NextMap']->ratio == -1.) {
                 $this->eXpChatSendServerMessage(eXpGetMessage("#error#Skip vote is disabled!"), $login);
-
                 return;
             }
 
             $this->voter = $login;
             $vote = $managedVotes['NextMap'];
-            $this->debug("[exp\Votes] Calling Skip vote..");
+            $this->debug("[exp\\Votes] Calling Skip vote..");
             $vote->callerLogin = $this->voter;
             $vote->cmdName = "Skip";
             $vote->cmdParam = array("the current map");

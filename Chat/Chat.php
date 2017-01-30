@@ -68,7 +68,10 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             $this->console("Couldn't initialize chat. Error from server: " . $e->getMessage());
             $this->enabled = false;
         }
-        $this->initChat();
+
+        if (Config::getInstance()->useChannels) {
+            $this->initChat();
+        }
 
         $this->config = Config::getInstance();
     }
@@ -105,15 +108,20 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onSettingsChanged(Variable $var)
     {
+
         if ($var->getConfigInstance() instanceof Config) {
+            if ($var->getName() == "useChannels") {
+                if ($var->getRawValue() == true) {
+                    $this->initChat();
+                } else {
+                    ChatSelect::EraseAll();
+                }
+            }
             if ($var->getName() == "channels") {
                 self::$channels = array_merge(array("Public"), $var->getRawValue());
-                ChatSelect::EraseAll();
-                $all = $this->storage->players + $this->storage->spectators;
-                foreach ($all as $login => $player) {
-                    $window = ChatSelect::Create($login);
-                    $window->sync($login);
-                    $window->show();
+                if (Config::getInstance()->useChannels) {
+                    ChatSelect::EraseAll();
+                    $this->initChat();
                 }
             }
         }
@@ -300,42 +308,27 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
             if ($this->config->publicChatActive || AdminGroups::hasPermission($login, Permission::CHAT_ON_DISABLED)) {
                 $playersCombined = $this->storage->players + $this->storage->spectators;
-                $playersByCountry = array();
                 $channels = array();
                 $currentChannel = self::$playerChannels[$login];
 
-                foreach ($playersCombined as $localLogin => $player) {
-                    $playersByCountry[$this->getCountry($player)][] = $localLogin;
-                }
                 foreach (self::$playerChannels as $key => $value) {
                     $channels[$value][] = $key;
                 }
 
                 // by default set global channel
                 $receivers = null;
-                $country = $this->getCountry($source_player);
                 $channel = "";
 
-                // if group
-                if (self::$playerChannels[$login] != "Public") {
-                    $channel = "[" . ucfirst($currentChannel) . "] ";
-                    $receivers = implode(",", array_intersect(array_keys($playersCombined),
-                            (AdminGroups::getAdminsByPermission(Permission::CHAT_ADMINCHAT)
-                                + $channels[$currentChannel]))
-                    );
-                }
-
-                // if local language
-                if (self::$playerChannels[$login] == "Local Language") {
-
-                    if (array_key_exists($country, $playersByCountry)) {
-                        $channel = "[" . ucfirst($country) . "] ";
+                if (Config::getInstance()->useChannels) {
+                    // if group
+                    if (self::$playerChannels[$login] != "Public") {
+                        $channel = "[" . ucfirst($currentChannel) . "] ";
                         $receivers = implode(",", array_intersect(array_keys($playersCombined),
-                            (AdminGroups::getAdminsByPermission(Permission::CHAT_ADMINCHAT)
-                                + $playersByCountry[$country])));
+                                (AdminGroups::getAdminsByPermission(Permission::CHAT_ADMINCHAT)
+                                    + $channels[$currentChannel]))
+                        );
                     }
                 }
-
 
                 try {
                     // change text color, if admin is defined at admingroups
@@ -412,19 +405,6 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 }
             }
         }
-    }
-
-    private function getCountry($player)
-    {
-        $path = str_replace("World|", "", $player->path);
-        $country = explode("|", $path);
-        if (sizeof($country) > 0) {
-            $country = $country[1];
-        } else {
-            $country = "Unknown";
-        }
-
-        return $country;
     }
 
     /**

@@ -29,6 +29,15 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(false);
         $this->registerVariable($var);
 
+        $var = new Boolean('useChannels', 'Use chat channels', $config, false, false);
+        $var->setDefaultValue(false);
+        $this->registerVariable($var);
+
+        $var = new BasicList('channels', 'Chat channels', $config, false, false);
+        $var->setType(new TypeString(''));
+        $var->setDefaultValue(array("English", "French", "German"));
+        $this->registerVariable($var);
+
         $var = new Boolean('publicChatActive', 'Enable public chat for players', $config, false, false);
         $var->setDescription(
             'Admins with required permissions can continue to chat. A personal message is sent to other players'
@@ -70,9 +79,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue('$0af»$z$s ');
         $this->registerVariable($var);
 
-        $var = new BasicList('channels', 'Chat channels', $config, false, false);
-        $var->setType(new TypeString(''));
-        $var->setDefaultValue(array("English", "French", "German"));
-        $this->registerVariable($var);
     }
 }
