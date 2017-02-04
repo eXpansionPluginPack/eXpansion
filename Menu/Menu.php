@@ -109,7 +109,9 @@ class Menu extends ExpPlugin implements Listener
         $this->menuGroups = [];
         MenuWidget::EraseAll();
 
-        foreach (AdminGroups::getGroupList() as $group) {
+        $adminGroups = AdminGroups::getInstance();
+
+        foreach ($adminGroups->getGroupList() as $group) {
             $this->menuGroups[$group->getGroupName()] = Group::Create($group->getGroupName());
             foreach ($group->getGroupUsers() as $user) {
                 $this->menuGroups[$group->getGroupName()]->add($user->getLogin());
