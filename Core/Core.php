@@ -644,15 +644,15 @@ EOT;
         }
         $this->teamScores = array();
 
-        $this->connection->customizeQuitDialog($this->quitDialogXml, "", true, 0);
+        $this->updateQuitDialog();
     }
 
     /**
      * Compares the values  in 2 objects recursively.
      *
-     * @param object $obj1       First object
-     * @param object $obj2       Object to compare with
-     * @param array  $ignoreList Keys to ignore while comparing
+     * @param object $obj1 First object
+     * @param object $obj2 Object to compare with
+     * @param array $ignoreList Keys to ignore while comparing
      *
      * @return array List keys that has a different value. this is an array that has the same structure
      *               as the objects that were compared
@@ -694,7 +694,8 @@ EOT;
         \Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings,
         \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings,
         $changes
-    ) {
+    )
+    {
         $this->saveMatchSettings();
     }
 
