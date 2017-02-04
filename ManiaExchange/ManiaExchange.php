@@ -241,7 +241,7 @@ class ManiaExchange extends ExpPlugin
                 $this->saveMapRemotelly($file, $dir, $data, $login);
             } else {
                 if (!is_dir($dir)) {
-                    mkdir($dir, 0775);
+                    mkdir($dir, 0775, true);
                 }
                 $this->saveMapLocally($file, $dir, $data, $login);
             }
