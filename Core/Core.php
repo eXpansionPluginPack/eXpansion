@@ -1487,10 +1487,12 @@ EOT;
         }
         // all same... test time of previous checks
         for ($key = $a->curCpIndex - 1; $key >= 0; $key--) {
-            if ($a->checkpoints[$key] < $b->checkpoints[$key]) {
-                return -1;
-            } elseif ($a->checkpoints[$key] > $b->checkpoints[$key]) {
-                return 1;
+            if (isset($a->checkpoints[$key]) && isset($b->checkpoints[$key])) {
+                if ($a->checkpoints[$key] < $b->checkpoints[$key]) {
+                    return -1;
+                } elseif ($a->checkpoints[$key] > $b->checkpoints[$key]) {
+                    return 1;
+                }
             }
         }
         // really all same, use login  :p
