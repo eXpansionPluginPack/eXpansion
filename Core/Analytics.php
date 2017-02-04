@@ -197,6 +197,7 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
             'country' => $this->expStorage->serverCountry,
             'version' => Core::EXP_VERSION,
             'php_version' => $this->expStorage->cleanPhpVersion,
+            'php_version_short' => $this->expStorage->shortPhpVersion,
             'mysql_version' => $this->expStorage->cleanMysqlVersion,
             'memory' => memory_get_usage(),
             'memory_peak' => memory_get_peak_usage(),

@@ -119,6 +119,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
     /** @var string Just php version without compilation formation */
     public $cleanPhpVersion = '';
 
+    /** @var string Just php version without compilation and minor version information. */
+    public $shortPhpVersion = '';
+
     /** @var string Just mysql version. */
     public $cleanMysqlVersion = '';
 
@@ -195,8 +198,10 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         $version = explode('-', phpversion());
         $this->cleanPhpVersion = $version[0];
 
+        $this->shortPhpVersion = implode('.', array_slice(explode('.', $this->cleanPhpVersion),0,2));
+
         $version = $this->getDatabase()->execute('SHOW VARIABLES LIKE "version"')->fetchArray();
-        $this->cleanMysqlVersion = $version['Value'];
+        $this->cleanMysqlVersion = preg_replace("/(.*)(\~|\+|\-0)(.*)/", "$1", $version['Value']);
 
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $this->serverOs = "Windows";
