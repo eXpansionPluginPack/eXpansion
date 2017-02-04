@@ -225,36 +225,75 @@ class ManiaExchange extends ExpPlugin
             return;
         }
         /** @var \Maniaplanet\DedicatedServer\Structures\Version */
-        $game = $this->connection->getVersion();
-        $dir = Helper::getPaths()->getDownloadMapsPath() . $game->titleId;
+        $dir = Helper::getPaths()->getDownloadMapsPath();
         if ($this->expStorage->isRemoteControlled) {
-            $dir = "Downloaded/" . $game->titleId;
+            $dir = "Downloaded";
         }
-
 
         try {
             $gbxReader = new GBXChallMapFetcher(true, false, false);
             $gbxReader->processData($data);
-            $name = $gbxReader->authorLogin
-                . "_"
-                . trim(
-                    mb_convert_encoding(
-                        substr(\ManiaLib\Utils\Formatting::stripStyles($gbxReader->name), 0, 40),
-                        "7bit",
-                        "UTF-8"
-                    )
-                );
-            $name = str_replace(array("/", "\\", ":", ".", "?", "*", '"', "|", "<", ">", "'"), "", $name);
-            $file = $dir . "/" . $name . "_" . $mxId . ".Map.Gbx";
+
+            $file = $dir . '/' . $this->getDownloadedMapFilePath($gbxReader, $mxId);
+            $dir = dirname($file);
 
             if ($this->expStorage->isRemoteControlled) {
                 $this->saveMapRemotelly($file, $dir, $data, $login);
             } else {
+                if (!is_dir($dir)) {
+                    mkdir($dir, 0775);
+                }
                 $this->saveMapLocally($file, $dir, $data, $login);
             }
         } catch (\Exception $ex) {
             $this->console('Error while adding map from mx:' . $ex->getMessage());
         }
+    }
+
+    /**
+     * Get Name for the downloaded map.
+     *
+     * @param GBXChallMapFetcher $gbxReader
+     * @param int $mxId
+     *
+     * @return string
+     */
+    public function getDownloadedMapFilePath(GBXChallMapFetcher $gbxReader, $mxId)
+    {
+        $authorName = $this->cleanMapName($gbxReader->authorLogin);
+        $mapName = $this->cleanMapName(
+            trim(
+                mb_convert_encoding(
+                    substr(\ManiaLib\Utils\Formatting::stripStyles($gbxReader->name), 0, 40),
+                    "7bit",
+                    "UTF-8"
+                )
+            )
+        );
+
+        $replacements = array(
+            '{map_author}' => $authorName,
+            '{map_name}' => $mapName,
+            '{map_environment}' => $gbxReader->envir,
+            '{map_vehicle}' => $gbxReader->vehicle,
+            '{map_type}' => $gbxReader->mapType,
+            '{map_style}' => $gbxReader->mapStyle,
+            '{mx_id}'   => $mxId,
+            '{server_title}'   => $this->expStorage->titleId,
+        );
+
+        return str_replace(array_keys($replacements), array_values($replacements), $this->config->file_name);
+    }
+
+    /**
+     * Remove special characters from map name
+     *
+     * @param $string
+     * @return mixed
+     */
+    protected function cleanMapName($string)
+    {
+        return str_replace(array("/", "\\", ":", ".", "?", "*", '"', "|", "<", ">", "'"), "", $string);
     }
 
     public function saveMapRemotelly($file, $dir, $data, $login)

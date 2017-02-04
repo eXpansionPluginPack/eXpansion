@@ -153,8 +153,22 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->text = $text;
     }
 
+    /**
+     * Set a description to the button. This will add a tooltip;
+     *
+     * @param string|array $description The description to disiplay. If it's an array it will
+     *                                  be displayed on multiple lines.
+     * @param int $sizeX
+     * @param int $sizeY
+     * @param int $maxLine
+     */
     public function setDescription($description, $sizeX = 30, $sizeY = 5, $maxLine = 1)
     {
+        if (is_array($description)) {
+            $maxLine = count($description);
+            $description = implode("\n", $description);
+        }
+
         $this->description = "$000" . $description;
         $this->labelDesc->setSizeX($sizeX);
         $this->labelDesc->setSizeY($sizeY * $maxLine);
