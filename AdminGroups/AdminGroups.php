@@ -1311,7 +1311,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @return array of admins
      */
-    public function get()
+    public static function get()
     {
         $admins = array_keys(self::$admins);
         if (sizeof($admins) == 0) {

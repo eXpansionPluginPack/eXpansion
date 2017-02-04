@@ -72,7 +72,7 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->author->setTextPrefix('$s');
         $this->addComponent($this->author);
 
-        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Map\Gui\Scripts_Map");
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Map\\Gui\\Scripts_Map");
         $this->registerScript($script);
     }
 

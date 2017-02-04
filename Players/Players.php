@@ -2,8 +2,6 @@
 
 namespace ManiaLivePlugins\eXpansion\Players;
 
-use ManiaLivePlugins\MatchMakingLobby\Windows\PlayerList;
-
 class Players extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
     public $msg_broadcast;

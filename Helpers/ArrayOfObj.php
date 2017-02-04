@@ -41,7 +41,7 @@ class ArrayOfObj
      * asortAsc()
      * sort and maintain indexes
      *
-     * @param mixed[] $array
+     * @param mixed $array
      * @param string $prop
      *
      * @return
