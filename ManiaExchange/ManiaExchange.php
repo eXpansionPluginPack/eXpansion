@@ -497,7 +497,7 @@ class ManiaExchange extends ExpPlugin
                      `mx_exeBuild`=" . $db->quote($map->exeBuild) . ",
                      `mx_environmentName`=" . $db->quote($map->environmentName) . ",
                      `mx_vehicleName`=" . $db->quote($map->vehicleName) . ",
-                     `mx_unlimiterRequired`=" . $db->quote($map->unlimiterRequired) . ",
+                     `mx_unlimiterRequired`=" . (empty($map->unlimiterRequired) ? 0 : $db->quote($map->unlimiterRequired)) . ",
                      `mx_routeName`=" . $db->quote($map->routeName) . ",
                      `mx_lengthName`=" . $db->quote($map->lengthName) . ",
                      `mx_laps`=" . $db->quote($map->laps) . ",
