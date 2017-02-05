@@ -89,7 +89,7 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     {
         $window = \ManiaLivePlugins\eXpansion\Maps\Gui\Windows\MapInfo::create($login);
         $window->setMap(null);
-        $window->setSize(160, 90);
+        $window->setSize(150, 50);
         $window->show($login);
     }
 }

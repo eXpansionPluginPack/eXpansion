@@ -1474,7 +1474,7 @@ class Maps extends ExpPlugin
         $window = Gui\Windows\MapInfo::create($login);
         $window->setMap($uid);
         $window->setTitle("Map Info", $this->storage->currentMap->name);
-        $window->setSize(160, 90);
+        $window->setSize(150, 50);
         $window->show($login);
     }
 

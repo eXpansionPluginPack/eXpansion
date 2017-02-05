@@ -486,7 +486,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         if (!$window->setMap($uid)) {
             return;
         }
-        $window->setSize(160, 90);
+        $window->setSize(150, 50);
         $window->show($login);
     }
 

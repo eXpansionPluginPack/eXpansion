@@ -9,6 +9,7 @@ namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
 use Exception;
 use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Layouts\Column;
 use ManiaLive\Data\Storage;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLive\Utilities\Time;
@@ -17,6 +18,7 @@ use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj;
 use ManiaLivePlugins\eXpansion\Helpers\GbxReader\Map;
 use ManiaLivePlugins\eXpansion\Helpers\Singletons;
+use ManiaLivePlugins\eXpansion\ServerStatistics\Gui\Controls\InfoLine;
 use Maniaplanet\DedicatedServer\Connection;
 
 /**
@@ -26,6 +28,7 @@ use Maniaplanet\DedicatedServer\Connection;
  */
 class MapInfo extends Window
 {
+    /** @var  Frame */
     protected $frame;
     protected $frame2;
 
@@ -36,14 +39,13 @@ class MapInfo extends Window
     {
         parent::onConstruct();
         $this->frame = new Frame();
-        $this->frame->setPosition(-35, -6);
-
-        $this->addComponent($this->frame);
+        $this->frame->setLayout(new Column(80, 100));
+        $this->frame->setScale(.8);
+        $this->mainFrame->addComponent($this->frame);
 
         $this->frame2 = clone $this->frame;
-        $this->frame2->setPosition(40);
-        $this->addComponent($this->frame);
-        $this->addComponent($this->frame2);
+        $this->frame2->setPosition(93);
+        $this->mainFrame->addComponent($this->frame2);
     }
 
     public function setMap($uid = null)
@@ -54,8 +56,6 @@ class MapInfo extends Window
             $uid = $storage->currentMap->uId;
         }
 
-        $x = 35;
-        $y = 0;
         $this->frame->clearComponents();
         $this->frame2->clearComponents();
 
@@ -66,18 +66,8 @@ class MapInfo extends Window
             return false;
         }
 
-        $this->setTitle("Map Info", $map->name);
-        $lbl = new Label($x, 6);
-        $lbl->setPosition($x, $y);
-        $lbl->setText("Unique id");
-        $this->frame->addComponent($lbl);
-        $lbl = new Inputbox("", $x, 5);
-        $lbl->setPosition($x * 2, $y);
-        $lbl->setText($map->uId);
+        $this->setTitle('Map Information', $map->name);
 
-        $this->frame->addComponent($lbl);
-
-        $model = "commonCar";
         try {
             $connection = Singletons::getInstance()->getDediConnection();
             $mapPath = $connection->getMapsDirectory();
@@ -89,85 +79,61 @@ class MapInfo extends Window
                 $map->authorTime = $gbxInfo->authorTime;
                 $map->silverTime = $gbxInfo->silverTime;
                 $map->bronzeTime = $gbxInfo->bronzeTime;
+                $map->playerModel = $gbxInfo->playerModel;
                 $map->{"nick"} = $gbxInfo->author->nickname;
             }
         } catch (Exception $ex) {
             \ManiaLive\Utilities\Console::println("Info: Map not found or error while reading gbx info for map.");
         }
 
-        $y -= 5;
-        $mapData = array("fileName" => "File Name", "name" => "Name", "author" => "Author", "nick" => "Author Nick",
-            "mood" => "Mood", "mapStyle" => "Map Style", "mapType" => "Map Type", "environnement" => "Environment");
-
+        /*
+         * First columns of data
+         */
+        $mapData = array(
+            "fileName" => "File Name",
+            "name" => "Name",
+            "author" => "Author",
+            "nick" => "Author Nick",
+            "mood" => "Mood",
+            "mapStyle" => "Map Style",
+            "mapType" => "Map Type",
+            "environnement" => "Environment"
+        );
 
         foreach ($mapData as $field => $descr) {
-            $lbl = new Label($x, 6);
-            $lbl->setPosition($x, $y);
-            $lbl->setText($descr);
-            $this->frame->addComponent($lbl);
-            $lbl = new Label("", $x, 6);
-            $lbl->setPosition($x * 2, $y);
-            $lbl->setText($map->{$field});
-            $this->frame->addComponent($lbl);
-            $y -= 5;
+            $this->frame->addComponent(new InfoLine(5, $descr, $map->{$field}, 0, 80, false));
         }
 
-        // player model
-        $lbl = new Label($x, 6);
-        $lbl->setPosition($x, $y);
-        $lbl->setText("Car type");
-        $this->frame->addComponent($lbl);
-        $lbl = new Label("", $x, 6);
-        $lbl->setPosition($x * 2, $y);
-        $lbl->setText($gbxInfo->playerModel);
-        $this->frame->addComponent($lbl);
-
-        // frame 2
-        $y = 0;
-
-        // add time
-        $lbl = new Label($x, 6);
-        $lbl->setPosition($x, $y);
-        $lbl->setText("Add Date");
-        $this->frame2->addComponent($lbl);
-        $lbl = new Label("", $x, 6);
-        $lbl->setPosition($x * 2, $y);
-        $date = new \DateTime(now);
-        $date->setTimestamp((int)$map->addTime);
-
-        $lbl->setText($date->format("d.m.Y"));
-        $this->frame2->addComponent($lbl);
-        $y -= 5;
+        /*
+         * Put data in second frame
+         */
+        $mapData =  array(
+            'playerModel' => 'Car Type',
+            'addTime' => 'Add Date',
+        );
+        foreach ($mapData as $field => $descr) {
+            $this->frame2->addComponent(new InfoLine(5, $descr, $map->{$field}, 0, 40));
+        }
 
         // time datas
         $mapData = array(
-            "authorTime" => "Author Time", "goldTime" => "Gold Time",
-            "silverTime" => "Silver Time", "bronzeTime" => "Bronze Time"
+            "authorTime" => "Author Time",
+            "goldTime" => "Gold Time",
+            "silverTime" => "Silver Time",
+            "bronzeTime" => "Bronze Time"
         );
         foreach ($mapData as $field => $descr) {
-            $lbl = new Label($x, 6);
-            $lbl->setPosition($x, $y);
-            $lbl->setText($descr);
-            $this->frame2->addComponent($lbl);
-            $lbl = new Label("", $x, 6);
-            $lbl->setPosition($x * 2, $y);
-            $lbl->setText(Time::fromTM($map->{$field}));
-            $this->frame2->addComponent($lbl);
-            $y -= 5;
+            $this->frame2->addComponent(new InfoLine(5, $descr, Time::fromTM($map->{$field}), 0, 40));
         }
 
         // integer values
-        $mapData = array("nbCheckpoint" => "Checkpoints", "nbLap" => "Laps", "copperPrice" => "Display Cost");
+        $mapData = array(
+            "nbCheckpoint" => "Checkpoints",
+            "nbLap" => "Laps",
+            "copperPrice" => "Display Cost"
+        );
         foreach ($mapData as $field => $descr) {
-            $lbl = new Label($x, 6);
-            $lbl->setPosition($x, $y);
-            $lbl->setText($descr);
-            $this->frame2->addComponent($lbl);
-            $lbl = new Label("", $x, 6);
-            $lbl->setPosition($x * 2, $y);
-            $lbl->setText(strval($map->{$field}));
-            $this->frame2->addComponent($lbl);
-            $y -= 5;
+            $this->frame2->addComponent(new InfoLine(5, $descr, strval($map->{$field}), 0, 40));
         }
 
         return true;
