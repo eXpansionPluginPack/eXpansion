@@ -46,7 +46,11 @@ class Playeritem extends Control implements OptimizedPagerElement
     {
         $this->recipient = $login;
         $sizeY = 6;
-        $sizeX = 120;
+        if (AdminGroups::isInList($login)) {
+            $sizeX = 120;
+        } else {
+            $sizeX = 80;
+        }
         $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
