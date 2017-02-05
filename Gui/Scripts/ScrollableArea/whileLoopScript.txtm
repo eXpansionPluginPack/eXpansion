@@ -51,7 +51,7 @@ if(pager_moveScroll2) {
 
     if (percent2 != oldPercent2) {
         declare x = (contentSizeX - ScrollableArea.ClipWindowSize.X ) * percent2;
-        Content.RelativePosition.X = x;
+        Content.RelativePosition.X = -x;
 
         oldPercent2 = percent2;
     }

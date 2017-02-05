@@ -5,7 +5,7 @@
 
 There's 2 ways of adding maps from MX:
 
-	1. using Menu --> Mania-exchange --> Search Maps
+	1. using Menu -- Mania-exchange -- Search Maps
 	2. using chat command $o/mx add $f00MXid
 			or
 	using chat command $o/admin add $f00MXid

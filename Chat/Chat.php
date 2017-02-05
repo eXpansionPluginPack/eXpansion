@@ -188,7 +188,9 @@ class Chat extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function onPlayerConnect($login, $isSpectator)
     {
         self::$playerChannels[$login] = "Public";
-        $this->displayWidget($login);
+        if (Config::getInstance()->useChannels) {
+            $this->displayWidget($login);
+        }
         $player = $this->storage->getPlayerObject($login);
         $nickLog = \ManiaLib\Utils\Formatting::stripStyles($player->nickName);
         \ManiaLive\Utilities\Logger::getLog('chat')->write(
