@@ -89,6 +89,7 @@ class MapInfo extends Window
         /*
          * First columns of data
          */
+        $this->frame->addComponent(new InfoLine(5, "Unique Id", $map->uId, 0, 80, false, true));
         $mapData = array(
             "fileName" => "File Name",
             "name" => "Name",
