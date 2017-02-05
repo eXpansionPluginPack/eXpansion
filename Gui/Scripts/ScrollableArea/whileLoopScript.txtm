@@ -1,0 +1,115 @@
+if(pager_moveScroll){
+
+   if(pager_firstClick){
+	pager_scrollYOriginPosition = ScrollBar.RelativePosition.Y;
+    }
+    pager_firstClick = False;
+
+    declare ypos = pager_scrollYOriginPosition + pager_deltaMouseYPosition;
+
+    if (ypos >= pagerStartPos) {
+	    ScrollBar.RelativePosition.Y = pagerStartPos;
+	} else if (ypos < pagerStopPosition) {
+    	ScrollBar.RelativePosition.Y = pagerStopPosition;
+    } else {
+        ScrollBar.RelativePosition.Y = pager_scrollYOriginPosition + pager_deltaMouseYPosition;
+    }
+
+    declare maxDelta = pagerStartPos - pagerStopPosition;
+
+    percent = 1 - (MathLib::Abs(maxDelta) - MathLib::Abs(ScrollBar.RelativePosition.Y)) / MathLib::Abs(maxDelta);
+
+    if (percent != oldPercent) {
+    declare y =(contentSizeY - ScrollableArea.ClipWindowSize.Y )* percent;
+    Content.RelativePosition.Y = y;
+    oldPercent = percent;
+    }
+
+
+}
+
+if(pager_moveScroll2) {
+
+    if(pager_firstClick2){
+	    pager_scrollXOriginPosition = ScrollHBar.RelativePosition.X;
+    }
+    pager_firstClick2 = False;
+
+    declare xpos = pager_scrollXOriginPosition + pager_deltaMouseXPosition;
+
+    if ( xpos <= pagerStartPos2) {
+	    ScrollHBar.RelativePosition.X = pagerStartPos2;
+    } else if (xpos > pagerStopPosition2) {
+    	ScrollHBar.RelativePosition.X = pagerStopPosition2;
+    } else {
+        ScrollHBar.RelativePosition.X = pager_scrollXOriginPosition + pager_deltaMouseXPosition;
+    }
+
+    declare maxDelta2 = pagerStartPos2 - pagerStopPosition2;
+
+    percent2 = 1 - (MathLib::Abs(maxDelta2) - MathLib::Abs(ScrollHBar.RelativePosition.X)) / MathLib::Abs(maxDelta2);
+
+    if (percent2 != oldPercent2) {
+        declare x = (contentSizeX - ScrollableArea.ClipWindowSize.X ) * percent2;
+        Content.RelativePosition.X = -x;
+        log(x);
+        oldPercent2 = percent2;
+    }
+}
+
+
+foreach (Event in PendingEvents) {
+    if( Event.Type == CMlEvent::Type::MouseClick ) {
+	    if (Event.ControlId == "scrollVBar")  {
+	        pager_startMouseYPosition = MouseY;
+	        pager_firstClick = True;
+	        pager_moveScroll = True;
+	    }
+	    if (Event.ControlId == "scrollVDown")  {
+            isScrollDown = True;
+	    }
+	    if (Event.ControlId == "scrollVUp")  {
+            isScrollUp = True;
+	    }
+	    if (Event.ControlId == "scrollHBar")  {
+            pager_startMouseXPosition = MouseX;
+            pager_firstClick2 = True;
+            pager_moveScroll2 = True;
+        }
+        if (Event.ControlId == "scrollHLeft")  {
+            isScrollLeft = True;
+        }
+        if (Event.ControlId == "scrollHRight")  {
+            isScrollRight = True;
+        }
+    }
+
+// pagedown = 78
+    if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 78) {
+        if (exp_windowStack.count > 0)
+        {
+            if (exp_windowStack[0] == id) {
+              isScrollDown = True;
+           }
+        }
+    }
+// pageup = 103
+   if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 103) {
+        if (exp_windowStack.count > 0)
+        {
+            if (exp_windowStack[0] == id) {
+              isScrollUp = True;
+           }
+        }
+    }
+}
+
+if (MouseLeftButton == False) {
+    pager_firstClick = False;
+    pager_moveScroll = False;
+    pager_moveScroll2 = False;
+} else if(pager_moveScroll) {
+    pager_deltaMouseYPosition = MouseY - pager_startMouseYPosition;
+} else if (pager_moveScroll2) {
+    pager_deltaMouseXPosition = MouseX - pager_startMouseXPosition;
+}
