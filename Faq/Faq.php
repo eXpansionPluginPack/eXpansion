@@ -53,8 +53,6 @@ class Faq extends ExpPlugin
         $this->registerChatCommand("faq", "showFaq", 2, true);
         FaqWindow::$mainPlugin = $this;
         FaqWidget::$mainPlugin = $this;
-        $this->showFaq("reaby");
-
     }
 
     public function showFaq($login, $topic = "toc", $recipient = null)
