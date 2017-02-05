@@ -14,6 +14,7 @@ use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as MyButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Structures\OptimizedPagerElement;
+use ManiaLivePlugins\eXpansion\Players\Gui\Windows\Playerlist;
 
 class Playeritem extends Control implements OptimizedPagerElement
 {
@@ -54,7 +55,6 @@ class Playeritem extends Control implements OptimizedPagerElement
         $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
-
         $this->frame = new Frame();
         $this->frame->setSize($sizeX, $sizeY);
         $this->frame->setLayout(new Line());
@@ -80,16 +80,11 @@ class Playeritem extends Control implements OptimizedPagerElement
         if (AdminGroups::isInList($login)) {
             if (AdminGroups::hasPermission($login, Permission::PLAYER_IGNORE)) {
                 $this->ignoreButton = new MyButton(7, 5);
-                $this->ignoreButton->setDescription(__('Ignore player', $login), 50);
+                $this->ignoreButton->setDescription(__('Ignore/Unignore Player', $login), 50);
                 $this->ignoreButton->setTextColor("fff");
                 $this->ignoreButton->colorize("a22");
                 $this->ignoreButton->setAction($action);
-                if ($ignored) {
-                    $this->ignoreButton->setDescription(__('UnIgnore player', $login), 50);
-                    $this->ignoreButton->setIcon('Icons128x128_1', 'Beginner');
-                } else {
-                    $this->ignoreButton->setIcon('Icons128x128_1', 'Easy');
-                }
+                $this->ignoreButton->setIcon('Icons128x128_1', 'Easy');
                 $this->ignoreButton->setId('column_' . $indexNumber . '_2');
                 $this->ignoreButton->setClass("eXpOptimizedPagerAction");
                 $this->columnCount++;

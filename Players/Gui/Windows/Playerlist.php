@@ -6,9 +6,11 @@ use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
+use ManiaLivePlugins\eXpansion\Helpers\Storage as eXpStorage;
 
 class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 {
+    /** @var  \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager $pager */
     protected $pager;
 
     /** @var \ManiaLivePlugins\eXpansion\Players\Players */
@@ -19,6 +21,10 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     /** @var \ManiaLive\Data\Storage */
     protected $storage;
+
+    /** @var  eXpStorage */
+    protected $expStorage;
+
     protected $items = array();
     protected $frame;
     protected $title_status;
@@ -34,6 +40,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         \ManiaLive\DedicatedApi\Config::getInstance();
         $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
         $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $this->expStorage = eXpStorage::getInstance();
+
         $this->setScriptEvents();
         $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager();
         $this->mainFrame->addComponent($this->pager);
@@ -202,18 +210,8 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     private function populateList()
     {
-
         $this->pager->clearItems();
         $this->items = array();
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
-        $login = $this->getRecipient();
-        $isadmin = AdminGroups::hasPermission($login, Permission::PLAYER_FORCESPEC);
-
-        $list = $this->connection->getIgnoreList(-1, 0);
-        $ignoreList = array();
-        foreach ($list as $player) {
-            $ignoreList[$player->login] = true;
-        }
 
         foreach ($this->storage->players as $player) {
             $ignoreAction = $this->createAction(array($this, 'ignorePlayer'), $player->login);
@@ -223,15 +221,18 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $forceAction = $this->createAction(array($this, 'toggleSpec'), $player->login);
             $guestAction = $this->createAction(array($this, 'guestlistPlayer'), $player->login);
 
-            $this->pager->addSimpleItems(array(Gui::fixString($player->nickName) . " " => -1,
-                Gui::fixString($player->login) => -1,
-                "ignore" => $ignoreAction,
-                "kick" => $kickAction,
-                "ban" => $banAction,
-                "blacklist" => $blacklistAction,
-                "force" => $forceAction,
-                "guest" => $guestAction,
-            ));
+            $this->pager->addSimpleItems(
+                array(
+                    Gui::fixString($player->nickName) . " " => -1,
+                    Gui::fixString($player->login) => -1,
+                    "ignore" => $ignoreAction,
+                    "kick" => $kickAction,
+                    "ban" => $banAction,
+                    "blacklist" => $blacklistAction,
+                    "force" => $forceAction,
+                    "guest" => $guestAction,
+                )
+            );
         }
         foreach ($this->storage->spectators as $player) {
 
@@ -259,8 +260,6 @@ class Playerlist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function destroy()
     {
-        $this->connection = null;
-        $this->storage = null;
         foreach ($this->items as $item) {
             $item->erase();
         }
