@@ -18,7 +18,7 @@ class Help extends ExpPlugin
     public function display()
     {
         $win = HelpWindow::Create();
-        $win->setSize(120, 90);
+        $win->setSize(220, 93);
         $win->setTitle("Help");
         $win->show();
     }
