@@ -31,8 +31,11 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     public function __construct($indexNumber, Group $group, $controller, $login)
     {
         $this->group = $group;
-        $sizeX = 100;
+        $sizeX = 155;
         $sizeY = 6;
+
+        $scale = 0.8;
+        $buttonScale = 0.7;
 
         $this->action_changePermissions = $this->createAction(array($controller, 'changePermission'), $group);
         $this->action_playerList = $this->createAction(array($controller, 'playerList'), $group);
@@ -46,23 +49,23 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->addComponent(new ListBackGround($indexNumber, $sizeX, $sizeY));
 
-        $gui_name = new \ManiaLib\Gui\Elements\Label(35 * (0.8 / 0.6), 4);
+        $gui_name = new \ManiaLib\Gui\Elements\Label(35/$scale, 4);
         $gui_name->setAlign('left', 'center');
         $gui_name->setText($group->getGroupName());
-        $gui_name->setScale(0.6);
+        $gui_name->setScale($scale);
         $frame->addComponent($gui_name);
 
-        $gui_nbPlayers = new \ManiaLib\Gui\Elements\Label(15 * (0.8 / 0.6), 4);
+        $gui_nbPlayers = new \ManiaLib\Gui\Elements\Label(15/$scale, 4);
         $gui_nbPlayers->setAlign('left', 'center');
         $gui_nbPlayers->setText(sizeof($group->getGroupUsers()));
-        $gui_nbPlayers->setScale(0.6);
+        $gui_nbPlayers->setScale($scale);
         $frame->addComponent($gui_nbPlayers);
 
         if (!($group instanceof GuestGroup)) {
             $this->plistButton = new MyButton(30, 6);
             $this->plistButton->setAction($this->action_playerList);
             $this->plistButton->setText(__(AdminGroups::$txt_playerList, $login));
-            $this->plistButton->setScale(0.4);
+            $this->plistButton->setScale($buttonScale);
             $frame->addComponent($this->plistButton);
         }
 
@@ -74,14 +77,14 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->permiButton = new MyButton(40, 6);
             $this->permiButton->setAction($this->action_changePermissions);
             $this->permiButton->setText(__(AdminGroups::$txt_permissionList, $login));
-            $this->permiButton->setScale(0.4);
+            $this->permiButton->setScale($buttonScale);
             $frame->addComponent($this->permiButton);
 
             if (!($group instanceof GuestGroup)) {
                 $this->deleteButton = new MyButton(40, 6);
                 $this->deleteButton->setAction($this->action_deleteGroup);
                 $this->deleteButton->setText(__(AdminGroups::$txt_deletegroup, $login));
-                $this->deleteButton->setScale(0.4);
+                $this->deleteButton->setScale($buttonScale);
                 $frame->addComponent($this->deleteButton);
             }
         }
@@ -92,7 +95,7 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->InheritButton = new MyButton(30, 6);
             $this->InheritButton->setAction($this->action_inherticances);
             $this->InheritButton->setText(__(AdminGroups::$txt_inherits, $login));
-            $this->InheritButton->setScale(0.4);
+            $this->InheritButton->setScale($buttonScale);
             $frame->addComponent($this->InheritButton);
         }
 

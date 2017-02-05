@@ -28,11 +28,7 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onConstruct();
         $login = $this->getRecipient();
 
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
-        $this->addComponent($this->pager);
-
-
-        $line = new \ManiaLive\Gui\Controls\Frame(4, -6);
+        $line = new \ManiaLive\Gui\Controls\Frame(0, 0);
         $layout = new \ManiaLib\Gui\Layouts\Line();
         $layout->setMargin(2);
         $line->setLayout($layout);
@@ -54,7 +50,11 @@ class Players extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->button_select->setAction($this->action_select);
         $line->addComponent($this->button_select);
 
-        $this->addComponent($line);
+        $this->mainFrame->addComponent($line);
+
+        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pager->setPosition(0, 8);
+        $this->mainFrame->addComponent($this->pager);
     }
 
     public function setGroup($g)

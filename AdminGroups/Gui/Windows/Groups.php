@@ -39,14 +39,14 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX - 4, $this->sizeY - 12);
+        $this->pager->setSize($this->sizeX, $this->sizeY - 12);
         $this->pager->setStretchContentX($this->sizeX);
         $this->pager->setPosition(0, -7);
 
-        $this->group_add->setSize($this->sizeX - 25, 7);
+        $this->group_add->setSize($this->sizeX - 45, 7);
         $this->group_add->setPosition(0, -3);
 
-        $this->button_add->setPosition($this->sizeX * (1 / 0.8) - 40 * (1 / 0.8), -3);
+        $this->button_add->setPosition($this->sizeX - 40, -3);
     }
 
     public function onShow()
@@ -75,13 +75,11 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $label = new \ManiaLib\Gui\Elements\Label(35, 4);
         $label->setAlign('left', 'center');
         $label->setText(__(AdminGroups::$txt_groupName, $this->getRecipient()));
-        $label->setScale(0.8);
         $frame->addComponent($label);
 
-        $label = new \ManiaLib\Gui\Elements\Label(20, 4);
+        $label = new \ManiaLib\Gui\Elements\Label(40, 4);
         $label->setAlign('left', 'center');
         $label->setText(__(AdminGroups::$txt_nbPlayers, $this->getRecipient()));
-        $label->setScale(0.8);
         $frame->addComponent($label);
 
         $x = 0;
