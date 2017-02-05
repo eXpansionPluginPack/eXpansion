@@ -44,13 +44,14 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
     public function setText($text)
     {
 
-        $matches = array();
-        preg_match('/\!(.*)\|(.*)/', $text, $matches);
-
         if (substr_count($text, "\t")) {
             $indent = substr_count($text, "\t");
             $this->setBlock($indent);
         }
+
+        $matches = array();
+
+        preg_match('/\!(.*)\|(.*)/', $text, $matches);
 
         if (sizeof($matches) == 3) {
 

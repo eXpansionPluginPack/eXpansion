@@ -14,9 +14,9 @@ class Header extends FaqControl
     {
         parent::__construct($text);
         $this->label->setStyle("TextRaceMessageBig");
-        $this->label->setTextSize(4 - (.5*($level+1)));
+        $this->label->setTextSize(5 - (.75*($level+1)));
         $this->label->setTextColor("fff");
-        $this->setSizeY(7);
+        $this->setSizeY(7 - (.5*($level+1)));
         $this->setAlign("left", "top");
     }
 }
