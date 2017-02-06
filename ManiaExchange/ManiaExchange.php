@@ -11,6 +11,7 @@ use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Widgets\MxWidget;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Windows\MxSearch;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Structures\MxMap;
+use ManiaLivePlugins\eXpansion\Maps\Maps;
 use oliverde8\AsynchronousJobs\Job\Curl;
 
 class ManiaExchange extends ExpPlugin
@@ -119,7 +120,10 @@ class ManiaExchange extends ExpPlugin
         if (!AdminGroups::hasPermission($login, Permission::MAP_ADD_MX)) {
             $this->eXpChatSendServerMessage("#error#You don't have permission to run this command.");
             return;
+
         }
+        // clear mx maps cache
+        Maps::$dbMapsByUid = array();
 
         $window = Gui\Windows\MxUpdate::Create($login);
         $window->setMain($this);

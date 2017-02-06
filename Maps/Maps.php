@@ -327,8 +327,6 @@ class Maps extends ExpPlugin
         $this->showCurrentMapWidget(null);
         $this->showNextMapWidget(null);
         CustomUI::HideForAll(CustomUI::CHALLENGE_INFO);
-        // update cache
-        $this->getMXdataForAllMaps();
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
@@ -520,29 +518,31 @@ class Maps extends ExpPlugin
 
     public function getMXdataForAllMaps()
     {
-        $count = 0;
-        $uids = "";
-        foreach ($this->storage->maps as $map) {
-            $uids .= $this->db->quote($map->uId) . ",";
-            $count++;
-        }
-
-        if ($count > 0) {
-            $uids = trim($uids, ",");
-
-            $q = ' SELECT * '
-                . ' FROM `exp_maps` '
-                . ' WHERE `challenge_uid` IN (' . $uids . ');';
-            $data = $this->db->execute($q);
-
-            $mapsByUid = array();
-            while ($row = $data->fetchArray()) {
-                $map = DbMap::fromArray($row);
-                $mapsByUid[$map->uId] = $map;
+        if (count(self::$dbMapsByUid) == 0) {
+            $count = 0;
+            $uids = "";
+            foreach ($this->storage->maps as $map) {
+                $uids .= $this->db->quote($map->uId) . ",";
+                $count++;
             }
+
+            if ($count > 0) {
+                $uids = trim($uids, ",");
+
+                $q = ' SELECT * '
+                    . ' FROM `exp_maps` '
+                    . ' WHERE `challenge_uid` IN (' . $uids . ');';
+                $data = $this->db->execute($q);
+
+                $mapsByUid = array();
+                while ($row = $data->fetchArray()) {
+                    $map = DbMap::fromArray($row);
+                    $mapsByUid[$map->uId] = $map;
+                }
+            }
+            self::$dbMapsByUid = $mapsByUid;
         }
-        self::$dbMapsByUid = $mapsByUid;
-        return $mapsByUid;
+        return self::$dbMapsByUid;
     }
 
     /**
@@ -1008,6 +1008,7 @@ class Maps extends ExpPlugin
             }
             $this->preloadHistory();
             // update local cache
+            self::$dbMapsByUid = array();
             $this->getMXdataForAllMaps();
         }
     }

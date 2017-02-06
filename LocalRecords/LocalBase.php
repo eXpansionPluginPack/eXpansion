@@ -47,7 +47,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     /**
      * Activating the debug mode of the plugin
      *
-     * @var type int
+     * @var int
      */
     protected $debug = self::DEBUG_NONE;
 
