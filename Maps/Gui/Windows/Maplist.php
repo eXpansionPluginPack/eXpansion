@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
 use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
@@ -273,6 +274,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
 
         // select sorttype and sort the list
+        $removePermission = AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP);
+        $adminPermission = AdminGroups::hasPermission($login, Permission::SERVER_ADMIN);
 
         switch (Maps::$playerSortModes[$login]->column) {
             case "rating":
@@ -392,8 +395,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $color . $style => -1,
                 "Info" => $sortableMap->showInfoAction,
                 "Recs" => $sortableMap->showRecsAction,
-                "x" => $sortableMap->removeMapAction,
-                "Tag" => $sortableMap->showTagAction
+                "x" => $removePermission ? $sortableMap->removeMapAction : -1,
+                "Tag" => $adminPermission ? $sortableMap->showTagAction : -1
             );
 
             $this->pager->addSimpleItems($array);
