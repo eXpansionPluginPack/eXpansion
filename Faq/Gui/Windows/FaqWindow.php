@@ -2,21 +2,30 @@
 
 namespace ManiaLivePlugins\eXpansion\Faq\Gui\Windows;
 
+use ManiaLib\Gui\Layouts\Column;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Faq\Faq;
+use ManiaLivePlugins\eXpansion\Faq\Gui\Controls\CodeLine;
+use ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Header;
 use ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Line;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ScrollableArea;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 
 /**
  * Description of FaqWindow
  *
  * @author Reaby
  */
-class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class FaqWindow extends Window
 {
 
     public static $mainPlugin;
     protected $userLanguage = "en";
     protected $elements = array();
+
+    /** @var  Frame */
     protected $frame;
+    /** @var  ScrollableArea */
     protected $scroll;
 
     protected function onConstruct()
@@ -27,15 +36,15 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->scroll = new ScrollableArea(167, 87);
         $this->scroll->setPosition(-1, -4);
         $this->addComponent($this->scroll);
-        $this->frame = new \ManiaLive\Gui\Controls\Frame(0, 0);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(190,90));
+        $this->frame = new Frame(0, 0);
+        $this->frame->setLayout(new Column(190, 90));
     }
 
 
     public function setLanguage($language)
     {
         $this->userLanguage = "en";
-        if (in_array($language, \ManiaLivePlugins\eXpansion\Faq\Faq::$availableLanguages)) {
+        if (in_array($language, Faq::$availableLanguages)) {
             $this->userLanguage = $language;
         }
     }
@@ -46,7 +55,8 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $sizeY = 0;
 
         //try {
-        if (strpos($topic, '../') !== false || strpos($topic, "..\\") !== false || strpos($topic, '/..') !== false || strpos($topic, '\..') !== false) {
+        if (strpos($topic, '../') !== false || strpos($topic, "..\\") !== false ||
+            strpos($topic, '/..') !== false || strpos($topic, '\..') !== false) {
             $topic = "toc";
         }
         $file = file_get_contents(dirname(dirname(__DIR__)) . "/Topics/" . $this->userLanguage . "/" . $topic . ".txt");
@@ -77,8 +87,9 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $topic = true;
         $x = 1;
         $isCodeBlock = false;
-        $this->elements[0] = new Line("");
 
+        // add one empty line
+        $this->elements[0] = new Line("");
         foreach ($data as $line) {
 
             if ($topic == true) {
@@ -91,7 +102,7 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
             // match #, which marks a text to be rendered as a header
             if (preg_match('/(?P<level>#{1,6})(?P<rest>.*)/', trim($line), $matches)) {
-                $this->elements[$x] = new \ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Header(trim($matches['rest']), strlen($matches['level']));
+                $this->elements[$x] = new Header(trim($matches['rest']), strlen($matches['level']));
             }
 
             if (trim($line) === "```") {
@@ -99,8 +110,12 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 continue;
             }
 
+            if (trim($line) === ">") {
+                $this->elements[$x] = new InfoLine();
+            }
+
             if ($isCodeBlock) {
-                $this->elements[$x] = new \ManiaLivePlugins\eXpansion\Faq\Gui\Controls\CodeLine($line);
+                $this->elements[$x] = new CodeLine($line);
             }
 
             // in case nothing is set, it's normal line
@@ -109,7 +124,7 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                     $lines = str_split(trim($line), 100);
                     $blockOld = 0;
                     foreach ($lines as $line2) {
-                        $data = new \ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Line($line2);
+                        $data = new Line($line2);
                         if ($data->getBlock() != $blockOld) {
                             $data->setBlock($blockOld);
                         }
@@ -117,13 +132,11 @@ class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                         $blockOld = $data->getBlock();
                         $x++;
                     }
-                }
-                else {
-                    $this->elements[$x] = new \ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Line($line);
+                } else {
+                    $this->elements[$x] = new Line($line);
                 }
             }
             $x++;
         }
-
     }
 }
