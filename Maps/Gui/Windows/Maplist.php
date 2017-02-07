@@ -371,14 +371,14 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             }
 
             $diff = " - ";
-            if ($sortableMap->difficulty != "") {
-                $diff = $sortableMap->difficulty;
+            if (isset($this->mxInfo[$sortableMap->uId]) && $this->mxInfo[$sortableMap->uId]->difficultyName != "") {
+                $diff = $this->mxInfo[$sortableMap->uId]->difficultyName;
             }
 
             $style = "- ";
-            if (isset($this->mxInfo[$sortableMap->uId])) {
+            if (isset($this->mxInfo[$sortableMap->uId]) && $this->mxInfo[$sortableMap->uId]->styleName != "") {
                 $style = $this->mxInfo[$sortableMap->uId]->styleName;
-                $diff = $this->mxInfo[$sortableMap->uId]->difficultyName;
+
             }
 
             $array = array(
