@@ -581,7 +581,7 @@ class Maps extends ExpPlugin
                 $this->actions[] = $map->showInfoAction;
                 $this->actions[] = $map->removeMapAction;
                 $this->actions[] = $map->showTagAction;
-                $this->maps[] = $map;
+                $this->maps[$map->uId] = $map;
             }
         }
     }

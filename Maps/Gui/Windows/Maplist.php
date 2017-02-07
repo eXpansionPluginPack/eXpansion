@@ -354,8 +354,8 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             }
 
             $localrecord = "-";
-            if (isset($this->records[$sortableMap->uId])) {
-                $localrecord = $this->records[$sortableMap->uId] + 1;
+            if (isset($sortableMap->localrecord)) {
+                $localrecord = $sortableMap->localrecord+1;
             }
 
 
@@ -413,7 +413,12 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     public function setRecords($records)
     {
         self::$localrecordsLoaded = true;
-        $this->records = $records;
+        foreach ($records as $uid => $record) {
+            if (isset($this->maps[$uid])) {
+                $this->maps[$uid]->localrecord = $record;
+            }
+        }
+
     }
 
     /** @param \Maniaplanet\DedicatedServer\Structures\Map[] $history */
