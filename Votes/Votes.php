@@ -17,6 +17,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private $update = false;
     private $resCount = 0;
     private $lastMapUid = "";
+    private $votesCmd = null;
     /** @var int */
     private $origTimeValue = 0;
 
@@ -84,7 +85,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $cmd = AdminGroups::addAdminCommand('votes', $this, 'showVotesConfig', 'server_votes'); //
         $cmd->setHelp('shows config window for managing votes');
         $cmd->setMinParam(0);
-
+        $this->votesCmd = $cmd;
 
         $this->lastMapUid = $this->storage->currentMap->uId;
 
@@ -363,6 +364,7 @@ class Votes extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function eXpOnUnload()
     {
         VoteSettingsWindow::EraseAll();
+        AdminGroups::removeAdminCommand($this->votesCmd);
     }
 
     public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
