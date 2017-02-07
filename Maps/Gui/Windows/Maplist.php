@@ -355,7 +355,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
             $localrecord = "-";
             if (isset($sortableMap->localrecord)) {
-                $localrecord = $sortableMap->localrecord+1;
+                $localrecord = $sortableMap->localrecord + 1;
             }
 
 
@@ -387,7 +387,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $array = array(
                 Gui::fixString($name) => $sortableMap->queueMapAction,
                 Gui::fixString($author) => -1,
-                $color . $sortableMap->environment => -1,
+                $color . $sortableMap->environnement => -1,
                 $color . \ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime) => -1,
                 $color . $localrecord => -1,
                 $color . $rate => -1,
