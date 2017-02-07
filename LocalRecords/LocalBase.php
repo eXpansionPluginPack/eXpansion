@@ -1833,6 +1833,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     {
         if ((empty($this->ranks) || $this->rank_needUpdated) && !$this->expStorage->isRelay) {
 
+            $profiling = rankCalculation::start();
+
             $this->debug("Fetching Server Ranks from Database !");
 
             $this->rank_needUpdated = false;
@@ -1900,6 +1902,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             }
 
             $this->ranks = array_values($tempranks);
+
+            $profiling->end();
         }
 
         return $this->ranks;

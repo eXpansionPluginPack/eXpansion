@@ -30,6 +30,7 @@ use ManiaLive\Features\Tick\Event as TickEvent;
 use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLive\Utilities\Console;
 use ManiaLive\Utilities\Logger;
+use ManiaLivePlugins\eXpansion\Core\types\Profiler\Profile;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 /**
@@ -176,19 +177,13 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
     }
 
     /**
-     * @param \Exception $exception to log
+     * Get data that is with all analytics datas.
+     *
+     * @return strng[]
      */
-    public function ping($error = null)
+    protected function getGenericPingData()
     {
-        /** @var DataAccess $access */
-        $access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
-
         $buildDate = Helper::getBuildDate();
-
-        $plugins = array();
-        foreach ($this->pluginHandler->getLoadedPluginsList() as $plugin) {
-            $plugins[] = str_replace('\\', '__', $plugin);
-        }
 
         $data = array(
             'page' => 'ping',
@@ -206,9 +201,30 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
             'title' => str_replace('@', '_', $this->expStorage->titleId),
             'mode' => $this->storage->gameInfos->gameMode == 0
                 ? $this->storage->gameInfos->scriptName : $this->storage->gameInfos->gameMode,
-            'plugins' => implode(',', $this->pluginHandler->getLoadedPluginsList()),
             'serverOs' => $this->expStorage->serverOs,
         );
+    }
+
+
+    /**
+     * @param \Exception $exception to log
+     * @param Profile $profileData
+     */
+    public function ping($error = null, $profileData = null)
+    {
+        /** @var DataAccess $access */
+        $access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
+
+        $plugins = array();
+        foreach ($this->pluginHandler->getLoadedPluginsList() as $plugin) {
+            $plugins[] = str_replace('\\', '__', $plugin);
+        }
+
+        $data = $this->getGenericPingData();
+
+        if (is_null($profileData)) {
+            $data['plugins'] = implode(',', $this->pluginHandler->getLoadedPluginsList());
+        }
 
 
         if (!is_null($error)) {
@@ -217,6 +233,8 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
                 return;
             }
             $data['page'] = 'error';
+            $data['plugins'] = implode(',', $this->pluginHandler->getLoadedPluginsList());
+
             /** @var \Exception $error */
             $data['error_file'] = $this->removeRoot($error->getFile());
             $data['error_line'] = $error->getLine();
@@ -225,11 +243,26 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
 
             $url = $this->url . "?" . $this->generate($data);
             $access->httpGet($url, array($this, "completeError"), $data, "Manialive/eXpansion", "application/json");
+        } elseif (!is_null($profileData)) {
+
+            $data['duration'] = $profileData->getDuration();
+            $data['task'] = $profileData->getTaskName();
+            $data['details'] = $profileData->getDesription();
+            $data['number_of_elements'] = $profileData->getNumberOfElements();
+
+
+
+            $url = $this->url . "?" . $this->generate($data);
+            $access->httpGet($url, array($this, "completeError"), $data, "Manialive/eXpansion", "application/json");
+
         } else {
+            $data['plugins'] = implode(',', $this->pluginHandler->getLoadedPluginsList());
+
             $url = $this->url . "?" . $this->generate($data);
             $access->httpGet($url, array($this, "completePing"), $data, "Manialive/eXpansion", "application/json");
         }
     }
+
 
     private function removeRoot($fileName)
     {

@@ -23,16 +23,74 @@
 require 'vendor/autoload.php';
 $client = new \Elasticsearch\Client();
 
-$time = time() - 3600;
-
-$key = getData($_GET, 'key', '');
-
 const INTERVAL = 600;
 
-$settings = array(
-    'number_of_shrads' => 1,
-    'number_of_replicas' => 1
-);
+/** @var int Current Time $time */
+$time = time() - 3600;
+
+/** @var string Key that needs validation  $key */
+$key = getData($_GET, 'key', '');
+
+/** @var String[] Pages that are supported for data insertion. */
+$pages = array('ping', 'error', 'profiling');
+
+if ($key != "" && canSendData($key, $time) && in_array(getData($_GET, 'page'), $pages)) {
+
+    $params['body'] = array(
+        'nbPlayers' => (int) getData($_GET, 'nbPlayers', 0),
+        'key' => getData($_GET, 'key', "invalid-$key-" . rand(100000, 1000000)),
+        '@timestamp' => getCurrentTimeStamp($time),
+        'country' => getData($_GET, 'country', ""),
+        'version' => getData($_GET, 'version', "invalid"),
+        'memory' => (int) getData($_GET, 'memory', 0),
+        'memory_peak' => (int) getData($_GET, 'memory_peak', 0),
+        'php_version' => getData($_GET, 'php_version', "unknown"),
+        'php_version_short' => getData(
+            $_GET,
+            'php_version_short',
+            implode('.', array_slice(explode('.', getData($_GET, 'php_version', 'unknown')), 0, 2))
+        ),
+        'mysql_version' => getData($_GET, 'mysql_version', 'unknown'),
+        'serverOs' => getData($_GET, 'serverOs', 'unknown'),
+        'build' => getData($_GET, 'build', "invalid"),
+        'game' => getData($_GET, 'game', "invalid"),
+        'title' => getData($_GET, 'title', "invalid"),
+        'mode' => getData($_GET, 'mode', "invalid"),
+    );
+
+    switch (getData($_GET, 'page')) {
+        case 'ping':
+            $index = getIndexToUse($time, "expansion-ping");
+
+            $params['body']['plugins'] = getData($_GET, 'plugins', "");
+            break;
+
+        case 'error':
+            $index = getIndexToUse($time, "expansion-error");
+
+            $params['body']['error_file'] = getData($_GET, 'error_file', "");
+            $params['body']['error_line'] = getData($_GET, 'error_line', "");
+            $params['body']['error_msg'] = getData($_GET, 'error_msg', "");
+            $params['body']['error_stack'] = getData($_GET, 'error_stack', "");
+            $params['body']['plugins'] = getData($_GET, 'plugins', "");
+            break;
+
+        case 'profiling':
+            $index = getIndexToUse($time, "expansion-profiling");
+
+            $params['body']['duration'] = getData($_GET, 'duration', "");
+            $params['body']['task'] = getData($_GET, 'task', "");
+            $params['body']['details'] = getData($_GET, 'task', "");
+            $params['body']['number_of_elements'] = getData($_GET, 'number_of_elements', "");
+            break;
+    }
+
+    $params['index'] = $index;
+    $params['type'] = 'servers';
+    $ret = $client->index($params);
+
+}
+
 
 if (getData($_GET, 'page') == 'ping' && $key != "" && canSendData($key, $time)) {
 
@@ -57,7 +115,6 @@ if (getData($_GET, 'page') == 'ping' && $key != "" && canSendData($key, $time)) 
     );
     $params['index'] = $index;
     $params['type'] = 'servers';
-    //$params['settings']['index'] = $settings;
 
     $ret = $client->index($params);
     }else if (getData($_GET, 'page') == 'error' && $key != "" && canSendData($key, $time, false) && getData($_GET, 'error_file', false)) {
@@ -73,6 +130,8 @@ if (getData($_GET, 'page') == 'ping' && $key != "" && canSendData($key, $time)) 
         'memory' => (int) getData($_GET, 'memory', 0),
         'memory_peak' => (int) getData($_GET, 'memory_peak', 0),
         'php_version' => getData($_GET, 'php_version', "unknown"),
+        'php_version_short' => getData($_GET, 'php_version_short', implode('.', array_slice(explode('.', getData($_GET, 'php_version', 'unknown')), 0, 2))),
+        'mysql_version' => getData($_GET, 'mysql_version', 'unknown'),
         'build' => getData($_GET, 'build', "invalid"),
         'game' => getData($_GET, 'game', "invalid"),
         'title' => getData($_GET, 'title', "invalid"),
@@ -85,7 +144,6 @@ if (getData($_GET, 'page') == 'ping' && $key != "" && canSendData($key, $time)) 
     );
     $params['index'] = $index;
     $params['type'] = 'servers';
-//      $params['settings']['index'] = $settings;
 
     $ret = $client->index($params);
 }  else if(getData($_GET, 'page', '') == 'handshake'){

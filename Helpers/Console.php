@@ -81,7 +81,6 @@ class Console
             self::out(Console::b_black . trim($message) . "\n", $section, $sectionColor);
         }
     }
-
     /**
      * function out_error
      *
