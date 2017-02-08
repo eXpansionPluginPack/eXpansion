@@ -1,5 +1,5 @@
 ﻿Faq: widgets help 
-!toc|Back to index
+
 #Widgets: how to show/hide individual widgets ?
 	You can easily show or hide nearly any of the widgets you seen at screen hud.
 		1. access the menu, use mouse right button and click to anywhere at game screen area.

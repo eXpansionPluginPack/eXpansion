@@ -1,13 +1,13 @@
 ﻿Faq: adding a map from maniaExchange
-!admin|Back to admin
+[Back to admin](admin.md)<br>
 
 #Admin: Adding a map from Mania-exchange
 
 There's 2 ways of adding maps from MX:
 
 	1. using Menu -- Mania-exchange -- Search Maps
-	2. using chat command $o/mx add $f00MXid
+	2. using chat command **/mx add $f00MXid
 			or
-	using chat command $o/admin add $f00MXid
+	using chat command **/admin add $f00MXid
 
-!admin_maps|Admin: How to add and remove maps ?
+[Admin: How to add and remove maps ?](admin_maps.md)<br>

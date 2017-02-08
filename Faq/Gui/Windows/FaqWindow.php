@@ -91,6 +91,7 @@ class FaqWindow extends Window
 
         // add one empty line
         $this->elements[0] = new Line("");
+        $this->elements[0] = new Line("[Back to index](toc.md)<br>");
         foreach ($data as $line) {
 
             if ($topic == true) {

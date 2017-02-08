@@ -1,7 +1,5 @@
 ﻿Admin Topics
 
-[Back to index](toc.md)
-
 #Server Management
 [Chat commands](admin_chat.md)<br>
 

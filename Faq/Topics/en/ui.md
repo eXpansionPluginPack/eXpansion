@@ -1,5 +1,5 @@
 ﻿Faq: widgets help
-!toc|Back to index
+
 #eXpansion User Interface
 	The idea for the user interface is to provide clean, powerful but still easy of use Interface that you just use with ease. The learning curve should be quite low.
 
@@ -14,5 +14,5 @@
 		2. A menu will appear next to mouse pointer
 		Type "/help" and press enter to see all available chat commands
 
-!widgets_config|Widgets: how to show/hide individual widgets ?
-!widgets_move|Widgets: how to enable moving and lock the widget positions ?
+[Widgets: how to show/hide individual widgets ?](widgets_config.md)<br>
+[Widgets: how to enable moving and lock the widget positions ?](widgets_move.md)<br>

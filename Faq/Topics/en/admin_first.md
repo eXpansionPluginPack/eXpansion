@@ -1,5 +1,5 @@
 Admin guide
-!admin|Back to Admin
+[Back to Admin](admin.md)<br>
 
 # First steps after installation
 Here is a few useful tips to make server administration easier for you.

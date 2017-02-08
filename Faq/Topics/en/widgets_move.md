@@ -1,5 +1,5 @@
 ﻿Faq: widgets help 
-!toc|Back to index
+
 #Widgets: how to enable moving and lock the widget positions ?        
 
 		1. access the menu, use mouse right button and click to anywhere at game screen area.

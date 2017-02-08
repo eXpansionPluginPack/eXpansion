@@ -1,5 +1,4 @@
 ﻿Faq: Maniapark
-!toc|Back to index
 
 #What is ManiaPark ?
 		ManiaPark and Carpark are sites you can download and install custom car models 

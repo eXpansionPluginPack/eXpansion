@@ -1,10 +1,10 @@
 ﻿Faq: How to display list of maps ? 
-!toc|Back to index
+
 #How to display list of maps ?
 There is 3 ways to access a maplisting of the server.
 
-	$oUsing the chat-command:
-		1. Write the following command to chatline: $o/list
+	**Using the chat-command:
+		1. Write the following command to chatline: **/list
 		2. Press enter
 		
 	$oUsing the esc-menu:

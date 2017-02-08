@@ -1,5 +1,5 @@
 Admin Groups
-!admin|Back to admin
+[Back to admin](admin.md)<br>
 
 #Admin Groups
     Admin groups is a plugin that will intercept all admin commands in order

@@ -1,5 +1,4 @@
 ﻿Faq: Dedimania
-!toc|Back to index
 
 #What is Dedimania ?
 
@@ -11,4 +10,4 @@ External links:
 $l[http://dedimania.net/tm2stats/?do=stat]Dedimania$l
 $l[http://dedimania.net/tm2stats/?do=donation]Donate-page$l
 
-!admin_dedimania|Admins: Dedimania
+[Admins: Dedimania](admin_dedimania.md)<br>

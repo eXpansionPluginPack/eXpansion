@@ -37,20 +37,19 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         $this->label->setTextColor("3af");
         $this->label->setStyle("TextCardMedium");
+        echo $file . " ";
         $this->action = $this->createAction(array(\ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWindow::$mainPlugin, "showFaq"), $file, null);
         $this->label->setAction($this->action);
     }
 
     public function setText($text)
     {
-
         if (substr_count($text, "\t")) {
             $indent = substr_count($text, "\t");
             $this->setBlock($indent);
         }
 
         $matches = array();
-
         if (preg_match('/\[(?P<text>.*?)\]\((?P<link>.*?)\)/', $text, $matches)) {
             $this->setTopicLink($matches['link']);
             $text = $matches['text'];

@@ -7,15 +7,15 @@ Index
 
 ##Topics for Everyone
 
-!ui|I'm not seeing the usual UI, how i find my way around ?
-!list|How to display list of maps ?
-!votes|How to vote for skip or restart a map ?
+[I'm not seeing the usual UI, how i find my way around ?](ui.md)<br>
+[How to display list of maps ?](list.md)<br>
+[How to vote for skip or restart a map ?](votes.md)<br>
 
-!nickname|How do i customize my nickname colors ?
-!mx_upload|I did a map! How do i get it to server ?
+[How do i customize my nickname colors ?](nickname.md)<br>
+[I did a map! How do i get it to server ?](mx_upload.md)<br>
 
 ## Community services
-!dedimania|Dedimania
-!tmkarma|TM-Karma
-!maniapark|ManiaPark (and CarPark)
-!mx|Mania-exchange
+[Dedimania](dedimania.md)<br>
+[TM-Karma](tmkarma.md)<br>
+[ManiaPark (and CarPark)](maniapark.md)<br>
+[Mania-exchange](mx.md)<br>

@@ -1,5 +1,5 @@
 ﻿Faq: how to vote 
-!toc|Back to index
+
 #How to restart ?
 	Select restart on either menu, or use chat commands:
 	$o/res  /restart  /replay

@@ -1,5 +1,5 @@
 ﻿Chat commands
-!admin_chat|Back to admin
+[Back to admin](admin_chat.md)<br>
 
 ##Admin commands: /ta `command` _parameter_
 
