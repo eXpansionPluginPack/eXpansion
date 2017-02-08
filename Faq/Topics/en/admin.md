@@ -6,8 +6,8 @@
 ## Basics
 [First steps after installing](admin_first.md)<br>
 [Enabling **Dedimania** for your server](admin_dedimania.md)<br>
-[Add more admins using](admin_groups.md)<br>
-[Plugins](admin_plugins.md)<br>
+[Add/remove Admins](admin_groups.md)<br>
+[Manage Plugins](admin_plugins.md)<br>
 [MatchSettings manager](admin_matchsettings.md)<br>
 
 ## Maps

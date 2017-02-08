@@ -56,7 +56,7 @@ class FaqWindow extends Window
 
         //try {
         if (strpos($topic, '../') !== false || strpos($topic, "..\\") !== false ||
-            strpos($topic, '/..') !== false || strpos($topic, '\..') !== false
+            strpos($topic, '/..') !== false || strpos($topic, '\\..') !== false
         ) {
             $topic = "toc.md";
         }
@@ -86,12 +86,12 @@ class FaqWindow extends Window
 
         $data = explode("\n", $file);
         $topic = true;
-        $x = 1;
+        $x = 2;
         $isCodeBlock = false;
 
         // add one empty line
         $this->elements[0] = new Line("");
-        $this->elements[0] = new Line("[Back to index](toc.md)<br>");
+        $this->elements[1] = new Line("[Back to index](toc.md)<br>");
         foreach ($data as $line) {
 
             if ($topic == true) {

@@ -1,20 +1,18 @@
-﻿Faq: how to vote 
+﻿Votes 
 
-#How to restart ?
-	Select restart on either menu, or use chat commands:
-	$o/res  /restart  /replay
+#Voting
+You can easily callvote for replay of map: `/res` or `/restart` or `/replay`
+also to skip map start vote by writing `/nextmap` or `/skip` to chat.
 
-#How skip ?
-	Select skip on either menu, or use chat command:
-	$o/nextmap  /skip
+Other than writing chat commands, you can also access the voting using menu.
 
-#2 different ways to access a voting menu
-	$othe esc-menu:
-		1. Press esc
-		2. Select [Manage Server]
-		3. Select one of the "Callvote"-actions.
+### Esc-menu
+    1. Press esc
+    2. Select `Manage Server`
+    3. Select one of the `Callvote`-actions.
 
-	$othe eXpansion-menu:
-                1. Right click anywhere at game window
-                2. Hover to Votes --> 
-                3. Click on either Skip or Restart
+###eXpansion-menu
+    1. Right click anywhere at game window
+    2. Hover to `Votes` 
+    3. Click on either `Skip` or `Restart`
+

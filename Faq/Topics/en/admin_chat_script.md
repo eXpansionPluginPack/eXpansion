@@ -6,5 +6,5 @@
 ###/script `load` {name}.txt
     loads script with name to runtime
 
-###/script `reload` {number}
+###/script `reload`
     reloads currently loaded script

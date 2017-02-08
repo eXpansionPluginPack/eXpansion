@@ -58,7 +58,7 @@ class Faq extends ExpPlugin
     public function showFaq($login, $topic = "toc", $recipient = null)
     {
         FaqWindow::Erase($login);
-        $topic = rtrim($topic, ".md");
+        $topic = str_replace(".md", "", $topic);
         $showTo = $login;
         if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
             if (!empty($recipient)) {
@@ -70,6 +70,7 @@ class Faq extends ExpPlugin
             }
         }
         $player = $this->storage->getPlayerObject($login);
+        /** @var FaqWindow $window */
         $window = FaqWindow::Create($showTo);
         $window->setLanguage($player->language);
         $window->setTopic($topic . ".md");

@@ -14,8 +14,8 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
     public function __construct($text)
     {
         $this->sizeX = 240;
-        $this->sizeY = 4;
-        $this->setSize(240, 4);
+        $this->sizeY = 5;
+        $this->setSize(240, 5);
         $this->setAlign("left");
         $this->label = new \ManiaLib\Gui\Elements\Label(240, 5);
         $this->label->setAlign("left", "center");
@@ -30,14 +30,13 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
     {
         $this->block = $index;
         $this->setPosX($index * 6);
-        $this->setSize(240 - ($index * 6), 4);
+        $this->setSize(240 - ($index * 6), 5);
     }
 
     public function setTopicLink($file)
     {
         $this->label->setTextColor("3af");
         $this->label->setStyle("TextCardMedium");
-        echo $file . " ";
         $this->action = $this->createAction(array(\ManiaLivePlugins\eXpansion\Faq\Gui\Windows\FaqWindow::$mainPlugin, "showFaq"), $file, null);
         $this->label->setAction($this->action);
     }

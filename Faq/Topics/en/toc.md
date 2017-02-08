@@ -6,10 +6,9 @@ Index
 [Server Management](admin.md)
 
 ##Topics for Everyone
-
-[I'm not seeing the usual UI, how i find my way around ?](ui.md)<br>
-[How to display list of maps ?](list.md)<br>
-[How to vote for skip or restart a map ?](votes.md)<br>
+[Configure HUD](ui.md)<br>
+[How to change maps on server](list.md)<br>
+[Voting for skip or restart a map](votes.md)<br>
 
 [How do i customize my nickname colors ?](nickname.md)<br>
 [I did a map! How do i get it to server ?](mx_upload.md)<br>

@@ -1,13 +1,21 @@
-﻿Faq: adding a map from maniaExchange
+﻿Mania-Exchange integration 
 [Back to admin](admin.md)<br>
 
-#Admin: Adding a map from Mania-exchange
+#Mania-Exchange
 
-There's 2 ways of adding maps from MX:
+##Finding maps
+You can easily find maps on mania-exchange using manialink: $hexchange$h or  
+by visiting the website $lhttps://www.mania-exchange.com$l other ways to find maps 
+is to use eXpansion mx map browser.
 
-	1. using Menu -- Mania-exchange -- Search Maps
-	2. using chat command **/mx add $f00MXid
-			or
-	using chat command **/admin add $f00MXid
+type `/mx search` to start browsing and searching. you can also find the browser at menu.
+path is `Maps` > `ManiaExchange` 
 
+##Adding maps
+After you have find appropriate map for your server you can add it easily from the MX-browser
+by clicking `install`-button. Other ways to add maps is to use chat command with mxID:
+`/mx add {mxId}` or `/adm add {mxId}`.
+
+
+### Further reading
 [Admin: How to add and remove maps ?](admin_maps.md)<br>
