@@ -1,8 +1,8 @@
 ﻿Chat commands
-!admin|Back to admin
+
+[Back to admin](admin.md)
 
 #Admin chat commands list
-
 Migration to eXpansion is made easy, since you can use both: Xaseco and Fast admin commands!
 
 Admin commands are:

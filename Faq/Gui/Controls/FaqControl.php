@@ -51,19 +51,15 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $matches = array();
 
-        preg_match('/\!(.*)\|(.*)/', $text, $matches);
-
-        if (sizeof($matches) == 3) {
-
-            $this->setTopicLink($matches[1]);
-            $text = $matches[2];
+        if (preg_match('/\[(?P<text>.*?)\]\((?P<link>.*?)\)/', $text, $matches)) {
+            $this->setTopicLink($matches['link']);
+            $text = $matches['text'];
         }
+
         $text = str_replace("**", '$o', $text);
         $text = str_replace("__", '$o', $text);
         $text = preg_replace("/\*(.*?)\*/", '\$i$1\$i', $text);
         $text = preg_replace("/_(.*?)_/", '\$i$1\$i', $text);
-
-        $matches = array();
         $text = preg_replace("/`(.*?)`/", '\$i\$ff0$1\$z', $text);
 
         $matches = array();

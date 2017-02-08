@@ -56,10 +56,11 @@ class FaqWindow extends Window
 
         //try {
         if (strpos($topic, '../') !== false || strpos($topic, "..\\") !== false ||
-            strpos($topic, '/..') !== false || strpos($topic, '\..') !== false) {
-            $topic = "toc";
+            strpos($topic, '/..') !== false || strpos($topic, '\..') !== false
+        ) {
+            $topic = "toc.md";
         }
-        $file = file_get_contents(dirname(dirname(__DIR__)) . "/Topics/" . $this->userLanguage . "/" . $topic . ".txt");
+        $file = file_get_contents(dirname(dirname(__DIR__)) . "/Topics/" . $this->userLanguage . "/" . $topic);
         $this->parse($file);
         //} catch (\Exception $e) {
         //$file = file_get_contents(dirname(dirname(__DIR__)) . "/Topics/" . $this->userLanguage . "/" . "toc.txt");
