@@ -206,6 +206,12 @@ Other server might use the same blacklist file!!'
             ->setMinParam(1);
         AdminGroups::addAlias($cmd, "spec"); // xaseco & fast
 
+        $cmd = AdminGroups::addAdminCommand('player play', $this, 'forcePlay', Permission::PLAYER_FORCESPEC);
+        $cmd->setHelp('Forces the spectator to become player')
+            ->addLineHelpMore('$w/admin player play #login$z The spectator will be forced to become a player')
+            ->setMinParam(1);
+        AdminGroups::addAlias($cmd, "play"); // xaseco & fast
+
         $cmd = AdminGroups::addAdminCommand('player ignore', $this, 'ignore', Permission::PLAYER_IGNORE);
         $cmd->setHelp('Adds player to ignore list and mutes him from the chat')
             ->addLineHelpMore('$w/admin player ignore #login$z will ignore the players chat')
@@ -1912,7 +1918,7 @@ Other server might use the same blacklist file!!'
             $this->connection->forceSpectator($player, 0);
             $this->eXpChatSendServerMessage(
                 '#admin_action#Admin#variable# %s #admin_action#Forces '
-                .'the player #variable# %s #admin_action#to Spectator.',
+                .'the player#variable# %s #admin_action#to spectate.',
                 null,
                 array($admin->nickName, $player->nickName)
             );
@@ -1920,6 +1926,33 @@ Other server might use the same blacklist file!!'
             $this->sendErrorChat($fromLogin, $e->getMessage());
         }
     }
+
+    public function forcePlay($fromLogin, $params)
+    {
+        $player = $this->storage->getPlayerObject($params[0]);
+        if ($player == null) {
+            $this->eXpChatSendServerMessage(
+                '#admin_action#Player #variable# %s doesn\' exist.',
+                $fromLogin,
+                array($params[0])
+            );
+            return;
+        }
+        try {
+            $admin = $this->storage->getPlayerObject($fromLogin);
+            $this->connection->forceSpectator($player, 2);
+            $this->connection->forceSpectator($player, 0);
+            $this->eXpChatSendServerMessage(
+                '#admin_action#Admin#variable# %s #admin_action#Forces '
+                .'the spectator#variable# %s #admin_action#to play.',
+                null,
+                array($admin->nickName, $player->nickName)
+            );
+        } catch (Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
 
     public function sendErrorChat($login, $message)
     {
