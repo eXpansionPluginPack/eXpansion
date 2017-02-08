@@ -13,3 +13,4 @@ Admin commands are:
 !admin_chat_cup|$o/cup$o commands for Cup-game mode.
 !admin_chat_team|$o/team$o commands for Team-game mode.
 !admin_chat_laps|$o/laps$o commands for Laps-game mode.
+!admin_chat_script|$o/script$o commands for Script-game mode.
