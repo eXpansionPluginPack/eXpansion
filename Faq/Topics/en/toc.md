@@ -10,8 +10,8 @@ Index
 [How to change maps on server](list.md)<br>
 [Voting for skip or restart a map](votes.md)<br>
 
-[How do i customize my nickname colors ?](nickname.md)<br>
-[I did a map! How do i get it to server ?](mx_upload.md)<br>
+[How to customize my nickname color](nickname.md)<br>
+[I did a map! How do i get it to server](mx_upload.md)<br>
 
 ## Community services
 [Dedimania](dedimania.md)<br>
