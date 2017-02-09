@@ -78,6 +78,7 @@ class Maps extends ExpPlugin
 
     private $actions = array();
     private $maps = array();
+    private $ratings = array();
 
     private $isRestartMap = false;
     private $is_onBeginMatch = false;
@@ -98,6 +99,7 @@ class Maps extends ExpPlugin
         $this->setPublicMethod("replayScoreReset");
         $this->setPublicMethod("returnQueue");
         $this->setPublicMethod("showMapList");
+
         if ($this->expStorage->isRemoteControlled == false) {
             $this->setPublicMethod("addMaps");
         }
@@ -169,6 +171,8 @@ class Maps extends ExpPlugin
         // update cache
         $this->getMXdataForAllMaps();
         $this->getMapsCache();
+
+
     }
 
     public function eXpOnLoad()
@@ -501,6 +505,13 @@ class Maps extends ExpPlugin
         $this->getMapsCache();
         $window->setMaps($this->maps);
         $window->setHistory($this->history);
+        if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings')) {
+            $window->setRatings($this->callPublicMethod(
+                '\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings',
+                'getRatings'
+            ));
+        }
+
         $window->setCurrentMap($this->storage->currentMap);
         $window->setMxInfo($this->getMXdataForAllMaps());
 
@@ -1142,13 +1153,11 @@ class Maps extends ExpPlugin
             if (is_object($this->storage->maps[$params[0]])) {
                 $this->removeMap($login, $this->storage->maps[$params[0]]);
             }
-
             return;
         }
 
         if ($params[0] == "this") {
             $this->removeMap($login, $this->storage->currentMap);
-
             return;
         }
     }

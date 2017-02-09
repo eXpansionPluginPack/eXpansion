@@ -358,15 +358,14 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $localrecord = $sortableMap->localrecord + 1;
             }
 
-
-            if (isset($this->history[$sortableMap->uId])) {
-                $name = '$d00' . $sortableMap->strippedName;
-                $author = '$d00' . $sortableMap->author;
-                $color = '$d00';
-            } else if ($sortableMap->uId == $this->currentMap->uId) {
+            if ($sortableMap->uId == $this->currentMap->uId) {
                 $name = '$0d0' . $sortableMap->strippedName;
                 $author = '$0d0' . $sortableMap->author;
                 $color = '$0d0';
+            } else if (isset($this->history[$sortableMap->uId])) {
+                $name = '$d00' . $sortableMap->strippedName;
+                $author = '$d00' . $sortableMap->author;
+                $color = '$d00';
             } else {
                 $name = $sortableMap->name;
                 $author = $sortableMap->author;
@@ -427,6 +426,15 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->history = array();
         foreach ($history as $map) {
             $this->history[$map->uId] = true;
+        }
+    }
+
+    public function setRatings($ratings)
+    {
+        foreach ($ratings as $uid => $rating) {
+            if (isset($this->maps[$uid])) {
+                $this->maps[$uid]->mapRating = $rating;
+            }
         }
     }
 

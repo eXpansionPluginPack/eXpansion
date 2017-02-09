@@ -129,7 +129,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         $this->previousMap = $this->storage->currentMap;
 
-        $this->affectAllRatings();
+       // $this->affectAllRatings();
     }
 
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified)
@@ -145,6 +145,8 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         foreach ($ratings as $rating) {
             $out[$rating->uid] = new Structures\Rating($rating->rating, $rating->ratingTotal, $rating->uid);
         }
+
+        $out[$this->storage->currentMap->uId] = new Structures\Rating($this->rating, $this->ratingTotal, $this->storage->currentMap->uId);
 
         return $out;
     }
