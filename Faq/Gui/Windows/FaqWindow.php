@@ -89,11 +89,15 @@ class FaqWindow extends Window
         $x = 2;
         $isCodeBlock = false;
 
+
         // add one empty line
         $this->elements[0] = new Line("");
         $this->elements[1] = new Line("[Back to index](toc.md)<br>");
-        foreach ($data as $line) {
 
+        $emptyLines = 0;
+        $lastIsTitle = false;
+        foreach ($data as $line) {
+            $currentIsTitle = false;
             if ($topic == true) {
                 $this->setTitle("Help ", trim($line));
                 $topic = false;
@@ -104,8 +108,27 @@ class FaqWindow extends Window
 
             // match #, which marks a text to be rendered as a header
             if (preg_match('/(?P<level>#{1,6})(?P<rest>.*)/', trim($line), $matches)) {
+                if ($emptyLines == 0) {
+                    $this->elements[$x] = new Line($line);
+                    $x++;
+                }
+                $lastIsTitle = true;
+                $currentIsTitle = true;
                 $this->elements[$x] = new Header(trim($matches['rest']), strlen($matches['level']));
             }
+
+
+            if (trim($line) == '') {
+                $emptyLines++;
+                if ($emptyLines > 1 || $lastIsTitle) {
+                    // Simply ignore this line. It's for md files.
+                    continue;
+                }
+            } else {
+                $emptyLines = 0;
+            }
+
+            $lastIsTitle = $currentIsTitle;
 
             if (trim($line) === "```") {
                 $isCodeBlock = !$isCodeBlock;

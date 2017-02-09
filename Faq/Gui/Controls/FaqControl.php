@@ -43,15 +43,18 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public function setText($text)
     {
-        if (substr_count($text, "\t")) {
-            $indent = substr_count($text, "\t");
+        if (preg_match("/^(\t|    )*\* (.*)/", $text, $matches)) {
+            // Check for lists
+            $indent = substr_count($matches[1], '    ');
+            $indent += substr_count($matches[1], "\t");
+            $this->setBlock($indent + 0.2);
+        } else if ($indent = substr_count($text, "\t")) {
             $this->setBlock($indent);
         }
 
-        $matches = array();
-        if (preg_match('/\[(?P<text>.*?)\]\((?P<link>.*?)\)/', $text, $matches)) {
+        if (preg_match('/(?P<btext>.*)\[(?P<text>.*)\]\((?P<link>.*)\)/', $text, $matches)) {
             $this->setTopicLink($matches['link']);
-            $text = $matches['text'];
+            $text = $matches['btext'] . $matches['text'];
         }
 
         $text = str_replace("**", '$o', $text);
@@ -63,6 +66,11 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
         $matches = array();
         if (preg_match_all("/```(?P<inline>.*?)```(?P<rest>.*)/", $text, $matches)) {
             $text = '$ff0$i' . $matches['inline'] . '$i$fff ' . $matches['rest'];
+        }
+
+        if (empty($text)) {
+            // Empty lines should be smaller
+            $this->setSizeY(3);
         }
 
         $this->label->setText($text);
