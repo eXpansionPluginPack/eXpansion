@@ -18,6 +18,8 @@
 namespace ManiaLivePlugins\eXpansion\AutoQueue;
 
 use ManiaLive\Gui\ActionHandler;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\AutoQueue\Classes\Queue;
 use ManiaLivePlugins\eXpansion\AutoQueue\Gui\Widgets\EnterQueueWidget;
 use ManiaLivePlugins\eXpansion\AutoQueue\Gui\Widgets\QueueList;
@@ -143,14 +145,14 @@ class AutoQueue extends ExpPlugin
 
     public function admRemoveQueue($login, $target)
     {
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission(
+        if (AdminGroups::hasPermission(
             $login,
-            \ManiaLivePlugins\eXpansion\AdminGroups\Permission::SERVER_ADMIN
+            Permission::SERVER_ADMIN
         )
         ) {
             if (in_array($target, $this->queue->getLogins())) {
                 $this->queue->remove($target);
-                $this->eXpChatSendServerMessage(eXpGetMessage("Admin has removed you from queue!", $target));
+                $this->eXpChatSendServerMessage(eXpGetMessage("Admin has removed you from queue!"), $login);
                 $this->eXpChatSendServerMessage(
                     eXpGetMessage('Removed player %s $z$ffffrom queue'),
                     $login,
@@ -200,6 +202,7 @@ class AutoQueue extends ExpPlugin
         QueueList::EraseAll();
 
         foreach ($this->storage->spectators as $login => $player) {
+            /** @var QueueList $widget */
             $widget = QueueList::Create($login);
             $widget->setPlayers($this->queue->getQueuedPlayers(), $this);
             $widget->show();
