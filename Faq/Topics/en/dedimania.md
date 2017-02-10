@@ -1,5 +1,4 @@
 ﻿Faq: Dedimania
-!toc|Back to index
 
 #What is Dedimania ?
 
@@ -8,7 +7,7 @@ Dedimania is a global database for map record times, it has become one of the ve
 Dedimania accepts top15 records for stadium2 players, and the server limit is 30 but you can help Slig with hosting fees and the same time get more ranking limit for yourself.
 
 External links:
-$l[http://dedimania.net/tm2stats/?do=stat]Dedimania$l
-$l[http://dedimania.net/tm2stats/?do=donation]Donate-page$l
+* [Dedimania](http://dedimania.net/tm2stats/?do=stat)
+* [Donate Page](http://dedimania.net/tm2stats/?do=donation)
 
-!admin_dedimania|Admins: Dedimania
+[Admins: Dedimania](#admin_dedimania.md)

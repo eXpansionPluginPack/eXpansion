@@ -1,5 +1,4 @@
 ﻿Faq: Dedimania
-!toc|Back to index
 
 #TM-Karma, what is it?
 

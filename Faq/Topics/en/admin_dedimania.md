@@ -1,5 +1,5 @@
 ﻿Dedimania
-!admin|Back to admin
+[Back to admin](#admin.md)
 
 # Enabling Dedimania
 1. type `/adm plugins` or use menu to access plugins
@@ -9,9 +9,8 @@
 5. Scroll down to widgets,
 6. Enable the dedimania widget
 
-```
-If you wish to have more traditional widget look, configure the widget and select "use legacy layout"!
-```
+
+> If you wish to have more traditional widget look, configure the widget and select "use legacy layout"!
 
 #Dedimania info
 eXpansion automatically saves a replay file of the map first time every map played.

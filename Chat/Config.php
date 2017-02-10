@@ -2,7 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Chat;
 
-class Config extends \ManiaLib\Utils\Singleton
+use ManiaLib\Utils\Singleton;
+
+class Config extends Singleton
 {
 
     public $publicChatColor = '$ff0';

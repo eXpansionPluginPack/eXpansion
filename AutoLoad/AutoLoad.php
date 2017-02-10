@@ -85,9 +85,8 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         } catch (\exception $ex) {
             $this->console("[AutoLoad] Error while loading Core plugins!" . $ex->getMessage());
             AdminGroups::getInstance()
-                ->announceToPermission(
-                    '[AutoLoad] Error while starting expansion core. See console for more info.',
-                    Permission::SERVER_ADMIN
+                ->announceToPermission(Permission::SERVER_ADMIN,
+                    '[AutoLoad] Error while starting expansion core. See console for more info.'
                 );
         }
 
@@ -209,7 +208,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * This method will try and solve dependecies, so start plugins needed to start the plugins asked.
      *
-     * @param string[]      $plugins  List of plugins to autoload
+     * @param string[] $plugins List of plugins to autoload
      * @param PluginHandler $pHandler The manialive plugin handler
      *
      * @throws \Maniaplanet\DedicatedServer\InvalidArgumentException
@@ -239,7 +238,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             );
             $this->console(
                 "Not all required plugins were loaded, "
-                ."due to unmet dependencies or errors. list of not loaded plugins: "
+                . "due to unmet dependencies or errors. list of not loaded plugins: "
             );
             foreach ($recheck as $pname) {
                 $this->console($pname);
@@ -255,7 +254,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Try to load multiple plugins.
      *
-     * @param string[]      $list     List of plugins to load.
+     * @param string[] $list List of plugins to load.
      * @param PluginHandler $pHandler The manialive plugin handler.
      *
      * @return array list of plugins that couldn't be loaded due to dependencies
@@ -281,7 +280,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Try and load a plugin. Will check for dependecies all the other criteries that allows a plugin to start.
      *
-     * @param string        $pname    The name of the plugin to load
+     * @param string $pname The name of the plugin to load
      * @param PluginHandler $pHandler The manialive plugin handler.
      *
      * @return bool
@@ -313,7 +312,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                     if (!$metaData->checkForPluginIncompatibility($pHandler->getLoadedPluginsList())) {
                         $this->console(
                             "[" . $pname . "]...Disabled -> Not Compatible : either can't run with a certain plugin "
-                            ."or a loaded plugin can't with this plugin"
+                            . "or a loaded plugin can't with this plugin"
                         );
                         return false;
                     } elseif ($metaData->checkAll()) {
@@ -353,7 +352,7 @@ class AutoLoad extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Start or stop a certain plugin.
      *
-     * @param string       $login    Login of the user that tries to start or stop the process.
+     * @param string $login Login of the user that tries to start or stop the process.
      * @param MetaDataType $metaData The metadata of the plugin we try to start.
      */
     public function togglePlugin($login, MetaDataType $metaData)

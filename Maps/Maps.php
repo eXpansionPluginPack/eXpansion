@@ -18,6 +18,7 @@ use ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\CurrentMapWidget;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Widgets\NextMapWidget;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\AddMaps;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Jukelist;
+use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\MapInfo;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\Maplist;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Windows\MapTag;
 use ManiaLivePlugins\eXpansion\Maps\Structures\DbMap;
@@ -75,6 +76,10 @@ class Maps extends ExpPlugin
     private $cmd_replay;
     private $cmd_tag;
 
+    private $actions = array();
+    private $maps = array();
+    private $ratings = array();
+
     private $isRestartMap = false;
     private $is_onBeginMatch = false;
     private $is_onEndMatch = false;
@@ -94,6 +99,7 @@ class Maps extends ExpPlugin
         $this->setPublicMethod("replayScoreReset");
         $this->setPublicMethod("returnQueue");
         $this->setPublicMethod("showMapList");
+
         if ($this->expStorage->isRemoteControlled == false) {
             $this->setPublicMethod("addMaps");
         }
@@ -144,7 +150,6 @@ class Maps extends ExpPlugin
 
         $this->nextMap = $this->storage->nextMap;
 
-        Maplist::Initialize($this);
         Jukelist::$mainPlugin = $this;
         Gui\Windows\AddMaps::$mapsPlugin = $this;
         /** @var \ManiaLive\Gui\ActionHandler */
@@ -165,6 +170,9 @@ class Maps extends ExpPlugin
 
         // update cache
         $this->getMXdataForAllMaps();
+        $this->getMapsCache();
+
+
     }
 
     public function eXpOnLoad()
@@ -491,12 +499,21 @@ class Maps extends ExpPlugin
     {
         Maplist::Erase($login);
         self::$searchField[$login] = "name";
-
+        /** @var Maplist $window */
         $window = Maplist::Create($login);
         $window->setTitle(__('Maps on server', $login), " (" . count($this->storage->maps) . ")");
+        $this->getMapsCache();
+        $window->setMaps($this->maps);
         $window->setHistory($this->history);
+        if ($this->isPluginLoaded('\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings')) {
+            $window->setRatings($this->callPublicMethod(
+                '\\ManiaLivePlugins\\eXpansion\\MapRatings\\MapRatings',
+                'getRatings'
+            ));
+        }
+
         $window->setCurrentMap($this->storage->currentMap);
-        $window->setMaps($this->getMXdataForAllMaps());
+        $window->setMxInfo($this->getMXdataForAllMaps());
 
         if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\LocalRecords\LocalRecords')) {
             $window->setRecords($this->callPublicMethod(
@@ -504,15 +521,80 @@ class Maps extends ExpPlugin
                 'getPlayersRecordsForAllMaps',
                 $login
             ));
-            Maplist::$localrecordsLoaded = true;
-        } else {
-            Maplist::$localrecordsLoaded = false;
         }
 
-        $window->centerOnScreen();
         $window->setSize(230, 100);
         $window->updateList($login);
         $window->show();
+    }
+
+
+    public function listShowInfo($login, $uid)
+    {
+        $window = MapInfo::create($login);
+        if (!$window->setMap($uid)) {
+            return;
+        }
+        $window->setSize(150, 50);
+        $window->show($login);
+    }
+
+    public function listShowTag($login, $uid)
+    {
+        $window = MapTag::create($login);
+        $window->setMap($uid);
+        $window->setSize(120, 20);
+        $window->show($login);
+    }
+
+    public function listRemoveMap($login, $mapUid)
+    {
+        $this->removeMap($login, $this->findMapByUid($mapUid));
+        $this->showMapList($login);
+    }
+
+    public function listQueueMap($login, $mapUid)
+    {
+        $this->playerQueueMap($login, $this->findMapByUid($mapUid), false);
+    }
+
+    public function listShowRec($login, $mapUid)
+    {
+        $this->showRec($login, $this->findMapByUid($mapUid));
+    }
+
+
+    public function findMapByUid($mapUid)
+    {
+        foreach ($this->storage->maps as $map) {
+            if ($map->uId == $mapUid) {
+                return $map;
+            }
+        }
+    }
+
+    public function getMapsCache()
+    {
+        if (count($this->maps) == 0) {
+            /** @var ActionHandler $actionHandler */
+            $actionHandler = ActionHandler::getInstance();
+
+            foreach ($this->storage->maps as $map) {
+                $map->strippedName = \ManiaLib\Utils\Formatting::stripStyles($map->name);
+
+                $map->queueMapAction = $actionHandler->createAction(array($this, 'listQueueMap'), $map->uId);
+                $map->showRecsAction = $actionHandler->createAction(array($this, 'listShowRec'), $map->uId);
+                $map->showInfoAction = $actionHandler->createAction(array($this, 'listShowInfo'), $map->uId);
+                $map->removeMapAction = $actionHandler->createAction(array($this, 'listRemoveMap'), $map->uId);
+                $map->showTagAction = $actionHandler->createAction(array($this, 'listShowTag'), $map->uId);
+                $this->actions[] = $map->queueMapAction;
+                $this->actions[] = $map->showRecsAction;
+                $this->actions[] = $map->showInfoAction;
+                $this->actions[] = $map->removeMapAction;
+                $this->actions[] = $map->showTagAction;
+                $this->maps[$map->uId] = $map;
+            }
+        }
     }
 
 
@@ -1001,15 +1083,22 @@ class Maps extends ExpPlugin
         }
         // update all open Maplist windows
         if ($isListModified) {
+            $this->preloadHistory();
+            // update local cache
+            self::$dbMapsByUid = array();
+            $this->getMXdataForAllMaps();
+
+            foreach ($this->actions as $action) {
+                ActionHandler::getInstance()->deleteAction($action);
+            }
+            $this->actions = array();
+            $this->maps = array();
+
             $windows = Maplist::GetAll();
             foreach ($windows as $window) {
                 $login = $window->getRecipient();
                 $this->showMapList($login);
             }
-            $this->preloadHistory();
-            // update local cache
-            self::$dbMapsByUid = array();
-            $this->getMXdataForAllMaps();
         }
     }
 
@@ -1064,13 +1153,11 @@ class Maps extends ExpPlugin
             if (is_object($this->storage->maps[$params[0]])) {
                 $this->removeMap($login, $this->storage->maps[$params[0]]);
             }
-
             return;
         }
 
         if ($params[0] == "this") {
             $this->removeMap($login, $this->storage->currentMap);
-
             return;
         }
     }
@@ -1494,6 +1581,10 @@ class Maps extends ExpPlugin
         MapTag::EraseAll();
         Gui\Windows\MapInfo::EraseAll();
         CustomUI::ShowForAll(CustomUI::CHALLENGE_INFO);
+
+        foreach ($this->actions as $action) {
+            ActionHandler::getInstance()->deleteAction($action);
+        }
 
         AdminGroups::removeAdminCommand($this->cmd_replay);
         AdminGroups::removeAdminCommand($this->cmd_erease);
