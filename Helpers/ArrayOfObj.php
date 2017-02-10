@@ -57,7 +57,7 @@ class ArrayOfObj
      * sortDesc()
      * sort and maintain indexes
      *
-     * @param mixed[] $array
+     * @param mixed $array
      * @param string $prop
      *
      * @return
