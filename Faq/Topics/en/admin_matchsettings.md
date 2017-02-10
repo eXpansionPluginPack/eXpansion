@@ -1,5 +1,5 @@
 ﻿Matchsettings
-[Back to admin](admin.md)<br>
+[Back to admin](#admin.md)
 
 #Managing multiple maplists
 You can easily have many sets of maps for your server from server control panel.

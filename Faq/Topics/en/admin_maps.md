@@ -1,5 +1,5 @@
 ﻿Manage maps on server
-[Back to admin](admin.md)<br>
+[Back to admin](#admin.md)
 
 #Managing maps at server
 Fast way to add/remove current map from current playlist is to use chat command:
@@ -18,8 +18,8 @@ see `/adm settings` > `Config Files` for defaults and changing them.
 
 You can have multiple map lists easily at your server, see following topic to manage your 
 matchsettings.
-[Managing matchsettings](admin_matchsettings.md) 
+[Managing matchsettings](#admin_matchsettings.md) 
 
 Other topics:
-[Adding maps from Mania-Exchange](admin_mx.md)<br>
+[Adding maps from Mania-Exchange](#admin_mx.md)
 

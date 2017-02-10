@@ -15,5 +15,5 @@ click on the globe-icon next to "Dedimania Records" text.
 click on the arrow -icon at end of Local Records-title bar.
 
 Further reading:
-[what is dedimania](dedimania.md)
+[what is dedimania](#dedimania.md)
 

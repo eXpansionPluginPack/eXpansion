@@ -1,5 +1,5 @@
 ﻿Dedimania
-[Back to admin](admin.md)<br>
+[Back to admin](#admin.md)
 
 # Enabling Dedimania
 1. type `/adm plugins` or use menu to access plugins

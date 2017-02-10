@@ -1,5 +1,5 @@
 ﻿Chat commands
-[Back to admin](admin_chat.md)<br>
+[Back to admin](#admin_chat.md)
 
 ##Admin commands: /cup `command` _parameter_
 
