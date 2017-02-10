@@ -29,7 +29,14 @@ class Profile
     /** @var mixed Time at which the prifling */
     protected $startTime;
 
+    /** @var  mixed Time at which the profiling ended */
     protected $endTime;
+
+    /** @var string */
+    protected $vendor;
+
+    /** @var string */
+    protected $plugin;
 
     /**
      * Create a new profile instance.
@@ -50,6 +57,9 @@ class Profile
 
         $tags = array('Profiling') + explode('.', $taskName);
         Helper::logInfo("Starting  @ " . $this->startTime, $tags);
+
+        $this->vendor = $tags[1];
+        $this->plugin = $tags[2];
     }
 
     /**
@@ -151,6 +161,22 @@ class Profile
     public function getEndTime()
     {
         return $this->endTime;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVendor()
+    {
+        return $this->vendor;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPlugin()
+    {
+        return $this->plugin;
     }
 
     /**

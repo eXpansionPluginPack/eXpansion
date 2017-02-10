@@ -239,7 +239,7 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
             $data['error_file'] = $this->removeRoot($error->getFile());
             $data['error_line'] = $error->getLine();
             $data['error_msg'] = $error->getMessage();
-            $data['error_stack'] = $error->getTraceAsString();
+            $data['error_stack'] = str_replace(getcwd(), '', $error->getTraceAsString());
 
             $url = $this->url . "?" . $this->generate($data);
             $access->httpGet($url, array($this, "completeError"), $data, "Manialive/eXpansion", "application/json");
@@ -249,8 +249,8 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
             $data['task'] = $profileData->getTaskName();
             $data['details'] = $profileData->getDesription();
             $data['number_of_elements'] = $profileData->getNumberOfElements();
-
-
+            $data['vendor'] = $profileData->getVendor();
+            $data['plugins'] = $profileData->getPlugin();
 
             $url = $this->url . "?" . $this->generate($data);
             $access->httpGet($url, array($this, "completeError"), $data, "Manialive/eXpansion", "application/json");
