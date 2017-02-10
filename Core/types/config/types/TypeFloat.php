@@ -1,13 +1,14 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
 
+use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
+
 /**
- * Description of Int
+ * Description of Float
  *
  * @author De Cramer Oliver
  */
-class TypeFloat extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
+class TypeFloat extends Variable
 {
 
     public function setValue($value)

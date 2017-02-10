@@ -1,6 +1,7 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core\types;
+
+use ManiaLivePlugins\eXpansion\Core\Core;
 
 /**
  * Description of MaxPlugin
@@ -17,7 +18,7 @@ class ExpPlugin extends BasicPlugin
      */
     public static function getMaxVersion()
     {
-        return \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION;
+        return Core::EXP_VERSION;
     }
 
     public function eXpOnInit()
