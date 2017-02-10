@@ -1,15 +1,15 @@
 ﻿Admin Topics
 
 #Server Management
-[Chat commands](admin_chat.md)<br>
+* [Chat commands](admin_chat.md)
 
 ## Basics
-[First steps after installing](admin_first.md)<br>
-[Enabling **Dedimania** for your server](admin_dedimania.md)<br>
-[Add/remove Admins](admin_groups.md)<br>
-[Manage Plugins](admin_plugins.md)<br>
-[MatchSettings manager](admin_matchsettings.md)<br>
+* [First steps after installing](admin_first.md)
+* [Enabling **Dedimania** for your server](admin_dedimania.md)
+* [Add/remove Admins](admin_groups.md)
+* [Manage Plugins](admin_plugins.md)
+* [MatchSettings manager](admin_matchsettings.md)
 
 ## Maps
-[How to add and remove maps in a server ?](admin_maps.md)<br>
-[How to add a map from Mania-Exchange.com](admin_mx.md)<br>
+* [How to add and remove maps in a server ?](admin_maps.md)
+* [How to add a map from Mania-Exchange.com](admin_mx.md)

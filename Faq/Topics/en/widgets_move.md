@@ -1,25 +1,36 @@
 ﻿Faq: widgets help 
 
-#Widgets: how to enable moving and lock the widget positions ?        
+#Widgets: How to move widgets ?        
 
-		1. access the menu, use mouse right button and click to anywhere at game screen area.
-		2.select Hud --> Move Positions
+* First open the menu.
+    * Simply right click anywhere on the screen. 
+    * A menu should popup.
+    
+* Go to Hud > Move Positions
+    * Now all movable widgets starts to blink with blue colour. These are the widgets you can move.
+    
+* You can drag and drop this widgets to the position you desire. 
+* Once you are done you need to lock them
 
-Now all movable widgets starts to blink with blue colour. These are the widgets you can move.
-When you are happy with the new widget positions and wish to lock the positions:
+* Open the menu
+    * Simply right click anywhere on the screen. 
+    * A menu should popup.
+    
+* select Hud > Lock Positions
 
-		1. access the menu, use mouse right button and click to anywhere at game screen area.
-		2. select Hud --> Lock Positions
+**If you wish to revert everything back to default positions :**
 
-If you wish to revert everything back to default positions:
+* Open the menu
+    * Simply right click anywhere on the screen. 
+    * A menu should popup.
 
-		1. access the menu, use mouse right button and click to anywhere at game screen area.
-		2. select Hud --> Reset Positions
+* Go to Hud > Reset positions
 
 If you can't access menu, or you have disabled other settings and wish to revert the widgets back
-to original state, you can reset the hud by typing /hud reset
+to original state, you can reset the hud by typing `/hud reset`
 
 
+**You can also use middle click of your mouse to move & lock widgets**
 
 
 

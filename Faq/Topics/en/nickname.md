@@ -16,8 +16,8 @@ $lhttp://nickr.brun.pl/$l or $lhttp://kc.jfreu.com/$l
 
 #How to change my nickname ?
 1. Exit the server
-2. Go back to `Title main` menu
-3. Go to `Profile`
+2. Go back to _Title main_ menu
+3. Go to _Profile_
 4. Type your new nickname to the inputbox  
 5. Go back to server with your brand new nickname :)
 
