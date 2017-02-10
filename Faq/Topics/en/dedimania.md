@@ -10,4 +10,4 @@ External links:
 * [Dedimania](http://dedimania.net/tm2stats/?do=stat)
 * [Donate Page](http://dedimania.net/tm2stats/?do=donation)
 
-[Admins: Dedimania](admin_dedimania.md)<br>
+[Admins: Dedimania](#admin_dedimania.md)

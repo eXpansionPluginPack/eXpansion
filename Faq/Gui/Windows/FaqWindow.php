@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Faq\Gui\Windows;
 
 use ManiaLib\Gui\Layouts\Column;
+use ManiaLib\Gui\Layouts\Flow;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Faq\Faq;
 use ManiaLivePlugins\eXpansion\Faq\Gui\Controls\CodeLine;
@@ -37,7 +38,7 @@ class FaqWindow extends Window
         $this->scroll->setPosition(-1, -4);
         $this->addComponent($this->scroll);
         $this->frame = new Frame(0, 0);
-        $this->frame->setLayout(new Column(190, 90));
+        $this->frame->setLayout(new Flow(190, 90));
     }
 
 
@@ -92,7 +93,7 @@ class FaqWindow extends Window
 
         // add one empty line
         $this->elements[0] = new Line("");
-        $this->elements[1] = new Line("[Back to index](toc.md)<br>");
+        $this->elements[1] = new Line("[Back to index](#toc.md)");
 
         $emptyLines = 0;
         $lastIsTitle = false;
@@ -107,7 +108,7 @@ class FaqWindow extends Window
             $matches = array();
 
             // match #, which marks a text to be rendered as a header
-            if (preg_match('/(?P<level>#{1,6})(?P<rest>.*)/', trim($line), $matches)) {
+            if (preg_match('/^(?P<level>#{1,6})(?P<rest>.*)/', trim($line), $matches)) {
                 if ($emptyLines == 0) {
                     $this->elements[$x] = new Line($line);
                     $x++;

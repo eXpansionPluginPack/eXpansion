@@ -15,5 +15,5 @@ Familiar chat commands are though available, support for nearly 90% of Fast and 
 1. Use mouse and do right click anywhere at screen
 2. A menu will appear next to mouse pointer 
     
-* [Widgets: how to show/hide individual widgets ?](widgets_config.md)
-* [Widgets: how to enable moving and lock the widget positions ?](widgets_move.md)
+* [Widgets: how to show/hide individual widgets ?](#widgets_config.md)
+* [Widgets: how to enable moving and lock the widget positions ?](#widgets_move.md)

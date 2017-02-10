@@ -1,11 +1,11 @@
 ﻿Mania-Exchange integration 
-[Back to admin](admin.md)<br>
+[Back to admin](#admin.md)
 
 #Mania-Exchange
 
 ##Finding maps
 You can easily find maps on mania-exchange using manialink: $hexchange$h or  
-by visiting the website $lhttps://www.mania-exchange.com$l other ways to find maps 
+by visiting the website [https://www.mania-exchange.com](https://www.mania-exchange.com) other ways to find maps 
 is to use eXpansion mx map browser.
 
 type `/mx search` to start browsing and searching. you can also find the browser at menu.
@@ -18,4 +18,4 @@ by clicking `install`-button. Other ways to add maps is to use chat command with
 
 
 ### Further reading
-[Admin: How to add and remove maps ?](admin_maps.md)<br>
+[Admin: How to add and remove maps ?](#admin_maps.md)

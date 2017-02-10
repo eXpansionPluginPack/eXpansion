@@ -8,12 +8,11 @@
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
 use Exception;
-use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLive\Data\Storage;
 use ManiaLive\Gui\Controls\Frame;
+use ManiaLive\Utilities\Console;
 use ManiaLive\Utilities\Time;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj;
 use ManiaLivePlugins\eXpansion\Helpers\GbxReader\Map;
@@ -30,10 +29,8 @@ class MapInfo extends Window
 {
     /** @var  Frame */
     protected $frame;
+    /** @var  Frame */
     protected $frame2;
-
-    /** @var Connection */
-    protected $connection;
 
     protected function onConstruct()
     {
@@ -69,11 +66,11 @@ class MapInfo extends Window
         $this->setTitle('Map Information', $map->name);
 
         try {
+            /** @var Connection $connection */
             $connection = Singletons::getInstance()->getDediConnection();
             $mapPath = $connection->getMapsDirectory();
             $gbxInfo = Map::read($mapPath . DIRECTORY_SEPARATOR . $map->fileName);
             if ($gbxInfo) {
-                $model = $gbxInfo->playerModel;
                 $map->mood = $gbxInfo->mood;
                 $map->nbLaps = $gbxInfo->nbLaps;
                 $map->authorTime = $gbxInfo->authorTime;
@@ -83,7 +80,7 @@ class MapInfo extends Window
                 $map->{"nick"} = $gbxInfo->author->nickname;
             }
         } catch (Exception $ex) {
-            \ManiaLive\Utilities\Console::println("Info: Map not found or error while reading gbx info for map.");
+            Console::println("Info: Map not found or error while reading gbx info for map.");
         }
 
         /*
@@ -108,7 +105,7 @@ class MapInfo extends Window
         /*
          * Put data in second frame
          */
-        $mapData =  array(
+        $mapData = array(
             'playerModel' => 'Car Type',
             'addTime' => 'Add Date',
         );
@@ -140,9 +137,4 @@ class MapInfo extends Window
         return true;
     }
 
-    protected function onHide()
-    {
-        parent::onHide();
-        $this->connection = null;
-    }
 }

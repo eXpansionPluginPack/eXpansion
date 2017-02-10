@@ -8,8 +8,8 @@ colorcode, $$$w$f00R$0b0G$3afB $zwhere R is for red, G is for green, B is for bl
 Hexadesimal is special type of number, values are from 0 to 15:
 with this values: 0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f
 
-[List of control codes](t_nick_controls.md)<br>
-[Examples of nickname colors](t_nick_examples.md)<br>
+[List of control codes](#t_nick_controls.md)
+[Examples of nickname colors](#t_nick_examples.md)
 
 Internet you can find color generators with preview, such services are for example:
 $lhttp://nickr.brun.pl/$l or $lhttp://kc.jfreu.com/$l
