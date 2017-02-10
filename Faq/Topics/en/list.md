@@ -4,8 +4,8 @@
 There is 3 ways to access a maplisting of the server.
 
 	$oUsing the chat-command:
-		1. Write the following command to chatline: $o/list
-		2. Press enter
+        1. Write the following command to chatline: $o/list
+        2. Press enter
 		
 	$oUsing the esc-menu:
 		1. Press esc

@@ -51,18 +51,31 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $matches = array();
 
-        preg_match('/\!(.*)\|(.*)/', $text, $matches);
+        // Match links
+        // @TODO try and make it match more then one links at the time
+        // Should be something like this : ((\[([^\]]*)\]\(([^\)]*)\)))*
+        preg_match("(?P<textb>.*)(\[(?P<text>.*)\]\((?P<url>.*)\))(?P<texta>.*)", $text, $matches);
+        if (!empty($matches['url']) && !empty($matches['text'])) {
 
-        if (sizeof($matches) == 3) {
-
-            $this->setTopicLink($matches[1]);
-            $text = $matches[2];
+            if (substr($matches['url'], 0, 1) == '#') {
+                // It's an internal link
+                $this->setTopicLink($matches['url']);
+                $text = $matches['textb'] . $matches['text'] . $matches['texta'];
+            } else {
+                $text = $matches['textb'] . '$l[' . $matches['url'] . ']' . $matches['text'] . '$l' . $matches['textb'];
+            }
         }
+
+        // Match bold.
         $text = str_replace("**", '$o', $text);
         $text = str_replace("__", '$o', $text);
+
+        // Match italic
         $text = preg_replace("/\*(.*?)\*/", '\$i$1\$i', $text);
         $text = preg_replace("/_(.*?)_/", '\$i$1\$i', $text);
 
+        // Match code lines
+        // @TODO check why there is 2 preg_replace here. First seems superflous.
         $matches = array();
         $text = preg_replace("/`(.*?)`/", '\$i\$ff0$1\$z', $text);
 
