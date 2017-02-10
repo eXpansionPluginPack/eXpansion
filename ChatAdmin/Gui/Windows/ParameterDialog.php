@@ -1,24 +1,37 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\ChatAdmin\Gui\Windows;
 
-use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 
-class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+use ManiaLib\Gui\Layouts\Column;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\ChatAdmin\ChatAdmin;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
+
+class ParameterDialog extends Window
 {
 
+    /** @var  Inputbox */
     protected $inputbox;
+    /** @var  Button */
     protected $btn_ok;
+    /** @var  Button */
     protected $btn_cancel;
+    /** @var  Frame */
     protected $frame;
+    /** @var  Frame */
     protected $frm;
+    /** @var  Dropdown */
     protected $compobox;
+
     protected $adminAction;
     protected $adminParams;
 
-    /** @var \ManiaLivePlugins\eXpansion\ChatAdmin\ChatAdmin */
+    /** @var ChatAdmin */
     public static $mainPlugin;
 
     protected function onConstruct()
@@ -26,8 +39,8 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onConstruct();
         $login = $this->getRecipient();
 
-        $this->frm = new \ManiaLive\Gui\Controls\Frame(2, -6);
-        $this->frm->setLayout(new \ManiaLib\Gui\Layouts\Column());
+        $this->frm = new Frame(2, -6);
+        $this->frm->setLayout(new Column());
         $this->addComponent($this->frm);
 
         $this->inputbox = new Inputbox("parameter", 100);
@@ -50,22 +63,22 @@ class ParameterDialog extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             "week",
             "month"
         );
-        $this->compobox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown("select", $items);
+        $this->compobox = new Dropdown("select", $items);
         $this->compobox->setAlign("left", "top");
 
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame(0, 0, new \ManiaLib\Gui\Layouts\Line());
+        $this->frame = new Frame(0, 0, new Line());
         $this->frame->setPosition("right", "top");
         $this->addComponent($this->frame);
 
         $action = $this->createAction(array($this, "ok"));
-        $this->btn_ok = new OkButton();
+        $this->btn_ok = new Button();
         $this->btn_ok->setText(__("Ok", $login));
         $this->btn_ok->setAction($action);
         $this->frame->addComponent($this->btn_ok);
 
         $action = $this->createAction(array($this, "cancel"));
-        $this->btn_cancel = new OkButton();
+        $this->btn_cancel = new Button();
         $this->btn_cancel->setText(__("Cancel", $login));
         $this->btn_cancel->setAction($action);
         $this->frame->addComponent($this->btn_cancel);

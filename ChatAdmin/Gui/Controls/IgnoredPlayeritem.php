@@ -1,13 +1,12 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\ChatAdmin\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Icons64x64_1;
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Line;
-use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use Maniaplanet\DedicatedServer\Structures\Player;
 
@@ -18,6 +17,7 @@ class IgnoredPlayeritem extends Control
     protected $login;
     protected $unignoreAction;
     protected $frame;
+    protected $player;
 
     public function __construct($indexNumber, Player $player, $controller, $login)
     {

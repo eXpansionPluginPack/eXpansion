@@ -2,9 +2,16 @@
 
 namespace ManiaLivePlugins\eXpansion\ChatAdmin\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLib\Gui\Elements\Icons64x64_1;
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Elements\Quad;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Control;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as MyButton;
+use Maniaplanet\DedicatedServer\Structures\PlayerBan;
 
-class BannedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
+class BannedPlayeritem extends Control
 {
 
     protected $bg;
@@ -13,33 +20,41 @@ class BannedPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $nickname;
     protected $unbanAction;
     protected $frame;
+    protected $player;
 
+    /**
+     * BannedPlayeritem constructor.
+     * @param $indexNumber
+     * @param PlayerBan $player
+     * @param $controller
+     * @param $login
+     */
     public function __construct(
         $indexNumber,
-        \Maniaplanet\DedicatedServer\Structures\PlayerBan $player,
+        PlayerBan $player,
         $controller,
         $login
-    ) {
+    )
+    {
         $sizeX = 80;
         $sizeY = 6;
         $this->player = $player;
 
         $this->unbanAction = $this->createAction(array($controller, 'unbanClick'), array($player->login));
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame = new Frame();
         $this->frame->setSize($sizeX, $sizeY);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $this->frame->setLayout(new Line());
 
-        $this->login = new \ManiaLib\Gui\Elements\Label(50, 4);
+        $this->login = new Label(50, 4);
         $this->login->setAlign('left', 'center');
         $this->login->setText($player->login);
 
         $this->frame->addComponent($this->login);
 
-
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
+        $spacer = new Quad();
         $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+        $spacer->setStyle(Icons64x64_1::EmptyIcon);
 
         $this->frame->addComponent($spacer);
 
