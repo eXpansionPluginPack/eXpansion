@@ -1,136 +1,137 @@
 ﻿Chat commands
-[Back to admin](#admin_chat.md)
+[Back to admin chat](admin_chat.md)
 
-##Admin commands: /adm `command` _parameter_
+#Admin commands: /adm `command` _parameter_
 
-# Map related
-    ###/adm `shuffle`
-    makes map list to randomize
+## Map related
+###/adm `shuffle`
+makes map list to randomize
 
-    ###/adm `skip`
-	forces to go next map instantly
+###/adm `skip`
+forces to go next map instantly
 
-    ###/adm `prev`
-	forces to go previous map instantly
+###/adm `prev`
+forces to go previous map instantly
 
-    ###/adm `replay`
-	forces to replay map after it ends
+###/adm `replay`
+forces to replay map after it ends
 
-	###/adm `replay`
-    forces map to restart instantly
+###/adm `replay`
+forces map to restart instantly
 
-    ###/adm `er`
-    forces endround on rounds-based modes (has 3sec delay)
+###/adm `er`
+forces endround on rounds-based modes (has 3sec delay)
 
-    ###/adm `add` {mxId}
-	adds map from mx, {mxId} can be numeric value or "this"
+###/adm `add` {mxId}
+adds map from mx, {mxId} can be numeric value or "this"
 
-	###/adm `trash` this
-    remove current map from playlist and delete the map file
+###/adm `trash` this
+remove current map from playlist and delete the map file
 
-	###/adm `remove` this
-    remove current map from playlist, keep file
+###/adm `remove` this
+remove current map from playlist, keep file
 
 # Records related
-	###/adm `delrec` {login}
-	deletes all records by login, has confirm dialog
 
-	###/adm `saverec`
-    saves instantly all records to database
+###/adm `delrec` {login}
+deletes all records by login, has confirm dialog
 
-# Player Related commands
-    ###/adm `ignore` {login}
-	ignores players chat, he is able to see chat, but can't write
+###/adm `saverec`
+saves instantly all records to database
 
-	###/adm `unignore` {login}
-	unignores player, so he can chat again
+## Player Related commands
+###/adm `ignore` {login}
+ignores players chat, he is able to see chat, but can't write
 
-	###/adm `kick` {login}
-	remove player from server
+###/adm `unignore` {login}
+unignores player, so he can chat again
 
-	###/adm `ban` {login}
-	opens a ban window to ban a player from the server
+###/adm `kick` {login}
+remove player from server
 
-	###/adm `unban` {login}
-	unbans a player
+###/adm `ban` {login}
+opens a ban window to ban a player from the server
 
-	###/adm `getbanlist`
-	shows banlist
+###/adm `unban` {login}
+unbans a player
 
-	###/adm `cleanbanlist`
-	clears banlist
+###/adm `getbanlist`
+shows banlist
 
-	###/adm `black` {login}
-	permanently ban player
+###/adm `cleanbanlist`
+clears banlist
 
-	###/adm `unblack` {login}
-	remove permanent ban
+###/adm `black` {login}
+permanently ban player
 
-	###/adm `getblacklist`
-	shows blacklist
+###/adm `unblack` {login}
+remove permanent ban
 
-	###/adm `cleanblacklist`
-	cleans blacklist
+###/adm `getblacklist`
+shows blacklist
 
-#Server Related
-    ###/adm `mode` {mode}
-	{mode} can be one of: ta, rounds, team, cup, laps
+###/adm `cleanblacklist`
+cleans blacklist
 
-	###/adm `name` "{new name}"
-	gives server a new name
+## Server Related
+###/adm `mode` {mode}
+{mode} can be one of: ta, rounds, team, cup, laps
 
-	###/adm `comment` "{new comment}"
-	add new comment
+###/adm `name` "{new name}"
+gives server a new name
 
-	###/adm `pass` "{new pass}"
-	set new password for server
+###/adm `comment` "{new comment}"
+add new comment
 
-	###/adm `spectpass` "{new pass}"
-	set new spectator pass for server
+###/adm `pass` "{new pass}"
+set new password for server
 
-	###/adm `maxplayers` {number}
-	set maximum players count
+###/adm `spectpass` "{new pass}"
+set new spectator pass for server
 
-	###/adm `maxspec` {number}
-	set maximum spectator count
+###/adm `maxplayers` {number}
+set maximum players count
 
-	###/adm `chattime` {mm:ss}
-	set podium time
+###/adm `maxspec` {number}
+set maximum spectator count
 
-	###/adm `sethideserver` {boolean}
-	set server hidden
+###/adm `chattime` {mm:ss}
+set podium time
 
-	###/adm `setmapdownload` {boolean}
-	set allow map download from menu
+###/adm `sethideserver` {boolean}
+set server hidden
 
-# Other
-    ###/admin `update`
-    autoupdate eXpansion
+###/adm `setmapdownload` {boolean}
+set allow map download from menu
 
-	###/adm `stop` exp
-	stop expansion
+## Other
+###/admin `update`
+autoupdate eXpansion
 
-	###/adm `stop` dedicated
-    stop dedicated
+###/adm `stop` exp
+stop expansion
 
-    ###/adm `netstat`
-    opens netstats window, displays ping and other infos
+###/adm `stop` dedicated
+stop dedicated
 
-    ###/adm `cancel`
-    cancels current vote
+###/adm `netstat`
+opens netstats window, displays ping and other infos
 
-	###/adm `planets`
-	shows planets amount at server login}
+###/adm `cancel`
+cancels current vote
 
-	###/adm `pay` {login} {amount}
-	pays login amount
+###/adm `planets`
+shows planets amount at server login}
 
-    ###/admin `server`
-    open control panel window
+###/adm `pay` {login} {amount}
+pays login amount
 
-    ###/admin `plugins`
-    open pluginsmanager window
+###/admin `server`
+open control panel window
 
-    ###/admin `settings`
-    open eXpansion settings window
+###/admin `plugins`
+open pluginsmanager window
+
+###/admin `settings`
+open eXpansion settings window
 

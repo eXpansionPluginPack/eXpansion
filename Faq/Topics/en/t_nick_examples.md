@@ -1,5 +1,5 @@
 Faq: How do i customize my nickname colors ?
-[Back](#nickname.md)
+[Back](nickname.md)
 
 #Examples of colorcodes
 
