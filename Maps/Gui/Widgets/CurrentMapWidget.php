@@ -8,9 +8,10 @@ use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
+use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 use Maniaplanet\DedicatedServer\Structures\Map;
 
-class CurrentMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
+class CurrentMapWidget extends Widget
 {
     /** @var  WidgetBackGround */
     protected $bg;

@@ -2,7 +2,11 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
+use ManiaLib\Gui\Layouts\Flow;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Adm\Adm;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use ManiaLivePlugins\eXpansion\Helpers\Storage;
 
 /**
@@ -10,14 +14,15 @@ use ManiaLivePlugins\eXpansion\Helpers\Storage;
  *
  * @author Petri
  */
-class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class ServerControlMain extends Window
 {
 
-    /** @var \ManiaLivePlugins\eXpansion\Adm\Adm */
+    /** @var Adm */
     public static $mainPlugin;
-    private $frame;
-    private $actions;
+    /** @var  Frame */
+    protected $frame;
 
+    protected $actions;
 
     public function onConstruct()
     {
@@ -28,8 +33,8 @@ class ServerControlMain extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $btnX = 40;
         $btnY = 5.5;
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame(0, -7);
-        $flow = new \ManiaLib\Gui\Layouts\Flow(150, $btnY + 2);
+        $this->frame = new Frame(0, -7);
+        $flow = new Flow(150, $btnY + 2);
         $flow->setMargin(2, 1);
 
         $this->frame->setLayout($flow);

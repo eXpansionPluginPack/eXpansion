@@ -2,42 +2,60 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Data\Storage;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\MatchSettingsFile;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
+use ManiaLivePlugins\eXpansion\Helpers\Singletons;
+use ManiaLivePlugins\eXpansion\Helpers\Storage as eXpStorage;
+use Maniaplanet\DedicatedServer\Connection;
 
-class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class MatchSettings extends Window
 {
+    /** @var  Pager */
+    protected $pager;
+    /** @var  Connection */
+    protected $connection;
+    /** @var  Storage */
+    protected $storage;
 
-    private $pager;
+    protected $items = array();
 
-    private $connection;
+    /** @var  Inputbox */
+    protected $inputboxSaveAs;
+    /** @var  Inputbox */
+    protected $inputboxLoadAs;
 
-    private $storage;
+    protected $actionSave;
+    protected $actionLoad;
+    /** @var  Button */
+    protected $saveButton;
+    /** @var  Button */
+    protected $loadButton;
 
-    private $items = array();
+    /** @var  Frame */
+    protected $frame;
 
-    private $inputboxSaveAs;
-    private $inputboxLoadAs;
-
-    private $actionSave;
-    private $actionLoad;
-
-    private $saveButton;
-    private $loadButton;
-
-    private $frame;
-
+    /**
+     *
+     */
     protected function onConstruct()
     {
         parent::onConstruct();
-        $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
-        $layout = new \ManiaLib\Gui\Layouts\Line();
+        /** @var Connection connection */
+        $this->connection = Singletons::getInstance()->getDediConnection();
+        $this->storage = Storage::getInstance();
+        $this->frame = new Frame();
+        $layout = new Line();
         $layout->setMargin(2, 0);
         $this->frame->setLayout($layout);
 
@@ -70,7 +88,7 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $this->mainFrame->addComponent($this->frame);
 
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pager = new Pager();
         $this->mainFrame->addComponent($this->pager);
     }
 
@@ -80,7 +98,6 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         try {
             if (empty($entries['SaveAs'])) {
                 $this->connection->chatSendServerMessage(__("Error in filename", $login), $login);
-
                 return;
             }
             $appendTxt = ".txt";
@@ -199,14 +216,14 @@ class MatchSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->clearItems();
         $this->items = array();
 
-        if (\ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance()->isRemoteControlled) {
-            $this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(
+        if (eXpStorage::getInstance()->isRemoteControlled) {
+            $this->items[0] = new InfoItem(
                 1,
                 __("File listing disabled since you are running remote", $this->getRecipient()),
                 $this->sizeX
             );
             $this->pager->addItem($this->items[0]);
-            $this->items[0] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\InfoItem(
+            $this->items[0] = new InfoItem(
                 1,
                 __("You can tho save and load files from server by the filename!", $this->getRecipient()),
                 $this->sizeX

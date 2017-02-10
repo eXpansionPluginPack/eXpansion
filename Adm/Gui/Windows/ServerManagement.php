@@ -2,47 +2,60 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Application\Application;
+use ManiaLive\Data\Storage;
 use ManiaLive\Gui\ActionHandler;
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
+use ManiaLivePlugins\eXpansion\Helpers\Singletons;
+use Maniaplanet\DedicatedServer\Connection;
 
 /**
  * Server Controlpanel Main window
  *
  * @author Petri
  */
-class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class ServerManagement extends Window
 {
 
-    /** @var \Maniaplanet\DedicatedServer\Connection */
-    private $connection;
+    /** @var Connection */
+    protected $connection;
 
-    /** @var \ManiaLive\Data\Storage */
-    private $storage;
-    private $frame;
-    private $closeButton;
-    private $actions;
-    private $btn1;
-    private $btn2;
+    /** @var Storage */
+    protected $storage;
+    /** @var  Frame */
+    protected $frame;
+    /** @var  myButton */
+    protected $closeButton;
+
+    protected $actions;
+    /** @var  myButton */
+    protected $btn1;
+    /** @var  myButton */
+    protected $btn2;
 
     protected function onConstruct()
     {
         parent::onConstruct();
 
-        $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $this->connection = Singletons::getInstance()->getDediConnection();
+        $this->storage = Storage::getInstance();
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $this->frame = new Frame();
+        $this->frame->setLayout(new Line());
 
         $this->actions = new \stdClass();
-        $this->actions->close = ActionHandler::getInstance()->createAction(array($this, "close"));
+        $this->actions->close = $this->createAction(array($this, "close"));
 
-        $this->actions->stopServerf = ActionHandler::getInstance()->createAction(array($this, "stopServer"));
-        $this->actions->stopServer = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->actions->stopServerf);
-        $this->actions->stopManialivef = ActionHandler::getInstance()->createAction(array($this, "stopManialive"));
-        $this->actions->stopManialive = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm(
+        $this->actions->stopServerf = $this->createAction(array($this, "stopServer"));
+        $this->actions->stopServer = Gui::createConfirm($this->actions->stopServerf);
+        $this->actions->stopManialivef = $this->createAction(array($this, "stopManialive"));
+        $this->actions->stopManialive = Gui::createConfirm(
             $this->actions->stopManialivef
         );
 
@@ -80,16 +93,16 @@ class ServerManagement extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onDraw();
     }
 
-    public function stopServer($login)
+    public function stopServer()
     {
         $this->connection->stopServer();
     }
 
-    public function stopManialive($login)
+    public function stopManialive()
     {
         $this->connection->chatSendServerMessage("[Notice] Stopping eXpansion...");
         $this->connection->sendHideManialinkPage();
-        \ManiaLive\Application\Application::getInstance()->kill();
+        Application::getInstance()->kill();
     }
 
     public function close()
