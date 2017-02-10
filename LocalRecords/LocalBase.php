@@ -622,6 +622,12 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 break;
             }
         }
+
+        $profiling = recordUpdate::start();
+        $profiling->setNumberOfElements(
+            count($this->currentChallengeRecords) + count($this->currentChallengePlayerRecords)
+        );
+
         $currentMap->localRecords = array();
         foreach ($this->currentChallengeRecords as $i => $record) {
             $currentMap->localRecords[$record->login] = $record->place;
@@ -633,6 +639,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             $newUpdate = $this->updateRecordInDatabase($record, $nbLaps);
             $updated = $updated || $newUpdate;
         }
+        $profiling->end();
 
         if ($updated) {
             $this->updateRanks($this->storage->currentMap->uId, $nbLaps, true);
@@ -1685,6 +1692,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
             );
         }
 
+        $profile = rankUpdate::start();
+
         $this->db->execute(
             'DELETE FROM exp_ranks
                                         WHERE rank_challengeuid = \'' . $challengeId . '\'
@@ -1707,7 +1716,9 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 LIMIT 0, ' . $this->config->recordsCount;
 
         $this->db->execute($q);
+
         \ManiaLivePlugins\eXpansion\Helpers\Timer::endTimer($id, "[LocalRecods]Updating Ranks for $challengeId");
+        $profile->setNumberOfElements($this->db->affectedRows())->end();
     }
 
     /**

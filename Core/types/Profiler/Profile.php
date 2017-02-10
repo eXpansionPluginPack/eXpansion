@@ -111,18 +111,26 @@ class Profile
 
     /**
      * @param string $desription
+     *
+     * @return $this
      */
     public function setDesription($desription)
     {
         $this->desription = $desription;
+
+        return $this;
     }
 
     /**
      * @param int $numberOfElements
+     *
+     * @return $this
      */
     public function setNumberOfElements($numberOfElements)
     {
         $this->numberOfElements = $numberOfElements;
+
+        return $this;
     }
 
     /**
