@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups\types;
  *
  * @author oliverde8
  */
-class Integer extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker
+class Integer extends absChecker
 {
 
     private $options = array("flags" => FILTER_NULL_ON_FAILURE);

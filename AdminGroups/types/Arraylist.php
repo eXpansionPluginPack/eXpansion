@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups\types;
  *
  * @author oliverde8
  */
-class Arraylist extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker
+class Arraylist extends absChecker
 {
 
     private $haystack = array();

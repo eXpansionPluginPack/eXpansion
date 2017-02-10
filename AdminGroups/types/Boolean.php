@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups\types;
  *
  * @author oliverde8
  */
-class Boolean extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker
+class Boolean extends absChecker
 {
 
     public function check($data)
