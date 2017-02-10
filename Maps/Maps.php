@@ -26,6 +26,7 @@ use ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode;
 use ManiaLivePlugins\eXpansion\Maps\Structures\MapWish;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 use Maniaplanet\DedicatedServer\Structures\Map;
+use \ManialivePlugins\eXpansion\Maps\Profiling\mapList as mapListProfiler;
 
 class Maps extends ExpPlugin
 {
@@ -497,6 +498,8 @@ class Maps extends ExpPlugin
 
     public function showMapList($login)
     {
+        $profiler = mapListProfiler::start();
+
         Maplist::Erase($login);
         self::$searchField[$login] = "name";
         /** @var Maplist $window */
@@ -526,6 +529,8 @@ class Maps extends ExpPlugin
         $window->setSize(230, 100);
         $window->updateList($login);
         $window->show();
+
+        $profiler->setNumberOfElements(count($this->maps));
     }
 
 
