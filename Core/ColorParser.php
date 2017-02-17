@@ -1,6 +1,7 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core;
+
+use ManiaLib\Utils\Singleton;
 
 /**
  * ColorParser - Singleton
@@ -8,7 +9,7 @@ namespace ManiaLivePlugins\eXpansion\Core;
  *
  * @author oliverde8
  */
-class ColorParser extends \ManiaLib\Utils\Singleton
+class ColorParser extends Singleton
 {
 
     /**

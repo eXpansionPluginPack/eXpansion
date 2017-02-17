@@ -1,16 +1,18 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Chatlog\Structures;
+
+use ManiaLib\Utils\Formatting;
+use Maniaplanet\DedicatedServer\Structures\AbstractStructure;
 
 /**
  * Defines a single chatmessage structure
  *
  * @author Reaby
  */
-class ChatMessage extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+class ChatMessage extends AbstractStructure
 {
 
-    /** @var long */
+    /** @var integer */
     public $time;
 
     /** @var string */
@@ -25,7 +27,7 @@ class ChatMessage extends \Maniaplanet\DedicatedServer\Structures\AbstractStruct
     /**
      * Constructor
      *
-     * @param long $stamp
+     * @param integer $stamp
      * @param string $login
      * @param string $nickname
      * @param string $text
@@ -40,6 +42,6 @@ class ChatMessage extends \Maniaplanet\DedicatedServer\Structures\AbstractStruct
 
     public function __toString()
     {
-        return "[" . \ManiaLib\Utils\Formatting::stripStyles($this->nickName) . "] " . $this->text;
+        return "[" . Formatting::stripStyles($this->nickName) . "] " . $this->text;
     }
 }

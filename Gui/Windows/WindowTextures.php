@@ -57,9 +57,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
         $this->_bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_bg->setAlign("left", "top");
-
         $this->_bg->setBgcolor($config->windowBackgroundColor);
-
         $this->_bg->setOpacity(0.9);
         $this->_windowFrame->addComponent($this->_bg);
 
@@ -70,7 +68,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_bgeff->setAlign("left", "top");
 
         $this->_bgeff->setColorize($config->windowBackgroundColor);
-        $this->_windowFrame->addComponent($this->_bgeff);
+    //    $this->_windowFrame->addComponent($this->_bgeff);
 
         $this->_bottomcenter = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
         $this->_bottomcenter->setAlign("left", "top");

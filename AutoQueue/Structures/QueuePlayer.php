@@ -1,4 +1,5 @@
 <?php
+namespace ManiaLivePlugins\eXpansion\AutoQueue\Structures;
 
 /*
  * Copyright (C) 2014 Reaby
@@ -16,15 +17,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+use ManiaLive\Data\Player;
 
-namespace ManiaLivePlugins\eXpansion\AutoQueue\Structures;
 
 /**
  * Description of QueuePlayer
  *
  * @author Reaby
  */
-class QueuePlayer extends \ManiaLive\Data\Player
+class QueuePlayer extends Player
 {
     public $isQueuable = false;
 }

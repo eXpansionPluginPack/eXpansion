@@ -7,10 +7,12 @@ use ManiaLib\Utils\Formatting;
 use ManiaLib\Utils\Path;
 use ManiaLive\Application\Application;
 use ManiaLive\Event\Dispatcher;
+use ManiaLive\Gui\ActionHandler;
 use ManiaLive\PluginHandler\Dependency;
 use ManiaLive\Utilities\Time;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\AdminGroups\types\Arraylist;
 use ManiaLivePlugins\eXpansion\AdminGroups\types\Boolean;
 use ManiaLivePlugins\eXpansion\AdminGroups\types\Integer;
 use ManiaLivePlugins\eXpansion\AdminGroups\types\Time_ms;
@@ -51,6 +53,9 @@ class ChatAdmin extends ExpPlugin
 
     public static $showActions = array();
 
+    /**
+     *
+     */
     public function eXpOnInit()
     {
         ParameterDialog::$mainPlugin = $this;
@@ -67,6 +72,9 @@ class ChatAdmin extends ExpPlugin
         $this->setPublicMethod("shuffleMaps");
     }
 
+    /**
+     *
+     */
     public function eXpOnLoad()
     {
         $adminGroup = AdminGroups::getInstance();
@@ -205,6 +213,12 @@ Other server might use the same blacklist file!!'
             ->addLineHelpMore('If the max spectators is reached it the player won\'t become a spectator')
             ->setMinParam(1);
         AdminGroups::addAlias($cmd, "spec"); // xaseco & fast
+
+        $cmd = AdminGroups::addAdminCommand('player play', $this, 'forcePlay', Permission::PLAYER_FORCESPEC);
+        $cmd->setHelp('Forces the spectator to become player')
+            ->addLineHelpMore('$w/admin player play #login$z The spectator will be forced to become a player')
+            ->setMinParam(1);
+        AdminGroups::addAlias($cmd, "play"); // xaseco & fast
 
         $cmd = AdminGroups::addAdminCommand('player ignore', $this, 'ignore', Permission::PLAYER_IGNORE);
         $cmd->setHelp('Adds player to ignore list and mutes him from the chat')
@@ -667,7 +681,7 @@ Other server might use the same blacklist file!!'
         $cmd->setMinParam(2);
         $cmd->addchecker(
             2,
-            \ManiaLivePlugins\eXpansion\AdminGroups\types\Arraylist::getInstance()->items("0,1,red,blue")
+            Arraylist::getInstance()->items("0,1,red,blue")
         );
         AdminGroups::addAlias($cmd, "forcePlayerTeam");
 
@@ -746,31 +760,37 @@ Other server might use the same blacklist file!!'
 
         $this->enableDatabase();
         $this->enableTickerEvent();
-        self::$showActions['ignore'] = \ManiaLive\Gui\ActionHandler::getInstance()
+        self::$showActions['ignore'] = ActionHandler::getInstance()
             ->createAction(array($this, 'showIgnoreList'));
-        self::$showActions['ban'] = \ManiaLive\Gui\ActionHandler::getInstance()
+        self::$showActions['ban'] = ActionHandler::getInstance()
             ->createAction(array($this, 'showBanList'));
-        self::$showActions['black'] = \ManiaLive\Gui\ActionHandler::getInstance()
+        self::$showActions['black'] = ActionHandler::getInstance()
             ->createAction(array($this, 'showBlackList'));
-        self::$showActions['guest'] = \ManiaLive\Gui\ActionHandler::getInstance()
+        self::$showActions['guest'] = ActionHandler::getInstance()
             ->createAction(array($this, 'showGuestList'));
 
-        self::$showActions['guestPlayer'] = \ManiaLive\Gui\ActionHandler::getInstance()
+        self::$showActions['guestPlayer'] = ActionHandler::getInstance()
             ->createAction(array($this, 'addGuestList'));
-        self::$showActions['ignorePlayer'] = \ManiaLive\Gui\ActionHandler::getInstance()
+        self::$showActions['ignorePlayer'] = ActionHandler::getInstance()
             ->createAction(array($this, 'addIgnore'));
-        self::$showActions['banPlayer'] = \ManiaLive\Gui\ActionHandler::getInstance()
+        self::$showActions['banPlayer'] = ActionHandler::getInstance()
             ->createAction(array($this, 'addBan'));
-        self::$showActions['blackPlayer'] = \ManiaLive\Gui\ActionHandler::getInstance()
+        self::$showActions['blackPlayer'] = ActionHandler::getInstance()
             ->createAction(array($this, 'addBlack'));
 
     }
 
+    /**
+     *
+     */
     public function eXpOnReady()
     {
         $this->enableDedicatedEvents();
     }
 
+    /**
+     *
+     */
     public function onTick()
     {
         if (time() % 30 == 0) {
@@ -795,6 +815,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $login
+     * @return bool
+     */
     public function checkBanList($login)
     {
         foreach ($this->connection->getBanList(-1, 0) as $player) {
@@ -806,6 +830,10 @@ Other server might use the same blacklist file!!'
         return false;
     }
 
+    /**
+     * @param $login
+     * @return bool
+     */
     public function checkBlackList($login)
     {
         foreach ($this->connection->getBlackList(-1, 0) as $player) {
@@ -831,6 +859,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function fastScript($fromLogin, $params)
     {
 
@@ -857,6 +889,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function fastTa($fromLogin, $params)
     {
 
@@ -888,6 +924,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function fastLaps($fromLogin, $params)
     {
         try {
@@ -925,6 +965,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function fastRounds($fromLogin, $params)
     {
         try {
@@ -964,6 +1008,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function fastCup($fromLogin, $params)
     {
         try {
@@ -1012,6 +1060,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function fastTeam($fromLogin, $params)
     {
         try {
@@ -1069,16 +1121,28 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param null $params
+     */
     public function invokeExpSettings($fromLogin, $params = null)
     {
         $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Core\Core', "showExpSettings", $fromLogin);
     }
 
+    /**
+     * @param $fromLogin
+     * @param null $params
+     */
     public function invokeNetStats($fromLogin, $params = null)
     {
         $this->callPublicMethod('\ManiaLivePlugins\eXpansion\Core\Core', "showNetStats", $fromLogin);
     }
 
+    /**
+     * @param $login
+     * @param null $params
+     */
     public function shuffleMaps($login, $params = null)
     {
         $mapsArray = array();
@@ -1099,6 +1163,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setTeamBalance($fromLogin, $params)
     {
         try {
@@ -1118,6 +1186,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setScriptName($fromLogin, $params)
     {
         if (sizeof($params) == 0) {
@@ -1148,6 +1220,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $login
+     * @param $params
+     */
     public function enableTeamGap($login, $params)
     {
         if ($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_TEAM) {
@@ -1166,11 +1242,18 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     *
+     */
     public function onBeginMatch()
     {
 
     }
 
+    /**
+     * @param \ManiaLive\DedicatedApi\Callback\SPlayerRanking[] $rankings
+     * @param int|\ManiaLive\DedicatedApi\Callback\SMapInfo $winnerTeamOrMap
+     */
     public function onEndMatch($rankings, $winnerTeamOrMap)
     {
         if ($this->teamGap > 1 && $this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_TEAM) {
@@ -1182,16 +1265,25 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     *
+     */
     public function onEndRound()
     {
         $this->checkTeamGap();
     }
 
+    /**
+     *
+     */
     public function onBeginRound()
     {
         $this->checkTeamGap();
     }
 
+    /**
+     *
+     */
     public function checkTeamGap()
     {
         if ($this->teamGap >= 1) {
@@ -1209,6 +1301,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function pay($fromLogin, $params)
     {
         try {
@@ -1227,6 +1323,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param null $params
+     */
     public function getServerPlanets($fromLogin, $params = null)
     {
         try {
@@ -1241,6 +1341,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setTeamBlue($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1257,6 +1361,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setTeamRed($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1273,6 +1381,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setCupNbWinners($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1288,6 +1400,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setCupWarmUpDuration($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1304,6 +1420,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setCupRoundsPerMap($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1319,6 +1439,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setCupPointsLimit($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1335,6 +1459,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function forcePlayerTeam($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1369,6 +1497,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setUseNewRulesTeam($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1385,6 +1517,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setMaxPointsTeam($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1400,6 +1536,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setTeamPointsLimit($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1415,6 +1555,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setFinishTimeout($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1431,6 +1575,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setNbLaps($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1447,6 +1595,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setLapsTimeLimit($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1463,6 +1615,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setRoundPointsLimit($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1478,6 +1634,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function forceEndRound($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1498,6 +1658,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setUseNewRulesRound($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1513,6 +1677,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setRoundForcedLaps($fromLogin, $params)
     {
 
@@ -1529,6 +1697,11 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     * @param bool $showBlacklistDialog
+     */
     public function blacklist($fromLogin, $params, $showBlacklistDialog = false)
     {
         $target = array_shift($params);
@@ -1541,6 +1714,7 @@ Other server might use the same blacklist file!!'
         }
 
         if (empty($reason)) {
+            /** @var ParameterDialog $dialog */
             $dialog = ParameterDialog::Create($fromLogin);
             $dialog->setTitle(__("blacklist", $fromLogin), Formatting::stripStyles($nickname));
             $dialog->setData("black", $target);
@@ -1560,7 +1734,8 @@ Other server might use the same blacklist file!!'
             $this->expStorage->saveBlackList();
 
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin #variable# %s #admin_action#blacklists the player #variable# %s reason: #admin_error#%s',
+                '#admin_action#Admin #variable# %s #admin_action#blacklists '
+                . 'the player #variable# %s reason: #admin_error#%s',
                 null,
                 array($admin->nickName, $nickname, $reason)
             );
@@ -1573,6 +1748,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function cleanBlacklist($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1589,6 +1768,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function cleanBanlist($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1604,6 +1787,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function cleanIgnorelist($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1619,6 +1806,9 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     */
     public function reloadScript($fromLogin)
     {
 
@@ -1633,6 +1823,10 @@ Other server might use the same blacklist file!!'
         $this->loadScript($fromLogin, array($scriptName));
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function loadScript($fromLogin, $params)
     {
         if ($this->storage->gameInfos->gameMode != GameInfos::GAMEMODE_SCRIPT) {
@@ -1670,6 +1864,10 @@ Other server might use the same blacklist file!!'
         $this->eXpChatSendServerMessage("#admin_error#Error: Script wasn't found !", $fromLogin);
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function unBlacklist($fromLogin, $params)
     {
 
@@ -1689,12 +1887,20 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function unBlackListClick($fromLogin, $params)
     {
         $this->unBlacklist($fromLogin, $params);
         $this->showBlackList($fromLogin);
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function ban($fromLogin, $params)
     {
         $target = array_shift($params);
@@ -1706,6 +1912,7 @@ Other server might use the same blacklist file!!'
             $nickname = $target;
         }
         if (empty($reason)) {
+            /** @var ParameterDialog $dialog */
             $dialog = ParameterDialog::Create($fromLogin);
             $dialog->setTitle(__("ban", $fromLogin), Formatting::stripStyles($nickname));
             $dialog->setData("ban", $target);
@@ -1716,7 +1923,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->ban($target, $reason);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin #variable# %s #admin_action# bans the player#variable# %s reason: #admin_error# %s',
+                '#admin_action#Admin #variable# %s #admin_action# bans '
+                . 'the player#variable# %s reason: #admin_error# %s',
                 null,
                 array($admin->nickName, $nickname, $reason)
             );
@@ -1725,6 +1933,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function ignore($fromLogin, $params)
     {
 
@@ -1748,18 +1960,30 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function unignoreClick($fromLogin, $params)
     {
         $this->unignore($fromLogin, $params);
         $this->showIgnoreList($fromLogin);
     }
 
+    /**
+     * @param $fromlogin
+     * @param $params
+     */
     public function unbanClick($fromlogin, $params)
     {
         $this->unban($fromlogin, $params);
         $this->showBanList($fromlogin);
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function unban($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1783,6 +2007,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function unignore($fromLogin, $params)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -1799,6 +2027,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function kick($fromLogin, $params)
     {
         $target = array_shift($params);
@@ -1815,6 +2047,7 @@ Other server might use the same blacklist file!!'
             return;
         }
         if (empty($reason)) {
+            /** @var ParameterDialog $dialog */
             $dialog = ParameterDialog::Create($fromLogin);
             $dialog->setTitle(__("kick", $fromLogin), Formatting::stripStyles($player->nickName));
             $dialog->setData("kick", $target);
@@ -1826,7 +2059,8 @@ Other server might use the same blacklist file!!'
         try {
             $this->connection->kick($player, $reason);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %1$s #admin_action#kicks the player#variable# %2$s (%3$s) #variable#Reason: #admin_error#%4$s',
+                '#admin_action#Admin#variable# %1$s #admin_action#kicks the '
+                . 'player#variable# %2$s (%3$s) #variable#Reason: #admin_error#%4$s',
                 null,
                 array($admin->nickName, $player->nickName, $target, $reason)
             );
@@ -1835,6 +2069,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function guest($fromLogin, $params)
     {
         $target = array_shift($params);
@@ -1860,6 +2098,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function guestRemove($fromLogin, $params)
     {
         $target = array_shift($params);
@@ -1886,12 +2128,20 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function removeGuestClick($fromLogin, $params)
     {
         $this->guestRemove($fromLogin, $params);
         $this->showGuestList($fromLogin);
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function forceSpec($fromLogin, $params)
     {
         $player = $this->storage->getPlayerObject($params[0]);
@@ -1908,7 +2158,8 @@ Other server might use the same blacklist file!!'
             $this->connection->forceSpectator($player, 1);
             $this->connection->forceSpectator($player, 0);
             $this->eXpChatSendServerMessage(
-                '#admin_action#Admin#variable# %s #admin_action#Forces the player #variable# %s #admin_action#to Spectator.',
+                '#admin_action#Admin#variable# %s #admin_action#Forces '
+                . 'the player#variable# %s #admin_action#to spectate.',
                 null,
                 array($admin->nickName, $player->nickName)
             );
@@ -1917,11 +2168,50 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
+    public function forcePlay($fromLogin, $params)
+    {
+        $player = $this->storage->getPlayerObject($params[0]);
+        if ($player == null) {
+            $this->eXpChatSendServerMessage(
+                '#admin_action#Player #variable# %s doesn\' exist.',
+                $fromLogin,
+                array($params[0])
+            );
+            return;
+        }
+        try {
+            $admin = $this->storage->getPlayerObject($fromLogin);
+            $this->connection->forceSpectator($player, 2);
+            $this->connection->forceSpectator($player, 0);
+            $this->eXpChatSendServerMessage(
+                '#admin_action#Admin#variable# %s #admin_action#Forces '
+                . 'the spectator#variable# %s #admin_action#to play.',
+                null,
+                array($admin->nickName, $player->nickName)
+            );
+        } catch (Exception $e) {
+            $this->sendErrorChat($fromLogin, $e->getMessage());
+        }
+    }
+
+
+    /**
+     * @param $login
+     * @param $message
+     */
     public function sendErrorChat($login, $message)
     {
         $this->eXpChatSendServerMessage('#admin_error#' . $message, $login);
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setServerName($fromLogin, $params)
     {
         $name = implode(" ", $params);
@@ -1938,6 +2228,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setServerComment($fromLogin, $params)
     {
         $comment = implode(" ", $params);
@@ -1954,6 +2248,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setServerMaxPlayers($fromLogin, $params)
     {
         $params[0] = (int)$params[0];
@@ -1970,6 +2268,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setServerMaxSpectators($fromLogin, $params)
     {
         $params[0] = (int)$params[0];
@@ -1986,6 +2288,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setServerPassword($fromLogin, $params)
     {
         try {
@@ -2007,6 +2313,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setSpecPassword($fromLogin, $params)
     {
         try {
@@ -2028,6 +2338,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setRefereePassword($fromLogin, $params)
     {
         try {
@@ -2049,6 +2363,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setserverchattime($fromLogin, $params)
     {
         $newLimit = TimeConversion::MStoTM($params[0]) - 8000;
@@ -2071,6 +2389,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setTAdynamic($fromLogin, $params)
     {
         try {
@@ -2101,6 +2423,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setTAlimit($fromLogin, $params)
     {
         try {
@@ -2118,6 +2444,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setServerMapDownload($fromLogin, $params)
     {
 
@@ -2151,9 +2481,14 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setHideServer($fromLogin, $params)
     {
         $validValues = array("1", "0", "2", "all", "visible", "both", "nations", "off", "hidden");
+        $output = 0;
         if (in_array(strtolower($params[0]), $validValues, true)) {
             if ($params[0] == 'off' || $params[0] == 'visible') {
                 $output = 0;
@@ -2172,7 +2507,6 @@ Other server might use the same blacklist file!!'
                 $fromLogin,
                 'Invalid parameter. Correct parameters for command are: 0,1,2,visible,hidden,nations.'
             );
-
             return;
         }
         try {
@@ -2188,6 +2522,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function stopDedicated($fromLogin, $params)
     {
         try {
@@ -2198,6 +2536,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function stopManiaLive($fromLogin, $params)
     {
         $this->connection->chatSendServerMessage("[Notice] stopping eXpansion...");
@@ -2206,6 +2548,10 @@ Other server might use the same blacklist file!!'
         Application::getInstance()->kill();
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function restartManiaLive($fromLogin, $params)
     {
         Dispatcher::dispatch(new ExpansionEvent(ExpansionEvent::ON_RESTART_START));
@@ -2225,7 +2571,7 @@ Other server might use the same blacklist file!!'
             'manialive_cfg::', 'rpcport::', //Set the XML RPC Port to use
             'address::', //Set the adresse of the server
             'password::', //Set the User Password
-            'dedicated_cfg::', //Set the configuration file to use to define XML RPC Port, SuperAdmin, Admin and User passwords
+            'dedicated_cfg::',//Set the configuration file to use to define XMLRPC Port, SuperAdmin/Admin/User passwords
             'user::', //Set the user to use during the communication with the server
             'logsPrefix::', //Set the log prefix option
             'debug::' // Set up the debug option//Set a configuration file to load instead of config.ini
@@ -2258,6 +2604,10 @@ Other server might use the same blacklist file!!'
         exit();
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function skipMap($fromLogin, $params)
     {
         try {
@@ -2274,6 +2624,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function restartMap($fromLogin, $params)
     {
         try {
@@ -2296,6 +2650,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function skipScoreReset($fromLogin, $params)
     {
         try {
@@ -2312,6 +2670,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function restartScoreReset($fromLogin, $params)
     {
         try {
@@ -2335,6 +2697,10 @@ Other server might use the same blacklist file!!'
     }
 
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setGameMode($fromLogin, $params)
     {
         $gamemode = null;
@@ -2387,6 +2753,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setAllWarmUpDuration($fromLogin, $params)
     {
 
@@ -2405,6 +2775,9 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     */
     public function cancelVote($fromLogin)
     {
         $admin = $this->storage->getPlayerObject($fromLogin);
@@ -2431,8 +2804,13 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $fromLogin
+     * @param $params
+     */
     public function setDisableRespawn($fromLogin, $params)
     {
+        $bool = false;
         if ($params[0] == 'true' || $params[0] == 'false') {
             if ($params[0] == 'true') {
                 $bool = false;
@@ -2464,11 +2842,15 @@ Other server might use the same blacklist file!!'
 
     /* Graphical Methods */
 
+    /**
+     * @param $login
+     */
     public function showBanList($login)
     {
         GenericPlayerList::Erase($login);
 
         try {
+            /** @var GenericPlayerList $window */
             $window = GenericPlayerList::Create($login);
             $window->setTitle('Banned Players on the server');
             $indexNumber = 0;
@@ -2490,23 +2872,39 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $login
+     * @param $entries
+     */
     public function addBan($login, $entries)
     {
         $this->ban($login, array($entries['login']));
         $this->showBanList($login);
     }
 
+    /**
+     * @param $login
+     * @param $entries
+     */
     public function addBlack($login, $entries)
     {
         $this->blacklist($login, array($entries['login']), true);
     }
 
+    /**
+     * @param $login
+     * @param $entries
+     */
     public function addIgnore($login, $entries)
     {
         $this->ignore($login, array($entries['login']));
         $this->showIgnoreList($login);
     }
 
+    /**
+     * @param $login
+     * @param $entries
+     */
     public function addGuestList($login, $entries)
     {
         $this->guest($login, array($entries['login']));
@@ -2514,11 +2912,15 @@ Other server might use the same blacklist file!!'
     }
 
 
+    /**
+     * @param $login
+     */
     public function showBlackList($login)
     {
         GenericPlayerList::Erase($login);
 
         //	try {
+        /** @var GenericPlayerList $window */
         $window = GenericPlayerList::Create($login);
         $window->setTitle(__('Blacklisted Players on the server', $login));
         $indexNumber = 0;
@@ -2537,11 +2939,15 @@ Other server might use the same blacklist file!!'
         $window->show();
     }
 
+    /**
+     * @param $login
+     */
     public function showGuestList($login)
     {
         GenericPlayerList::Erase($login);
 
         try {
+            /** @var GenericPlayerList $window */
             $window = GenericPlayerList::Create($login);
             $window->setTitle(__('Guest Players on the server'));
             $indexNumber = 0;
@@ -2564,11 +2970,15 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $login
+     */
     public function showIgnoreList($login)
     {
         GenericPlayerList::Erase($login);
 
         try {
+            /** @var GenericPlayerList $window */
             $window = GenericPlayerList::Create($login);
             $window->setTitle(__('Ignored Players on the server'));
             $indexNumber = 0;
@@ -2590,6 +3000,10 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     * @param $statusCode
+     * @param $statusName
+     */
     public function onStatusChanged($statusCode, $statusName)
     {
         if ($this->expStorage->simpleEnviTitle == Storage::TITLE_SIMPLE_TM
@@ -2628,6 +3042,9 @@ Other server might use the same blacklist file!!'
         }
     }
 
+    /**
+     *
+     */
     public function eXpOnUnload()
     {
         parent::eXpOnUnload();

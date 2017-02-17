@@ -1,6 +1,7 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core\I18n;
+
+use ManiaLivePlugins\eXpansion\Core\ColorParser;
 
 /**
  * Description of Message
@@ -20,14 +21,14 @@ class Message
     /**
      * List of all the messages in different languages
      *
-     * @var String[String]
+     * @var Message[]
      */
     private $lmessages = array();
 
     /**
      * List of all arguments passed for parsing
      *
-     * @var String[String]
+     * @var string[]
      */
     private $args = array();
 
@@ -51,7 +52,7 @@ class Message
      * Returns a multilanguage message array to be used with Connection->ChatSendServerMessageToLanguage();
      * if message contains arguments, please use $msg->setArgs before calling this function
      *
-     * @return Strign[String] $out Array[] = array("Lang" => string, "Text" => string)
+     * @return string[string] $out Array[] = array("Lang" => string, "Text" => string)
      */
     public function getMultiLangArray()
     {
@@ -67,7 +68,7 @@ class Message
             $text = call_user_func_array('sprintf', $arrgs);
             $out[$lang] = array(
                 "Lang" => lcfirst($lang),
-                "Text" => \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text),
+                "Text" => ColorParser::getInstance()->parseColors($text),
             );
         }
 
@@ -92,7 +93,7 @@ class Message
         array_unshift($arrgs, $this->getMessage($lang));
         $text = call_user_func_array('sprintf', $arrgs);
 
-        return \ManiaLivePlugins\eXpansion\Core\ColorParser::getInstance()->parseColors($text);
+        return ColorParser::getInstance()->parseColors($text);
     }
 
     /**

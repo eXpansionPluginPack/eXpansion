@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="" ?>
+<label autonewline="0" textsize="1" posn="0 0" text="# Admin guide" />
+<label autonewline="0" textsize="1" posn="0 -3" text="Here is few chat commands you might find useful." /><label autonewline="0" textsize="1" posn="0 -6" text="Good to know is, about 90% of XAseco and FAST commands are supported. There is few new commands also." /><label autonewline="0" textsize="1" posn="0 -9" text="Default chat commands can be found at [[chat commands list|admin-chatcommands]]." />
+<label autonewline="0" textsize="1" posn="0 -12" text="To restart or stop running eXpansion:" />
+<label autonewline="0" textsize="1" posn="0 -15" text="`/adm manialive restart` " />
+<label autonewline="0" textsize="1" posn="0 -18" text="`/adm manialive stop`" />
+<label autonewline="0" textsize="1" posn="0 -21" text="or even faster:" />
+<label autonewline="0" textsize="1" posn="0 -24" text="`/adm exp res`" />
+<label autonewline="0" textsize="1" posn="0 -27" text="`/adm exp stop`" />
+<label autonewline="0" textsize="1" posn="0 -30" text="to stop running dedicated &amp; exp:" />
+<label autonewline="0" textsize="1" posn="0 -33" text="`/adm stop dedicated`" />
+<label autonewline="0" textsize="1" posn="0 -36" text="or" />
+<label autonewline="0" textsize="1" posn="0 -39" text="`/adm stop dedi`" />
+<label autonewline="0" textsize="1" posn="0 -42" text="Fastly open config windows:" />
+<label autonewline="0" textsize="1" posn="0 -45" text="`/adm server` opens server management window" />
+<label autonewline="0" textsize="1" posn="0 -48" text="`/adm settings` opens eXpansion config settings " />
+<label autonewline="0" textsize="1" posn="0 -51" text="`/adm plugins` opens plugin manager" />
+<label autonewline="0" textsize="1" posn="0 -54" text="`/adm groups` opens admin groups" />
+<label autonewline="0" textsize="1" posn="0 -57" text="## First steps after installation" /><label autonewline="0" textsize="1" posn="0 -60" text="Here is a few useful tips to make server administration easier for you." />
+<label autonewline="0" textsize="1" posn="0 -63" text="As currently there is no way to fetch infos on dedicated server files using dedicated API, the files needs to be configured manually in order to auto-save the changed values for next server restart." /><label autonewline="0" textsize="1" posn="0 -66" text="type `/adm settings` -->  click tab `Config files`" />
+<label autonewline="0" textsize="1" posn="0 -69" text="fill in your `match settings` file and `dedicated_cfg.txt` file and the `server settings` file." />
+<label autonewline="0" textsize="1" posn="0 -72" text="> the `Server setting`-files are very powerful, as all expansion settings are saved &amp; loaded from them, this means" /><label autonewline="0" textsize="1" posn="0 -75" text="> also active plugins. There is already defined some for, like match or minimal configs for plugins." />
+<label autonewline="0" textsize="1" posn="0 -78" text="## Enabling Dedimania " /><label autonewline="0" textsize="1" posn="0 -81" text="1. type `/adm plugins` or use menu to access plugins" /><label autonewline="0" textsize="1" posn="0 -84" text="2. Scroll down or search for dedimania" /><label autonewline="0" textsize="1" posn="0 -87" text="3. Click the wrench icon next to the plugin and fill in your settings" /><label autonewline="0" textsize="1" posn="0 -90" text="4. Start the plugin" /><label autonewline="0" textsize="1" posn="0 -93" text="5. Scroll down to widgets, " /><label autonewline="0" textsize="1" posn="0 -96" text="6. Enable the dedimania widget" />
+<label autonewline="0" textsize="1" posn="0 -99" text="> If you wish to have more traditional widget look, configure the widget and select "use legacy layout"!" />

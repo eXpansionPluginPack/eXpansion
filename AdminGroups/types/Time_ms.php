@@ -7,7 +7,7 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups\types;
  *
  * @author oliverde8
  */
-class Time_ms extends \ManiaLivePlugins\eXpansion\AdminGroups\types\absChecker
+class Time_ms extends absChecker
 {
 
     public function check($data)

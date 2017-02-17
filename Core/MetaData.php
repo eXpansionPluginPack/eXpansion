@@ -1,5 +1,4 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
@@ -14,7 +13,7 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
  *
  * @author De Cramer Oliver
  */
-class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
+class MetaData extends types\config\MetaData
 {
 
     public function onBeginLoad()

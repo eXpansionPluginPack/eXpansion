@@ -51,9 +51,10 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
     /** @var String[][] */
     private $votes = array();
 
+    /** @var MXVote[] */
     private $votesTemp = array();
 
-    /** @var MXVote */
+
     private $msg_error;
     private $msg_connected;
 
@@ -121,40 +122,54 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
         if ($playerUid == 0) {
             return;
         }
-        if ((substr($text, 0, 1) == "+" || substr($text, 0, 1) == "-")) {
 
-            $player = $this->storage->getPlayerObject($login);
-            switch ($text) {
-                case "+++":
-                    $this->votesTemp[$login] = new MXVote($player, 100);
-                    break;
+        $player = $this->storage->getPlayerObject($login);
 
-                case "++":
-                    $this->votesTemp[$login] = new MXVote($player, 80);
-                    break;
-
-                case "+":
-                    $this->votesTemp[$login] = new MXVote($player, 60);
-                    break;
-                case "+-":
-                case "-+":
-                    $this->votesTemp[$login] = new MXVote($player, 50);
-                    break;
-                case "-":
-                    $this->votesTemp[$login] = new MXVote($player, 40);
-                    break;
-
-                case "--":
-                    $this->votesTemp[$login] = new MXVote($player, 20);
-                    break;
-
-                case "---":
-                    $this->votesTemp[$login] = new MXVote($player, 0);
-                    break;
-            }
-
-            $this->eXpChatSendServerMessage("Vote registered for MXKarma", $login);
+        switch ($text) {
+            case "+++":
+                $this->vote($player, 100);
+                break;
+            case "++":
+                $this->vote($player, 80);
+                break;
+            case "+":
+                $this->vote($player, 60);
+                break;
+            case "+-":
+            case "-+":
+                $this->vote($player, 50);
+                break;
+            case "-":
+                $this->vote($player, 40);
+                break;
+            case "--":
+                $this->vote($player, 20);
+                break;
+            case "---":
+                $this->vote($player, 0);
+                break;
         }
+
+    }
+
+    public function vote($player, $vote)
+    {
+        $this->votesTemp[$player->login] = new MXVote($player, $vote);
+        $this->eXpChatSendServerMessage("Vote registered for MXKarma", $player->login);
+
+        $widget = MXRatingsWidget::Create();
+        $x = 0;
+        $avgTempVotes = 0;
+        foreach ($this->votesTemp as $vote) {
+            $avgTempVotes += $vote->vote;
+            $x++;
+        }
+        if ($x > 0) {
+            $avgTempVotes = $avgTempVotes / $x;
+        }
+        $newAverage = ($this->mxRatings->voteaverage + $avgTempVotes) / 2;
+        $widget->setRating($newAverage, ($this->mxRatings->votecount+$x));
+        $widget->show();
     }
 
     public function onBeginMatch()
@@ -169,7 +184,7 @@ class MXKarma extends ExpPlugin implements MXKarmaEventListener
         }
     }
 
-    public function onEndMatch($rankings, $winnerTeamOrMap)
+    public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
     {
 
         $newVotes = array();

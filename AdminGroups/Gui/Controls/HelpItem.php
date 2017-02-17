@@ -2,9 +2,14 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\CmdMore;
+use ManiaLivePlugins\eXpansion\Gui\Control;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as MyButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
 /**
@@ -12,28 +17,29 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
  *
  * @author oliverde8
  */
-class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
+class HelpItem extends Control
 {
     protected $moreButton;
+    protected $action;
 
     public function __construct($indexNumber, AdminCmd $cmd, $controller, $login)
     {
         $this->action = $this->createAction(array($this, 'cmdMore'), $cmd);
 
         $this->setSize(116, 4);
-        $frame = new \ManiaLive\Gui\Controls\Frame();
+        $frame = new Frame();
         $frame->setSize($this->getSizeX(), $this->getSizeY());
-        $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $frame->setLayout(new Line());
 
         $this->addComponent(new ListBackGround($indexNumber, $this->getSizeX(), $this->getSizeY()));
 
-        $gui_cmd = new \ManiaLib\Gui\Elements\Label(50 * (.8 / .6), 4);
+        $gui_cmd = new Label(50 * (.8 / .6), 4);
         $gui_cmd->setAlign('left', 'center');
         $gui_cmd->setText(__($cmd->getCmd(), $login));
         $gui_cmd->setScale(0.6);
         $frame->addComponent($gui_cmd);
 
-        $gui_desc = new \ManiaLib\Gui\Elements\Label(
+        $gui_desc = new Label(
             ($this->getSizeX() - ($gui_cmd->getSizeX() / (.8 / .6))) * (1 / .6) - 8,
             4
         );
@@ -73,10 +79,11 @@ class HelpItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     public function cmdMore($login, $cmd)
     {
-        \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\CmdMore::Erase($login);
-        $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\CmdMore::Create($login);
+        CmdMore::Erase($login);
+        /** @var CmdMore $window */
+        $window = CmdMore::Create($login);
         $window->setCommand($cmd);
-        $window->setTitle(__(AdminGroups::$txt_helpTitle, $login));
+        $window->setTitle(__(\eXpGetMessage("Admin Commands Extended Help"), $login));
         $window->setSize(120, 100);
         $window->centerOnScreen();
         $window->show();

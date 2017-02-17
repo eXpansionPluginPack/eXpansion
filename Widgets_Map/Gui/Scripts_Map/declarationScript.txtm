@@ -1,5 +1,13 @@
-declare CMlLabel lbl_clock <=> (Page.GetFirstChild("clock") as CMlLabel);
+declare country <=> (Page.GetFirstChild("country") as CMlQuad);
 declare mapName <=> (Page.GetFirstChild("mapName") as CMlLabel);
 declare mapAuthor <=> (Page.GetFirstChild("mapAuthor") as CMlLabel);
 declare authorTime <=> (Page.GetFirstChild("authorTime") as CMlLabel);
 declare eXp_lastClockUpdate = 0;
+mapName.SetText(""^Map.MapName);
+authorTime.SetText(""^TimeToText(Map.TMObjective_AuthorTime));
+mapAuthor.SetText(""^Map.AuthorNickName);
+if (Map.AuthorZoneIconUrl != "") {
+    country.ChangeImageUrl(Map.AuthorZoneIconUrl);
+} else {
+    country.ChangeImageUrl("file://Media/Manialinks/flags/NadeoNations.dds");
+}

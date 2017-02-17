@@ -1,12 +1,11 @@
 <?php
+namespace ManiaLivePlugins\eXpansion\ChatBackground;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-namespace ManiaLivePlugins\eXpansion\ChatBackground;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;

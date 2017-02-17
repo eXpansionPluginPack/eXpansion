@@ -115,9 +115,9 @@ foreach (Event in PendingEvents) {
 	    declare Integer col = TextLib::ToInteger(id[2]);   
 
 	    if (data.existskey(row) && data[row].existskey(col)){
-		entry.Value = " " ^ data[row][col];
+    		entry.Value = " " ^ data[row][col];
 	    }else{
-		entry.Value = "";
+	    	entry.Value = "";
 	    }
 	}
 	else{

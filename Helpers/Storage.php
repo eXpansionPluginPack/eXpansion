@@ -119,6 +119,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
     /** @var string Just php version without compilation formation */
     public $cleanPhpVersion = '';
 
+    /** @var string Just php version without compilation and minor version information. */
+    public $shortPhpVersion = '';
+
     /** @var string Just mysql version. */
     public $cleanMysqlVersion = '';
 
@@ -195,8 +198,10 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         $version = explode('-', phpversion());
         $this->cleanPhpVersion = $version[0];
 
+        $this->shortPhpVersion = implode('.', array_slice(explode('.', $this->cleanPhpVersion),0,2));
+
         $version = $this->getDatabase()->execute('SHOW VARIABLES LIKE "version"')->fetchArray();
-        $this->cleanMysqlVersion = $version['Value'];
+        $this->cleanMysqlVersion = preg_replace("/(.*)(\~|\+|\-0)(.*)/", "$1", $version['Value']);
 
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $this->serverOs = "Windows";
@@ -358,7 +363,7 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
     /**
      * Get the current rankings.
      *
-     * This method will get all current rankings by batch to prevent any memory issues.
+     * This method will get all current rankings by batch to prevent any connection issues.
      *
      * @return PlayerRanking[]
      * @throws \Maniaplanet\DedicatedServer\InvalidArgumentException
@@ -385,6 +390,36 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         return $this->currentRankings;
     }
 
+    /**
+     * Get the current ignore list.
+     *
+     * This method will get current ignore list by batch to prevent connection issues.
+     *
+     * @return Player[]
+     * @throws \Maniaplanet\DedicatedServer\InvalidArgumentException
+     */
+    public function getIgnoreList()
+    {
+        $chunkSize = 200;
+        $offset = 0;
+        $ignoreList = array();
+
+        do {
+            try {
+                $ignores = $this->connection->getIgnoreList($chunkSize, $offset);
+                $offset += $chunkSize;
+
+                foreach ($ignores as $ignore) {
+                    $ignoreList[$ignore->login] = true;
+                }
+            } catch (IndexOutOfBoundException $e) {
+                // We are expecting this exception, if we have an empty chunk.
+                $ignoreList = array();
+            }
+        } while (!empty($ignoreList) && count($ignoreList) == $chunkSize);
+
+        return $ignoreList;
+    }
 
     /**
      * Method called when a Player chat on the server

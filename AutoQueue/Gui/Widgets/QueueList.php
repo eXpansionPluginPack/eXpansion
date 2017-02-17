@@ -1,4 +1,6 @@
 <?php
+namespace ManiaLivePlugins\eXpansion\AutoQueue\Gui\Widgets;
+
 /*
  * Copyright (C) 2014 Reaby
  *
@@ -16,12 +18,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace ManiaLivePlugins\eXpansion\AutoQueue\Gui\Widgets;
 
 use ManiaLib\Gui\Elements\Label;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\AutoQueue\AutoQueue;
 use ManiaLivePlugins\eXpansion\AutoQueue\Structures\QueuePlayer;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
@@ -35,17 +37,21 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
  */
 class QueueList extends Widget
 {
+    /** @var Frame */
     public $frame;
 
     /** @var QueuePlayer[] */
     public $queueplayers = array();
-    protected $mainInstance = null;
+
+    /** @var AutoQueue */
+    protected $mainInstance;
+
+    /** @var  WidgetBackGround */
     protected $bg;
 
     protected function eXpOnBeginConstruct()
     {
         $this->setName("Queue List");
-        $login = $this->getRecipient();
         $this->bg = new WidgetBackGround(62, 40);
         $this->bg->setAction($this->createAction(array($this, "enterQueue")));
         $this->addComponent($this->bg);

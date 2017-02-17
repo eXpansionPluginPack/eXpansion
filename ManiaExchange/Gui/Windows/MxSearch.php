@@ -167,7 +167,10 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                     $query .= "&tpack=TMStadium,Stadium";
                     break;
                 case "TMValley":
-                    $query .= "&tpack=TMValley";
+                    $query .= "&tpack=TMValley,Valley";
+                    break;
+                case "TM2Snow@florenzius":
+                    $query .= "&tpack=TM2Snow";
                     break;
                 default:
                     break;
@@ -214,8 +217,9 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             return;
         }
 
-        foreach ($this->items as $item)
+        foreach ($this->items as $item) {
             $item->erase();
+        }
 
         $this->pager->clearItems();
         $this->items = array();

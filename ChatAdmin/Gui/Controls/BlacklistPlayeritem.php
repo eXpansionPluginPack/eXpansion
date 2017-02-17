@@ -1,10 +1,17 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\ChatAdmin\Gui\Controls;
 
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLib\Gui\Elements\Icons64x64_1;
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Elements\Quad;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Control;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as MyButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
+use Maniaplanet\DedicatedServer\Structures\Player;
 
-class BlacklistPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
+class BlacklistPlayeritem extends Control
 {
 
     protected $unblackButton;
@@ -16,30 +23,35 @@ class BlacklistPlayeritem extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $frame;
 
     protected $bg;
+    protected $player;
 
-    public function __construct($indexNumber, \Maniaplanet\DedicatedServer\Structures\Player $player, $controller, $login)
-    {
+    public function __construct(
+        $indexNumber,
+        Player $player,
+        $controller,
+        $login
+    ) {
         $sizeX = 80;
         $sizeY = 6;
         $this->player = $player;
 
         $this->unblackAction = $this->createAction(array($controller, 'unBlacklistClick'), array($player->login));
 
-        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
+        $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame = new Frame();
         $this->frame->setSize($sizeX, $sizeY);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $this->frame->setLayout(new Line());
 
-        $this->login = new \ManiaLib\Gui\Elements\Label(50, 4);
+        $this->login = new Label(50, 4);
         $this->login->setAlign('left', 'center');
         $this->login->setText($player->login);
         $this->frame->addComponent($this->login);
 
 
-        $spacer = new \ManiaLib\Gui\Elements\Quad();
+        $spacer = new Quad();
         $spacer->setSize(4, 4);
-        $spacer->setStyle(\ManiaLib\Gui\Elements\Icons64x64_1::EmptyIcon);
+        $spacer->setStyle(Icons64x64_1::EmptyIcon);
 
         $this->frame->addComponent($spacer);
 

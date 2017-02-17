@@ -36,7 +36,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $config = Config::getInstance();
         $var = new TypeString("branchName", "Name of the branch to update with", $config);
-        $var->setDescription("master : Stable, nighty : latest fixes not tested, dev : just might work :D");
+        $var->setDescription("master : Stable, nightly : latest fixes not tested, dev : just might work :D");
         $var->setDefaultValue('master');
         $var->setGroup("Auto Update");
         $this->registerVariable($var);

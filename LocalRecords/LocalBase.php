@@ -47,7 +47,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
     /**
      * Activating the debug mode of the plugin
      *
-     * @var type int
+     * @var int
      */
     protected $debug = self::DEBUG_NONE;
 
@@ -502,15 +502,8 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $count = 0;
         $uids = "";
         foreach ($this->storage->maps as $map) {
-            if (!isset($map->localRecords)) {
-                $map->localRecords = array();
-            }
-            if (!isset($map->localRecords[$login])) {
-                $count++;
-
-                $uids .= $this->db->quote($map->uId) . ",";
-                $mapsByUid[$map->uId] = $map;
-            }
+            $uids .= $this->db->quote($map->uId) . ",";
+            $count++;
         }
 
         if ($count > 0) {
@@ -522,10 +515,12 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 . '	AND rank_playerlogin = ' . $this->db->quote($login);
             $data = $this->db->execute($q);
 
+            $mapsByUid = array();
             while ($row = $data->fetchObject()) {
-                $mapsByUid[$row->uid]->localRecords[$login] = $row->rank;
+                $mapsByUid[$row->uid] = $row->rank;
             }
         }
+        return $mapsByUid;
     }
 
     public function onTick()
@@ -1707,7 +1702,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                 FROM exp_records r1
                 WHERE record_challengeuid = \'' . $challengeId . '\'
                                 AND record_nbLaps = ' . $nbLaps . '
-                GROUP BY record_playerlogin, record_challengeuid, record_nbLaps, record_score
+                GROUP BY record_playerlogin, record_challengeuid, record_nbLaps, record_score, record_date
                 ORDER BY ' . $this->getDbOrderCriteria() . '
                 LIMIT 0, ' . $this->config->recordsCount;
 
@@ -1854,7 +1849,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
                             ' . $nbTrack . ' as nbMaps
                FROM exp_ranks
                WHERE rank_challengeuid IN (' . $uids . ')                                       
-               GROUP BY rank_playerlogin                            
+               GROUP BY login
                ORDER BY tscore ASC
                LIMIT 0,100';
 

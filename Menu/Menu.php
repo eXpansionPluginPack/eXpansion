@@ -35,7 +35,8 @@ class Menu extends ExpPlugin implements Listener
         Dispatcher::register(Event::getClass(), $this);
         $this->prepareMenu();
         $this->enableDedicatedEvents();
-        $this->registerChatCommand("menu", "prepareMenu", 0, false);
+
+
     }
 
     public function eXpAdminAdded($login)
@@ -109,7 +110,9 @@ class Menu extends ExpPlugin implements Listener
         $this->menuGroups = [];
         MenuWidget::EraseAll();
 
-        foreach (AdminGroups::getGroupList() as $group) {
+        $adminGroups = AdminGroups::getInstance();
+
+        foreach ($adminGroups->getGroupList() as $group) {
             $this->menuGroups[$group->getGroupName()] = Group::Create($group->getGroupName());
             foreach ($group->getGroupUsers() as $user) {
                 $this->menuGroups[$group->getGroupName()]->add($user->getLogin());
@@ -366,7 +369,12 @@ class Menu extends ExpPlugin implements Listener
                     if ($this->isPluginLoaded($plugin)) {
                         $this->callPublicMethod($plugin, "vote_restart", $login);
                     } else {
-                        $this->connection->callVoteRestartMap();
+                        $data = $this->getVoteRatio('RestartMap');
+                        if ($data->ratio != -1) {
+                            $this->connection->callVoteRestartMap($data->ratio);
+                        } else {
+                            $this->eXpChatSendServerMessage(eXpGetMessage("#error#Restart vote is disabled!"), $login);
+                        }
                     }
                     break;
                 case "!voteskip":
@@ -374,7 +382,12 @@ class Menu extends ExpPlugin implements Listener
                     if ($this->isPluginLoaded($plugin)) {
                         $this->callPublicMethod($plugin, "vote_skip", $login);
                     } else {
-                        $this->connection->callVoteNextMap();
+                        $data = $this->getVoteRatio('NextMap');
+                        if ($data->ratio != -1) {
+                            $this->connection->callVoteNextMap($data->ratio);
+                        } else {
+                            $this->eXpChatSendServerMessage(eXpGetMessage("#error#Skip vote is disabled!"), $login);
+                        }
                     }
                     break;
                 default:
@@ -397,4 +410,20 @@ class Menu extends ExpPlugin implements Listener
     {
         return "\\ManiaLivePlugins\\eXpansion\\" . $plugin . "\\" . $plugin;
     }
+
+    /**
+     * @param string $name
+     * @return \Maniaplanet\DedicatedServer\Structures\VoteRatio
+     */
+    private function getVoteRatio($name)
+    {
+        $voteRatios = $this->connection->getCallVoteRatios();
+        foreach ($voteRatios as $ratio) {
+            if ($ratio->command == $name) {
+                return $ratio;
+            }
+        }
+    }
+
+
 }

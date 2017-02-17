@@ -2,10 +2,15 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Data\Storage;
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\AdminGroups\Admin;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as MyButton;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
 /**
@@ -13,7 +18,7 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
  *
  * @author oliverde8
  */
-class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
+class AdminItem extends Control
 {
 
     private $plistButton;
@@ -25,20 +30,20 @@ class AdminItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $actionRemove = $this->createAction(array($controller, 'clickRemove'), $admin);
 
-        $frame = new \ManiaLive\Gui\Controls\Frame();
+        $frame = new Frame();
         $frame->setSize($sizeX, $sizeY);
-        $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $frame->setLayout(new Line());
 
         $this->addComponent(new ListBackGround($indexNumber, $sizeX, $sizeY));
 
-        $gui_name = new \ManiaLib\Gui\Elements\Label(40, 4);
+        $gui_name = new Label(40, 4);
         $gui_name->setAlign('left', 'center');
         $gui_name->setText($admin->getLogin());
         $gui_name->setScale(0.8);
         $frame->addComponent($gui_name);
 
-        $player = \ManiaLive\Data\Storage::getInstance()->getPlayerObject($admin->getLogin());
-        $gui_nick = new \ManiaLib\Gui\Elements\Label(32, 4);
+        $player = Storage::getInstance()->getPlayerObject($admin->getLogin());
+        $gui_nick = new Label(32, 4);
         $gui_nick->setAlign('left', 'center');
         $gui_nick->setText($player != null ? $player->nickName : "");
         $gui_nick->setTextColor("fff");

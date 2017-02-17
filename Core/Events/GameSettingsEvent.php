@@ -2,7 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Core\Events;
 
-class GameSettingsEvent extends \ManiaLive\Event\Event
+use ManiaLive\Event\Event;
+
+class GameSettingsEvent extends Event
 {
 
     const ON_GAME_MODE_CHANGE = 1;

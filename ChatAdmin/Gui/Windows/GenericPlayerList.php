@@ -4,12 +4,17 @@ namespace ManiaLivePlugins\eXpansion\ChatAdmin\Gui\Windows;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 
-class GenericPlayerList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+
+class GenericPlayerList extends Window
 {
-
+    /** @var  Pager */
     protected $pager;
+    /** @var  Inputbox */
     protected $inputbox;
+    /** @var  Button */
     protected $button;
 
     protected function onConstruct()
@@ -27,7 +32,7 @@ class GenericPlayerList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->addComponent($this->button);
 
 
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pager = new Pager();
         $this->addComponent($this->pager);
     }
 
@@ -40,7 +45,7 @@ class GenericPlayerList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     /**
      *
-     * @param type $items ArrayOfObject
+     * @param array $items
      */
     public function populateList($items)
     {

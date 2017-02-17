@@ -1,4 +1,5 @@
 <?php
+namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Controls;
 
 /**
  * @author       Oliver de Cramer (oliverde8 at gmail.com)
@@ -21,7 +22,6 @@
  *  along with this program.  If not, see {http://www.gnu.org/licenses/}.
  */
 
-namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
@@ -29,10 +29,11 @@ use ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad;
 use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpSettings;
 use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
-class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
+class Plugin extends Control
 {
 
     /**
@@ -45,18 +46,21 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
      */
     protected $metaData;
 
-    /**
-     * @var Button
-     */
+    /** @var Button */
     protected $button_running;
+    /** @var Button */
     protected $button_titleComp;
+    /** @var Button */
     protected $button_gameComp;
+    /** @var Button */
     protected $button_otherComp;
+    /** @var Button */
     protected $button_more;
+    /** @var Button */
     protected $button_start;
 
     /**
-     * @var \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround
+     * @var ListBackGround
      */
     protected $bg;
 
@@ -64,12 +68,14 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
      * @var Label
      */
     protected $label_name;
+    /** @var Label */
     protected $label_author;
 
     /**
      * @var Quad
      */
     protected $icon_name;
+    /** @var  Quad */
     protected $icon_author;
 
     /**
@@ -194,13 +200,19 @@ class Plugin extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->button_start->setPositionX($this->getSizeX() - 8 * 1 - 2);
     }
 
+    /**
+     * @param $running
+     * @param $inStart
+     * @return string
+     */
     private function getRunningDescriptionText($running, $inStart)
     {
         if ($running) {
             return "Plugin is running. Click to unload!";
         } else {
             if ($inStart) {
-                return "Plugin not compatible with game mode, title or server settings.\n Plugin will be enabled when possible.";
+                return "Plugin not compatible with game mode, title or server settings.\n "
+                    . "Plugin will be enabled when possible.";
             } else {
                 return "Plugin not running. Click to load!";
             }

@@ -1,8 +1,9 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core;
 
-class Config extends \ManiaLib\Utils\Singleton
+use ManiaLib\Utils\Singleton;
+
+class Config extends Singleton
 {
 
     public $debug = false;
