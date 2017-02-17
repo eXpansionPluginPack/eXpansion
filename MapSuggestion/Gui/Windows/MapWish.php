@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 
+ * Copyright (C)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,14 @@
 
 namespace ManiaLivePlugins\eXpansion\MapSuggestion\Gui\Windows;
 
+use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLib\Gui\Layouts\Line;
 use ManiaLive\Data\Storage;
 use ManiaLive\Gui\Controls\Frame;
-use ManiaLive\Utilities\Validation;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\TextEdit;
+use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use ManiaLivePlugins\eXpansion\MapSuggestion\MapSuggestion;
 
@@ -39,7 +42,9 @@ class MapWish extends Window
 
     /** @var string $mxid */
     protected $mxid = "";
-    protected $inputbox_mxid;
+    /** @var  Inputbox */
+    public $inputbox_mxid;
+    /** @var  TextEdit */
     protected $inputbox_description;
     protected $button_send;
     protected $button_cancel;
@@ -62,39 +67,49 @@ class MapWish extends Window
         $this->setSize(90, 60);
 
         $this->frame = new Frame(2, -6);
-        $this->frame->setLayout(new Column());
-        $this->mainFrame->addComponent($this->frame);
+        $this->frame->setLayout(new Column(90, 60));
+        $this->addComponent($this->frame);
 
-        // frame with line layout, used for row template;
-        $row = new Frame();
-        $row->setLayout(new Line());
 
         $lbl_login = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("from", 60, false);
         $lbl_login->setLabel(__('From', $login));
         $lbl_login->setText($this->fromText);
-
-
         $this->frame->addComponent($lbl_login);
+
 
         $this->inputbox_mxid = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("mxid", 60);
         $this->inputbox_mxid->setLabel(__("Mania-Exchange ID-number for map wish", $login));
         $this->inputbox_mxid->setText($this->mxid);
         $this->frame->addComponent($this->inputbox_mxid);
 
-        $this->inputbox_description = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("description", 60);
-        $this->inputbox_description->setLabel(__("Why you would like this map to be added ?", $login));
+        $lbl = new Label(60, 4);
+        $lbl->setText(__("Why you would like this map to be added ?", $login));
+        $this->frame->addComponent($lbl);
+
+        $input = new Inputbox("description");
+        $input->setPosition(900, 900);
+        $input->setId("descriptionTo");
+        $this->addComponent($input);
+        $this->registerScript(new Script("MapSuggestion\\Gui\\Scripts"));
+
+        $this->inputbox_description = new \ManiaLivePlugins\eXpansion\Gui\Elements\TextEdit("description_", 80, 24);
+        $this->inputbox_description->setId("descriptionFrom");
         $this->frame->addComponent($this->inputbox_description);
+
+        // frame with line layout, used for row template;
+        $row = new Frame(0, -3, new Line());
+        $row->setSize(60, 10);
 
         $this->button_send = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
         $this->button_send->colorize("0d0");
         $this->button_send->setAction($this->createAction(array($this, "apply")));
-        $this->button_send->setText(__("Apply", $login));
+        $this->button_send->setText(__("Send Suggestion", $login));
         $row->addComponent($this->button_send);
 
         $this->button_cancel = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
-        $this->button_cancel->setAction($this->createAction(array($this, "cancel")));
-        $this->button_cancel->setText(__("Cancel", $login));
-        $row->addComponent($this->button_send);
+        $this->button_cancel->setAction($this->createAction(array($this, "openMxWindow")));
+        $this->button_cancel->setText(__("Search for Map", $login));
+        $row->addComponent($this->button_cancel);
 
         $this->frame->addComponent($row);
     }
@@ -113,15 +128,16 @@ class MapWish extends Window
         $this->plugin->addMapToWish($login, $mxid, $entries['description']);
     }
 
-    public function cancel($login)
+    public function openMxWindow($login)
     {
-        $this->Erase($login);
+        $this->plugin->openMxWindow($login);
     }
 
     public function setMXid($mxid)
     {
-        if (Validation::int($mxid, 1)) {
+        if (is_numeric($mxid)) {
             $this->mxid = "" . $mxid;
+            $this->inputbox_mxid->setText($this->mxid);
         }
     }
 }

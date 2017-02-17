@@ -159,11 +159,12 @@ class DataAccess extends Singleton implements Listener, TickListener
         if (!is_file($filename)) {
             if (!touch($filename)) {
                 chmod($filename, 0755);
-
                 return false;
             }
         }
+
         clearstatcache();
+
         if (is_writable($filename)) {
             try {
                 if ($append === true) {

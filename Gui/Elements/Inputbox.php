@@ -36,7 +36,8 @@ class Inputbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->label->setTextEmboss();
         $this->addComponent($this->label);
 
-
+        $this->sizeX = $sizeX;
+        $this->sizeY = 12;
         $this->setSize($sizeX, 12);
     }
 

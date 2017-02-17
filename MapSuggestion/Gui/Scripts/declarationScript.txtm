@@ -1,0 +1,3 @@
+
+declare descriptionFrom <=> (Page.GetFirstChild("descriptionFrom") as CMlTextEdit);
+declare descriptionTo <=> (Page.GetFirstChild("descriptionTo") as CMlEntry);
