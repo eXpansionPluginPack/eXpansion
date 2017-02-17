@@ -380,7 +380,7 @@ class Chat extends ExpPlugin
                         if ($this->expStorage->isRelay) {
                             $color = $config->otherServerChatColor;
                         }
-                        $this->connection->chatSendServerMessage(
+                        $this->eXpChatSendServerMessage(
                             $channel .
                             $config->adminSign . '$fff$<' . $nick . '$z$s$> '
                             . $config->chatSeparator . $color . $force . $text,
@@ -392,7 +392,7 @@ class Chat extends ExpPlugin
                             $color = $config->otherServerChatColor;
                         }
 
-                        $this->connection->chatSendServerMessage(
+                        $this->eXpChatSendServerMessage(
                             $channel . '$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text,
                             $receivers
                         );
@@ -421,7 +421,7 @@ class Chat extends ExpPlugin
 
 
                         $color = $config->otherServerChatColor;
-                        $this->connection->chatSendServerMessage(
+                        $this->eXpChatSendServerMessage(
                             '$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text,
                             $recepient
                         );
