@@ -54,6 +54,21 @@ class AutoUpdate extends ExpPlugin
     }
 
     /**
+     * Get composer command to use.
+     *
+     * @return string
+     */
+    public function getComposerName()
+    {
+        if(file_exists('composer.phar')) {
+            return PHP_BINARY . " composer.phar";
+        } else {
+            // Hope composer is installed.
+            return "composer";
+        }
+    }
+
+    /**
      * Will check if updates are necessary.
      */
     public function checkUpdate()
@@ -70,10 +85,11 @@ class AutoUpdate extends ExpPlugin
 
         $this->onGoing = true;
 
+        $composer = $this->getComposerName();
         if ($this->config->useGit) {
-            $cmds = array(PHP_BINARY . ' composer.phar update --prefer-source --no-interaction --dry-run');
+            $cmds = array("$composer update --prefer-source --no-interaction --dry-run");
         } else {
-            $cmds = array(PHP_BINARY . ' composer.phar update --prefer-dist --no-interaction --dry-run');
+            $cmds = array("$composer update --prefer-dist --no-interaction --dry-run");
         }
 
         $AdminGroups->announceToPermission(
@@ -146,10 +162,11 @@ class AutoUpdate extends ExpPlugin
 
         $this->onGoing = true;
 
+        $composer = $this->getComposerName();
         if ($this->config->useGit) {
-            $cmds = array(PHP_BINARY . ' composer.phar update --no-interaction --prefer-source');
+            $cmds = array("$composer update --no-interaction --prefer-source");
         } else {
-            $cmds = array(PHP_BINARY . ' composer.phar update --no-interaction --prefer-dist');
+            $cmds = array("$composer update --no-interaction --prefer-dist");
         }
 
         $AdminGroups->announceToPermission(
