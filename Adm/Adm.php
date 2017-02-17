@@ -20,7 +20,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\Config;
 use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\I18n\Message;
-use ManiaLivePlugins\eXpansion\Core\MetaData;
+use ManiaLivePlugins\eXpansion\Core\MetaData as CoreMetaData;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
@@ -443,7 +443,7 @@ class Adm extends ExpPlugin implements Listener
 
             $config->roundsPoints = $intPoints;
 
-            $var = MetaData::getInstance()->getVariable('roundsPoints');
+            $var = CoreMetaData::getInstance()->getVariable('roundsPoints');
             $var->setRawValue($intPoints);
 
             ConfigManager::getInstance()->check();
