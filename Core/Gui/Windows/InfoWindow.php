@@ -4,13 +4,13 @@ namespace ManiaLivePlugins\eXpansion\Core\Gui\Windows;
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLive\Data\Storage;
 use ManiaLive\Gui\Controls\Frame;
-use ManiaLivePlugins\eXpansion\Core\Gui\Controls\InfoLine;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\Helpers\Singletons;
+use ManiaLivePlugins\eXpansion\ServerStatistics\Gui\Controls\InfoLine;
 use Maniaplanet\DedicatedServer\Connection;
 
 class InfoWindow extends Window
