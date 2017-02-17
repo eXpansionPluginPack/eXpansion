@@ -4,7 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Core\Gui\Windows;
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLive\Data\Storage;
 use ManiaLive\Gui\Controls\Frame;
-
+use ManiaLivePlugins\eXpansion\Core\Gui\Controls\InfoLine;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
@@ -53,7 +53,7 @@ class InfoWindow extends Window
         $this->mainFrame->addComponent($this->frame);
         $version = $this->connection->getVersion();
 
-        $line = new Infoline(5, "Server Login", $this->storage->serverLogin, 0);
+        $line = new InfoLine(5, "Server Login", $this->storage->serverLogin, 0);
         $this->frame->addComponent($line);
 
         $line = new Infoline(5, "Server version", $version->version, 0);
