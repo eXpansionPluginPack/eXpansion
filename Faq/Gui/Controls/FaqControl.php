@@ -76,12 +76,15 @@ abstract class FaqControl extends \ManiaLivePlugins\eXpansion\Gui\Control
         $matches = array();
         preg_match("/(?P<textb>.*)(\[(?P<text>.*?)\]\((?P<url>.*?)\))(?P<texta>.*)/", $text, $matches);
         if (!empty($matches['url']) && !empty($matches['text'])) {
-            if (substr($matches['url'], 0, 1) == '#') {
+            if (substr($matches['url'], 0, 4) == 'http') {
+                $text = $matches['textb'] . '$3af$l[' . $matches['url'] . ']' . $matches['text'] . '$l$z' . $matches['texta'];
+            } else if (substr($matches['url'], 0, 4) == '##') {
+                // It's a manialink.
+                $text = $matches['textb'] . '$3af$l[' . str_replace('##', '', $matches['url']) . ']' . $matches['text'] . '$l$z' . $matches['texta'];
+            } else {
                 // It's an internal link
                 $this->setTopicLink($matches['url']);
                 $text = $matches['textb'] . $matches['text'] . $matches['texta'];
-            } else {
-                $text = $matches['textb'] . '$3af$l[' . $matches['url'] . ']' . $matches['text'] . '$l$z' . $matches['texta'];
             }
         }
 
