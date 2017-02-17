@@ -1,4 +1,6 @@
 <?php
+namespace ManiaLivePlugins\eXpansion\AutoQueue\Gui\Widgets;
+
 /*
  * Copyright (C) 2014 Reaby
  *
@@ -16,8 +18,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace ManiaLivePlugins\eXpansion\AutoQueue\Gui\Widgets;
-
 use ManiaLib\Gui\Layouts\Column;
 use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\AutoQueue\AutoQueue;
@@ -34,9 +34,15 @@ use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
  */
 class EnterQueueWidget extends Widget
 {
+    /** @var  DicoLabel */
     protected $dicoLabel;
+
+    /** @var  Button */
     protected $button;
 
+    /**
+     *
+     */
     protected function eXpOnBeginConstruct()
     {
         $this->setName("Enter Queue");

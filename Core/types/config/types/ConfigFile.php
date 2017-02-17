@@ -30,6 +30,7 @@ class ConfigFile extends TypeString
     public function showConfWindow($login)
     {
         ConfSwitcher::Erase($login);
+        /** @var ConfSwitcher $win */
         $win = ConfSwitcher::Create($login);
         $win->setTitle("Config selection");
         $win->centerOnScreen();

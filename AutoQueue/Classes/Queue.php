@@ -1,4 +1,6 @@
 <?php
+namespace ManiaLivePlugins\eXpansion\AutoQueue\Classes;
+
 /*
  * Copyright (C) 2014 Reaby
  *
@@ -15,8 +17,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-namespace ManiaLivePlugins\eXpansion\AutoQueue\Classes;
 
 use ManiaLive\Data\Storage;
 use ManiaLivePlugins\eXpansion\AutoQueue\Structures\QueuePlayer;
@@ -77,10 +77,10 @@ class Queue
      */
     public function getNextPlayer()
     {
-
         if ($this->queue->count() > 0) {
             return $this->queue->dequeue();
         }
+        return null;
     }
 
     /**

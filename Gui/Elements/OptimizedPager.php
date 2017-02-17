@@ -1,11 +1,11 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
-use ManiaLivePlugins\eXpansion\Gui\Config;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
+use ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer;
 
-class OptimizedPager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
+class OptimizedPager extends Control implements ScriptedContainer
 {
 
     protected $frame;

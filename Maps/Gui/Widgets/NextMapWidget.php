@@ -2,46 +2,60 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Widgets;
 
+use ManiaLib\Gui\Elements\Quad;
+use ManiaLib\Gui\Layouts\Column;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel;
+use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
+use Maniaplanet\DedicatedServer\Structures\Map;
+
 class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
-
+    /** @var  WidgetBackGround */
     protected $bg;
+    /** @var  Frame */
     protected $leftFrame;
+    /** @var  Frame */
     protected $rightFrame;
-    protected $mapName;
-    protected $mapAuthor;
+
+    /** @var  DicoLabel */
     protected $labelName;
+    /** @var  DicoLabel */
     protected $labelAuthor;
+    /** @var  DicoLabel */
     protected $environment;
+
+    /** @var  DicoLabel */
     protected $time;
+    /** @var  Quad */
     protected $country;
 
-    /** @var \Maniaplanet\DedicatedServer\Structures\Map */
+    /** @var Map */
     protected $map;
 
     protected function eXpOnBeginConstruct()
     {
         $this->setName("Next Map");
-        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(60, 15);
+        $this->bg = new WidgetBackGround(60, 15);
         $this->addComponent($this->bg);
 
-        $column = new \ManiaLib\Gui\Layouts\Column();
+        $column = new Column();
 
-        $this->leftFrame = new \ManiaLive\Gui\Controls\Frame(4, -1);
+        $this->leftFrame = new Frame(4, -1);
         $this->leftFrame->setAlign("left", "top");
         $this->leftFrame->setLayout(clone $column);
         $this->addComponent($this->leftFrame);
 
-        $this->rightFrame = new \ManiaLive\Gui\Controls\Frame(20, -3);
+        $this->rightFrame = new Frame(20, -3);
         $this->rightFrame->setLayout(clone $column);
         $this->addComponent($this->rightFrame);
 
-        $biglabel = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(40, 4);
+        $biglabel = new DicoLabel(40, 4);
         $biglabel->setStyle("TextRankingsBig");
         $biglabel->setTextSize(2);
         $biglabel->setAlign("left", "center");
 
-        $label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(40, 4);
+        $label = new DicoLabel(40, 4);
         $label->setStyle("TextRaceMessage");
         $label->setAlign("left", "center");
         $label->setTextSize(2);
@@ -53,14 +67,13 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $nowPlaying->setAlign("center", "center");
         $this->addComponent($nowPlaying);
 
-        $this->country = new \ManiaLib\Gui\Elements\Quad(14, 9);
+        $this->country = new Quad(14, 9);
         $this->country->setId("authorZone");
         $this->country->setImage("http://reaby.kapsi.fi/ml/flags/Other%20Countries.dds", true);
         $this->country->setAlign("left", "top");
         $this->leftFrame->addComponent($this->country);
 
         $this->labelAuthor = clone $biglabel;
-        $this->labelAuthor->setText($this->mapAuthor);
         $this->labelAuthor->setAlign("left", "top");
         $this->leftFrame->addComponent($this->labelAuthor);
 
@@ -69,7 +82,6 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->rightFrame->addComponent($this->environment);
 
         $this->labelName = clone $biglabel;
-        $this->labelName->setText('$ddd' . $this->mapName);
         $this->rightFrame->addComponent($this->labelName);
 
         $this->time = clone $label;
@@ -86,7 +98,7 @@ class NextMapWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->bg->setAction($action);
     }
 
-    public function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
+    public function setMap(Map $map)
     {
         $this->map = $map;
         $this->labelName->setText($this->map->name);

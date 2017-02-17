@@ -1,16 +1,20 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
 use ManiaLive\DedicatedApi\Callback\Event as ServerEvent;
 use ManiaLive\Event\Dispatcher;
+use ManiaLive\Features\Admin\AdminGroup;
+use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Help;
+use ManiaLivePlugins\eXpansion\Core\I18n\Message;
+use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 
 /**
  * Admin Groups for eXpansion
  *
  * @author oliver
  */
-class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+class AdminGroups extends ExpPlugin
 {
     /** Constant for permission values */
     const HAVE_PERMISSION = "y";
@@ -29,6 +33,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     /** @var  GuestGroup */
     private static $guestGroup;
+    public $msg_removeMlAdmin;
 
     /**
      * Get currect running instance of the singleton
@@ -62,7 +67,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     private static $shortCommands = array();
 
     /**
-     * @var AdminCmd[] List of All commans
+     * @var AdminCmd[] List of All commands
      * Used for the Help
      */
     private static $commandsList = array();
@@ -70,7 +75,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * List of all permissions
      *
-     * @var type
+     * @var boolean[]
      */
     private static $permissionList = array();
 
@@ -377,7 +382,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $masterGroup = $this->getMasterGroup();
         self::$guestGroup = $this->getGuestGroup();
 
-        foreach (\ManiaLive\Features\Admin\AdminGroup::get() as $login) {
+        foreach (AdminGroup::get() as $login) {
             $admin = new Admin($login, $masterGroup);
             $admin->setReadOnly(true);
             $admin->setAllowedIP($this->getAllowedIp($login));
@@ -443,7 +448,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *  $ag->announceToGroup($ag->getGroup("Admins"), exp_getMessage("your message here"));
      *
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
-     * @param String|\ManiaLivePlugins\eXpansion\Core\I18n\Message $msg
+     * @param String|Message $msg
+     * @param array $args
      */
     public function announceToGroup(Group $group, $msg, $args = array())
     {
@@ -460,7 +466,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param string $permission common usage would be to use
      *                                                                         Permission::constant
-     * @param String|\ManiaLivePlugins\eXpansion\Core\I18n\Message $msg
+     * @param String|Message $msg
+     * @param array $args
      */
     public function announceToPermission($permission, $msg, $args = array())
     {
@@ -494,7 +501,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param string $groupName The groups name
      * @param array $value Data from the csv
-     * @oaram bool   $isGuest   Is the group the guest group
+     * @param bool $isGuest Is the group the guest group
      *
      * @return array
      */
@@ -711,9 +718,10 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             return true;
         } else {
             $this->eXpChatSendServerMessage($this->msg_needBeAdmin, $login);
-
             return false;
         }
+
+        return false;
     }
 
     /**
@@ -893,7 +901,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Add a command to the command tree.
      *
-     * @param string[] $commands The commands tree
+     * @param AdminCmd $commands The commands tree
      * @param string[] $cmdArray The command to add
      * @param AdminCmd $comandObj The command to add.
      *
@@ -921,12 +929,13 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      * Add title to a certain permission.
      *
      * @param string $permissionName
-     * @param \ManiaLivePlugins\eXpansion\Core\I18n\Message $msg
+     * @param Message $msg
      */
     public static function addPermissionTitleMessage(
         $permissionName,
-        \ManiaLivePlugins\eXpansion\Core\I18n\Message $msg
-    ) {
+        Message $msg
+    )
+    {
         self::$txt_permissions[$permissionName] = $msg;
     }
 
@@ -935,7 +944,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param String $permissionName The name of the permission to get the message for
      *
-     * @return \ManiaLivePlugins\eXpansion\Core\I18n\Message|string
+     * @return Message|string
      */
     public static function getPermissionTitleMessage($permissionName)
     {
@@ -952,6 +961,8 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param string $login
      * @param string $params
+     * @param array $cmds
+     * @param bool $errors
      */
     public function adminCmd($login, $params = "", $cmds = array(), $errors = true)
     {
@@ -1116,12 +1127,12 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     /**
      * Create a new group
      *
-     * @param string $login2 The login if the user creating the group.
+     * @param string $login The login if the user creating the group.
      * @param string $groupName The name of the new group
      *
      * @throws \Exception
      */
-    public function addGroup($login2, $groupName)
+    public function addGroup($login, $groupName)
     {
         // First be sure the lis ot groups we have is up to date.
         $this->reLoadAdmins();
@@ -1199,7 +1210,7 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param String $login
      * @param \ManiaLivePlugins\eXpansion\AdminGroups\Group $group
-     * @param array $newPermissions The list of new permissions.
+     * @param array $newHeritances
      */
     public function changeInheritanceOfGroup($login, Group $group, array $newHeritances)
     {
@@ -1328,8 +1339,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function windowGroups($login)
     {
-        \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::Erase($login);
-        $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::Create($login);
+        Gui\Windows\Groups::Erase($login);
+        /** @var Groups $window */
+        $window = Gui\Windows\Groups::Create($login);
         $window->setTitle(__(self::$txt_groupsTitle, $login));
         $window->setSize(160, 100);
         $window->centerOnScreen();
@@ -1343,8 +1355,9 @@ class AdminGroups extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function windowHelp($login)
     {
-        \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Help::Erase($login);
-        $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Help::Create($login);
+        Gui\Windows\Help::Erase($login);
+        /** @var Help $window */
+        $window = Gui\Windows\Help::Create($login);
         $window->setTitle(__(self::$txt_helpTitle, $login));
         $window->setSize(120, 100);
         $window->centerOnScreen();

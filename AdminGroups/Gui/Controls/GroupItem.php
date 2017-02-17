@@ -2,19 +2,25 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Gui\ActionHandler;
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Group;
 use ManiaLivePlugins\eXpansion\AdminGroups\GuestGroup;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Button as myButton;
+use ManiaLivePlugins\eXpansion\Gui\Control;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button as MyButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
+use ManiaLivePlugins\eXpansion\Gui\Gui;
 
 /**
  * Description of GroupItem
  *
  * @author oliverde8
  */
-class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
+class GroupItem extends Control
 {
     protected $group;
 
@@ -27,7 +33,15 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $permiButton;
     protected $deleteButton;
     protected $InheritButton;
+    protected $action_deleteGroupf;
 
+    /**
+     * GroupItem constructor.
+     * @param $indexNumber
+     * @param Group $group
+     * @param $controller
+     * @param $login
+     */
     public function __construct($indexNumber, Group $group, $controller, $login)
     {
         $this->group = $group;
@@ -40,22 +54,22 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->action_changePermissions = $this->createAction(array($controller, 'changePermission'), $group);
         $this->action_playerList = $this->createAction(array($controller, 'playerList'), $group);
         $this->action_deleteGroupf = $this->createAction(array($controller, 'deleteGroup'), $group);
-        $this->action_deleteGroup = \ManiaLivePlugins\eXpansion\Gui\Gui::createConfirm($this->action_deleteGroupf);
+        $this->action_deleteGroup = Gui::createConfirm($this->action_deleteGroupf);
         $this->action_inherticances = $this->createAction(array($controller, 'inheritList'), $group);
 
-        $frame = new \ManiaLive\Gui\Controls\Frame();
+        $frame = new Frame();
         $frame->setSize($sizeX, $sizeY);
-        $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $frame->setLayout(new Line());
 
         $this->addComponent(new ListBackGround($indexNumber, $sizeX, $sizeY));
 
-        $gui_name = new \ManiaLib\Gui\Elements\Label(35/$scale, 4);
+        $gui_name = new Label(35/$scale, 4);
         $gui_name->setAlign('left', 'center');
         $gui_name->setText($group->getGroupName());
         $gui_name->setScale($scale);
         $frame->addComponent($gui_name);
 
-        $gui_nbPlayers = new \ManiaLib\Gui\Elements\Label(15/$scale, 4);
+        $gui_nbPlayers = new Label(15/$scale, 4);
         $gui_nbPlayers->setAlign('left', 'center');
         $gui_nbPlayers->setText(sizeof($group->getGroupUsers()));
         $gui_nbPlayers->setScale($scale);
@@ -112,8 +126,9 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 
     }
 
-    /*
-     * custom function to remove contents.
+
+    /**
+     *
      */
     public function erase()
     {
@@ -133,8 +148,8 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->plistButton = null;
         $this->deleteButton = null;
         $this->destroyComponents();
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_deleteGroupf);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_deleteGroup);
+        ActionHandler::getInstance()->deleteAction($this->action_deleteGroupf);
+        ActionHandler::getInstance()->deleteAction($this->action_deleteGroup);
 
         parent::destroy();
     }

@@ -2,40 +2,57 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\AdminGroups\Group;
 use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\GroupItem;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 
 /**
  * Description of Groups
  *
  * @author oliverde8
  */
-class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class Groups extends Window
 {
-
+    /** @var  Pager */
     protected $pager;
+    /** @var  Inputbox */
     protected $group_add;
+    /** @var  Button */
     protected $button_add;
     protected $items = array();
 
+    /**
+     *
+     */
     protected function onConstruct()
     {
         parent::onConstruct();
 
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pager = new Pager();
         $this->mainFrame->addComponent($this->pager);
 
-        $this->group_add = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("group_name");
+        $this->group_add = new Inputbox("group_name");
         $this->group_add->setLabel(__(AdminGroups::$txt_nwGroupNameL));
         $this->group_add->setText("");
         $this->mainFrame->addComponent($this->group_add);
 
-        $this->button_add = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button();
+        $this->button_add = new Button();
         $this->button_add->setText(__(AdminGroups::$txt_add));
         $this->button_add->setAction($this->createAction(array($this, 'clickAdd')));
         $this->mainFrame->addComponent($this->button_add);
     }
 
+    /**
+     * @param $oldX
+     * @param $oldY
+     */
     public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
@@ -49,6 +66,9 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->button_add->setPosition($this->sizeX - 40, -3);
     }
 
+    /**
+     *
+     */
     public function onShow()
     {
         foreach ($this->items as $item) {
@@ -64,20 +84,23 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->populateList();
     }
 
+    /**
+     *
+     */
     public function populateList()
     {
 
-        $frame = new \ManiaLive\Gui\Controls\Frame();
+        $frame = new Frame();
         $frame->setSize(120, 4);
-        $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $frame->setLayout(new Line());
         $this->pager->addItem($frame);
 
-        $label = new \ManiaLib\Gui\Elements\Label(35, 4);
+        $label = new Label(35, 4);
         $label->setAlign('left', 'center');
         $label->setText(__(AdminGroups::$txt_groupName, $this->getRecipient()));
         $frame->addComponent($label);
 
-        $label = new \ManiaLib\Gui\Elements\Label(40, 4);
+        $label = new Label(40, 4);
         $label->setAlign('left', 'center');
         $label->setText(__(AdminGroups::$txt_nbPlayers, $this->getRecipient()));
         $frame->addComponent($label);
@@ -92,9 +115,14 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
+    /**
+     * @param $login2
+     * @param $args
+     */
     public function clickAdd($login2, $args)
     {
         $groupName = $args['group_name'];
+        /** @var AdminGroups $adminGroups */
         $adminGroups = AdminGroups::getInstance();
         if ($groupName != "") {
             $adminGroups->addGroup($login2, $groupName);
@@ -104,7 +132,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->onShow();
         $this->redraw($login2);
 
-        $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
+        $windows = Groups::GetAll();
 
         foreach ($windows as $window) {
             $login = $window->getRecipient();
@@ -113,10 +141,15 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
+    /**
+     * @param $login
+     * @param Group $group
+     */
     public function changePermission($login, $group)
     {
-        \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Permissions::Erase($login);
-        $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Permissions::Create($login);
+        Permissions::Erase($login);
+        /** @var Permissions $window */
+        $window = Permissions::Create($login);
         $window->setGroup($group);
         $window->setTitle(__(AdminGroups::$txt_permissionsTitle, $login, $group->getGroupName()));
         $window->setSize(74, 100);
@@ -124,10 +157,15 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $window->show();
     }
 
+    /**
+     * @param $login
+     * @param Group $group
+     */
     public function playerList($login, $group)
     {
-        \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Players::Erase($login);
-        $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Players::Create($login);
+        Players::Erase($login);
+        /** @var Players $window */
+        $window = Players::Create($login);
         $window->setGroup($group);
         $window->setTitle(__(AdminGroups::$txt_playersTitle, $login, $group->getGroupName()));
         $window->setSize(85, 100);
@@ -135,10 +173,15 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $window->show();
     }
 
+    /**
+     * @param $login
+     * @param Group $group
+     */
     public function inheritList($login, $group)
     {
-        \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Inherits::Erase($login);
-        $window = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Inherits::Create($login);
+        Inherits::Erase($login);
+        /** @var Inherits $window */
+        $window = Inherits::Create($login);
         $window->setGroup($group);
         $window->setTitle(__(AdminGroups::$txt_permissionsTitle, $login, $group->getGroupName()));
         $window->setSize(74, 100);
@@ -146,6 +189,10 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $window->show();
     }
 
+    /**
+     * @param $login
+     * @param Group $group
+     */
     public function deleteGroup($login, $group)
     {
         $adminGroups = AdminGroups::getInstance();
@@ -153,7 +200,7 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->onShow();
         $this->redraw($login);
 
-        $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
+        $windows = Groups::GetAll();
         foreach ($windows as $window) {
             $login = $window->getRecipient();
             $window->onShow();
@@ -161,9 +208,13 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
+    /**
+     *
+     */
     public function refreshAll()
     {
-        $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Players::GetAll();
+        /** @var Players[] $windows */
+        $windows = Players::GetAll();
         foreach ($windows as $window) {
             $window->setGroup(AdminGroups::getInstance()->getGroup($window->getGroup()->getGroupName()));
             $login = $window->getRecipient();
@@ -171,7 +222,8 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $window->redraw($login);
         }
 
-        $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Inherits::GetAll();
+        /** @var Inherits[] $windows */
+        $windows = Inherits::GetAll();
         foreach ($windows as $window) {
             $window->setGroup(AdminGroups::getInstance()->getGroup($window->getGroup()->getGroupName()));
             $login = $window->getRecipient();
@@ -179,7 +231,8 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
             $window->redraw($login);
         }
 
-        $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Permissions::GetAll();
+        /** @var Permissions[] $windows */
+        $windows = Permissions::GetAll();
         foreach ($windows as $window) {
             $window->setGroup(AdminGroups::getInstance()->getGroup($window->getGroup()->getGroupName()));
             $login = $window->getRecipient();
@@ -188,6 +241,9 @@ class Groups extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
+    /**
+     *
+     */
     public function destroy()
     {
         foreach ($this->items as $item) {

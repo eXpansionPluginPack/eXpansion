@@ -1,5 +1,4 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
 /**
@@ -9,6 +8,7 @@ namespace ManiaLivePlugins\eXpansion\AdminGroups;
  */
 class Group
 {
+    /** @var string */
     private $groupName;
 
     /** @var boolean */
@@ -16,7 +16,10 @@ class Group
 
     /** @var Admin[] */
     private $groupUsers = array();
+
     private $permissions;
+
+    /** @var Group[] */
     private $inherits = array();
 
     public function __construct($groupName, $master)
@@ -101,8 +104,6 @@ class Group
     {
         $actual = AdminGroups::UNKNOWN_PERMISSION;
         if (!empty($this->inherits)) {
-            $i = 0;
-
             foreach ($this->inherits as $gname => $group) {
                 $actual = $group->getPermission($name);
                 if ($actual == AdminGroups::HAVE_PERMISSION) {

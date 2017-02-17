@@ -9,11 +9,13 @@ use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
  *
  * @author De Cramer Oliver
  */
-class HashList extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
+class HashList extends Variable
 {
 
+    /** @var Variable */
     private $keyType = null;
 
+    /** @var  Variable */
     private $type;
 
     public function setType(Variable $type)

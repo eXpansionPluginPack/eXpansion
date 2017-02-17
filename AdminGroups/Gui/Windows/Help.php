@@ -2,43 +2,53 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\HelpItem;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 
 /**
  * Description of Help
  *
  * @author oliverde8
  */
-class Help extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class Help extends Window
 {
-
+    /**
+     * @var AdminGroups
+     */
     protected $adminGroups;
+    /** @var  Pager */
     protected $pager;
     protected $items = array();
 
+    /** @var  Label */
     protected $label_cmd;
+    /** @var  Label */
     protected $label_desc;
 
     protected function onConstruct()
     {
         parent::onConstruct();
         $this->adminGroups = AdminGroups::getInstance();
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pager = new Pager();
         $this->mainFrame->addComponent($this->pager);
 
-        $frame = new \ManiaLive\Gui\Controls\Frame();
+        $frame = new Frame();
         $frame->setSize(120, 4);
         $frame->setPosY(0);
-        $frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $frame->setLayout(new Line());
         $this->mainFrame->addComponent($frame);
 
-        $this->label_cmd = new \ManiaLib\Gui\Elements\Label(50, 4);
+        $this->label_cmd = new Label(50, 4);
         $this->label_cmd->setAlign('left', 'center');
         $this->label_cmd->setScale(0.8);
         $frame->addComponent($this->label_cmd);
 
-        $this->label_desc = new \ManiaLib\Gui\Elements\Label(20, 4);
+        $this->label_desc = new Label(20, 4);
         $this->label_desc->setAlign('left', 'center');
         $this->label_desc->setScale(0.8);
         $frame->addComponent($this->label_desc);

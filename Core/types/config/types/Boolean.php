@@ -1,15 +1,15 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
+
+use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 
 /**
  * Description of Int
  *
  * @author De Cramer Oliver
  */
-class Boolean extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
+class Boolean extends Variable
 {
-
 
     private $labelTrue = "True";
     private $labelFalse = "True";

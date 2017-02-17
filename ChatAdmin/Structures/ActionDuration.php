@@ -1,4 +1,5 @@
 <?php
+namespace ManiaLivePlugins\eXpansion\ChatAdmin\Structures;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -6,14 +7,14 @@
  * and open the template in the editor.
  */
 
-namespace ManiaLivePlugins\eXpansion\ChatAdmin\Structures;
+use Maniaplanet\DedicatedServer\Structures\AbstractStructure;
 
 /**
  * Description of ActionDuration
  *
  * @author Reaby
  */
-class ActionDuration extends \Maniaplanet\DedicatedServer\Structures\AbstractStructure
+class ActionDuration extends AbstractStructure
 {
 
     public $login;

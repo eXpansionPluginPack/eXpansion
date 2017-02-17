@@ -2,39 +2,51 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
+use ManiaLive\Gui\ActionHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Group;
+use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 
 /**
  * Description of Permissions
  *
  * @author oliverde8
  */
-class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class Inherits extends Window
 {
 
+    /** @var  Pager */
     protected $pager;
+
+    /** @var  Group */
     protected $group;
+    /** @var  Button */
     protected $button_ok;
+    /** @var  Button */
     protected $button_cancel;
     protected $action_ok;
     protected $action_cancel;
     protected $items = array();
+
     protected $inherits = array();
 
     protected function onConstruct()
     {
         parent::onConstruct();
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pager = new Pager();
         $this->mainFrame->addComponent($this->pager);
 
-        $this->button_ok = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
+        $this->button_ok = new Button(20, 5);
         $this->button_ok->setText(__("OK"));
         $this->action_ok = $this->createAction(array($this, 'clickOk'));
         $this->button_ok->setAction($this->action_ok);
         $this->mainFrame->addComponent($this->button_ok);
 
-        $this->button_cancel = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(20, 5);
+        $this->button_cancel = new Button(20, 5);
         $this->button_cancel->setText(__("Cancel"));
         $this->action_cancel = $this->createAction(array($this, 'clickCancel'));
         $this->button_cancel->setAction($this->action_cancel);
@@ -89,7 +101,7 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
             if ($this->group != $group && !isset($nh[$this->group->getGroupName()])) {
 
-                $cInherit = new \ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox(4, 4, 38);
+                $cInherit = new Checkbox(4, 4, 38);
                 $cInherit->setText($group->getGroupName());
                 $cInherit->setScale(0.8);
 
@@ -98,7 +110,7 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 }
 
                 $this->inherits[$i] = $cInherit;
-                $this->items[$x] = new \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem($x, $cInherit);
+                $this->items[$x] = new CheckboxItem($x, $cInherit);
                 $this->pager->addItem($this->items[$x]);
                 $x++;
             }
@@ -124,7 +136,7 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $adminGroups->changeInheritanceOfGroup($login, $this->group, $newInheritances);
         $this->Erase($login);
 
-        $windows = \ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows\Groups::GetAll();
+        $windows = Groups::GetAll();
         foreach ($windows as $window) {
             $login = $window->getRecipient();
             $window->onShow();
@@ -149,8 +161,8 @@ class Inherits extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->inherits = null;
         $this->items = array();
         $this->pager->destroy();
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_ok);
-        \ManiaLive\Gui\ActionHandler::getInstance()->deleteAction($this->action_cancel);
+        ActionHandler::getInstance()->deleteAction($this->action_ok);
+        ActionHandler::getInstance()->deleteAction($this->action_cancel);
 
         $this->button_cancel->destroy();
         $this->button_ok->destroy();

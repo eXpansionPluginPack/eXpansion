@@ -1,5 +1,4 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
 use ManiaLive\Data\Storage;

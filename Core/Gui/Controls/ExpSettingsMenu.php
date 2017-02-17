@@ -1,21 +1,24 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
 
+use ManiaLib\Gui\Layouts\Column;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 
-class ExpSettingsMenu extends \ManiaLivePlugins\eXpansion\Gui\Control
+class ExpSettingsMenu extends Control
 {
 
+    /** @var Frame */
     public $frame;
 
 
     public function __construct()
     {
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame = new Frame();
         $this->frame->setSize($this->getSizeX(), 4);
         $this->frame->setPosition(-2, 0);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column());
+        $this->frame->setLayout(new Column());
         $this->addComponent($this->frame);
     }
 

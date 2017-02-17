@@ -1,4 +1,5 @@
 <?php
+namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Windows;
 
 /**
  * @author       Oliver de Cramer (oliverde8 at gmail.com)
@@ -21,7 +22,6 @@
  *  along with this program.  If not, see {http://www.gnu.org/licenses/}.
  */
 
-namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Windows;
 
 use ManiaLib\Gui\Elements\Label;
 use ManiaLive\PluginHandler\PluginHandler;
@@ -32,20 +32,23 @@ use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 
-class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class PluginList extends Window
 {
 
     /**
      * @var Inputbox
      */
     protected $input_name;
+    /** @var  Inputbox */
     protected $input_author;
 
-    /**
-     * @var String
+    /** @var string /*
+     * protected $value_name;
+     *
+     * /** @var  string
      */
-    protected $value_name;
     protected $value_author;
 
     /**
@@ -95,6 +98,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
      */
     protected $autoLoad;
 
+    /** @var bool */
     public $firstDisplay = true;
 
     protected function onConstruct()
@@ -131,7 +135,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->button_search->setAction($this->createAction(array($this, "doSearch")));
         $this->mainFrame->addComponent($this->button_search);
 
-        $this->pagerFrame = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pagerFrame = new Pager();
         $this->pagerFrame->setPosY(-3);
 
         $this->mainFrame->addComponent($this->pagerFrame);
@@ -169,6 +173,7 @@ class PluginList extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
         $groups['All'] = true;
 
+        /** @var MetaData[] $metaData */
         foreach ($availablePlugins as $metaData) {
             if ($this->firstDisplay) {
                 foreach ($metaData->getGroups() as $name) {

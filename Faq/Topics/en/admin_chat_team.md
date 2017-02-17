@@ -1,29 +1,29 @@
 ﻿Chat commands
-[Back to admin](admin_chat.md)<br>
+[Back to admin](#admin_chat.md)
 
 ##Admin commands: /team `command` _parameter_
 
 ###/team `limit` {number}
-    sets new rounds points limit
+sets new rounds points limit
 
 ###/team `maxpoints` {mm:ss}
-    sets team max points
+sets team max points
 
 ###/team `fto` {mm:ss}
-    sets finish timeout
+sets finish timeout
 
 ###/team `wu` {mm:ss}
-    sets warmup duration
+sets warmup duration
 
 ###/team `res`
-    restart and reset scores
+restart and reset scores
 
 ###/team `skip`
-    skip and reset scores
+skip and reset scores
 
 ###/team `blue` {login}
-    sets player to blue team
+sets player to blue team
 
 ###/team `red` {login}
-    sets player to red team
+sets player to red team
 

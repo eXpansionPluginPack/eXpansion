@@ -2,9 +2,12 @@
 
 namespace ManiaLivePlugins\eXpansion\Core;
 
+use ManiaLib\Utils\Singleton;
 use ManiaLive\Application\Event as AppEvent;
+use ManiaLive\Application\Listener;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Features\Tick\Event as TickEvent;
+use ManiaLive\Features\Tick\Listener as TickListener;
 use ManiaLive\Utilities\Console;
 use ManiaLivePlugins\eXpansion\Core\Classes\Webaccess;
 use ManiaLivePlugins\eXpansion\Core\Structures\HttpQuery;
@@ -14,7 +17,7 @@ use ManiaLivePlugins\eXpansion\Core\Structures\HttpQuery;
  *
  * @author Reaby
  */
-class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Application\Listener, \ManiaLive\Features\Tick\Listener
+class DataAccess extends Singleton implements Listener, TickListener
 {
     /** @var Webaccess */
     private $webaccess;
@@ -93,7 +96,7 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
      * @param string $userAgent userAgent to be sent
      * @param string $mimeType header mimetype request -> defaults to "text/html"
      *
-     * @throws Exception
+     * @throws \Exception
      */
     final public function httpGet(
         $url,
@@ -101,7 +104,8 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
         $callparams = array(),
         $userAgent = "ManiaLive - eXpansionPluginPack",
         $mimeType = "text/html"
-    ) {
+    )
+    {
         $this->_get(new HttpQuery($url, $callback, $callparams, $userAgent, $mimeType));
     }
 
@@ -120,6 +124,14 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
         );
     }
 
+    /**
+     * @param $url
+     * @param null $data
+     * @param $callback
+     * @param array $callparams
+     * @param string $userAgent
+     * @param string $mimeType
+     */
     final public function httpPost(
         $url,
         $data = null,
@@ -127,14 +139,20 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
         $callparams = array(),
         $userAgent = "ManiaLive - eXpansionPluginPack",
         $mimeType = "application/json"
-    ) {
+    )
+    {
 
         $query = new HttpQuery($url, $callback, $callparams, $userAgent, $mimeType);
         $query->setData($data);
         $this->_get($query);
     }
 
-    /** @todo make queue and process it onPostLoop */
+    /** @todo make queue and process it onPostLoop
+     * @param $filename
+     * @param $data
+     * @param bool $append
+     * @return bool|int
+     */
     final public function save($filename, $data, $append = false)
     {
         clearstatcache();
@@ -155,13 +173,16 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
                 return file_put_contents($filename, $data, LOCK_EX);
             } catch (\Exception $e) {
                 Console::println("File write exception:" . $e->getMessage());
-
                 return false;
             }
         }
+        return false;
     }
 
-    /** @todo make queue and process it onPostLoop */
+    /** @todo make queue and process it onPostLoop
+     * @param $filename
+     * @return bool|string
+     */
     final public function load($filename)
     {
         clearstatcache();
@@ -173,17 +194,20 @@ class DataAccess extends \ManiaLib\Utils\Singleton implements \ManiaLive\Applica
                 return file_get_contents($filename);
             } catch (\Exception $e) {
                 Console::println("File read exception:" . $e->getMessage());
-
                 return false;
             }
         }
+        return false;
     }
 
+    /**
+     * @param $data
+     * @param HttpQuery $query
+     */
     public function _process($data, HttpQuery $query)
     {
         if (!is_callable($query->callback)) {
             Console::println("[DataAccess Error] Callback-function is not valid!");
-
             return;
         }
 

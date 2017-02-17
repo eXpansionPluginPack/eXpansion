@@ -2,28 +2,39 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Controls;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
+
 class InfoItem extends \ManiaLivePlugins\eXpansion\Gui\Control
 {
-
+    /** @var ListBackGround */
     private $bg;
-
+    /** @var Label */
     private $label;
-
+    /** @var Frame */
     private $frame;
 
+    /**
+     * InfoItem constructor.
+     * @param $indexNumber
+     * @param $text
+     * @param $sizeX
+     */
     public function __construct($indexNumber, $text, $sizeX)
     {
         $sizeY = 6;
 
-        $this->bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround($indexNumber, $sizeX, $sizeY);
+        $this->bg = new ListBackGround($indexNumber, $sizeX, $sizeY);
         $this->addComponent($this->bg);
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame = new Frame();
         $this->frame->setSize($sizeX, $sizeY);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $this->frame->setLayout(new Line());
 
 
-        $this->label = new \ManiaLib\Gui\Elements\Label(90, 6);
+        $this->label = new Label(90, 6);
         $this->label->setAlign('left', 'center');
         $this->label->setText($text);
         $this->label->setTextSize(1);

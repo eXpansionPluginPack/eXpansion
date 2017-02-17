@@ -1,5 +1,4 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
@@ -11,7 +10,6 @@ use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
  */
 class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 {
-
     public function onBeginLoad()
     {
         parent::onBeginLoad();
