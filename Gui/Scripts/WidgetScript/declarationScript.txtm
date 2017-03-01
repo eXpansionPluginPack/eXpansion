@@ -3,9 +3,9 @@ declare Window <=> Page.GetFirstChild("<?php echo $win->getId() ?>");
 declare MoveWindow = False;
 declare CMlQuad quad <=> (Page.GetFirstChild("enableMove") as CMlQuad);
 
-//declare CMlLabel coordLabel <=> (Page.GetFirstChild("coordLabel") as CMlLabel);
-//declare CMlLabel coordButton <=> (Page.GetFirstChild("coordButton") as CMlLabel);
-//declare CMlEntry coordInput <=> (Page.GetFirstChild("coordinates") as CMlEntry);
+declare CMlLabel coordLabel <=> (Page.GetFirstChild("coordLabel") as CMlLabel);
+declare CMlLabel coordButton <=> (Page.GetFirstChild("coordButton") as CMlLabel);
+declare CMlEntry coordInput <=> (Page.GetFirstChild("_widgetPosition") as CMlEntry);
 
 declare Vec3 LastDelta = <Window.RelativePosition.X, Window.RelativePosition.Y, -3.0>;
 declare Vec3 DeltaPos = <0.0, 0.0, -3.0>;
@@ -20,12 +20,12 @@ declare Boolean exp_enableHudMove for UI = False;
 exp_enableHudMove = False;
 
 declare persistent Vec3[Text][Text][Text] eXp_widgetLastPos = Vec3[Text][Text][Text];
-declare persistent Vec3[Text][Text][Text] eXp_widgetLastPosRel =  Vec3[Text][Text][Text];	
+declare persistent Vec3[Text][Text][Text] eXp_widgetLastPosRel =  Vec3[Text][Text][Text];
 declare persistent Boolean[Text][Text][Text] eXp_widgetVisible = Boolean[Text][Text][Text];
 declare Boolean exp_widgetVisibleBuffered;
 
 declare persistent Text[Text][Text][Text] eXp_widgetLayers = Text[Text][Text][Text];  // layer can be "normal" or "scorestable" or some other for future usage
-declare Text exp_widgetLayersBuffered;  
+declare Text exp_widgetLayersBuffered;
 
 declare Text version = "<?php echo $this->version ?>";
 declare Text id = "<?php echo $this->name ?>";
@@ -56,17 +56,17 @@ if (!eXp_widgetLayers.existskey(version) ) {
 	eXp_widgetLayers[version] = Text[Text][Text];
 }
 
-if (!eXp_widgetLayers[version].existskey(id) || forceReset) { 
+if (!eXp_widgetLayers[version].existskey(id) || forceReset) {
 	eXp_widgetLayers[version][id] = Text[Text];
 }
 
-if (!eXp_widgetLayers[version][id].existskey(gameMode)) { 
-	eXp_widgetLayers[version][id][gameMode] = activeLayer; 
+if (!eXp_widgetLayers[version][id].existskey(gameMode)) {
+	eXp_widgetLayers[version][id][gameMode] = activeLayer;
 }
 
 if (!eXp_widgetLastPosRel.existskey(version)) {
 	eXp_widgetLastPosRel[version] = Vec3[Text][Text];
-} 
+}
 
 if (!eXp_widgetLastPosRel[version].existskey(id) || forceReset) {
     eXp_widgetLastPosRel[version][id] = Vec3[Text];
@@ -83,13 +83,13 @@ if(!disablePersonalHud){
     exp_widgetCurrentVisible = eXp_widgetVisible[version][id][gameMode];
     exp_widgetVisibleBuffered = eXp_widgetVisible[version][id][gameMode];
     exp_widgetLayersBuffered = eXp_widgetLayers[version][id][gameMode];
-    
+
     // reduce flickering on normal layer, when widget update.
     if(!eXp_widgetVisible[version][id][gameMode] || eXp_widgetLayers[version][id][gameMode] != activeLayer) {
 	    Window.Hide();
 	    exp_widgetCurrentVisible = False;
     }
-    
+
     if (exp_enableHudMove == True) {
 	    quad.Show();
     }else {

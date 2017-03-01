@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\HashList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
@@ -24,8 +25,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $config = Config::getInstance();
 
-        $var = new Boolean("disablePersonalHud", "Disable personalized hud", $config);
-        $var->setDescription("if disable this, server admin defined positions are forced to all players");
+        $var = new Boolean("disablePersonalHud", "Enable widget positions override for admins", $config);
+        $var->setDescription("If set, the server admin hud defined positions are forced to all players");
         $var->setGroup("GUI");
         $var->setDefaultValue(false);
         $this->registerVariable($var);
@@ -132,5 +133,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setMax(5.0);
         $var->setDefaultValue(1);
         $this->registerVariable($var);
+
+        $var = new HashList("allWidgetPositions", "WidgetPositions (do not edit)", $config);
+        $var->setKeyType(new TypeString(""));
+        $var->setType(new TypeString(""));
+        $var->setGroup("GUI");
+        $var->setDescription('Automatically generated from widgets');
+        $var->setDefaultValue(array());
+        $this->registerVariable($var);
+
     }
 }

@@ -51,12 +51,12 @@ class Clock extends Widget
     {
         $this->setSize(36, 6);
         $this->setPosition(-160, 74);
-        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
+     /*   $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
         $script->setParam('isMinimized', 'False');
         $script->setParam('autoCloseTimeout', 0);
         $script->setParam('posXMin', -12);
         $script->setParam('posX', -12);
         $script->setParam('posXMax', -2);
-        $this->registerScript($script);
+        $this->registerScript($script); */
     }
 }
