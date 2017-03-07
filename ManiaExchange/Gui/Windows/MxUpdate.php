@@ -9,6 +9,7 @@ use ManiaLivePlugins\eXpansion\Core\DataAccess;
 use ManiaLivePlugins\eXpansion\Gui\Structures\ButtonHook;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
+use ManiaLivePlugins\eXpansion\ManiaExchange\Config;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxInfo;
 use ManiaLivePlugins\eXpansion\ManiaExchange\Gui\Controls\MxMap as MxMapItem;
 use ManiaLivePlugins\eXpansion\ManiaExchange\ManiaExchange;
@@ -93,8 +94,12 @@ class MxUpdate extends Window
         if ($storage->simpleEnviTitle == \ManiaLivePlugins\eXpansion\Helpers\Storage::TITLE_SIMPLE_SM) {
             $title = "sm";
         }
-
-        $query = 'https://api.mania-exchange.com/' . $title . '/maps?ids=' . $uids;
+        $key = "";
+        $config = Config::getInstance();
+        if ($config->key) {
+            $key = "&key=" . $config->key;
+        }
+        $query = 'https://api.mania-exchange.com/' . $title . '/maps?ids=' . $uids . $key;
 
         $access = DataAccess::getInstance();
         $options = array(CURLOPT_HTTPHEADER => array("Content-Type" => "application/json"));

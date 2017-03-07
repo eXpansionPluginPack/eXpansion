@@ -24,7 +24,6 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $config = Config::getInstance();
 
-
         $var = new Boolean("juke_newmaps", "Autojuke newly added maps ?", $config, true, false);
         $var->setDefaultValue(true);
         $this->registerVariable($var);
@@ -61,6 +60,11 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setMin(0);
         $var->setMax(2);
         $var->setDefaultValue(1);
+        $this->registerVariable($var);
+
+        $var = new TypeString('key', 'Mania-exchange key', $config, true, false);
+        $var->setDescription("You know if you need this, otherwise leave empty");
+        $var->setDefaultValue("");
         $this->registerVariable($var);
 
         $var = new TypeString('file_name', 'File Pattern', $config, true, false);

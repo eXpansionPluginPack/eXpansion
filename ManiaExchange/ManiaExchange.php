@@ -138,7 +138,7 @@ class ManiaExchange extends ExpPlugin
         $window = Gui\Windows\MxSearch::Create($login);
         $window->setTitle('ManiaExchange');
         $window->setPlugin($this);
-        $window->search($login, $search, $author);
+       // $window->search($login, $search, $author);
         $window->setSize(210, 100);
         $window->centerOnScreen();
         $window->show();
@@ -189,10 +189,10 @@ class ManiaExchange extends ExpPlugin
         $query = "";
         switch ($this->expStorage->simpleEnviTitle) {
             case "SM":
-                $query = 'https://sm.mania-exchange.com/tracks/download/' . $mxId;
+                $query = 'https://sm.mania-exchange.com/tracks/download/' . $mxId . $this->getKey();
                 break;
             case "TM":
-                $query = 'https://tm.mania-exchange.com/tracks/download/' . $mxId;
+                $query = 'https://tm.mania-exchange.com/tracks/download/' . $mxId . $this->getKey();
                 break;
         }
 
@@ -282,8 +282,8 @@ class ManiaExchange extends ExpPlugin
             '{map_vehicle}' => $gbxReader->vehicle,
             '{map_type}' => $gbxReader->mapType,
             '{map_style}' => $gbxReader->mapStyle,
-            '{mx_id}'   => $mxId,
-            '{server_title}'   => $this->expStorage->titleId,
+            '{mx_id}' => $mxId,
+            '{server_title}' => $this->expStorage->titleId,
         );
 
         return str_replace(array_keys($replacements), array_values($replacements), $this->config->file_name);
@@ -430,12 +430,13 @@ class ManiaExchange extends ExpPlugin
     private function updateMxInfo($mapUid)
     {
         $storage = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance();
+
         $title = "tm";
         if ($storage->simpleEnviTitle == \ManiaLivePlugins\eXpansion\Helpers\Storage::TITLE_SIMPLE_SM) {
             $title = "sm";
         }
 
-        $query = 'https://api.mania-exchange.com/' . $title . '/maps?ids=' . $mapUid;
+        $query = 'https://api.mania-exchange.com/' . $title . '/maps?ids=' . $mapUid . $this->getKey(true);
 
         $options = array(CURLOPT_HTTPHEADER => array("Content-Type" => "application/json"));
         $this->dataAccess->httpCurl($query, array($this, "xUpdateInfo"), null, $options);
@@ -558,20 +559,35 @@ class ManiaExchange extends ExpPlugin
             }
         }
 
-
         $query = "";
         switch ($this->expStorage->simpleEnviTitle) {
             case "SM":
-                $query = 'https://sm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
+                $query = 'https://sm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId . $this->getKey();
                 break;
             case "TM":
-                $query = 'https://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId;
+                $query = 'https://tm.mania-exchange.com/api/tracks/get_track_info/id/' . $mxId . $this->getKey();
                 break;
         }
 
         $options = array(CURLOPT_HTTPHEADER => "X-ManiaPlanet-ServerLogin:" . $this->storage->serverLogin);
         $this->dataAccess->httpCurl($query, array($this, "xVote"), array("login" => $login, "mxId" => $mxId), $options);
     }
+
+    /**
+     * @param bool $append
+     * @return string
+     */
+    public function getKey($append = false)
+    {
+        $key = "";
+        $op = $append ? "&" : "?";
+
+        if ($this->config->key) {
+            $key = $op . "key=" . $this->config->key;
+        }
+        return $key;
+    }
+
 
     //function xVote($data, $code, $login, $mxId)
     public function xVote($job, $jobData)
