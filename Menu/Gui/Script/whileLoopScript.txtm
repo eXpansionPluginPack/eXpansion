@@ -106,7 +106,7 @@ if (needUpdate) {
         Menu.Show();
         showStamp = Now;
         outText = "";
-                foreach (idd => dump in eXp_widgetVisible[version]) {
+                foreach (idd => temp in eXp_widgetVisible[version]) {
                     if (!eXp_widgetVisible[version][idd].existskey(gameMode)) {
                         continue;
                     }
