@@ -70,7 +70,7 @@ class Players extends Window
         $this->mainFrame->addComponent($line);
 
         $this->pager = new Pager();
-        $this->pager->setPosition(0, 8);
+        $this->pager->setPosition(0, 4);
         $this->mainFrame->addComponent($this->pager);
     }
 
@@ -98,7 +98,7 @@ class Players extends Window
     public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX - 4, $this->sizeY - 12);
+        $this->pager->setSize($this->sizeX + 1, $this->sizeY - 10);
         $this->pager->setPosition(0, -7);
     }
 

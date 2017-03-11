@@ -38,19 +38,19 @@ class Inherits extends Window
     {
         parent::onConstruct();
         $this->pager = new Pager();
-        $this->mainFrame->addComponent($this->pager);
+        $this->_windowFrame->addComponent($this->pager);
 
         $this->button_ok = new Button(20, 5);
         $this->button_ok->setText(__("OK"));
         $this->action_ok = $this->createAction(array($this, 'clickOk'));
         $this->button_ok->setAction($this->action_ok);
-        $this->mainFrame->addComponent($this->button_ok);
+        $this->_windowFrame->addComponent($this->button_ok);
 
         $this->button_cancel = new Button(20, 5);
         $this->button_cancel->setText(__("Cancel"));
         $this->action_cancel = $this->createAction(array($this, 'clickCancel'));
         $this->button_cancel->setAction($this->action_cancel);
-        $this->mainFrame->addComponent($this->button_cancel);
+        $this->_windowFrame->addComponent($this->button_cancel);
     }
 
     public function setGroup(Group $group)
@@ -66,12 +66,12 @@ class Inherits extends Window
     public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX - 2, $this->sizeY - 12);
-        $this->pager->setPosition(1, -1);
+        $this->pager->setSize($this->sizeX, $this->sizeY - 4);
+        $this->pager->setPosition(0, 0);
 
         $centerX = $this->sizeX / 2 - 10;
-        $this->button_ok->setPosition($centerX + 5, -$this->sizeY + 5);
-        $this->button_cancel->setPosition($centerX + 30, -$this->sizeY + 5);
+        $this->button_ok->setPosition($centerX + 5, -$this->sizeY - 1);
+        $this->button_cancel->setPosition($centerX + 30, -$this->sizeY - 1);
     }
 
     public function onShow()
@@ -101,10 +101,8 @@ class Inherits extends Window
 
             if ($this->group != $group && !isset($nh[$this->group->getGroupName()])) {
 
-                $cInherit = new Checkbox(4, 4, 38);
+                $cInherit = new Checkbox(4, 5, 38);
                 $cInherit->setText($group->getGroupName());
-                $cInherit->setScale(0.8);
-
                 if (!empty($inherits)) {
                     $cInherit->setStatus(isset($inherits[$group->getGroupName()]));
                 }

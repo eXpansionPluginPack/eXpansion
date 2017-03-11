@@ -152,7 +152,7 @@ class Groups extends Window
         $window = Permissions::Create($login);
         $window->setGroup($group);
         $window->setTitle(__(AdminGroups::$txt_permissionsTitle, $login, $group->getGroupName()));
-        $window->setSize(74, 100);
+        $window->setSize(90, 100);
         $window->centerOnScreen();
         $window->show();
     }
@@ -168,7 +168,7 @@ class Groups extends Window
         $window = Players::Create($login);
         $window->setGroup($group);
         $window->setTitle(__(AdminGroups::$txt_playersTitle, $login, $group->getGroupName()));
-        $window->setSize(85, 100);
+        $window->setSize(88, 100);
         $window->centerOnScreen();
         $window->show();
     }
