@@ -1,6 +1,6 @@
 <?php
-namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Windows;
 
+namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Windows;
 /**
  * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
@@ -22,7 +22,6 @@ namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Windows;
  *  along with this program.  If not, see {http://www.gnu.org/licenses/}.
  */
 
-
 use ManiaLib\Gui\Elements\Label;
 use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad;
@@ -31,8 +30,8 @@ use ManiaLivePlugins\eXpansion\Core\types\config\MetaData;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Dropdown;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
+use ManiaLive\Gui\Controls\Pager;
 
 class PluginList extends Window
 {
@@ -136,7 +135,7 @@ class PluginList extends Window
         $this->mainFrame->addComponent($this->button_search);
 
         $this->pagerFrame = new Pager();
-        $this->pagerFrame->setPosY(-3);
+        $this->pagerFrame->setPosY(-8);
 
         $this->mainFrame->addComponent($this->pagerFrame);
 
@@ -146,7 +145,7 @@ class PluginList extends Window
     public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
-        $this->pagerFrame->setSize($this->getSizeX() - 3, $this->getSizeY() - 11);
+        $this->pagerFrame->setSize($this->getSizeX(), $this->getSizeY() - 14);
     }
 
     /**

@@ -187,17 +187,19 @@ class Plugin extends Control
     protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
-        $this->label_name->setSizeX(($this->getSizeX() - $this->label_name->getPosX() - 5 * 8 - 7) / 1);
-        $this->label_author->setSizeX(($this->getSizeX() - $this->label_author->getPosX() - 5 * 8 - 7) / 1);
+        $sizeMultiplier = 1.14;
 
-        $this->bg->setSize($this->getSizeX() + 3, $this->getSizeY());
+        $this->label_name->setSizeX((($this->getSizeX() - $this->label_name->getPosX() - 5 * 8 - 7) / 1) * $sizeMultiplier);
+        $this->label_author->setSizeX((($this->getSizeX() - $this->label_author->getPosX() - 5 * 8 - 7) / 1) * $sizeMultiplier);
 
-        $this->button_titleComp->setPositionX($this->getSizeX() - 5 * 5 - 4);
-        $this->button_gameComp->setPositionX($this->getSizeX() - 5 * 4 - 3);
-        $this->button_otherComp->setPositionX($this->getSizeX() - 5 * 3 - 2);
+        $this->bg->setSize(($this->getSizeX() + 3) * $sizeMultiplier, $this->getSizeY());
 
-        $this->button_more->setPositionX($this->getSizeX() - 5 * 8 - 7);
-        $this->button_start->setPositionX($this->getSizeX() - 8 * 1 - 2);
+        $this->button_titleComp->setPositionX(($this->getSizeX() - 5 * 5 - 4) * $sizeMultiplier);
+        $this->button_gameComp->setPositionX(($this->getSizeX() - 5 * 4 - 3) * $sizeMultiplier);
+        $this->button_otherComp->setPositionX(($this->getSizeX() - 5 * 3 - 2) * $sizeMultiplier);
+
+        $this->button_more->setPositionX(($this->getSizeX() - 5 * 8 - 7) * $sizeMultiplier);
+        $this->button_start->setPositionX(($this->getSizeX() - 8 * 1 - 2) * $sizeMultiplier);
     }
 
     /**
