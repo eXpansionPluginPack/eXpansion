@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\Gui\Windows;
 
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
 /**
@@ -18,6 +19,8 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
     protected $_closebutton;
     protected $_closeAction;
     protected $_showCoords = 'False';
+
+    /** @var  Frame */
     protected $_windowFrame;
     private $_titlebar;
     private $_bg;
