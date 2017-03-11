@@ -42,6 +42,7 @@ use ManiaLivePlugins\eXpansion\Database\Structures\DbPlayer;
 use Maniaplanet\DedicatedServer\Structures\PlayerRanking;
 use Maniaplanet\DedicatedServer\Structures\Version;
 use ManiaLive\Database\Connection as DbConnection;
+use Maniaplanet\DedicatedServer\Xmlrpc\FileException;
 use Maniaplanet\DedicatedServer\Xmlrpc\IndexOutOfBoundException;
 
 
@@ -145,11 +146,23 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
 
     private $currentRankings = array();
 
+    /**
+     * Time at which eXPansion started.
+     *
+     * @var int
+     */
     private $startTime;
 
+    /**
+     * Amount of time the dedicated was up when eXpansion started.
+     *
+     * @var int
+     */
     private $dediUpTime;
 
-
+    /**
+     * Storage constructor.
+     */
     protected function __construct()
     {
         Dispatcher::register(ServerEvent::getClass(), $this, ServerEvent::ON_PLAYER_CONNECT);
@@ -225,30 +238,80 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         }
     }
 
+    /**
+     * Save the current blacklist in the configured file.
+     *
+     * @return bool
+     */
     public function saveBlackList()
     {
         $file = CoreMeta::getInstance('expansion/core')->getVariable('blackListSettingsFile')->getRawValue();
-        $this->connection->saveBlackList($file);
+        try {
+            $this->connection->saveBlackList($file);
+        } catch (FileException $e) {
+            return false;
+        }
+
+        return true;
     }
 
+    /**
+     * Load the blacklist from the file.
+     *
+     * @return bool
+     */
     public function loadBlackList()
     {
         $file = CoreMeta::getInstance('expansion/core')->getVariable('blackListSettingsFile')->getRawValue();
-        $this->connection->loadBlackList($file);
+
+        try {
+            $this->connection->loadBlackList($file);
+        } catch (FileException $e) {
+            return false;
+        }
+
+        return true;
     }
 
+    /**
+     * Save the current guestlist to the configured file.
+     *
+     * @return bool
+     */
     public function saveGuestList()
     {
         $file = CoreMeta::getInstance('expansion/core')->getVariable('guestListSettingsFile')->getRawValue();
-        $this->connection->saveGuestList($file);
+
+        try {
+            $this->connection->saveGuestList($file);
+        } catch (FileException $e) {
+            return false;
+        }
+
+        return true;
     }
 
+    /**
+     * Load the configured gueslist file.
+     *
+     * @return bool
+     */
     public function loadGuestList()
     {
         $file = CoreMeta::getInstance('expansion/core')->getVariable('guestListSettingsFile')->getRawValue();
-        $this->connection->loadGuestList($file);
+
+        try {
+            $this->connection->loadGuestList($file);
+        } catch (FileException $e) {
+            return false;
+        }
+
+        return true;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function onPlayerConnect($login, $isSpectator)
     {
         if ($isSpectator) {
@@ -258,11 +321,17 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     public function onPlayerDisconnect($login, $disconnectionReason = null)
     {
         $this->removePlayer($login);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function onBeginMap($map, $warmUp, $matchContinuation)
     {
         $this->players = array();
@@ -283,6 +352,9 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         $this->loadGuestList();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function onPlayerInfoChanged($playerInfo)
     {
         $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
@@ -297,6 +369,11 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         }
     }
 
+    /**
+     * Remove player data from storage.
+     *
+     * @param $login
+     */
     private function removePlayer($login)
     {
         if (array_key_exists($login, $this->spectators)) {
@@ -307,6 +384,13 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         }
     }
 
+    /**
+     * Get ssimplified type of the map.
+     *
+     * @param string $type The complex type stored on the map
+     *
+     * @return string
+     */
     protected function getSimpleMapType($type)
     {
         $parts = explode("\\", $type);
@@ -317,6 +401,13 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         }
     }
 
+    /**
+     * Get simplified title (either SM or TM)
+     *
+     * @param string $enviName
+     *
+     * @return string
+     */
     protected function getSimpleTitleByEnvironment($enviName)
     {
         if ($enviName == "Stadium" || $enviName == "Valley" || $enviName == "Canyon") {
@@ -327,6 +418,8 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
     }
 
     /**
+     * Get the Database data of a player if the player is currently connected.
+     *
      * @param $login
      *
      * @return DbPlayer|null
@@ -678,24 +771,39 @@ class Storage extends Singleton implements \ManiaLive\Event\Listener, ServerList
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     function onInit()
     {
     }
 
+    /**
+     * @inheritdoc
+     */
     function onRun()
     {
     }
 
+    /**
+     * @inheritdoc
+     */
     function onPreLoop()
     {
         // Reset current rankings
         $this->currentRankings = array();
     }
 
+    /**
+     * @inheritdoc
+     */
     function onPostLoop()
     {
     }
 
+    /**
+     * @inheritdoc
+     */
     function onTerminate()
     {
     }
