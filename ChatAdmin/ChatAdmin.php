@@ -80,7 +80,7 @@ class ChatAdmin extends ExpPlugin
         $adminGroup = AdminGroups::getInstance();
 
         $cmd = AdminGroups::addAdminCommand('game script', $this, 'fastScript', Permission::GAME_SETTINGS);
-        $cmd->setHelp('/script load toto will load that script.');
+        $cmd->setHelp('/script load TimeAttack.script.txt will load the Time Attack script script.');
         $adminGroup->addShortAlias($cmd, 'script');
 
         $cmd = AdminGroups::addAdminCommand('game ta', $this, 'fastTa', Permission::GAME_SETTINGS);
@@ -472,7 +472,7 @@ Other server might use the same blacklist file!!'
         AdminGroups::addAlias($cmd, 'loadscript'); //xaseco
 
         $cmd = AdminGroups::addAdminCommand('reload script', $this, 'reloadScript', Permission::GAME_GAMEMODE);
-        $cmd->setHelp('Loads script for the next game.')
+        $cmd->setHelp('ReLoads same script for the next game.')
             ->addLineHelpMore('$w\admin script reload Reloads current script. (Usefull if script was changed).');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, 'reloadscript'); //xaseco
