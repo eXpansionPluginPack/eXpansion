@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\JoinLeaveMessage;
 
 use DateTime;
 use Exception;
+use ManiaLive\Features\Admin\AdminGroup;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
@@ -150,12 +151,16 @@ from `exp_players` WHERE `player_login` = " . $this->db->quote($login) . ";";
                 $spec = '$n(Spectator)';
             }
 
-            $group =AdminGroups::getAdmin($login)->getGroup();
-            if ($group->hasPermission(Permission::JOIN_MESSAGE_DISABLED) && $group->isMaster()) {
-                return;
-            };
+            $grpName = AdminGroups::getGroupName($login);
 
-            $grpName = $group->getGroupName();
+            $admin = AdminGroups::getAdmin($login);
+            if ($admin) {
+                $group = $admin->getGroup();
+                if ($group->hasPermission(Permission::JOIN_MESSAGE_DISABLED) && $group->isMaster()) {
+                    return;
+                };
+            }
+
             $config = Config::getInstance();
             $playTime = Helper::formatPastTime($this->expStorage->getDbPlayer($login)->getPlayTime(), 2);
             $joinTimeArgs = array('$z$s' . $nick . '$z$s', $login, $country, $spec, $grpName, $playTime);
