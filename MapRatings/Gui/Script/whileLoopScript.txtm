@@ -1,44 +1,43 @@
 foreach (Event in PendingEvents) {
-    
+
     if (Event.Type == CMlEvent::Type::MouseOver) {
          if (Event.ControlId == "button_0") {
-            declare CMlQuad quad <=> (Page.GetFirstChild("rate_0") as CMlQuad);            
-            declare CMlLabel label <=> (Page.GetFirstChild("label_0") as CMlLabel);            
-            label.RelativeScale = 1.5;
-            quad.RelativeScale = 1.5;
+            AnimMgr.Add(quad1, "<label scale='1.5' />", 100, CAnimManager::EAnimManagerEasing::QuadIn);
+            AnimMgr.Add(label1, "<label scale='1.5' />", 100, CAnimManager::EAnimManagerEasing::BounceIn);
+            //label.RelativeScale = 1.5;
+            //quad.RelativeScale = 1.5;
         }
-        
+
         if (Event.ControlId == "button_5") {
-            declare CMlQuad quad <=> (Page.GetFirstChild("rate_5") as CMlQuad);            
-            declare CMlLabel label <=> (Page.GetFirstChild("label_5") as CMlLabel);            
-            label.RelativeScale = 1.5;
-            quad.RelativeScale = 1.5;
+            AnimMgr.Add(quad2, "<label scale='1.5' />",  100, CAnimManager::EAnimManagerEasing::QuadIn);
+            AnimMgr.Add(label2, "<label scale='1.5' />",  100, CAnimManager::EAnimManagerEasing::BounceIn);
+            //label2.RelativeScale = 1.5;
+            //quad2.RelativeScale = 1.5;
         }
 
-    } 
-    
-    if (Event.Type == CMlEvent::Type::MouseOut) {
-        if (Event.ControlId == "button_0" || Event.ControlId == "button_5") {	
-            declare CMlQuad quad <=> (Page.GetFirstChild("rate_5") as CMlQuad);
-            declare CMlQuad quad2 <=> (Page.GetFirstChild("rate_0") as CMlQuad);
+    }
 
-            declare CMlLabel label <=> (Page.GetFirstChild("label_5") as CMlLabel);   
-            declare CMlLabel label2 <=> (Page.GetFirstChild("label_0") as CMlLabel);   
-            quad.RelativeScale = 1.0;
+    if (Event.Type == CMlEvent::Type::MouseOut) {
+        if (Event.ControlId == "button_0" || Event.ControlId == "button_5") {
+            /*quad.RelativeScale = 1.0;
             quad2.RelativeScale = 1.0;
             label.RelativeScale = 1.0;
-            label2.RelativeScale = 1.0;
+            label2.RelativeScale = 1.0;*/
+            AnimMgr.Add(quad1, "<label scale='1.' />", 100, CAnimManager::EAnimManagerEasing::QuadIn);
+            AnimMgr.Add(label1, "<label scale='1.' />", 100, CAnimManager::EAnimManagerEasing::QuadIn);
+            AnimMgr.Add(quad2, "<label scale='1.' />", 100, CAnimManager::EAnimManagerEasing::QuadIn);
+            AnimMgr.Add(label2, "<label scale='1.' />", 100, CAnimManager::EAnimManagerEasing::QuadIn);
         }
-    } 
+    }
 
-    if (Event.Type == CMlEvent::Type::MouseClick) {    
-	if (Event.ControlId == "button_0") {	
-	    TriggerPageAction(rate_0);    
-	    Window.Hide();	
-	}    	
-	if (Event.ControlId == "button_5") {	
-	    TriggerPageAction(rate_5);    
-	    Window.Hide();	
-	}    
+    if (Event.Type == CMlEvent::Type::MouseClick) {
+        if (Event.ControlId == "button_0") {
+            TriggerPageAction(rate_0);
+            Window.Hide();
+        }
+        if (Event.ControlId == "button_5") {
+            TriggerPageAction(rate_5);
+            Window.Hide();
+        }
     }
 }

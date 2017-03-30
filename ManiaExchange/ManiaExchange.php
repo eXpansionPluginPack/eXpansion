@@ -75,9 +75,9 @@ class ManiaExchange extends ExpPlugin
         $this->titleId = $version->titleId;
         $this->enableDedicatedEvents();
 
-        $widget = Gui\Widgets\MxWidget::Create();
-        $widget->setDisableAxis("x");
-        $widget->show();
+       // $widget = Gui\Widgets\MxWidget::Create();
+       // $widget->setDisableAxis("x");
+       // $widget->show();
     }
 
     public function onPlayerDisconnect($login, $reason = null)

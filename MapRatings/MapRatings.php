@@ -46,7 +46,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         $this->enableDedicatedEvents();
         $this->msg_rating = eXpGetMessage(
             '#rating#Map Approval Rating: #variable#%2$s#rating# (#variable#%3$s #rating#votes). '
-            .' Your Rating: #variable#%4$s#rating# / #variable#5'
+            . ' Your Rating: #variable#%4$s#rating# / #variable#5'
         );  // '%1$s' = Map Name, '%2$s' = Rating %, '%3$s' = # of Ratings, '%4$s' = Player's Rating);
         $this->msg_noRating = eXpGetMessage('#rating# $iMap has not been rated yet!');
         if (!$this->db->tableExists("exp_ratings")) {
@@ -91,7 +91,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
             } catch (\Exception $ex) {
                 $this->console(
                     "[MapRatings] There was error while changing your database structure to newer one, "
-                    ."most likely the database is converted already!"
+                    . "most likely the database is converted already!"
                 );
             }
             $this->callPublicMethod(
@@ -105,18 +105,19 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         $cmd = $this->registerChatCommand("rate", "chatRate", 1, true);
         $cmd->help = '/rate +++, /rate ++, /rate +-, /rate --, /rate --- or '
-            .'/rate 5, /rate 4, /rate 3. /rate 2, /rate 1';
+            . '/rate 5, /rate 4, /rate 3. /rate 2, /rate 1';
         $cmd = $this->registerChatCommand("rating", "chatRating", 1, true);
         $cmd->help = '/rating Map Rating Approval';
 
         $this->setPublicMethod("getRatings");
         $this->setPublicMethod("showRatingsManager");
+
     }
 
     public function eXpOnReady()
     {
         $this->reload();
-        if ($this->isPluginLoaded("eXpansion\TMKarma")) {
+        if ($this->isPluginLoaded("eXpansion\\TMKarma")) {
             $this->displayWidget = false;
         }
 
@@ -129,7 +130,10 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         $this->previousMap = $this->storage->currentMap;
 
-       // $this->affectAllRatings();
+        // $this->affectAllRatings();
+
+        // $this->registerChatCommand("ratings", "showEndRatings", 0, false);
+
     }
 
     public function onMapListModified($curMapIndex, $nextMapIndex, $isListModified)
@@ -457,6 +461,13 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
                 }
             }
         }
+    }
+
+    public function showEndRatings()
+    {
+        $widget = EndMapRatings::Create(null);
+        $widget->setMap($this->storage->currentMap);
+        $widget->show();
     }
 
     public function onBeginMatch()

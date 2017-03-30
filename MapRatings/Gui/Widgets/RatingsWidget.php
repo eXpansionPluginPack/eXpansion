@@ -56,18 +56,19 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $test = ($number / 6) * 100;
         $color = "fff";
         if ($test < 30) {
-            $color = "0ad";
+            $color = "05b";
         }
+
         if ($test >= 30) {
-            $color = "2af";
+            $color = "07f";
         }
         if ($test > 60) {
-            $color = "0cf";
+            $color = "3af";
         }
 
         $this->gauge->setContent(
-            '<gauge sizen="32 7" drawblockbg="1" style="ProgressBarSmall" color="'
-            . $color . '" drawbg="1" rotation="0" posn="0 -3.5" grading="1" ratio="'
+            '<gauge sizen="34 14" drawblockbg="1" style="EnergyBar" color="'
+            . $color . '" drawbg="0" rotation="0" posn="0 0" grading="1" ratio="'
             . ($number / 5) . '" centered="0" />'
         );
         $this->frame->addComponent($this->gauge);
@@ -82,7 +83,7 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $info->setAlign("center", "center");
         $info->setTextEmboss();
         $info->setText($score . "% (" . $total . ")");
-        $info->setPosition(17, -7);
+        $info->setPosition(17, -7.5);
         $this->frame->addComponent($info);
         $this->redraw();
     }
