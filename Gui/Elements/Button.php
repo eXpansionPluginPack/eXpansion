@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Config;
+use ManiaLivePlugins\eXpansion\Helpers\ColorConversion;
 
 class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer
 {
@@ -36,7 +37,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         if (self::$script === null) {
             self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\ButtonScript();
         }
-
+        /** @var Config $config */
         $config = Config::getInstance();
         $this->buttonId = self::$counter++;
         if (self::$counter > 100000) {
@@ -52,8 +53,8 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
         $this->label = new \ManiaLib\Gui\Elements\Label($sizeX, $sizeY - 2);
         $this->label->setAlign('center', 'center2');
-        $this->label->setStyle("TextValueSmallSm");
-        $this->label->setTextSize(2);
+        $this->label->setAttribute("textfont","Oswald");
+        $this->label->setTextSize(2.5);
         $this->label->setTextEmboss();
         $this->label->setTextColor($config->buttonTitleColor);
 
@@ -70,11 +71,11 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
         $this->backGround = new \ManiaLib\Gui\Elements\Quad($sizeX + 2, $sizeY + 1);
         $this->backGround->setAlign('left', 'center2');
-        $this->backGround->setImage("file://Media/Manialinks/Common/Demo/demo-button-green.png", true);
-        $this->backGround->setImageFocus("file://Media/Manialinks/Common/Demo/demo-button-green-focus.png", true);
-        $this->backGround->setId("backGround_" . $this->buttonId);
+        $this->backGround->setStyle("Bgs1InRace");
+        $this->backGround->setSubStyle('BgCard');
+        $this->backGround->setModulateColor($config->buttonBackgroundColor);
         $this->backGround->setScriptEvents();
-        $this->backGround->setColorize($config->buttonBackgroundColor);
+        //$this->backGround->setColorize($config->buttonBackgroundColor);
 
 
         $this->labelDesc = new \ManiaLib\Gui\Elements\Label(20, 6);
@@ -82,6 +83,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->labelDesc->setId("eXp_ButtonDescText_Icon_" . $this->buttonId);
         $this->labelDesc->setPosition(7, 3);
         $this->labelDesc->setPositionZ(5);
+        $this->labelDesc->setAttribute("textfont","Oswald");
         $this->labelDesc->setAttribute('hidden', '1');
         $this->frameDescription->addComponent($this->labelDesc);
 
@@ -200,7 +202,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
     public function colorize($value)
     {
         $this->label->setTextColor("fff");
-        $this->backGround->setColorize($value);
+        $this->backGround->setModulateColor($value);
         if ($this->icon != null) {
             $this->icon->setColorize($value);
         }

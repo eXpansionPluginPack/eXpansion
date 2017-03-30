@@ -26,7 +26,7 @@ class Tab extends \ManiaLivePlugins\eXpansion\Gui\Control
         $label->setText("Tab " . $idx);
         $label->setId("tablabel_" . $idx);
         $label->setTextColor("fff");
-        $label->setStyle("TextCardScores2");
+        $label->setAttribute("textfont","Oswald");
         //$label->setScriptEvents();
         $label->setTextSize(1);
         $this->addComponent($label);

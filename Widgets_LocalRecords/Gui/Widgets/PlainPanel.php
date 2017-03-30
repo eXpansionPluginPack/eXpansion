@@ -162,7 +162,7 @@ class PlainPanel extends Widget
 
         $this->bgFirst->setPosX(($this->sizeX / 2) + 1);
 
-        $this->bg->setSize($this->sizeX, $this->sizeY + 1.5);
+        $this->bg->setSize($this->sizeX, $this->sizeY);
 
         $this->bgTitle->setSize($this->sizeX, $this->sizeY);
 

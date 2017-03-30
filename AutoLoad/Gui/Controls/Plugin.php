@@ -120,7 +120,7 @@ class Plugin extends Control
         $this->addComponent($this->label_name);
 
         $this->label_author = new Label(40, 4);
-        $this->label_author->setStyle("TextCardScores2");
+        $this->label_author->setAttribute("textfont","Oswald");
         $this->label_author->setTextSize(1);
 
         $this->label_author->setText('$i' . $plugin->getDescription());

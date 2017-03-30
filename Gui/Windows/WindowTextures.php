@@ -45,6 +45,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
     protected function onConstruct()
     {
         parent::onConstruct();
+        /** @var Config $config */
         $config = Config::getInstance();
 
         $this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
@@ -58,10 +59,22 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_windowFrame->setScriptEvents(true);
         $this->_windowFrame->setAlign("left", "top");
 
+        $this->_windowBorder = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->element);
+        $this->_windowBorder->setAlign("left", "top");
+        $this->_windowBorder->setStyle("Bgs1InRace");
+        $this->_windowBorder->setSubStyle("BgButtonShadow");
+
+        //    $this->_windowBorder->setModulateColor($config->windowTitleBackgroundColor);
+        $this->_windowFrame->addComponent($this->_windowBorder);
+
         $this->_bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);
         $this->_bg->setAlign("left", "top");
-        $this->_bg->setBgcolor($config->windowBackgroundColor);
+        $this->_bg->setModulateColor($config->windowBackgroundColor);
+        $this->_bg->setStyle("Bgs1");
+        $this->_bg->setSubStyle('BgWindow4');
         $this->_bg->setOpacity(0.9);
+        $this->_bg->setScriptEvents(true);
+        $this->_bg->setId("MainWindow");
         $this->_windowFrame->addComponent($this->_bg);
 
 
@@ -71,7 +84,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_bgeff->setAlign("left", "top");
 
         $this->_bgeff->setColorize($config->windowBackgroundColor);
-    //    $this->_windowFrame->addComponent($this->_bgeff);
+        //    $this->_windowFrame->addComponent($this->_bgeff);
 
         $this->_bottomcenter = new \ManiaLib\Gui\Elements\Quad($this->element, $this->element);
         $this->_bottomcenter->setAlign("left", "top");
@@ -80,48 +93,47 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_bottomcenter->setAlign("right", "bottom");
         $this->_bottomcenter->setId("MainWindow");
         $this->_bottomcenter->setOpacity(0.9);
-        $this->_windowFrame->addComponent($this->_bottomcenter);
+        //      $this->_windowFrame->addComponent($this->_bottomcenter);
 
-        $this->_windowBorder = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->element);
-        $this->_windowBorder->setAlign("left", "top");
-        $this->_windowBorder->setStyle("Bgs1");
-        $this->_windowBorder->setSubStyle("BgColorContour");
-        $this->_windowBorder->setScriptEvents(true);
-        $this->_windowBorder->setId("MainWindow");
-        $this->_windowBorder->setModulateColor($config->windowTitleBackgroundColor);
-        $this->_windowFrame->addComponent($this->_windowBorder);
 
 
         $this->_topcenter = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->element);
         $this->_topcenter->setAlign("left", "top");
         $this->_topcenter->setOpacity(0.8);
         $this->_topcenter->setBgcolor($config->windowTitleBackgroundColor);
-        $this->_windowFrame->addComponent($this->_topcenter);
+//        $this->_windowFrame->addComponent($this->_topcenter);
 
-        $this->_title = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(60, 4);
-        $this->_title->setId("TitlebarText");
-        $this->_title->setAlign("left", "bottom");
-        $this->_title->setStyle("TextRaceMessageBig");
-        $this->_title->setTextColor($config->windowTitleColor);
-        $this->_title->setTextSize(1);
-        $this->_windowFrame->addComponent($this->_title);
+
 
         $this->_titlebar = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->element);
         $this->_titlebar->setId("Titlebar");
         $this->_titlebar->setAlign("left", "top");
+        $this->_titlebar->setScriptEvents();
         $this->_titlebar->setStyle("Bgs1");
-        $this->_titlebar->setId("Titlebar");
-        $this->_titlebar->setSubStyle("BgColorContour");
-        $this->_titlebar->setScriptEvents(true);
+        $this->_titlebar->setSubStyle('BgWindow4');
+        $this->_titlebar->setOpacity(0.7);
         $this->_titlebar->setModulateColor($config->windowTitleBackgroundColor);
         $this->_windowFrame->addComponent($this->_titlebar);
 
-        $this->_closebutton = new \ManiaLib\Gui\Elements\Quad(4, 4);
+        $this->_title = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(60, 4);
+        $this->_title->setId("Titlebar");
+        $this->_title->setAlign("left", "center2");
+        $this->_title->setAttribute("textfont", "RajdhaniMono");
+        $this->_title->setTextColor($config->windowTitleColor);
+        $this->_title->setTextSize(1.5);
+        $this->_title->setScriptEvents();
+        $this->_windowFrame->addComponent($this->_title);
+
+        $this->_closebutton = new \ManiaLib\Gui\Elements\Label(9.6, 4);
         $this->_closebutton->setId("Close");
-        $this->_closebutton->setAlign('right', 'bottom');
-        $this->_closebutton->setImage('file://Media/Manialinks/Common/Chat/buddy-buddy-deny-focus.dds', true);
-        $this->_closebutton->setImageFocus('file://Media/Manialinks/Common/Chat/buddy-buddy-deny.dds', true);
+        $this->_closebutton->setAlign('center', 'center2');
         $this->_closebutton->setScriptEvents(true);
+        $this->_closebutton->setTextcolor("fff");
+        $this->_closebutton->setFocusareacolor1($config->windowTitleBackgroundColor);
+        $this->_closebutton->setFocusareacolor2("D30707");
+        $this->_closebutton->setAttribute("textfont", "OswaldMono");
+        $this->_closebutton->setTextSize(2);
+        $this->_closebutton->setText("✖");
         $this->_windowFrame->addComponent($this->_closebutton);
 
         $this->mainFrame = new \ManiaLive\Gui\Controls\Frame();
@@ -137,7 +149,6 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
     protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
-        $element = 12;
         $x = $this->sizeX;
         $y = $this->sizeY;
         $o = 6;
@@ -147,11 +158,8 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_bg->setSize($x + $o * 2, $y + $o);
         $this->_bg->setPosition(-$o, 0);
 
-        $this->_windowBorder->setSize($x + $o * 2, $y + $o * 2);
-        $this->_windowBorder->setPosition(-$o, $o);
-
-        $this->_bgeff->setSize($x + $o * 2, $y + $o * 2);
-        $this->_bgeff->setPosition(-$o, $o);
+        $this->_windowBorder->setSize($x + $o * 2+10, $y + $o * 2+10);
+        $this->_windowBorder->setPosition(-$o-5, $o+5);
 
         $this->_titlebar->setSize($x + $o * 2, $o);
         $this->_titlebar->setPosition(-$o, $o);
@@ -162,8 +170,8 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_bottomcenter->setSize($x + $o * 2, $o);
         $this->_bottomcenter->setPosition(-$o, -($y + $o - 2));
 
-        $this->_title->setPosition(0, 1);
-        $this->_closebutton->setPosition($x + 4, 1);
+        $this->_title->setPosition(0, $o/2);
+        $this->_closebutton->setPosition($x, $o/2);
     }
 
     private function detectElements($components)

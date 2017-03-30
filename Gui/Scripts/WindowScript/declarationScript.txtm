@@ -72,7 +72,7 @@ main () {
     declare Integer tabIndex = -1;
 
     declare Window <=> (Page.GetFirstChild("<?php echo $win->getId() ?>") as CMlFrame);
-    declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);
+    // declare CMlLabel TitlebarText <=> (Page.GetFirstChild("TitlebarText") as CMlLabel);
 
     declare MoveWindow = False;
     declare Scroll = False;

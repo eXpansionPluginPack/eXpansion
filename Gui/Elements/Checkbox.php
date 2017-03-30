@@ -26,20 +26,19 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->toToggle = $toToggle;
 
         $config = Config::getInstance();
-        $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+        $this->button = new \ManiaLib\Gui\Elements\Label($sizeX, $sizeY);
         $this->button->setAlign('left', 'center2');
+        $this->button->setTextSize(2);
         $this->button->setAction($this->action);
-        $this->button->setStyle('Icons64x64_1');
-        $this->button->setSubStyle('GenericButton');
-
-        $this->button->setScriptEvents(true);
+        $this->button->setText("юд?");
+        //$this->button->setScriptEvents(true);
         $this->addComponent($this->button);
 
         $this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 6);
         $this->label->setAlign('left', 'center');
         $this->label->setTextSize(1);
         $this->label->setScale(1.1);
-        $this->label->setStyle("TextCardInfoSmall");
+        $this->label->setAttribute("textfont","Oswald");
         $this->addComponent($this->label);
 
         $this->setSize($sizeX + $textWidth, $sizeY);
@@ -80,16 +79,15 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         if ($this->button->getAction() == -1) {
             if ($this->active) {
-
-                $this->button->setModulateColor("afa");
+                $this->button->setText("юд?");
             } else {
-                $this->button->setModulateColor("faa");
+                $this->button->setText("юдЮ");
             }
         } else {
             if ($this->active) {
-                $this->button->setModulateColor("0f0");
+                $this->button->setText("юд?");
             } else {
-                $this->button->setModulateColor("f00");
+                $this->button->setText("юдЮ");
             }
         }
     }

@@ -18,7 +18,8 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->frame->setAlign("left", "top");
         $this->addComponent($this->frame);
 
-        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(34, 10);
+        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(34, 6);
+        $bg->setPosition(0,-4);
         $bg->setAction($this->createAction(array(self::$parentPlugin, "showRatingsManager")));
         $this->addComponent($bg);
 
