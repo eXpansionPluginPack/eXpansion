@@ -25,6 +25,7 @@ namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Label;
 use ManiaLib\Gui\Elements\Quad;
+use ManiaLive\Features\Admin\AdminGroup;
 use ManiaLivePlugins\eXpansion\AutoLoad\AutoLoad;
 use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\Gui\Windows\ExpSettings;
@@ -100,14 +101,15 @@ class Plugin extends Control
         $isInStart = $autoload->isInStartList($plugin->getPlugin());
 
         $this->button_running = new Button(8, 8);
-        $this->button_running->setIcon('Icons64x64_1', 'GenericButton');
+        $this->button_running->setGlyph('⏺');
+        //$this->button_running->setIcon('Icons64x64_1', 'GenericButton');
         if ($isLoaded) {
-            $this->button_running->colorize('0f0');
+            $this->button_running->colorize('0d0');
         } else {
             if ($isInStart) {
-                $this->button_running->colorize('ff0');
+                $this->button_running->colorize('dd0');
             } else {
-                $this->button_running->colorize('f00');
+                $this->button_running->colorize('d00');
             }
         }
         $this->button_running->setAction($toggleAction);
@@ -128,27 +130,30 @@ class Plugin extends Control
         $this->addComponent($this->label_author);
 
         $this->button_titleComp = new Button(7, 7);
-        $this->button_titleComp->setIcon('Icons64x64_1', 'GenericButton');
+   //     $this->button_titleComp->setIcon('Icons64x64_1', 'GenericButton');
+        $this->button_titleComp->setGlyph('⏺');
         $this->button_titleComp->setDescription(__($this->getTitleDescriptionText($titleCompatible), $login), 100);
         if ($titleCompatible) {
             $this->button_titleComp->colorize('090');
         } else {
-            $this->button_titleComp->colorize('f00');
+            $this->button_titleComp->colorize('d00');
         }
         $this->addComponent($this->button_titleComp);
 
         $this->button_gameComp = new Button(7, 7);
-        $this->button_gameComp->setIcon('Icons64x64_1', 'GenericButton');
+        //$this->button_gameComp->setIcon('Icons64x64_1', 'GenericButton');
+        $this->button_gameComp->setGlyph('⏺');
         $this->button_gameComp->setDescription(__($this->getGameDescriptionText($gameCompatible), $login), 100);
         if ($gameCompatible) {
             $this->button_gameComp->colorize('090');
         } else {
-            $this->button_gameComp->colorize('f00');
+            $this->button_gameComp->colorize('d00');
         }
         $this->addComponent($this->button_gameComp);
 
         $this->button_otherComp = new Button(7, 7);
-        $this->button_otherComp->setIcon('Icons64x64_1', 'GenericButton');
+        //$this->button_otherComp->setIcon('Icons64x64_1', 'GenericButton');
+        $this->button_otherComp->setGlyph('⏺');
         $this->button_otherComp->setDescription(
             __($this->getOtherDescriptionText($otherCompatible), $login),
             100,
@@ -158,7 +163,7 @@ class Plugin extends Control
         if (empty($otherCompatible)) {
             $this->button_otherComp->colorize('090');
         } else {
-            $this->button_otherComp->colorize('f00');
+            $this->button_otherComp->colorize('d00');
         }
         $this->addComponent($this->button_otherComp);
 
@@ -177,7 +182,7 @@ class Plugin extends Control
         if ($this->getStartText($isLoaded, $isInStart) == "Start") {
             $this->button_start->colorize("0D0");
         } else {
-            $this->button_start->colorize("F00");
+            $this->button_start->colorize("d00");
         }
         $this->addComponent($this->button_start);
 

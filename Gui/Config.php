@@ -10,9 +10,11 @@ class Config extends \ManiaLib\Utils\Singleton
     public $windowBackgroundColor = "093055";
     public $buttonTitleColor = "fffe";
     public $buttonBackgroundColor = "aa9";
-    public $style_list_bgColor = array('aaa8', 'eee8');
-    public $style_list_bgStyle = array('BgsPlayerCard', 'BgsPlayerCard');
-    public $style_list_bgSubStyle = array('BgRacePlayerName', 'BgRacePlayerName');
+    public $style_list_bgColor = array('fff3', 'fff5');
+    // public $style_list_bgStyle = array('BgsPlayerCard', 'BgsPlayerCard');
+    public $style_list_bgStyle = array();
+    //public $style_list_bgSubStyle = array('BgRacePlayerName', 'BgRacePlayerName');
+    public $style_list_bgSubStyle = array();
     public $style_list_posXOffset = -1;
     public $style_list_sizeXOffset = 0;
     public $style_list_posYOffset = 0;

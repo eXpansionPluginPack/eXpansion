@@ -24,6 +24,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
     protected $value;
     protected $isActive = false;
     protected $action = 0;
+    protected $hasGlyph = false;
 
     /**
      * Button
@@ -53,7 +54,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
 
         $this->label = new \ManiaLib\Gui\Elements\Label($sizeX, $sizeY - 2);
         $this->label->setAlign('center', 'center2');
-        $this->label->setAttribute("textfont","Oswald");
+        $this->label->setAttribute("textfont", "Oswald");
         $this->label->setTextSize(2.5);
         $this->label->setTextEmboss();
         $this->label->setTextColor($config->buttonTitleColor);
@@ -83,7 +84,8 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->labelDesc->setId("eXp_ButtonDescText_Icon_" . $this->buttonId);
         $this->labelDesc->setPosition(7, 3);
         $this->labelDesc->setPositionZ(5);
-        $this->labelDesc->setAttribute("textfont","Oswald");
+        $this->labelDesc->setTextColor('fff');
+        $this->labelDesc->setAttribute("textfont", "Oswald");
         $this->labelDesc->setAttribute('hidden', '1');
         $this->frameDescription->addComponent($this->labelDesc);
 
@@ -91,8 +93,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->backGroundDesc->setAlign('left', 'center');
         $this->backGroundDesc->setId("eXp_ButtonDescBg_Icon_" . $this->buttonId);
         $this->backGroundDesc->setStyle('Bgs1');
-        $this->backGroundDesc->setSubStyle('BgMetalBar');
-        $this->backGroundDesc->setColorize("fff");
+        $this->backGroundDesc->setSubStyle('BgPager');
         $this->backGroundDesc->setPosition(5, 3);
         $this->backGroundDesc->setPositionZ(1);
         $this->backGroundDesc->setAttribute('hidden', '1');
@@ -171,7 +172,7 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
             $description = implode("\n", $description);
         }
 
-        $this->description = "$000" . $description;
+        $this->description = $description;
         $this->labelDesc->setSizeX($sizeX);
         $this->labelDesc->setSizeY($sizeY * $maxLine);
         $this->labelDesc->setMaxline($maxLine);
@@ -205,6 +206,9 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->backGround->setModulateColor($value);
         if ($this->icon != null) {
             $this->icon->setColorize($value);
+        }
+        if ($this->hasGlyph) {
+            $this->label->setTextColor($value);
         }
     }
 
@@ -266,6 +270,24 @@ class Button extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLi
         $this->label->setPosX((($this->sizeX - 2) / 2) + ($this->getSizeY() - 1));
         $this->label->setSizeX($this->getSizeX() - ($this->getSizeY() + 1));
     }
+
+    public function setGlyph($glyph)
+    {
+        $this->icon = new \ManiaLib\Gui\Elements\Quad($this->getSizeY(), $this->getSizeY());
+        $this->icon->setAlign('left', 'center');
+        $this->icon->setStyle("Bgs1InRace");
+        $this->icon->setSubStyle("BgEmpty");
+        $this->icon->setScriptEvents(1);
+        $this->icon->setId("Icon_" . $this->buttonId);
+        if ($this->action != 0) {
+            $this->icon->setAction($this->action);
+        }
+        $this->addComponent($this->icon);
+
+        $this->hasGlyph = true;
+        $this->setText($glyph);
+    }
+
 
     public function setId($id)
     {

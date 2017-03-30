@@ -37,8 +37,8 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         $this->button = new \ManiaLib\Gui\Elements\Label($sizeX, $sizeY);
         $this->button->setScriptEvents();
         $this->button->setAlign('left', 'center2');
-        $this->button->setTextSize(2);
-        $this->button->setText('$fff�?');
+        $this->button->setTextSize(2.5);
+        $this->button->setText('$fff☑');
         $this->button->setId('eXp_CheckboxQ_' . $this->checkboxId);
         $this->addComponent($this->button);
 
@@ -53,10 +53,10 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
 
         if (self::$script == null) {
             self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\CheckboxScript();
-            self::$script->setParam("disabledActiveUrl", '$999');
-            self::$script->setParam("disabledUrl", '$999�?');
-            self::$script->setParam("ActiveUrl", '$fff');
-            self::$script->setParam("InactiveUrl", '$fff�?');
+            self::$script->setParam("disabledActiveUrl", '$999☑');
+            self::$script->setParam("disabledUrl", '$999☐');
+            self::$script->setParam("ActiveUrl", '$fff☑');
+            self::$script->setParam("InactiveUrl", '$fff☐');
         }
 
         $this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 4);
@@ -96,30 +96,30 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         if ($this->skin == "ratiobutton") {
             if (!$this->enabled) {
                 if ($this->active) {
-                    $this->button->setText("$999");
+                    $this->button->setText("$999☑");
                 } else {
-                    $this->button->setText("$999");
+                    $this->button->setText("$999☐");
                 }
             } else {
                 if ($this->active) {
-                    $this->button->setText('$fff');
+                    $this->button->setText('$fff☑');
                 } else {
-                    $this->button->setText('$fff');
+                    $this->button->setText('$fff☐');
                 }
             }
         }
         if ($this->skin == "checkbox") {
             if (!$this->enabled) {
                 if ($this->active) {
-                    $this->button->setText("$999");
+                    $this->button->setText("$999☑");
                 } else {
-                    $this->button->setText("$999�?");
+                    $this->button->setText("$999☐");
                 }
             } else {
                 if ($this->active) {
-                    $this->button->setText('$fff');
+                    $this->button->setText('$fff☑');
                 } else {
-                    $this->button->setText('$fff�?');
+                    $this->button->setText('$fff☐');
                 }
             }
         }
@@ -130,10 +130,10 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         $this->skin = $value;
         $this->skinWidth = 5;
         if (is_object(self::$script)) {
-            self::$script->setParam("disabledActiveUrl", '$999');
-            self::$script->setParam("disabledUrl", '$999');
-            self::$script->setParam("ActiveUrl", '$fff');
-            self::$script->setParam("InactiveUrl", '$fff');
+            self::$script->setParam("disabledActiveUrl", '$999☑');
+            self::$script->setParam("disabledUrl", '$999☐');
+            self::$script->setParam("ActiveUrl", '$fff☑');
+            self::$script->setParam("InactiveUrl", '$fff☐');
         }
     }
 

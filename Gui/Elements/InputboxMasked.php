@@ -56,6 +56,7 @@ class InputboxMasked extends Control
 
 
         $this->label->setSize($this->getSizeX(), 3);
+        $this->label->setAttribute("textfont","Oswald");
         $this->label->setPosition(1, 0);
 
         parent::onResize($oldX, $oldY);
