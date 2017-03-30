@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Menu\Gui\Widgets;
 use ManiaLib\Gui\Elements\Frame;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Column;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 
 class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
@@ -12,9 +13,20 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     protected $frame;
     protected $script;
 
+    protected $button;
+
     protected function onConstruct()
     {
         parent::onConstruct();
+
+
+        $this->button = new Button(28,6);
+        $this->button->setText('Menu');
+        $this->button->colorize("3af");
+        $this->button->setPosition(-159, 60);
+        $this->button->setId('MenuButton');
+        $this->button->setScriptEvents();
+        $this->addComponent($this->button);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame(0, 0, new Column(50, 20));
         $this->frame->setId("Menu");

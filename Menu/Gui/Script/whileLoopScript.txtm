@@ -11,6 +11,15 @@ foreach (Event in PendingEvents) {
         exp_chatVisible = !exp_chatVisible;
         ClientUI.OverlayHideChat = !exp_chatVisible;
     }
+     if (Event.Type == CMlEvent::Type::MouseClick &&  Event.ControlId == "MenuButton") {
+        toggleSubmenu = True;
+        showStatus = True;
+        needUpdate = True;
+        firstClick = True;
+        Menu.RelativePosition.X = -159.;
+        Menu.RelativePosition.Y = 55.;
+        Menu.RelativePosition.Z = 50.0;
+    }
 }
 
 if (eXp_tabPressed) {
@@ -97,6 +106,12 @@ if (toggleSubmenu) {
                 }
             }
     }
+
+    if (MouseLeftButton && firstClick == False) {
+             showStatus = False;
+             needUpdate = True;
+    }
+
 }
 
 if (needUpdate) {
@@ -163,6 +178,7 @@ if (hideStamp != 0) {
 if (showStamp != 0) {
     if ((Now - showStamp) > 600) {
         showStamp = 0;
+        firstClick = False;
     }
       declare delay = 0;
           for (i, 1, itemCount ) {
@@ -184,7 +200,3 @@ if (showStamp != 0) {
           }
 }
 
-if (MouseLeftButton) {
-         showStatus = False;
-         needUpdate = True;
-}
