@@ -23,7 +23,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $this->button = new Button(28,6);
         $this->button->setText('Menu');
         $this->button->colorize("3af");
-        $this->button->setPosition(-159, 60);
+        $this->button->setPosition(-159, 80);
         $this->button->setId('MenuButton');
         $this->button->setScriptEvents();
         $this->addComponent($this->button);
@@ -89,6 +89,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $label->setTextSize(1);
         $label->setStyle("TextRaceChat");
         $label->setTextColor("fff");
+        $label->setAttribute("data-action", $action);
         $label->setAlign("left", "center");
 
         $quad = new Quad(30, 5);
@@ -97,7 +98,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $quad->setId("mQuad_" . count($this->items));
         $quad->setAlign("left", "center");
         $quad->setScriptEvents();
-        $quad->setAction($action);
+        $quad->setAttribute("data-action", $action);
 
         $frame->addComponent($quad);
         $frame->addComponent($label);

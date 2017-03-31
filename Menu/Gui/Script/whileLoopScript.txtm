@@ -17,7 +17,7 @@ foreach (Event in PendingEvents) {
         needUpdate = True;
         firstClick = True;
         Menu.RelativePosition.X = -159.;
-        Menu.RelativePosition.Y = 55.;
+        Menu.RelativePosition.Y = 75.;
         Menu.RelativePosition.Z = 50.0;
     }
 }
@@ -79,6 +79,14 @@ if(eXp_tabPressed){
 
 if (toggleSubmenu) {
 	foreach (Event in PendingEvents) {
+             if (Event.Type == CMlEvent::Type::MouseClick)
+             {
+                declare Text action = Event.Control.DataAttributeGet("action");
+                if (action != "") {
+                   // log(action);
+                    TriggerPageAction(action);
+                }
+             }
             if (Event.Type == CMlEvent::Type::MouseOver) {
                 if ( Event.Control.ControlClasses.count > 0) {
                     if (Event.Control.ControlClasses[0] == "group") {
@@ -106,12 +114,6 @@ if (toggleSubmenu) {
                 }
             }
     }
-
-    if (MouseLeftButton && firstClick == False) {
-             showStatus = False;
-             needUpdate = True;
-    }
-
 }
 
 if (needUpdate) {
@@ -200,3 +202,7 @@ if (showStamp != 0) {
           }
 }
 
+if (MouseLeftButton && firstClick == False) {
+    showStatus = False;
+    needUpdate = True;
+}
