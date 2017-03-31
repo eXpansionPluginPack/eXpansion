@@ -50,7 +50,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
 
         $this->_closeAction = \ManiaLive\Gui\ActionHandler::getInstance()->createAction(array($this, 'closeWindow'));
 
-        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\WindowScript");
+        $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\\Scripts\\WindowScript");
 
 
         $this->_windowFrame = new \ManiaLive\Gui\Controls\Frame();
@@ -63,8 +63,7 @@ abstract class WindowTextures extends \ManiaLive\Gui\Window
         $this->_windowBorder->setAlign("left", "top");
         $this->_windowBorder->setStyle("Bgs1InRace");
         $this->_windowBorder->setSubStyle("BgButtonShadow");
-
-        //    $this->_windowBorder->setModulateColor($config->windowTitleBackgroundColor);
+        $this->_windowBorder->setOpacity(0.6);
         $this->_windowFrame->addComponent($this->_windowBorder);
 
         $this->_bg = new \ManiaLib\Gui\Elements\Quad($this->sizeX, $this->sizeY);

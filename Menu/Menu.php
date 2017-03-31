@@ -150,7 +150,7 @@ class Menu extends ExpPlugin implements Listener
         $mapsGroup = $menu->addGroup(' Maps');
 
         if ($this->pluginLoaded("Maps")) {
-            $mapsGroup->addItem(' Show Maps', "!maplist", $this);
+            $mapsGroup->addItem('Show Maps', "!maplist", $this);
         }
         if ($group->hasPermission(Permission::MAP_ADD_LOCAL)) {
             if ($this->pluginLoaded("Maps")) {
@@ -159,7 +159,7 @@ class Menu extends ExpPlugin implements Listener
         }
         if ($group->hasPermission(Permission::MAP_ADD_MX)) {
             if ($this->pluginLoaded("ManiaExchange")) {
-                $mapsGroup->addItem('🌐 ManiaExchange', "!mx", $this);
+                $mapsGroup->addItem('ManiaExchange', "!mx", $this);
             }
         }
         if ($group->hasPermission(Permission::MAP_REMOVE_MAP)) {
