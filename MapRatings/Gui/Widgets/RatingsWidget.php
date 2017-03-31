@@ -8,6 +8,7 @@ use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle;
 use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
 use ManiaLivePlugins\eXpansion\Helpers\Storage;
 
 class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
@@ -60,14 +61,33 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     {
         $this->starFrame->clearComponents();
 
-        for ($x = 0; $x < $number; $x++) {
+        for ($x = 0; $x < floor($number); $x++) {
             $star = new Label();
             $star->setSize(6, 6);
             $star->setText('');
             $star->setTextSize(5);
             $this->starFrame->addComponent($star);
         }
-        for ($x = 0; $x < 5 - $number; $x++) {
+
+        $fraction = $number - floor($number);
+
+        $star = new Label();
+        $star->setSize(6, 6);
+        $star->setTextSize(5);
+        $star->setText('');
+
+        if ($fraction < 0.33) {
+            $star->setText('');
+        }
+
+        if ($fraction >= 0.66) {
+            $star->setText('');
+
+        }
+        if ($fraction != 0) {
+            $this->starFrame->addComponent($star);
+        }
+        for ($x = 0; $x < floor(5 - $number); $x++) {
             $star = new Label();
             $star->setSize(6, 6);
             $star->setText('');
@@ -75,13 +95,13 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
             $this->starFrame->addComponent($star);
         }
 
-        /*$info = new Label();
+       /* $info = new Label();
         $info->setTextColor('fff');
         $info->setAlign("left", "top");
         $info->setTextEmboss();
         $info->setTextSize(3);
-        $info->setText($total);
-        $this->starFrame->addComponent($info); */
-        $this->redraw();
+        $info->setText("number:" . $number);
+        $this->starFrame->addComponent($info);
+        $this->redraw(); */
     }
 }

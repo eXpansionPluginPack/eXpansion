@@ -80,7 +80,6 @@ class ExpSetting extends Control
             $this->button_change->setAction($this->createAction(array($this, "openWin"), $var));
             $this->addComponent($this->button_change);
         } elseif ($var->getDescription() != "") {
-
             $this->button_change = new Button(8, 8);
             $this->button_change->setGlyph('💡');
             //$this->button_change->setIcon('UIConstructionSimple_Buttons', 'Help');
@@ -93,7 +92,7 @@ class ExpSetting extends Control
         $this->button_reset->setGlyph('');
         $this->button_reset->setDescription(__('Reset the settings !', $login));
         $this->button_reset->setAction($this->createAction(array($this, 'reset')));
-        if ($var->getDefaultValue() != null) {
+        if ($var->getDefaultValue() !== null) {
             $this->addComponent($this->button_reset);
         }
 

@@ -34,18 +34,6 @@ if(!disablePersonalHud){
 		    eXp_widgetVisible[version][id][gameMode] = <?php echo $win->getWidgetVisible(); ?>;
 	    }
 
-	    if (!eXp_widgetLayers.existskey(version) ) {
-		    eXp_widgetLayers[version] = Text[Text][Text];
-	    }
-
-	    if (!eXp_widgetLayers[version].existskey(id) || forceReset) {
-		    eXp_widgetLayers[version][id] = Text[Text];
-	    }
-
-	    if (!eXp_widgetLayers[version][id].existskey(gameMode)) {
-		    eXp_widgetLayers[version][id][gameMode] = activeLayer;
-	    }
-
 	   if (!eXp_widgetLastPosRel.existskey(version)) {
        	    eXp_widgetLastPosRel[version] = Vec3[Text][Text];
        }
@@ -59,10 +47,10 @@ if(!disablePersonalHud){
        }
 
 
-    if (eXp_widgetVisible[version][id][gameMode] == True && eXp_widgetLayers[version][id][gameMode] == visibleLayerInit && exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode]) {
+    if (eXp_widgetVisible[version][id][gameMode] == True && exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode]) {
 	    Window.Show();
 	    exp_widgetCurrentVisible = True;
-	} else if(exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode] || eXp_widgetLayers[version][id][gameMode] != activeLayer) {
+	} else if(exp_widgetCurrentVisible != eXp_widgetVisible[version][id][gameMode]) {
 	    Window.Hide();
 	    exp_widgetCurrentVisible = False;
             yield;
@@ -84,7 +72,6 @@ if(!disablePersonalHud){
         coordButton.Hide();
 	}
 
-	exp_widgetLayersBuffered = eXp_widgetLayers[version][id][gameMode];
 	exp_widgetVisibleBuffered = eXp_widgetVisible[version][id][gameMode];
 
     } else {

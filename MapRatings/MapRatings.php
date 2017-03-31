@@ -132,7 +132,7 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
         // $this->affectAllRatings();
 
-        // $this->registerChatCommand("ratings", "showEndRatings", 0, false);
+         $this->registerChatCommand("test", "showTestRatings", 1, true);
 
     }
 
@@ -414,6 +414,17 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         try {
             foreach (RatingsWidget::GetAll() as $window) {
                 $window->setStars($this->rating, $this->ratingTotal);
+                $window->redraw();
+            }
+        } catch (\Exception $e) {
+            // do silent exception;
+        }
+    }
+
+    public function showTestRatings($login, $number) {
+        try {
+            foreach (RatingsWidget::GetAll() as $window) {
+                $window->setStars($number, 4);
                 $window->redraw();
             }
         } catch (\Exception $e) {

@@ -31,8 +31,5 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
             'TeamAttack.Script.txt'
         );
         $config = Config::getInstance();
-        $var = new Boolean("isHorizontal", "Use horizontal (old) widget style", $config, false, false);
-        $var->setDefaultValue(false);
-        $this->registerVariable($var);
     }
 }

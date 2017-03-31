@@ -23,7 +23,6 @@ declare persistent Vec3[Text][Text][Text] eXp_widgetLastPos = Vec3[Text][Text][T
 declare persistent Vec3[Text][Text][Text] eXp_widgetLastPosRel =  Vec3[Text][Text][Text];
 declare persistent Boolean[Text][Text][Text] eXp_widgetVisible = Boolean[Text][Text][Text];
 declare Boolean exp_widgetVisibleBuffered;
-
 declare persistent Text[Text][Text][Text] eXp_widgetLayers = Text[Text][Text][Text];  // layer can be "normal" or "scorestable" or some other for future usage
 declare Text exp_widgetLayersBuffered;
 
@@ -31,8 +30,7 @@ declare Text version = "<?php echo $this->version ?>";
 declare Text id = "<?php echo $this->name ?>";
 declare Text gameMode = "<?php echo $this->gameMode; ?>";
 declare Boolean forceReset = <?php echo $this->forceReset ?>;
-declare Text activeLayer = "<?php echo $win->getLayer(); ?>";
-declare Text visibleLayerInit = "<?php echo $this->visibleLayerInit; ?>";
+
 declare Boolean disablePersonalHud = <?php echo $this->disablePersonalHud; ?>;
 
 declare Boolean exp_widgetCurrentVisible = False;
@@ -50,18 +48,6 @@ if ( !eXp_widgetVisible[version].existskey(id) || forceReset) {
 
 if ( !eXp_widgetVisible[version][id].existskey(gameMode) ) {
 	eXp_widgetVisible[version][id][gameMode] = <?php echo $win->getWidgetVisible(); ?>;
-}
-
-if (!eXp_widgetLayers.existskey(version) ) {
-	eXp_widgetLayers[version] = Text[Text][Text];
-}
-
-if (!eXp_widgetLayers[version].existskey(id) || forceReset) {
-	eXp_widgetLayers[version][id] = Text[Text];
-}
-
-if (!eXp_widgetLayers[version][id].existskey(gameMode)) {
-	eXp_widgetLayers[version][id][gameMode] = activeLayer;
 }
 
 if (!eXp_widgetLastPosRel.existskey(version)) {
@@ -82,10 +68,9 @@ if(!disablePersonalHud){
 
     exp_widgetCurrentVisible = eXp_widgetVisible[version][id][gameMode];
     exp_widgetVisibleBuffered = eXp_widgetVisible[version][id][gameMode];
-    exp_widgetLayersBuffered = eXp_widgetLayers[version][id][gameMode];
 
     // reduce flickering on normal layer, when widget update.
-    if(!eXp_widgetVisible[version][id][gameMode] || eXp_widgetLayers[version][id][gameMode] != activeLayer) {
+    if(!eXp_widgetVisible[version][id][gameMode]) {
 	    Window.Hide();
 	    exp_widgetCurrentVisible = False;
     }
@@ -96,13 +81,7 @@ if(!disablePersonalHud){
 	    quad.Hide();
     }
 } else {
-    exp_widgetLayersBuffered = visibleLayerInit;
     exp_widgetCurrentVisible = True;
     exp_widgetVisibleBuffered = True;
-    if(visibleLayerInit != activeLayer) {
-	Window.Hide();
-	exp_widgetCurrentVisible = False;
-	exp_widgetVisibleBuffered = False;
-    }
     quad.Hide();
 }
