@@ -106,8 +106,8 @@ Temps des secteurs sur la carte
 Login
 Login
 
-#variable#%1$s #record#secures #rank#%2$s. #record#Local Record!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
-#variable#%1$s #record#sécurise #rank#%2$s. #record#Record Local!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+#variable#%1$s #record#secures #rank#%2$s. #record#Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+#variable#%1$s #record#sécurise #rank#%2$s. #record#Record Local! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 
 #variable#%1$s #record#new #rank#%2$s.#record# Local Record! #time#%3$s
 #variable#%1$s #record#new #rank#%2$s.#record# Record Local! #time#%3$s
