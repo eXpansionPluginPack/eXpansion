@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\MapRatings;
 
 use ManiaLive\Gui\ActionHandler;
+use ManiaLive\Gui\Window;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\EndMapRatings;
 use ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets\RatingsWidget;
@@ -122,17 +123,14 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
 
         if ($this->displayWidget) {
-            $info = RatingsWidget::Create(null);
-            $info->setSize(34, 12);
-            $info->setStars($this->rating, $this->ratingTotal);
-            $info->show();
+            $this->displayWidget();
         }
 
         $this->previousMap = $this->storage->currentMap;
 
         // $this->affectAllRatings();
 
-         $this->registerChatCommand("test", "showTestRatings", 1, true);
+        $this->registerChatCommand("test", "showTestRatings", 1, true);
 
     }
 
@@ -411,17 +409,17 @@ class MapRatings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         if (!$this->displayWidget) {
             return;
         }
-        try {
-            foreach (RatingsWidget::GetAll() as $window) {
-                $window->setStars($this->rating, $this->ratingTotal);
-                $window->redraw();
-            }
-        } catch (\Exception $e) {
-            // do silent exception;
-        }
+
+        $window = RatingsWidget::Create(null);
+        $window->setSize(34, 12);
+        $window->setStars($this->rating, $this->ratingTotal);
+        $window->setLayer(Window::LAYER_SCORES_TABLE);
+        $window->show();
+
     }
 
-    public function showTestRatings($login, $number) {
+    public function showTestRatings($login, $number)
+    {
         try {
             foreach (RatingsWidget::GetAll() as $window) {
                 $window->setStars($number, 4);

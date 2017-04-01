@@ -25,24 +25,24 @@ class MetaData extends types\config\MetaData
 
         $config = Config::getInstance();
 
-        $var = new ColorCode('Colors_admin_error', 'Color code for admin error ', $config, false, false);
+        $var = new ColorCode('Colors_admin_error', 'Color code for admin error ', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$f00');
+        $var->setDefaultValue('$d10');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_error', 'Color code for generic error', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$f00');
+        $var->setDefaultValue('$d10');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_info', 'Color code for generic info messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$bbb');
+        $var->setDefaultValue('$aaa');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_admin_action', 'Color code for actions made by admins', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$fff');
+        $var->setDefaultValue('$dee');
         $this->registerVariable($var);
 
         $var = new ColorCode(
@@ -58,22 +58,22 @@ class MetaData extends types\config\MetaData
 
         $var = new ColorCode('Colors_record', 'Color code for all localrecord messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$0af');
+        $var->setDefaultValue('$3af');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_record_top', 'Color code for top 5 localrecord messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$2d0');
+        $var->setDefaultValue('$bdd');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_dedirecord', 'Color code for dedimania record messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$0af');
+        $var->setDefaultValue('$3af');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_rank', 'Color code for rank in records messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$ff0');
+        $var->setDefaultValue('dee');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_time', 'Color code for time in records messages', $config, false, true);
@@ -83,62 +83,62 @@ class MetaData extends types\config\MetaData
 
         $var = new ColorCode('Colors_rating', 'Color code for map rating messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$fb3');
+        $var->setDefaultValue('$bdd');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_queue', 'Color code for map queue messages (jukebox)', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$0af');
+        $var->setDefaultValue('$bdd');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_personalmessage', 'Color code for personal messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$f90');
+        $var->setDefaultValue('$3bd');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_admingroup_chat', 'Color code for admin chat channel', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$f00');
+        $var->setDefaultValue('$dde');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_donate', 'Color code for donation messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$f0f');
+        $var->setDefaultValue('$5a5');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_player', 'Color code for generic player messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$3f0');
+        $var->setDefaultValue('$bdd');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_joinmsg', 'Color code for joining  message', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$3f0');
+        $var->setDefaultValue('$998');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_leavemsg', 'Color code for leaving message', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$3f0');
+        $var->setDefaultValue('$998');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_music', 'Color code for musicbox messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$f7f');
+        $var->setDefaultValue('$caf');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_emote', 'Color code for emotes messages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$ff0$i');
+        $var->setDefaultValue('$bdd');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_quiz', 'Color code for Quiz messsages', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$3e3');
+        $var->setDefaultValue('$5d3');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_question', 'Color code for Quiz questions', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$z$s$o$fa0');
+        $var->setDefaultValue('$db1');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_vote', 'Color code for voting', $config, false, true);
@@ -148,7 +148,7 @@ class MetaData extends types\config\MetaData
 
         $var = new ColorCode('Colors_vote_success', 'Color code for vote passing', $config, false, true);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue('$0f0');
+        $var->setDefaultValue('$5d3');
         $this->registerVariable($var);
 
         $var = new ColorCode('Colors_vote_failure', 'Color code for vote failure', $config, false, true);

@@ -36,7 +36,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setGroup("GUI");
         $var->setUsePrefix(false);
         $var->setUseFullHex(true);
-        $var->setDefaultValue("FFFE");
+        $var->setDefaultValue("DEEE");
         $this->registerVariable($var);
 
         $var = new ColorCode("windowTitleBackgroundColor", "Window Title Background color", $config);
@@ -62,7 +62,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setGroup("GUI");
         $var->setUsePrefix(false);
         $var->setUseFullHex(true);
-        $var->setDefaultValue("fffe");
+        $var->setDefaultValue("DEEe");
         $this->registerVariable($var);
 
 
@@ -71,7 +71,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setGroup("GUI");
         $var->setUsePrefix(false);
         $var->setUseFullHex(true);
-        $var->setDefaultValue("aa9");
+        $var->setDefaultValue("9AA");
         $this->registerVariable($var);
 
 
@@ -111,14 +111,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setGroup("GUI");
         $var->setUsePrefix(false);
         $var->setUseFullHex(true);
-        $var->setDefaultValue("42a5fa");
+        $var->setDefaultValue("0AA0F9");
         $this->registerVariable($var);
 
         $var = new ColorCode("style_widget_title_lbColor", "Widget Titlebar Text color", $config);
         $var->setGroup("GUI");
         $var->setUsePrefix(false);
         $var->setUseFullHex(true);
-        $var->setDefaultValue("fff");
+        $var->setDefaultValue("DEE");
         $this->registerVariable($var);
 
         $var = new TypeString("style_widget_title_lbStyle", "Widget Titlebar font", $config);

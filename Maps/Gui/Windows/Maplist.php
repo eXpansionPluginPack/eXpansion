@@ -418,17 +418,17 @@ class Maplist extends Window
             }
 
             if ($sortableMap->uId == $this->currentMap->uId) {
-                $name = '$o$3af' . $sortableMap->strippedName;
-                $author = '$o$3af' . $sortableMap->author;
-                $color = '$o$3af';
+                $name = '$fff' . $sortableMap->strippedName;
+                $author = '$fff' . $sortableMap->author;
+                $color = '$fff';
             } else if (isset($this->history[$sortableMap->uId])) {
-                $name = '$999' . $sortableMap->strippedName;
-                $author = '$999' . $sortableMap->author;
-                $color = '$999';
+                $name = '$888' . $sortableMap->strippedName;
+                $author = '$888' . $sortableMap->author;
+                $color = '$888';
             } else {
                 $name = $sortableMap->name;
                 $author = $sortableMap->author;
-                $color = '$fff';
+                $color = '$cdd';
             }
 
             $diff = " - ";
