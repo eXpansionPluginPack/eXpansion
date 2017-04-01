@@ -19,12 +19,9 @@ declare Integer exp_multipleCheckCount = 0;
 declare Boolean exp_enableHudMove for UI = False;
 exp_enableHudMove = False;
 
-declare persistent Vec3[Text][Text][Text] eXp_widgetLastPos = Vec3[Text][Text][Text];
-declare persistent Vec3[Text][Text][Text] eXp_widgetLastPosRel =  Vec3[Text][Text][Text];
+declare Vec3[Text][Text][Text] widgetLastPosRel =  Vec3[Text][Text][Text];
 declare persistent Boolean[Text][Text][Text] eXp_widgetVisible = Boolean[Text][Text][Text];
 declare Boolean exp_widgetVisibleBuffered;
-declare persistent Text[Text][Text][Text] eXp_widgetLayers = Text[Text][Text][Text];  // layer can be "normal" or "scorestable" or some other for future usage
-declare Text exp_widgetLayersBuffered;
 
 declare Text version = "<?php echo $this->version ?>";
 declare Text id = "<?php echo $this->name ?>";
@@ -50,21 +47,21 @@ if ( !eXp_widgetVisible[version][id].existskey(gameMode) ) {
 	eXp_widgetVisible[version][id][gameMode] = <?php echo $win->getWidgetVisible(); ?>;
 }
 
-if (!eXp_widgetLastPosRel.existskey(version)) {
-	eXp_widgetLastPosRel[version] = Vec3[Text][Text];
+if (!widgetLastPosRel.existskey(version)) {
+	widgetLastPosRel[version] = Vec3[Text][Text];
 }
 
-if (!eXp_widgetLastPosRel[version].existskey(id) || forceReset) {
-    eXp_widgetLastPosRel[version][id] = Vec3[Text];
+if (!widgetLastPosRel[version].existskey(id) || forceReset) {
+    widgetLastPosRel[version][id] = Vec3[Text];
 }
 
-if (!eXp_widgetLastPosRel[version][id].existskey(gameMode)) {
-	eXp_widgetLastPosRel[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, -3.0>;
+if (!widgetLastPosRel[version][id].existskey(gameMode)) {
+	widgetLastPosRel[version][id][gameMode] = < <?php echo $this->getNumber($win->getPosX()) ?>, <?php echo $this->getNumber($win->getPosY()) ?>, -3.0>;
 }
 
 if(!disablePersonalHud){
-    LastDelta = eXp_widgetLastPosRel[version][id][gameMode];
-    Window.RelativePosition = eXp_widgetLastPosRel[version][id][gameMode];
+    LastDelta = widgetLastPosRel[version][id][gameMode];
+    Window.RelativePosition = widgetLastPosRel[version][id][gameMode];
 
     exp_widgetCurrentVisible = eXp_widgetVisible[version][id][gameMode];
     exp_widgetVisibleBuffered = eXp_widgetVisible[version][id][gameMode];

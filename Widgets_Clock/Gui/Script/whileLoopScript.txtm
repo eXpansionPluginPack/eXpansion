@@ -1,1 +1,11 @@
-LocalTime.Value = TextLib::SubString(CurrentLocalDateText,10,6);
+Seconds = TextLib::SubString(CurrentLocalDateText,17,2);
+if (Seconds != OldSeconds) {
+    declare Text delim = ":";
+    OldSeconds = Seconds;
+    Counter = (Counter+1)%2;
+    if (Counter == 1) {
+        delim = " ";
+    }
+
+    LocalTime.Value = "🕑 "^Hours^delim^Minutes;
+}

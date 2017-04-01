@@ -24,15 +24,8 @@ class Config extends Singleton
         '\ManiaLivePlugins\eXpansion\Votes\Votes',
         '\ManiaLivePlugins\eXpansion\Widgets_Clock\Widgets_Clock',
         '\ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Widgets_BestCheckpoints',
-        '\ManiaLivePlugins\eXpansion\Widgets_EndRankings\Widgets_EndRankings',
         '\ManiaLivePlugins\eXpansion\Widgets_PersonalBest\Widgets_PersonalBest',
-        '\ManiaLivePlugins\eXpansion\Widgets_RecordSide\Widgets_RecordSide',
-        '\ManiaLivePlugins\eXpansion\Widgets_Times\Widgets_Times',
-        '\ManiaLivePlugins\eXpansion\Widgets_ResSkip\Widgets_ResSkip',
-        '\ManiaLivePlugins\eXpansion\Widgets_ServerInfo\Widgets_ServerInfo',
-        '\ManiaLivePlugins\eXpansion\Widgets_Map\Widgets_Map',
         '\ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Widgets_LocalRecords',
-        '\ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Widgets_LiveRankings',
         '\ManiaLivePlugins\eXpansion\Widgets_Dedimania\Widgets_Dedimania'
     );
     public $pluginPaths = array('libraries/ManiaLivePlugins' => 2, 'vendor' => 4,);

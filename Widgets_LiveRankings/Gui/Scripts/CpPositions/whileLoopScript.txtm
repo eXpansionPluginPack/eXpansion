@@ -307,14 +307,4 @@ foreach (Event in PendingEvents) {
                 //log("spectator" ^ playerScoreRanks[index]);
         }
     }
-
-    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer") {
-		if (eXp_widgetLayers[version][id][gameMode] == "normal") {
-			eXp_widgetLayers[version][id][gameMode] = "scorestable";
-			exp_needToCheckPersistentVars = True;
-		} else {
-			eXp_widgetLayers[version][id][gameMode] = "normal";
-			exp_needToCheckPersistentVars = True;
-		}
-    }
 }
