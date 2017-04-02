@@ -230,7 +230,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
         $this->msg_new_top1 = eXpGetMessage('$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$f90!'
             . '$z$s$o$fff %2$s.$f90 Local Record! #time#%3$s');
         // %1$s - nickname; %2$s - rank; %3$s - time
- 
+
         $this->msg_equals_top1 = eXpGetMessage('$o$0CFO$2DFo$3DFo$5EFo$6EFp$8FFs$9FF!$fff %1$s $z$s$9ff$oequals '
             . '#rank#%2$s.$9ff$o Local Record! #time#%3$s');
         // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference

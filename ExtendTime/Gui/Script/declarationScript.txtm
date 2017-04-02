@@ -1,0 +1,17 @@
+declare netread Text[Text] Net_LibUI_Settings for Teams[0];
+declare netread Integer Net_LibUI_SettingsUpdate for Teams[0];
+declare CutOffTimeLimit = -1;
+declare PrevSettingsUpdate = -1;
+
+declare Boolean sentEvent = False;
+declare Boolean isEventSent = False;
+declare Boolean isVoted = False;
+
+declare CMlLabel Lbl_no <=> (Page.GetFirstChild("rate_0") as CMlLabel);
+declare CMlLabel Lbl_yes <=> (Page.GetFirstChild("rate_5") as CMlLabel);
+declare CMlLabel Lbl_no2 <=> (Page.GetFirstChild("label_0") as CMlLabel);
+declare CMlLabel Lbl_yes2 <=> (Page.GetFirstChild("label_5") as CMlLabel);
+
+declare Text actionYes = "<?php echo $this->actionYes;?>";
+declare Text actionNo = "<?php echo $this->actionNo;?>";
+declare Text actionCalcVotes = "<?php echo $this->calcVotes;?>";
