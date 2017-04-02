@@ -1841,28 +1841,20 @@ Other server might use the same blacklist file!!'
             $mode = "ShootMania";
         }
 
-        $scriptName = $dataDir . "Scripts" . DIRECTORY_SEPARATOR . "Modes" . DIRECTORY_SEPARATOR
-            . $mode . DIRECTORY_SEPARATOR . $params[0];
-
+        $scriptName = $params[0];
 
         // Append .Script.txt if left out
         if (strtolower(substr($scriptName, -11)) !== '.script.txt') {
             $scriptName .= '.Script.txt';
         }
 
-        if (file_exists($scriptName)) {
-            // $data = file_get_contents($scriptName);
-
-            try {
-                //   $this->connection->setModeScriptText($data);
-                $this->connection->setScriptName($params[0]);
-                $this->eXpChatSendServerMessage("Script " . $params[0] . " will be loaded after this map!");
-            } catch (\Exception $e) {
-                $this->eXpChatSendServerMessage("#admin_error#Couldn't load script : ", $e->getMessage());
-            }
-            return;
+        try {
+            //   $this->connection->setModeScriptText($data);
+            $this->connection->setScriptName($scriptName);
+            $this->eXpChatSendServerMessage("Script " . $scriptName . " will be loaded after this map!");
+        } catch (\Exception $e) {
+            $this->eXpChatSendServerMessage("#admin_error#" . $e->getMessage(), $fromLogin);
         }
-        $this->eXpChatSendServerMessage("#admin_error#Error: Script wasn't found !", $fromLogin);
     }
 
     /**
