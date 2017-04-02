@@ -47,7 +47,7 @@ class ExtendTime extends ExpPlugin
                 $this->voteCount++;
                 $this->connection->setModeScriptSettings(["S_TimeLimit" => $this->config->timelimit * $this->voteCount]);
             } else {
-                $this->eXpChatSendServerMessage("#vote#Vote to extend time: #vote_fail# Fail.");
+                $this->eXpChatSendServerMessage("#vote#Vote to extend time: #vote_failure# Fail.");
             }
         }
 
