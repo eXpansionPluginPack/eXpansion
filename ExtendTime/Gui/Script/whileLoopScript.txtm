@@ -7,7 +7,9 @@ if (PrevSettingsUpdate != Net_LibUI_SettingsUpdate) {
     }
 }
 
-if ((CutOffTimeLimit - GameTime + 1) < 60000) {
+declare Time = (CutOffTimeLimit - GameTime + 1);
+
+if (Time < 60000) {
     if (isVoted == True) {
         Window.Hide();
     } else {
@@ -19,8 +21,9 @@ if ((CutOffTimeLimit - GameTime + 1) < 60000) {
     isEventSent = False;
 }
 
-if ((CutOffTimeLimit - GameTime + 1) < 15000) {
+if (Time < 15000) {
     sentEvent = True;
+    Window.Hide();
 }
 
 foreach (Event in PendingEvents) {
