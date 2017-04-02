@@ -2,6 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\ExtendTime;
 
+use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeInt;
 
 /**
@@ -23,5 +24,13 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var = new TypeInt("timelimit", "Default timelimit to set", $config, false, false);
         $var->setDefaultValue(300);
         $this->registerVariable($var);
+
+        $config = Config::getInstance();
+        $var = new BoundedTypeFloat("ratio", "voteRatio", $config, false, false);
+        $var->setMax(1.0);
+        $var->setMax(0.0);
+        $var->setDefaultValue(0.49);
+        $this->registerVariable($var);
+
     }
 }

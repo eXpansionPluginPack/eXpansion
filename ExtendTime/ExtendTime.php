@@ -42,7 +42,7 @@ class ExtendTime extends ExpPlugin
     {
         $total = $this->votes['yes'] + $this->votes['no'];
         if ($total > 0) {
-            if (($this->votes['yes'] + $total) / ($this->votes['no'] + $total) >= 0.5) {
+            if ( ($this->votes['yes'] / $total) > $this->config->ratio) {
                 $this->eXpChatSendServerMessage("#vote#Vote to extend time: #vote_success# Success.");
                 $this->voteCount++;
                 $this->connection->setModeScriptSettings(["S_TimeLimit" => $this->config->timelimit * $this->voteCount]);
