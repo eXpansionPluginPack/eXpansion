@@ -13,7 +13,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Core: Players");
+        $this->setName("Players");
         $this->setDescription("Playerlist");
         $this->setGroups(array('Core'));
     }

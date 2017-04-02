@@ -15,7 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Widget: Local Records");
+        $this->setName(" Local Records");
         $this->setDescription("Local Records widget");
         $this->setGroups(array('Widgets', 'Records'));
 

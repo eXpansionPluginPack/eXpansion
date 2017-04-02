@@ -19,7 +19,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Tool: Network lag");
+        $this->setName("Network lag");
         $this->setDescription("Provides /adm lag command, for fullstack latency");
         $this->setGroups(array('Tools'));
     }

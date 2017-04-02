@@ -14,7 +14,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     {
         parent::onBeginLoad();
 
-        $this->setName("Widget: Checkpoint Counter");
+        $this->setName("Checkpoint Counter");
         $this->setDescription("Checkpoint counter for storm");
         $this->setGroups(array('Widgets', 'Records'));
         $this->addTitleSupport("SM");

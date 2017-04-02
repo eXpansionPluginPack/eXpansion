@@ -23,7 +23,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Records: Dedimania for Legacy modes");
+        $this->setName("Dedimania for Legacy modes");
         $this->setDescription("Dedimania, Global world records system integration");
         $this->setGroups(array('Records'));
 

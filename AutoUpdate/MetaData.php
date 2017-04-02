@@ -16,7 +16,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Core: Auto Update");
+        $this->setName("Auto Update");
         $this->setDescription("Provides auto update service requests and ingame updates");
         $this->setGroups(array('Core'));
 

@@ -42,7 +42,6 @@ class Ratiobutton extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         $this->button->setSize(5, 5);
         $this->button->setPosition(0, -0.5);
-        $this->button->setText('$fffî¤?');
         $this->label->setSize($this->textWidth, 6);
         $this->label->setPosition(4, 0);
     }
@@ -52,9 +51,9 @@ class Ratiobutton extends \ManiaLivePlugins\eXpansion\Gui\Control
         $config = Config::getInstance();
 
         if ($this->active) {
-            $this->button->setText('$fffî¤');
+            $this->button->setText("â˜‘");
         } else {
-            $this->button->setText('$fffî¤?');
+            $this->button->setText("â˜");
         }
     }
 

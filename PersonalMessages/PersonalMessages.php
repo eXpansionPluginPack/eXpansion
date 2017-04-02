@@ -59,10 +59,10 @@ class PersonalMessages extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 
     public function onPlayerConnect($login, $isSpectator)
     {
-       /* $info = Gui\Widgets\MessagesPanel::Create($login);
+        $info = Gui\Widgets\MessagesPanel::Create($login);
         $info->setSize(100, 6);
         $info->setDisableAxis("x");
-        $info->show();*/
+        $info->show();
     }
 
     public function onPlayerDisconnect($login, $reason = null)

@@ -31,7 +31,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\LocalRecords\MetaData
 
     public function initName()
     {
-        $this->setName('Records: Doppler@Nerpson');
+        $this->setName('Doppler@Nerpson');
         $this->setDescription(
             'Works like LocalRecords but instead of ordering times it orders scores. Higher scores are better.'
         );

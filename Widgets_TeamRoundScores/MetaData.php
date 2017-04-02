@@ -13,7 +13,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Widget: Round Score widget for teams mode");
+        $this->setName(" Round Score widget for teams mode");
         $this->setDescription("");
         $this->setGroups(array('Widgets'));
 

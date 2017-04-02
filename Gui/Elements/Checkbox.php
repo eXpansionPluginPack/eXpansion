@@ -30,7 +30,7 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->button->setAlign('left', 'center2');
         $this->button->setTextSize(2);
         $this->button->setAction($this->action);
-        $this->button->setText("�?");
+        $this->button->setText("☐");
         //$this->button->setScriptEvents(true);
         $this->addComponent($this->button);
 
@@ -79,15 +79,15 @@ class Checkbox extends \ManiaLivePlugins\eXpansion\Gui\Control
 
         if ($this->button->getAction() == -1) {
             if ($this->active) {
-                $this->button->setText("�?");
+                $this->button->setText("☑?");
             } else {
-                $this->button->setText("");
+                $this->button->setText("☐");
             }
         } else {
             if ($this->active) {
-                $this->button->setText("�?");
+                $this->button->setText("☑");
             } else {
-                $this->button->setText("");
+                $this->button->setText("☐");
             }
         }
     }

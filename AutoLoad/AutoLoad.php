@@ -516,7 +516,7 @@ class AutoLoad extends ExpPlugin
         $win = PluginList::Create($login);
         $win->setTitle("Plugin List");
         $win->centerOnScreen();
-        $win->setSize(140, 100);
+        $win->setSize(172, 90);
         $win->populate($this, $this->availablePlugins);
         $win->show();
     }

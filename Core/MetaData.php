@@ -19,7 +19,7 @@ class MetaData extends types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Core: eXpansion Core");
+        $this->setName("eXpansion Core");
         $this->setDescription("Core plugin, all other plugins depend on this");
         $this->setGroups(array('Core'));
 

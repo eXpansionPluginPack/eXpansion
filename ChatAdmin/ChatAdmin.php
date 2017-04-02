@@ -1835,13 +1835,15 @@ Other server might use the same blacklist file!!'
             return;
         }
 
-        $mapsDir = Helper::getPaths()->getDefaultMapPath();
+        $dataDir = Helper::getPaths()->getGameDataPath();
         $mode = "TrackMania";
         if ($this->expStorage->simpleEnviTitle == "SM") {
             $mode = "ShootMania";
         }
 
-        $scriptName = dirname($mapsDir) . "/Scripts/Modes/" . $mode . "/" . $params[0];
+        $scriptName = $dataDir . "Scripts" . DIRECTORY_SEPARATOR . "Modes" . DIRECTORY_SEPARATOR
+            . $mode . DIRECTORY_SEPARATOR . $params[0];
+
 
         // Append .Script.txt if left out
         if (strtolower(substr($scriptName, -11)) !== '.script.txt') {
@@ -1849,16 +1851,15 @@ Other server might use the same blacklist file!!'
         }
 
         if (file_exists($scriptName)) {
-            $data = file_get_contents($scriptName);
+            // $data = file_get_contents($scriptName);
 
             try {
-                $this->connection->setModeScriptText($data);
+                //   $this->connection->setModeScriptText($data);
                 $this->connection->setScriptName($params[0]);
-                $this->eXpChatSendServerMessage("Script loaded to server runtime: " . $params[0]);
+                $this->eXpChatSendServerMessage("Script " . $params[0] . " will be loaded after this map!");
             } catch (\Exception $e) {
                 $this->eXpChatSendServerMessage("#admin_error#Couldn't load script : ", $e->getMessage());
             }
-
             return;
         }
         $this->eXpChatSendServerMessage("#admin_error#Error: Script wasn't found !", $fromLogin);
@@ -2704,6 +2705,16 @@ Other server might use the same blacklist file!!'
     public function setGameMode($fromLogin, $params)
     {
         $gamemode = null;
+
+        // if gamemode is script
+        if ($this->storage->gameInfos->gameMode == 0) {
+            $gamemode = $params[0];
+            if (strtolower($gamemode) == "ta") {
+                $gamemode = "timeattack";
+            }
+            $this->loadScript($fromLogin, [ucfirst($gamemode)]);
+            return;
+        }
 
         if (is_numeric($params[0])) {
             $gamemode = $params[0];

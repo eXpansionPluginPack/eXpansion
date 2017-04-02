@@ -19,7 +19,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Tool: Start Delay");
+        $this->setName("Start Delay");
         $this->setDescription("Delays the start of a round");
         $this->setGroups(array('Tools'));
 

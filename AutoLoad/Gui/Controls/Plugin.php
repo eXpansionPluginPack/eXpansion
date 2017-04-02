@@ -1,4 +1,5 @@
 <?php
+
 namespace ManiaLivePlugins\eXpansion\AutoLoad\Gui\Controls;
 
 /**
@@ -87,6 +88,9 @@ class Plugin extends Control
     public function __construct($indexNumber, AutoLoad $autoload, MetaData $plugin, $login, $isLoaded)
     {
 
+        $ok = "fff";
+        $fail = "900";
+
         $this->metaData = $plugin;
         $this->autoLoad = $autoload;
         $toggleAction = $this->createAction(array($this, "togglePlugin"));
@@ -104,12 +108,14 @@ class Plugin extends Control
         $this->button_running->setGlyph('⏺');
         //$this->button_running->setIcon('Icons64x64_1', 'GenericButton');
         if ($isLoaded) {
-            $this->button_running->colorize('0d0');
+            $this->button_running->colorize('fff');
         } else {
             if ($isInStart) {
-                $this->button_running->colorize('dd0');
+                $this->button_running->setGlyph('');
+                $this->button_running->colorize('db1');
             } else {
-                $this->button_running->colorize('d00');
+                $this->button_running->setGlyph(' ');
+                $this->button_running->colorize('900');
             }
         }
         $this->button_running->setAction($toggleAction);
@@ -122,21 +128,21 @@ class Plugin extends Control
         $this->addComponent($this->label_name);
 
         $this->label_author = new Label(40, 4);
-        $this->label_author->setAttribute("textfont","Oswald");
-        $this->label_author->setTextSize(1);
-
-        $this->label_author->setText('$i' . $plugin->getDescription());
+        $this->label_author->setAttribute("textfont", "Oswald");
+        $this->label_author->setTextSize(1.5);
+        $this->label_author->setText($plugin->getDescription());
         $this->label_author->setPosition(8, -0.5);
         $this->addComponent($this->label_author);
 
         $this->button_titleComp = new Button(7, 7);
-   //     $this->button_titleComp->setIcon('Icons64x64_1', 'GenericButton');
+        //     $this->button_titleComp->setIcon('Icons64x64_1', 'GenericButton');
         $this->button_titleComp->setGlyph('⏺');
         $this->button_titleComp->setDescription(__($this->getTitleDescriptionText($titleCompatible), $login), 100);
         if ($titleCompatible) {
-            $this->button_titleComp->colorize('090');
+            $this->button_titleComp->colorize($ok);
         } else {
-            $this->button_titleComp->colorize('d00');
+            $this->button_titleComp->setGlyph('');
+            $this->button_titleComp->colorize($fail);
         }
         $this->addComponent($this->button_titleComp);
 
@@ -145,9 +151,10 @@ class Plugin extends Control
         $this->button_gameComp->setGlyph('⏺');
         $this->button_gameComp->setDescription(__($this->getGameDescriptionText($gameCompatible), $login), 100);
         if ($gameCompatible) {
-            $this->button_gameComp->colorize('090');
+            $this->button_gameComp->colorize($ok);
         } else {
-            $this->button_gameComp->colorize('d00');
+            $this->button_gameComp->setGlyph('');
+            $this->button_gameComp->colorize($fail);
         }
         $this->addComponent($this->button_gameComp);
 
@@ -161,9 +168,10 @@ class Plugin extends Control
             sizeof($otherCompatible) + 1
         );
         if (empty($otherCompatible)) {
-            $this->button_otherComp->colorize('090');
+            $this->button_otherComp->colorize($ok);
         } else {
-            $this->button_otherComp->colorize('d00');
+            $this->button_otherComp->setGlyph('');
+            $this->button_otherComp->colorize($fail);
         }
         $this->addComponent($this->button_otherComp);
 
@@ -180,9 +188,9 @@ class Plugin extends Control
         $this->button_start->setText(__($this->getStartText($isLoaded, $isInStart), $login));
 
         if ($this->getStartText($isLoaded, $isInStart) == "Start") {
-            $this->button_start->colorize("0D0");
+            $this->button_start->colorize('0b0');
         } else {
-            $this->button_start->colorize("d00");
+            $this->button_start->colorize("b00");
         }
         $this->addComponent($this->button_start);
 
@@ -192,7 +200,7 @@ class Plugin extends Control
     protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
-        $sizeMultiplier = 1.14;
+        $sizeMultiplier = 1.;
 
         $this->label_name->setSizeX((($this->getSizeX() - $this->label_name->getPosX() - 5 * 8 - 7) / 1) * $sizeMultiplier);
         $this->label_author->setSizeX((($this->getSizeX() - $this->label_author->getPosX() - 5 * 8 - 7) / 1) * $sizeMultiplier);
@@ -215,13 +223,12 @@ class Plugin extends Control
     private function getRunningDescriptionText($running, $inStart)
     {
         if ($running) {
-            return "Plugin is running. Click to unload!";
+            return "Plugin is running!";
         } else {
             if ($inStart) {
-                return "Plugin not compatible with game mode, title or server settings.\n "
-                    . "Plugin will be enabled when possible.";
+                return "Plugin not compatible with game mode, title or server settings.";
             } else {
-                return "Plugin not running. Click to load!";
+                return "Plugin not running.";
             }
         }
     }
@@ -229,27 +236,27 @@ class Plugin extends Control
     private function getTitleDescriptionText($titleCompatible)
     {
         if ($titleCompatible) {
-            return "This plugin is compatible with the current Title";
+            return "Compatible with Title";
         } else {
-            return "This plugin isn't compatible with the current Title";
+            return "Not compatible with Title";
         }
     }
 
     private function getGameDescriptionText($gameCompatible)
     {
         if ($gameCompatible) {
-            return "This plugin is compatible with the current Game mode";
+            return "Compatible with current Game mode";
         } else {
-            return "This plugin isn't compatible with the current Game mode";
+            return "Not compatible with current Game mode";
         }
     }
 
     private function getOtherDescriptionText($otherCompatibility)
     {
         if (empty($otherCompatibility)) {
-            return "This plugin is is compatible with current installation";
+            return "Compatible with current installation";
         } else {
-            return "This plugin has a few compatibility issues : \n" . implode("\n", $otherCompatibility);
+            return "Compatibility issues : \n" . implode("\n", $otherCompatibility);
         }
     }
 

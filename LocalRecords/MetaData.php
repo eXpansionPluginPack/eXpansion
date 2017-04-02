@@ -32,7 +32,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
     protected function initName()
     {
-        $this->setName("Records: Local records Trackmania modes");
+        $this->setName("Local records Trackmania modes");
         $this->setDescription("Provides local records for the server, uses mysql database to store records");
     }
 
@@ -58,7 +58,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     {
         $config = Config::getInstance();
 
-        $var = new BoundedTypeInt("recordsCount", "Localrecords: records count (min: 30)", $config, true, false);
+        $var = new BoundedTypeInt("recordsCount", "Localrecords count (min: 30)", $config, true, false);
         $var->setMin(30);
         $var->setMax(1000);
         $var->setDefaultValue(100);
@@ -66,7 +66,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $var = new BoundedTypeInt(
             "recordPublicMsgTreshold",
-            "Localrecords: Public chat messages to TOP x",
+            "LocalPublic chat messages to TOP x",
             $config,
             true,
             false
@@ -78,12 +78,12 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->registerVariable($var);
 
 
-        $var = new Boolean("lapsModeCount1lap", "Localrecords: Count in 1st lap in Laps-mode ?", $config, true, false);
+        $var = new Boolean("lapsModeCount1lap", "LocalCount in 1st lap in Laps-mode ?", $config, true, false);
         $var->setDefaultValue(true);
         $this->registerVariable($var);
 
 
-        $var = new Boolean("ranking", "Localrecords: Calculate local rankings for players ?", $config, true, false);
+        $var = new Boolean("ranking", "LocalCalculate local rankings for players ?", $config, true, false);
         $var->setDefaultValue(true);
         $this->registerVariable($var);
 
@@ -110,14 +110,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setDefaultValue(false);
         $this->registerVariable($var);
 
-        $var = new Boolean("sendBeginMapNotices", "Localrecords: show message at begin map", $config, true, false);
+        $var = new Boolean("sendBeginMapNotices", "Localshow message at begin map", $config, true, false);
         $var->setGroup("Chat Messages");
         $var->setDefaultValue(false);
         $this->registerVariable($var);
 
         $var = new Boolean(
             "sendRankingNotices",
-            "Localrecords: Personal rankings messages at begin map",
+            "LocalPersonal rankings messages at begin map",
             $config,
             true,
             false

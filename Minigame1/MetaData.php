@@ -17,7 +17,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Games: Minigame 1");
+        $this->setName(" Minigame 1");
         $this->setDescription("An image appears on screen at random position every now and then, to win just click");
         $this->setGroups(array('Games'));
 
