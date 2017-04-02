@@ -19,6 +19,7 @@ if (Time < 60000) {
     Window.Hide();
     sentEvent = False;
     isEventSent = False;
+    isVoted = False;
 }
 
 if (Time < 15000) {
