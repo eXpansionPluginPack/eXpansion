@@ -11,15 +11,15 @@ foreach (Event in RaceEvents) {
 if (InputPlayer.RaceState == CTmMlPlayer::ERaceState::BeforeStart) {
     if (runOnce) {
         runOnce = False;
-        startStamp = Now;
+        startStamp = GameTime;
         Countdown.StopAndRewind();
-        Countdown.Show();
         Countdown.Play();
     }
 } else {
     runOnce = True;
 }
 
-if (GameTime > (startStamp + 6000) ) {
-    Countdown.Hide();
+if (Start) {
+Start = False;
+Countdown.StopAndRewind();
 }

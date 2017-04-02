@@ -1,5 +1,4 @@
 declare Countdown <=> (Page.GetFirstChild("Countdown") as CMlMediaPlayer);
 declare Boolean runOnce = False;
-declare Integer startStamp = 0;
-Countdown.Stop();
-Countdown.Hide();
+declare Integer startStamp = Now;
+declare Boolean Start = True;

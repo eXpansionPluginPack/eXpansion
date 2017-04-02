@@ -29,7 +29,7 @@ class CountdownHud extends PlainWidget
         $this->video->setId("Countdown");
         $this->video->setAttribute("hidden", "1");
         $this->video->setAttribute("looping", "0");
-        $this->video->setAttribute("play", "0");
+        $this->video->setAttribute("play", "1");
         $this->video->setAlign("center", "center");
         $this->video->setData($config->video, true);
         $this->addComponent($this->video);
