@@ -18,16 +18,10 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->setName(" 3-2-1-GO Customizer");
         $this->setDescription("Replaces the 3-2-1-Go with custom images");
         $this->setGroups(array('Tools', "Widgets"));
+
         $config = Config::getInstance();
-
-        $var = new TypeString("sprite1", "3-2-1", $config, false, false);
-        $var->setDescription("image for 3-2-1");
-        $var->setDefaultValue("http://reaby.kapsi.fi/ml/ghost.png");
-        $this->registerVariable($var);
-
-        $var = new TypeString("sprite2", "GO!", $config, false, false);
-        $var->setDescription("image for go");
-        $var->setDefaultValue("http://reaby.kapsi.fi/ml/boo.png");
+        $var = new TypeString("video", "webm", $config, false, false);
+        $var->setDefaultValue("http://reaby.kapsi.fi/ml/go2.webm");
         $this->registerVariable($var);
     }
 }

@@ -1,43 +1,25 @@
 if (InputPlayer == Null) {
 return;
 }
-        if (InputPlayer.RaceState == CTmMlPlayer::ERaceState::BeforeStart ) {
-            if (runOnce) {
-                runOnce = False;
-                //sprite.Show();
-                sprite2.Opacity = 0.;
-                sprite.RelativeRotation = 0.;
-                startStamp = Now;
-                needUpdate = True;
 
-            }
-        } else {
+foreach (Event in RaceEvents) {
+         if (Event.Type ==  CTmRaceClientEvent::EType::Respawn) {
             runOnce = True;
-            needUpdate = False;
-            //sprite.Hide();
-            if (runOnce2) {
-                runOnce2 = False;
-                startStamp2 = Now;
-                needUpdate2 = True;
-            }
-
         }
-
-
-
-if (needUpdate) {
-    sprite.RelativeScale = AL::Ease("SincOut", (Now - startStamp) * 1., 0., 1., 4000.);
-    sprite.Opacity = AL::Ease("SincOut", (Now - startStamp ) * 1., 0., 1., 4000.);
-    if (Now - startStamp < 3000) {
-    runOnce2 = True;
-    needUpdate2 = False;
-   }
 }
 
-if (needUpdate2) {
-    sprite.Opacity = AL::Ease("SincOut", (Now - startStamp2 ) * 1., 1., -1., 1000.);
-    sprite.RelativeScale = AL::Ease("SincOut", (Now - startStamp2) * 1., 1., 1.5, 1000.);
-    sprite2.RelativeScale = AL::Ease("SincOut", (Now - startStamp2) * 1., 1., 5., 1000.);
-    sprite2.Opacity = AL::Ease("SincOut", (Now - startStamp2 ) * 1., 1., -1., 1000.);
+if (InputPlayer.RaceState == CTmMlPlayer::ERaceState::BeforeStart) {
+    if (runOnce) {
+        runOnce = False;
+        startStamp = Now;
+        Countdown.StopAndRewind();
+        Countdown.Show();
+        Countdown.Play();
+    }
+} else {
+    runOnce = True;
 }
 
+if (GameTime > (startStamp + 6000) ) {
+    Countdown.Hide();
+}

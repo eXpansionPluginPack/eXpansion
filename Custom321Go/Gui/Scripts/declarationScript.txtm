@@ -1,13 +1,5 @@
-declare sprite <=> (Page.GetFirstChild("sprite1") as CMlQuad);
-declare sprite2 <=> (Page.GetFirstChild("sprite2") as CMlQuad);
-declare startStamp = Now;
-declare startStamp2 = Now;
-
-declare runOnce = True;
-declare needUpdate = False;
-
-declare runOnce2 = False;
-declare needUpdate2 = False;
-
-sprite.Opacity = 0.;
-sprite2.Opacity = 0.;
+declare Countdown <=> (Page.GetFirstChild("Countdown") as CMlMediaPlayer);
+declare Boolean runOnce = False;
+declare Integer startStamp = 0;
+Countdown.Stop();
+Countdown.Hide();
