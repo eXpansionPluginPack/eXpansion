@@ -3,7 +3,7 @@ return;
 }
 
 foreach (Event in RaceEvents) {
-         if (Event.Type ==  CTmRaceClientEvent::EType::Respawn) {
+         if (Event.Type ==  CTmRaceClientEvent::EType::Respawn && InputPlayer.Login == Event.Player.Login) {
             runOnce = True;
         }
 }
@@ -20,6 +20,6 @@ if (InputPlayer.RaceState == CTmMlPlayer::ERaceState::BeforeStart) {
 }
 
 if (Start) {
-Start = False;
-Countdown.StopAndRewind();
+    Start = False;
+    Countdown.StopAndRewind();
 }

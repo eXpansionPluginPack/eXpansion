@@ -97,7 +97,7 @@ main () {
     declare Text version = "<?php echo $this->version; ?>";
     declare Boolean disableAnimations = <?php echo $this->disableAnimations; ?>;
     //declare Boolean disableAnimations = True;
-    declare persistent Vec3[Text][Text] exp_windowLastPosRel;
+    declare Vec3[Text][Text] exp_windowLastPosRel for LocalUser = Vec3[Text][Text];
     declare Text[] exp_windowStack for UI = Text[];
     declare Boolean exp_updateStack for UI = False;
     declare Integer exp_stackCounter for UI = 0;
