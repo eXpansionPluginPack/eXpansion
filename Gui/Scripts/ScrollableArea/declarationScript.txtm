@@ -1,0 +1,58 @@
+declare CMlQuad ScrollBar <=> (Page.GetFirstChild("scrollVBar") as CMlQuad);
+declare CMlQuad ScrollBg <=> (Page.GetFirstChild("scrollVBg") as CMlQuad);
+declare CMlQuad ScrollUp <=> (Page.GetFirstChild("scrollVUp") as CMlQuad);
+declare CMlQuad ScrollDown <=> (Page.GetFirstChild("scrollVDown") as CMlQuad);
+
+declare CMlQuad ScrollHBar <=> (Page.GetFirstChild("scrollHBar") as CMlQuad);
+declare CMlQuad ScrollHBg <=> (Page.GetFirstChild("scrollHBg") as CMlQuad);
+declare CMlQuad ScrollHRight <=> (Page.GetFirstChild("scrollHRight") as CMlQuad);
+declare CMlQuad ScrollHLeft <=> (Page.GetFirstChild("scrollHLeft") as CMlQuad);
+
+declare CMlFrame Content <=> (Page.GetFirstChild("content") as CMlFrame);
+declare CMlFrame ScrollableArea <=> (Page.GetFirstChild("scrollableArea") as CMlFrame);
+
+declare contentSizeY = <?php echo $this->contentSizeY; ?>;
+declare contentSizeX = <?php echo $this->contentSizeX; ?>;
+
+declare Real pager_scrollYOriginPosition;
+declare Real pager_scrollXOriginPosition;
+
+declare Real disabledOpacity = 0.2;
+
+declare pager_moveScroll = False;
+declare pager_moveScroll2 = False;
+
+declare pager_firstClick = False;
+declare pager_firstClick2 = False;
+
+declare Real pager_deltaMouseYPosition;
+declare Real pager_startMouseYPosition;
+
+declare Real pager_deltaMouseXPosition;
+declare Real pager_startMouseXPosition;
+
+declare Real ScrollBarHeight = ScrollBar.Size.Y;
+declare Real ScrollBgHeight = ScrollBg.Size.Y;
+
+declare Real ScrollHBarWidth = ScrollHBar.Size.X;
+declare Real ScrollHBgWidth = ScrollHBg.Size.X;
+
+declare Real pagerStartPos = ScrollBar.RelativePosition.Y;
+declare Real pagerStopPosition = pagerStartPos - ScrollBgHeight + ScrollBarHeight;
+
+declare Real pagerStartPos2 = ScrollHBar.RelativePosition.X;
+declare Real pagerStopPosition2 = pagerStartPos2 - ScrollHBarWidth + ScrollHBgWidth;
+
+declare Boolean isScrollUp = False;
+declare Boolean isScrollDown = False;
+declare Boolean isScrollLeft = False;
+declare Boolean isScrollRight = False;
+
+declare Real oldPercent = 0.;
+declare Real percent = 0.;
+
+declare Real oldPercent2 = 0.;
+declare Real percent2 = 0.;
+
+ScrollableArea.ClipWindowRelativePosition.Y = -ScrollableArea.ClipWindowSize.Y * 0.5;
+ScrollableArea.ClipWindowRelativePosition.X = -1+ScrollableArea.ClipWindowSize.X * 0.5;

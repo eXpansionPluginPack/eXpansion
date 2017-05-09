@@ -6,30 +6,45 @@ use Exception;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Line;
 use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Adm\Adm;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
+use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
 
 class AdminPanel extends Widget
 {
+    /** @var  Frame */
     protected $_windowFrame;
+    /** @var  WidgetBackGround */
     protected $_mainWindow;
+    /** @var  Button */
     protected $_minButton;
-    protected $servername;
+    /** @var  Button */
     protected $btnEndRound;
+    /** @var  Button */
     protected $btnCancelVote;
+    /** @var  Button */
     protected $btnSkip;
+    /** @var  Button */
     protected $btnRestart;
+    /** @var  Button */
+    protected $btnBalance;
+    /** @var  Button */
     protected $actionEndRound;
     protected $actionCancelVote;
     protected $actionSkip;
     protected $actionRestart;
     protected $actionBalance;
+    /** @var Adm */
     public static $mainPlugin;
 
+    /**
+     *
+     */
     protected function eXpOnBeginConstruct()
     {
         parent::eXpOnBeginConstruct();
@@ -103,7 +118,7 @@ class AdminPanel extends Widget
 
     protected function eXpOnSettingsLoaded()
     {
-        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
+        $script = new Script("Gui\\Scripts\\TrayWidget");
         $script->setParam('isMinimized', 'True');
         $script->setParam('autoCloseTimeout', $this->getParameter('autoCloseTimeout'));
         $script->setParam('posXMin', -32);
@@ -143,7 +158,8 @@ class AdminPanel extends Widget
         $this->btnRestart->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::MAP_RES));
         $this->btnSkip->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::MAP_SKIP));
         $this->btnEndRound->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::MAP_END_ROUND));
-        $this->btnCancelVote->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_VOTES));
+        $this->btnCancelVote
+            ->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::SERVER_VOTES));
         $this->btnBalance->setVisibility(AdminGroups::hasPermission($this->getRecipient(), Permission::TEAM_BALANCE));
     }
 

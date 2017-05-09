@@ -2,90 +2,165 @@
 
 namespace ManiaLivePlugins\eXpansion\Faq\Gui\Windows;
 
+use ManiaLib\Gui\Layouts\Column;
+use ManiaLib\Gui\Layouts\Flow;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Faq\Faq;
+use ManiaLivePlugins\eXpansion\Faq\Gui\Controls\CodeLine;
+use ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Header;
+use ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Line;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ScrollableArea;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
+
 /**
  * Description of FaqWindow
  *
  * @author Reaby
  */
-class FaqWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class FaqWindow extends Window
 {
 
     public static $mainPlugin;
     protected $userLanguage = "en";
     protected $elements = array();
+
+    /** @var  Frame */
     protected $frame;
+    /** @var  ScrollableArea */
+    protected $scroll;
 
     protected function onConstruct()
     {
         parent::onConstruct();
-        $this->setTitle("Frequently asked questions");
-        $this->frame = new \ManiaLive\Gui\Controls\Frame(6, -4);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow(190, 90));
-        $this->addComponent($this->frame);
+        $this->setTitle("Help");
+
+        $this->scroll = new ScrollableArea(167, 87);
+        $this->scroll->setPosition(-1, -4);
+        $this->addComponent($this->scroll);
+        $this->frame = new Frame(0, 0);
+        $this->frame->setLayout(new Flow(190, 90));
     }
 
 
     public function setLanguage($language)
     {
         $this->userLanguage = "en";
-        if (in_array($language, \ManiaLivePlugins\eXpansion\Faq\Faq::$availableLanguages)) {
+        if (in_array($language, Faq::$availableLanguages)) {
             $this->userLanguage = $language;
         }
     }
 
     public function setTopic($topic)
     {
+        $this->elements = array();
+        $sizeY = 0;
+
+        //try {
+        if (strpos($topic, '../') !== false || strpos($topic, "..\\") !== false ||
+            strpos($topic, '/..') !== false || strpos($topic, '\\..') !== false
+        ) {
+            $topic = "toc.md";
+        }
+        $file = file_get_contents(dirname(dirname(__DIR__)) . "/Topics/" . $this->userLanguage . "/" . $topic);
+        $this->parse($file);
+        //} catch (\Exception $e) {
+        //$file = file_get_contents(dirname(dirname(__DIR__)) . "/Topics/" . $this->userLanguage . "/" . "toc.txt");
+        //    throw $e;
+        //$this->parse($file);
+        //}
+
+        foreach ($this->elements as $elem) {
+            $sizeY += $elem->getSizeY();
+            $this->frame->addComponent($elem);
+        }
+
+        $this->frame->setSize(280, $sizeY);
+        $this->scroll->setContent($this->frame);
+    }
+
+    public function parse($file)
+    {
         $this->frame->clearComponents();
         foreach ($this->elements as $elem) {
             $elem->destroy();
         }
 
-        $this->elements = array();
-        try {
-            if (strpos($topic, '../') !== false || strpos($topic, "..\\") !== false || strpos($topic, '/..') !== false || strpos($topic, '\..') !== false) {
-                $topic = "toc";
-            }
-            $file = file_get_contents(dirname(dirname(__DIR__)) . "/Topics/" . $this->userLanguage . "/" . $topic . ".txt");
-            $this->parse($file);
-        } catch (\Exception $e) {
-            $file = file_get_contents(dirname(dirname(__DIR__)) . "/Topics/" . $this->userLanguage . "/" . "toc.txt");
-            $this->parse($file);
-        }
-        foreach ($this->elements as $elem) {
-            $this->frame->addComponent($elem);
-        }
-    }
-
-    public function parse($file)
-    {
         $data = explode("\n", $file);
         $topic = true;
-        $x = 0;
+        $x = 2;
+        $isCodeBlock = false;
+
+
+        // add one empty line
+        $this->elements[0] = new Line("");
+        $this->elements[1] = new Line("[Back to index](#toc.md)");
+
+        $emptyLines = 0;
+        $lastIsTitle = false;
         foreach ($data as $line) {
-            $indent = 0;
+            $currentIsTitle = false;
             if ($topic == true) {
-                //$this->setTitle(trim($line));
+                $this->setTitle("Help ", trim($line));
                 $topic = false;
                 continue;
             }
-            // match #, which marks a text to be rendered as a header
-            if (preg_match('/^\#/', trim($line))) {
-                $this->elements[$x] = new \ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Header($line);
-            } else {
-                $this->elements[$x] = new \ManiaLivePlugins\eXpansion\Faq\Gui\Controls\Line(trim($line));
-            }
 
             $matches = array();
-            preg_match('/\!(.*)\|(.*)/', trim($line), $matches);
-            //preg_match('/\!.*\|(.*)\|(.*)/', trim($line), $matches);
 
-            if (sizeof($matches) == 3) {
-                $this->elements[$x]->setText(trim($matches[2]));
-                $this->elements[$x]->setTopicLink($matches[1]);
+            // match #, which marks a text to be rendered as a header
+            if (preg_match('/^(?P<level>#{1,6})(?P<rest>.*)/', trim($line), $matches)) {
+                if ($emptyLines == 0) {
+                    $this->elements[$x] = new Line($line);
+                    $x++;
+                }
+                $lastIsTitle = true;
+                $currentIsTitle = true;
+                $this->elements[$x] = new Header(trim($matches['rest']), strlen($matches['level']));
             }
-            if (substr_count($line, "\t")) {
-                $indent = substr_count($line, "\t");
-                $this->elements[$x]->setBlock($indent);
+
+
+            if (trim($line) == '') {
+                $emptyLines++;
+                if ($emptyLines > 1 || $lastIsTitle) {
+                    // Simply ignore this line. It's for md files.
+                    continue;
+                }
+            } else {
+                $emptyLines = 0;
+            }
+
+            $lastIsTitle = $currentIsTitle;
+
+            if (trim($line) === "```") {
+                $isCodeBlock = !$isCodeBlock;
+                continue;
+            }
+
+            if (trim($line) === ">") {
+                $this->elements[$x] = new InfoLine();
+            }
+
+            if ($isCodeBlock) {
+                $this->elements[$x] = new CodeLine($line);
+            }
+
+            // in case nothing is set, it's normal line
+            if (!isset($this->elements[$x])) {
+                if (strlen($line) > 100) {
+                    $lines = str_split(trim($line), 100);
+                    $blockOld = 0;
+                    foreach ($lines as $line2) {
+                        $data = new Line($line2);
+                        if ($data->getBlock() != $blockOld) {
+                            $data->setBlock($blockOld);
+                        }
+                        $this->elements[$x] = $data;
+                        $blockOld = $data->getBlock();
+                        $x++;
+                    }
+                } else {
+                    $this->elements[$x] = new Line($line);
+                }
             }
             $x++;
         }

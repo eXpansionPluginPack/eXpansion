@@ -1,20 +1,23 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Chatlog;
+
+use ManiaLive\DedicatedApi\Callback\Event;
+use ManiaLivePlugins\eXpansion\Chatlog\Gui\Windows\ChatlogWindow;
+use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 
 /**
  * Get all chat and logs it
  *
  * @author Reaby
  */
-class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
+class Chatlog extends ExpPlugin
 {
 
     private $log = array();
 
     public function eXpOnLoad()
     {
-        $this->enableDedicatedEvents(\ManiaLive\DedicatedApi\Callback\Event::ON_PLAYER_CHAT);
+        $this->enableDedicatedEvents(Event::ON_PLAYER_CHAT);
         $this->registerChatCommand("chatlog", "showLog", 0, true);
         $this->setPublicMethod('showLog');
     }
@@ -48,7 +51,8 @@ class Chatlog extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      */
     public function showLog($login)
     {
-        $window = Gui\Windows\ChatlogWindow::Create($login);
+        /** @var ChatlogWindow $window */
+        $window = ChatlogWindow::Create($login);
         $window->setTitle(__('Chatlog', $login));
 
         $window->setSize(140, 100);

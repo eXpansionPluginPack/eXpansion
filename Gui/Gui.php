@@ -71,9 +71,9 @@ class Gui extends ExpPlugin
 
         $this->loadWidgetConfigs();
 
-        $edge = Widgets\Edge::Create(null);
+       /* $edge = Widgets\Edge::Create(null);
         $edge->setPosition(-160, -35);
-        $edge->show();
+        $edge->show(); */
     }
 
     public static function getScaledSize($sizes, $totalSize)
@@ -363,9 +363,9 @@ class Gui extends ExpPlugin
      */
     public static function createConfirm($finalAction)
     {
-        $outAction = call_user_func_array(
-            array(ActionHandler::getInstance(), 'createAction'),
-            array(array(__NAMESPACE__ . '\Gui', 'showConfirmDialog'), $finalAction)
+        $outAction = ActionHandler::getInstance()->createAction(
+            array('\\ManiaLivePlugins\\eXpansion\\Gui\\Gui', 'showConfirmDialog'),
+            $finalAction
         );
 
         return $outAction;

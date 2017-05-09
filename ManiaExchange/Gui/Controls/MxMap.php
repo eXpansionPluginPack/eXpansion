@@ -64,7 +64,6 @@ class MxMap extends Control
 
         $label = new Label(36, 6);
         $label->setAlign('left', 'center');
-        $pack = str_replace("TM", "", $map->titlePack);
         if (empty($pack) || $pack == "Trackmania_2") {
             $pack = $map->environmentName;
         }

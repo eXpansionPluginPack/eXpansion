@@ -78,8 +78,6 @@ class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
         $this->b5 = new RateButton2(5);
         $this->frame->addComponent($this->b5);
-
-
         $this->setPosition(-45, -42);
 
         $this->script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("MapRatings\Gui\Script");
@@ -97,7 +95,7 @@ class EndMapRatings extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     public function setMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
     {
         $msg = eXpGetMessage("Did you like the map ?");
-        $this->label->setText($msg);
-        $this->labelMap->setText(\ManiaLib\Utils\Formatting::stripCodes($map->name, "wosn"));
+        $this->labelMap->setText($msg);
+        $this->label->setText(\ManiaLib\Utils\Formatting::stripCodes($map->name, "wosn"));
     }
 }

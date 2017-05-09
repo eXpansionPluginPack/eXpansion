@@ -103,8 +103,8 @@ Sector Times on Map
 Login
 #translate# Login
 
-#variable#%1$s #record#secures #rank#%2$s. #record#Local Record!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
-#translate# #variable#%1$s #record#secures #rank#%2$s. #record#Local Record!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+#variable#%1$s #record#secures #rank#%2$s. #record#Local Record!3 #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+#translate# #variable#%1$s #record#secures #rank#%2$s. #record#Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
 
 #variable#%1$s #record#new #rank#%2$s.#record# Local Record! #time#%3$s
 #translate# #variable#%1$s #record#new #rank#%2$s.#record# Local Record! #time#%3$s

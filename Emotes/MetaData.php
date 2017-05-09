@@ -19,7 +19,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Chat: Emotes");
+        $this->setName("Emotes");
         $this->setDescription("Provides lot of chat commands for players to emote");
         $this->setGroups(array('Chat'));
     }

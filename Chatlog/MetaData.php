@@ -15,7 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Chat: Chatlog & History viewer");
+        $this->setName("Chatlog & History viewer");
         $this->setDescription("Logs chat and provides ingame command /chatlog for viewing chat history");
         $this->setGroups(array('Chat'));
 

@@ -11,9 +11,7 @@ class ColorCode extends TypeString
 {
 
     private $sample = "Sample Text ...";
-
     private $digits = 3;
-
     private $usePrefix = true;
 
     public function getSample()

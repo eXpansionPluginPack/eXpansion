@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Menu\Gui\Widgets;
 use ManiaLib\Gui\Elements\Frame;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Layouts\Column;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 
 class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
 {
@@ -12,9 +13,20 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
     protected $frame;
     protected $script;
 
+    protected $button;
+
     protected function onConstruct()
     {
         parent::onConstruct();
+
+
+        $this->button = new Button(28,6);
+        $this->button->setText('Menu');
+        $this->button->colorize("3af");
+        $this->button->setPosition(-159, 80);
+        $this->button->setId('MenuButton');
+        $this->button->setScriptEvents();
+        $this->addComponent($this->button);
 
         $this->frame = new \ManiaLive\Gui\Controls\Frame(0, 0, new Column(50, 20));
         $this->frame->setId("Menu");
@@ -66,7 +78,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $config = \ManiaLivePlugins\eXpansion\Gui\Config::getInstance();
 
         $frame = new \ManiaLive\Gui\Controls\Frame();
-        $frame->setSize(30,5);
+        $frame->setSize(30, 5);
 
         /* @var $label \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel */
         $label = new \ManiaLivePlugins\eXpansion\Gui\Elements\DicoLabel(30, 5);
@@ -77,6 +89,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $label->setTextSize(1);
         $label->setStyle("TextRaceChat");
         $label->setTextColor("fff");
+        $label->setAttribute("data-action", $action);
         $label->setAlign("left", "center");
 
         $quad = new Quad(30, 5);
@@ -85,8 +98,7 @@ class MenuWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget
         $quad->setId("mQuad_" . count($this->items));
         $quad->setAlign("left", "center");
         $quad->setScriptEvents();
-        $quad->setAction($action);
-        // $label->setAction($action);
+        $quad->setAttribute("data-action", $action);
 
         $frame->addComponent($quad);
         $frame->addComponent($label);

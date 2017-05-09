@@ -1,2 +1,6 @@
-
 declare LocalTime = (Page.GetFirstChild("Time") as CMlLabel);
+declare Text Hours = TextLib::SubString(CurrentLocalDateText,10,3);
+declare Text Minutes = TextLib::SubString(CurrentLocalDateText,14,2);
+declare Text Seconds = TextLib::SubString(CurrentLocalDateText,17,2);
+declare Text OldSeconds = "";
+declare Integer Counter = 0;

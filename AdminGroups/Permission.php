@@ -1,5 +1,4 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\AdminGroups;
 
 class Permission
@@ -65,4 +64,7 @@ class Permission
     const QUIZ_ADMIN = "quiz_admin";
 
     const LOCAL_RECORDS_DELETE = 'localRecords_delete';
+    const GUI_SET_WIDGET_POSITION = 'gui_set_widget_position';
+
+    const JOIN_MESSAGE_DISABLED = "joinmsg_disable";
 }

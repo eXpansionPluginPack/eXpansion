@@ -1,13 +1,19 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core\Gui\Windows;
 
+use ManiaLib\Gui\Layouts\Column;
+use ManiaLive\Data\Storage;
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
+use ManiaLivePlugins\eXpansion\Helpers\Singletons;
 use ManiaLivePlugins\eXpansion\ServerStatistics\Gui\Controls\InfoLine;
+use Maniaplanet\DedicatedServer\Connection;
 
-class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class InfoWindow extends Window
 {
 
     public static $statsAction = -1;
@@ -19,49 +25,51 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
     protected $button_cpJoin;
     protected $button_addFav;
 
-    /** @var \Maniaplanet\DedicatedServer\Connection */
+    /** @var Connection */
     protected $connection;
 
-    /** @var \ManiaLive\Data\Storage */
+    /** @var Storage */
     protected $storage;
 
+    /**
+     *
+     */
     protected function onConstruct()
     {
         parent::onConstruct();
         $login = $this->getRecipient();
 
-        $this->registerScript(new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Core/Gui/Scripts/copyServerLink"));
+        $this->registerScript(new Script("Core/Gui/Scripts/copyServerLink"));
 
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $this->connection = Singletons::getInstance()->getDediConnection();
+        $this->storage = Storage::getInstance();
 
         $this->actionOk = $this->createAction(array($this, "Ok"));
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame = new Frame();
         $this->frame->setScale(0.8);
         $this->frame->setPosY(2);
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Column(120, 30));
+        $this->frame->setLayout(new Column(120, 30));
         $this->mainFrame->addComponent($this->frame);
         $version = $this->connection->getVersion();
 
-        $line = new Infoline(5, "Server Login", $this->storage->serverLogin, 0);
+        $line = new InfoLine(5, "Server Login", $this->storage->serverLogin, 0);
         $this->frame->addComponent($line);
 
-        $line = new Infoline(5, "Server version", $version->version, 0);
+        $line = new InfoLine(5, "Server version", $version->version, 0);
         $this->frame->addComponent($line);
-        $line = new Infoline(5, "Server Build", $version->build, 0);
+        $line = new InfoLine(5, "Server Build", $version->build, 0);
         $this->frame->addComponent($line);
-        $line = new Infoline(5, "Server ApiVersio", $version->apiVersion, 0);
-        $this->frame->addComponent($line);
-
-        $line = new Infoline(5, "Server Titlepack", $version->titleId, 0);
+        $line = new InfoLine(5, "Server ApiVersio", $version->apiVersion, 0);
         $this->frame->addComponent($line);
 
-        $line = new Infoline(5, "Manialive version", \ManiaLive\Application\VERSION, 0);
+        $line = new InfoLine(5, "Server Titlepack", $version->titleId, 0);
         $this->frame->addComponent($line);
 
-        $line = new Infoline(
+        $line = new InfoLine(5, "Manialive version", \ManiaLive\Application\VERSION, 0);
+        $this->frame->addComponent($line);
+
+        $line = new InfoLine(
             5,
             "eXpansion version",
             \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION
@@ -70,7 +78,7 @@ class InfoWindow extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         );
         $this->frame->addComponent($line);
 
-        $line = new Infoline(5, "Php Version", phpversion(), 0);
+        $line = new InfoLine(5, "Php Version", phpversion(), 0);
         $this->frame->addComponent($line);
 
         $this->frame->addComponent(new \ManiaLib\Gui\Elements\Label(10, 7));

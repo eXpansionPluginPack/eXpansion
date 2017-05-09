@@ -16,7 +16,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Chat: Chat Notifications redirect");
+        $this->setName(" Chat Notifications redirect");
         $this->setDescription("Redirect chat messages coming from plugins to a widget");
         $this->setGroups(array('Chat', 'Widgets'));
 

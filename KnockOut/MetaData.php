@@ -15,9 +15,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("GameMode: KnockOut!");
+        $this->setName("KnockOut!");
         $this->setDescription("Provides Knockout Virtual Game mode");
-
+        $this->setGroups("Game mode");
         $this->addTitleSupport("TM");
         $this->addTitleSupport("Trackmania");
         $this->setScriptCompatibilityMode(false);

@@ -1,31 +1,31 @@
 foreach (Event in PendingEvents) {
     if (Event.Type == CMlEvent::Type::MouseClick)  {
-
         if(Event.ControlId != "Unassigned"){
-            declare CMlQuad checkBox <=> (Page.GetFirstChild(Event.ControlId) as CMlQuad);
+            log(Event.ControlId);
+            declare CMlLabel checkBox <=> (Page.GetFirstChild(Event.ControlId) as CMlLabel);
 
-	     declare Parts = TextLib::Split("_", Event.ControlId);
-	     if(Parts.count == 3 && Parts[0] == "eXp" && Parts[1] == "CheckboxQ"){
+            declare Parts = TextLib::Split("_", Event.ControlId);
+            if(Parts.count == 3 && Parts[0] == "eXp" && Parts[1] == "CheckboxQ") {
 
-		if(checkBox.Colorize == eXp_checkBox_disabledActiveUrl || checkBox.Colorize == eXp_checkBox_disabledUrl){
-		    //do nothing
-		}else if(checkBox.Colorize == eXp_checkBox_ActiveUrl){
-		    checkBox.Colorize = eXp_checkBox_InactiveUrl;
-
-		    declare CMlEntry entry <=> (Page.GetFirstChild("eXp_CheckboxE_"^Parts[2]) as CMlEntry);
-		    if(entry != Null){
-			entry.Value = "0";
-		    }
-
-		}else if(checkBox.Colorize == eXp_checkBox_InactiveUrl){
-		    checkBox.Colorize = eXp_checkBox_ActiveUrl;
-
-		    declare CMlEntry entry <=> (Page.GetFirstChild("eXp_CheckboxE_"^Parts[2]) as CMlEntry);
-		    if(entry != Null){
-			entry.Value = "1";
-		    }
-		}
-	     }
+                if(checkBox.Value == eXp_checkBox_disabledActiveUrl || checkBox.Value == eXp_checkBox_disabledUrl) {
+                log("disabled");
+                //do nothing
+                } else if(checkBox.Value == eXp_checkBox_ActiveUrl) {
+                    log("not checked");
+                    checkBox.Value = eXp_checkBox_InactiveUrl;
+                    declare CMlEntry entry <=> (Page.GetFirstChild("eXp_CheckboxE_"^Parts[2]) as CMlEntry);
+                    if(entry != Null){
+                        entry.Value = "0";
+                    }
+                } else if(checkBox.Value == eXp_checkBox_InactiveUrl) {
+                    log("checked");
+                    checkBox.Value = eXp_checkBox_ActiveUrl;
+                    declare CMlEntry entry <=> (Page.GetFirstChild("eXp_CheckboxE_"^Parts[2]) as CMlEntry);
+                    if(entry != Null){
+                        entry.Value = "1";
+                    }
+                }
+            }
         }
     }
 }

@@ -26,7 +26,7 @@ Score
 Aika
 
 Average Score
-Keskimääräinen aika 
+Keskimääräinen aika
 
 Finishes
 Maaliin pääsyjä
@@ -76,8 +76,8 @@ Sektoriajat kartassa
 Login
 Login
 
-#variable#%1$s #record#secures #rank#%2$s. #record#Local Record!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
-#variable#%1$s #record#varmistaa #rank#%2$s. #record#Paikallisen ennätyksen!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+#variable#%1$s #record#secures #rank#%2$s. #record#Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
+#variable#%1$s #record#varmistaa #rank#%2$s. #record#Paikallisen ennätyksen! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)
 
 #variable#%1$s #record#new #rank#%2$s.#record# Local Record! #time#%3$s
 #variable#%1$s #record#uusi #rank#%2$s.#record# Paikallinen ennätys! #time#%3$s
@@ -118,8 +118,8 @@ $z$o$FF0Co$FE0ng$FD0rat$FC0ul$FB0ati$FA0on$F90s$fff %1$s$F90!$z$s$o$fff %2$s.$f9
 #record#Personal Best: #time#%1$s  #record#($n #rank#%2$s$n #record#)
 #record#Oma paras aika: #time#%1$s  #record#($n #rank#%2$s$n #record#)
 
-#variable#%1$s #record#secures #rank#%2$s. #record#Local Record!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
-#translate# #variable#%1$s #record#secures #rank#%2$s. #record#Local Record!#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+#variable#%1$s #record#secures #rank#%2$s. #record#Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
+#translate# #variable#%1$s #record#secures #rank#%2$s. #record#Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
 
 #variable#%1$s #record#improves #rank#%2$s. #record#Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#
 #translate# #variable#%1$s #record#improves #rank#%2$s. #record#Local Record! #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#

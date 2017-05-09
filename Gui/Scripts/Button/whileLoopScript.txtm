@@ -2,7 +2,7 @@ foreach (Event in PendingEvents) {
 
     if (Event.Type == CMlEvent::Type::MouseOver)  {
         if(Event.ControlId != "Unassigned"){
-            declare CMlQuad eXp_Button <=> (Page.GetFirstChild(Event.ControlId) as CMlQuad);
+            declare eXp_Button <=> (Page.GetFirstChild(Event.ControlId) );
 
             if(Page.GetFirstChild("eXp_ButtonDescBg_"^Event.ControlId) != Null){
 

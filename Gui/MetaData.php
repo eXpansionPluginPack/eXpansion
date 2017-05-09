@@ -5,6 +5,7 @@ namespace ManiaLivePlugins\eXpansion\Gui;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\BoundedTypeFloat;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\ColorCode;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\HashList;
 use ManiaLivePlugins\eXpansion\Core\types\config\types\TypeString;
 
 /**
@@ -18,14 +19,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Core: Graphical User Interface");
+        $this->setName("Graphical User Interface");
         $this->setDescription("");
         $this->setGroups(array('Core'));
 
         $config = Config::getInstance();
 
-        $var = new Boolean("disablePersonalHud", "Disable personalized hud", $config);
-        $var->setDescription("if disable this, server admin defined positions are forced to all players");
+        $var = new Boolean("disablePersonalHud", "Enable widget positions override for admins", $config);
+        $var->setDescription("If set, the server admin hud defined positions are forced to all players");
         $var->setGroup("GUI");
         $var->setDefaultValue(false);
         $this->registerVariable($var);
@@ -35,7 +36,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setGroup("GUI");
         $var->setUsePrefix(false);
         $var->setUseFullHex(true);
-        $var->setDefaultValue("FFFE");
+        $var->setDefaultValue("DEEE");
         $this->registerVariable($var);
 
         $var = new ColorCode("windowTitleBackgroundColor", "Window Title Background color", $config);
@@ -61,7 +62,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setGroup("GUI");
         $var->setUsePrefix(false);
         $var->setUseFullHex(true);
-        $var->setDefaultValue("fffe");
+        $var->setDefaultValue("DEEe");
         $this->registerVariable($var);
 
 
@@ -70,7 +71,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setGroup("GUI");
         $var->setUsePrefix(false);
         $var->setUseFullHex(true);
-        $var->setDefaultValue("aa9");
+        $var->setDefaultValue("9AA");
         $this->registerVariable($var);
 
 
@@ -110,14 +111,14 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setGroup("GUI");
         $var->setUsePrefix(false);
         $var->setUseFullHex(true);
-        $var->setDefaultValue("42a5fa");
+        $var->setDefaultValue("0AA0F9");
         $this->registerVariable($var);
 
         $var = new ColorCode("style_widget_title_lbColor", "Widget Titlebar Text color", $config);
         $var->setGroup("GUI");
         $var->setUsePrefix(false);
         $var->setUseFullHex(true);
-        $var->setDefaultValue("fff");
+        $var->setDefaultValue("DEE");
         $this->registerVariable($var);
 
         $var = new TypeString("style_widget_title_lbStyle", "Widget Titlebar font", $config);
@@ -132,5 +133,15 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $var->setMax(5.0);
         $var->setDefaultValue(1);
         $this->registerVariable($var);
+
+        $var = new HashList("allWidgetPositions", "WidgetPositions (do not edit)", $config);
+        $var->setKeyType(new TypeString(""));
+        $var->setType(new TypeString(""));
+        $var->setDefaultValue(array());
+        $var->setGroup("GUI");
+        $var->setDescription('Automatically generated from widgets');
+
+        $this->registerVariable($var);
+
     }
 }

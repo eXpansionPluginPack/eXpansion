@@ -2,7 +2,7 @@
 
 namespace ManiaLivePlugins\eXpansion\CustomUI;
 
-use ManiaLivePlugins\eXpansion\CustomUI\Gui\Customizer;
+use ManiaLivePlugins\eXpansion\Core\types\config\types\Boolean;
 
 class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -15,7 +15,7 @@ class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
     public function eXpOnReady()
     {
 
-        $this->displayWidget(null);
+        $this->updateData();
     }
 
     /**
@@ -23,24 +23,34 @@ class CustomUI extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
      *
      * @param string $login
      */
-    protected function displayWidget($login)
+    protected function updateData()
     {
-        Customizer::EraseAll();
-        $info = Customizer::Create(null);
-        $info->update($this->getMetaData()->getAllVariables());
-        $info->setSize(60, 15);
-        $info->show();
+        $variables = $this->getMetaData()->getAllVariables();
+        $code = "<ui_properties>\n";
+        foreach ($variables as $variable) {
+            $varName = strtolower($variable->getName());
+            if ($variable instanceof Boolean) {
+                $code .= "<" . $varName . ' visible="' . (($variable->getRawValue()) ? 'true' : 'false') . '" />' . "\n";
+            }
+        }
+        $code .= "</ui_properties>\n";
+        if ($this->expStorage->simpleEnviTitle == "TM") {
+            $this->connection->triggerModeScriptEvent("Trackmania.UI.SetProperties", [$code]);
+        } else {
+            $this->connection->triggerModeScriptEvent("Shootmania.SetUIProperties", [$code]);
+        }
+
     }
 
     public function onSettingsChanged(\ManiaLivePlugins\eXpansion\Core\types\config\Variable $var)
     {
         if ($var->getConfigInstance() instanceof \ManiaLivePlugins\eXpansion\CustomUI\Config) {
-            $this->displayWidget(null);
+            $this->updateData();
         }
     }
 
     public function eXpOnUnload()
     {
-        Customizer::EraseAll();
+
     }
 }

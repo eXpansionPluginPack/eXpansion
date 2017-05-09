@@ -1,5 +1,4 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core\Gui\Controls;
 
 use ManiaLib\Gui\Elements\Icons128x128_1;
@@ -16,30 +15,38 @@ use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 use ManiaLivePlugins\eXpansion\Gui\Control;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\CheckboxScripted;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ColorChooser;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
 use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
 
 class ExpSetting extends Control
 {
-
+    /** @var ListBackGround */
     protected $bg;
-
+    /** @var Label */
     protected $label_varName;
-
+    /** @var Label */
     protected $label_varValue;
-
+    /** @var Button|null */
     protected $button_change = null;
-
+    /** @var Button|null */
     protected $button_reset = null;
-
+    /** @var Button|null */
     protected $icon_global = null;
-
+    /** @var ColorChooser */
     protected $input;
-
+    /** @var Variable */
     protected $var;
-
+    /** @var ExpSettings */
     private $win;
 
+    /**
+     * ExpSetting constructor.
+     * @param $indexNumber
+     * @param Variable $var
+     * @param $login
+     * @param ExpSettings $win
+     */
     public function __construct($indexNumber, Variable $var, $login, ExpSettings $win)
     {
         $this->var = $var;
@@ -73,19 +80,21 @@ class ExpSetting extends Control
             $this->button_change->setAction($this->createAction(array($this, "openWin"), $var));
             $this->addComponent($this->button_change);
         } elseif ($var->getDescription() != "") {
-
             $this->button_change = new Button(8, 8);
-            $this->button_change->setIcon('UIConstructionSimple_Buttons', 'Help');
+            $this->button_change->setGlyph('💡');
+            //$this->button_change->setIcon('UIConstructionSimple_Buttons', 'Help');
             $this->button_change->setDescription($var->getDescription(), 120, 5, 2);
             $this->addComponent($this->button_change);
         }
 
         $this->button_reset = new Button(8, 8);
-        $this->button_reset->setIcon(Quad::Icons128x128_1, Icons128x128_1::DefaultIcon);
+        //$this->button_reset->setIcon(Quad::Icons128x128_1, Icons128x128_1::DefaultIcon);
+        $this->button_reset->setGlyph('');
         $this->button_reset->setDescription(__('Reset the settings !', $login));
         $this->button_reset->setAction($this->createAction(array($this, 'reset')));
-        if ($var->getDefaultValue() != null)
+        if ($var->getDefaultValue() !== null) {
             $this->addComponent($this->button_reset);
+        }
 
         if ($var instanceof HashList
             || $var instanceof BasicList
@@ -102,7 +111,7 @@ class ExpSetting extends Control
                 $this->input->setPosX(7);
                 $this->addComponent($this->input);
             } elseif ($var instanceof ColorCode) {
-                $this->input = new \ManiaLivePlugins\eXpansion\Gui\Elements\ColorChooser(
+                $this->input = new ColorChooser(
                     $var->getName(),
                     35,
                     $var->getUseFullHex(),
@@ -123,13 +132,15 @@ class ExpSetting extends Control
 
         $this->icon_global = new Button(7, 7);
         if ($var->getIsGlobal()) {
-            $this->icon_global->setIcon('Icons64x64_1', 'IconLeaguesLadder');
+            //$this->icon_global->setIcon('Icons64x64_1', 'IconLeaguesLadder');
+            $this->icon_global->setGlyph('');
             $this->icon_global->setDescription(
                 __("Global Setting, Saved for all servers sharing this configuration", $login),
                 120
             );
         } else {
-            $this->icon_global->setIcon('Icons64x64_1', 'IconServers');
+            //$this->icon_global->setIcon('Icons64x64_1', 'IconServers');
+            $this->icon_global->setGlyph('🌐');
             $this->icon_global->setDescription(__("Server Setting, Saved for this server only", $login), 80);
         }
         $this->addComponent($this->icon_global);
@@ -140,6 +151,10 @@ class ExpSetting extends Control
         $this->setSize(130, 10);
     }
 
+    /**
+     * @param float $oldX
+     * @param float $oldY
+     */
     protected function onResize($oldX, $oldY)
     {
 
@@ -163,17 +178,25 @@ class ExpSetting extends Control
         parent::onResize($oldX, $oldY);
     }
 
+    /**
+     * @return int
+     */
     public function getNbTextColumns()
     {
         return 2;
     }
 
+    /**
+     * @param $login
+     * @param Variable $var
+     */
     public function openWin($login, Variable $var)
     {
         if ($var->hasConfWindow()) {
             $var->showConfWindow($login);
         } else {
             ExpListSetting::Erase($login);
+            /** @var ExpListSetting $win */
             $win = ExpListSetting::Create($login);
             $win->setTitle("Expansion Settings: " . $var->getVisibleName());
             $win->centerOnScreen();
@@ -183,6 +206,9 @@ class ExpSetting extends Control
         }
     }
 
+    /**
+     * @param $login
+     */
     public function reset($login)
     {
         $this->var->setRawValue($this->var->getDefaultValue());
@@ -190,6 +216,9 @@ class ExpSetting extends Control
         $this->win->redraw();
     }
 
+    /**
+     * @return Variable|null
+     */
     public function getVar()
     {
         if ($this->input != null) {
@@ -199,19 +228,26 @@ class ExpSetting extends Control
         }
     }
 
+    /**
+     * @param $options
+     * @return bool|null
+     */
     public function getVarValue($options)
     {
         if ($this->input != null) {
             if ($this->input instanceof CheckboxScripted) {
                 $this->input->setArgs($options);
-
                 return $this->input->getStatus();
             } else {
                 return isset($options[$this->var->getName()]) ? $options[$this->var->getName()] : null;
             }
         }
+        return false;
     }
 
+    /**
+     *
+     */
     public function destroy()
     {
         parent::destroy();

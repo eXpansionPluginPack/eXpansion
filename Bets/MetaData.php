@@ -15,9 +15,9 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Games: Bet Planets for winner");
+        $this->setName(" Bet Planets for winner");
         $this->setDescription('Enables the famous bets for playres to compete for planets');
-        $this->setGroups(array("Games"));
+        $this->setGroups(array("Games", "Widgets"));
         $configInstance = Config::getInstance();
 
         $var = new BoundedTypeInt("timeoutSetBet", "Bet Accept timeout (in seconds)", $configInstance, false, false);

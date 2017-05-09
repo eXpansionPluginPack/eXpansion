@@ -1,12 +1,15 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core;
 
+use ManiaLib\Utils\Singleton;
+use ManiaLive\Data\Storage;
 use ManiaLive\DedicatedApi\Callback\Event as dediEvent;
+use ManiaLive\DedicatedApi\Callback\Listener;
 use ManiaLive\Event\Dispatcher;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
+use ManiaLivePlugins\eXpansion\Helpers\Singletons;
 
-class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\DedicatedApi\Callback\Listener
+class RelayLink extends Singleton implements Listener
 {
 
     public static $started = false;
@@ -14,7 +17,7 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
     /** @var  \Maniaplanet\DedicatedServer\Connection */
     private $connection;
 
-    /** @var \ManiaLive\Data\Storage */
+    /** @var Storage */
     private $storage;
 
     private $connectedRelays = array();
@@ -23,9 +26,9 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
 
     public function __construct()
     {
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+
+        $this->connection = Singletons::getInstance()->getDediConnection();
+        $this->storage = Storage::getInstance();
         Dispatcher::register(dediEvent::getClass(), $this, dediEvent::ALL, 1);
         $this->relayMaster = $this->connection->getMainServerPlayerInfo();
         $this->onPlayerConnect(null, true);
@@ -75,27 +78,27 @@ class RelayLink extends \ManiaLib\Utils\Singleton implements \ManiaLive\Dedicate
     private function syncMap($params)
     {
 
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $this->storage = Storage::getInstance();
 
         return $this->storage->currentMap;
     }
 
     private function syncMapNext($params)
     {
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $this->storage = Storage::getInstance();
 
         return $this->storage->nextMap;
     }
 
     private function xSyncMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
     {
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $this->storage = Storage::getInstance();
         $this->storage->currentMap = $map;
     }
 
     private function xSyncMapNext(\Maniaplanet\DedicatedServer\Structures\Map $map)
     {
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $this->storage = Storage::getInstance();
         $this->storage->nextMap = $map;
     }
 

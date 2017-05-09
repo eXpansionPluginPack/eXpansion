@@ -4,7 +4,7 @@ declare persistent Boolean edge_isLockedVisible2 = True;
 
 declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
 declare Integer eXp_lastClockUpdate2 = Now;
-declare Vec3 p2 = eXp_widgetLastPosRel[version][id][gameMode];
+declare Vec3 p2 = Window.RelativePosition;
 declare Boolean lastValue = edge_isMinimized;
 
 declare Integer edgeStart = Now;

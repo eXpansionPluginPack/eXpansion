@@ -2,35 +2,48 @@
 
 namespace ManiaLivePlugins\eXpansion\Adm\Gui\Windows;
 
+use ManiaLive\Data\Storage;
+use ManiaLivePlugins\eXpansion\Adm\Gui\Controls\ScriptSetting;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button as OkButton;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
+use ManiaLivePlugins\eXpansion\Helpers\Singletons;
+use Maniaplanet\DedicatedServer\Connection;
 
-class ScriptSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class ScriptSettings extends Window
 {
+    /** @var  Pager */
+    protected $pager;
 
-    private $pager;
+    /** @var Connection */
+    protected $connection;
 
-    /** @var \Maniaplanet\DedicatedServer\Connection */
-    private $connection;
+    /** @var Storage */
+    protected $storage;
 
-    /** @var \ManiaLive\Data\Storage */
-    private $storage;
-    private $items = array();
-    private $ok;
-    private $cancel;
-    private $actionOk;
-    private $actionCancel;
+    protected $items = array();
+    /** @var  OkButton */
+    protected $ok;
+    /** @var  OkButton */
+    protected $cancel;
 
+    protected $actionOk;
+    protected $actionCancel;
+
+    /**
+     *
+     */
     protected function onConstruct()
     {
         parent::onConstruct();
         $login = $this->getRecipient();
 
-        $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $this->connection = Singletons::getInstance()->getDediConnection();
+        $this->storage = Storage::getInstance();
 
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\Pager();
+        $this->pager = new Pager();
         $this->pager->setPosX(5);
-        $this->mainFrame->addComponent($this->pager);
+        $this->addComponent($this->pager);
         $this->actionOk = $this->createAction(array($this, "ok"));
         $this->actionCancel = $this->createAction(array($this, "cancel"));
 
@@ -46,20 +59,30 @@ class ScriptSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->mainFrame->addComponent($this->cancel);
     }
 
+    /**
+     * @param $oldX
+     * @param $oldY
+     */
     protected function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 5, $this->sizeY - 8);
         $this->pager->setStretchContentX($this->sizeX);
-        $this->ok->setPosition($this->sizeX - 38, -$this->sizeY + 6);
+        $this->ok->setPosition($this->sizeX - 46, -$this->sizeY + 6);
         $this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
     }
 
+    /**
+     *
+     */
     protected function onShow()
     {
         $this->populateList();
     }
 
+    /**
+     *
+     */
     public function populateList()
     {
         foreach ($this->items as $item) {
@@ -68,17 +91,25 @@ class ScriptSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->pager->clearItems();
         $this->items = array();
 
-        $login = $this->getRecipient();
         $x = 0;
         $settings = $this->connection->getModeScriptSettings();
 
         foreach ($settings as $var => $setting) {
-            $this->items[$x] = new \ManiaLivePlugins\eXpansion\Adm\Gui\Controls\ScriptSetting($x, $var, $setting, $this->sizeX);
+            $this->items[$x] = new ScriptSetting(
+                $x,
+                $var,
+                $setting,
+                $this->sizeX
+            );
             $this->pager->addItem($this->items[$x]);
             $x++;
         }
     }
 
+    /**
+     * @param $login
+     * @param $settings
+     */
     public function ok($login, $settings)
     {
 
@@ -95,11 +126,17 @@ class ScriptSettings extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->Erase($login);
     }
 
+    /**
+     * @param $login
+     */
     public function cancel($login)
     {
         $this->Erase($login);
     }
 
+    /**
+     *
+     */
     public function destroy()
     {
         foreach ($this->items as $item) {

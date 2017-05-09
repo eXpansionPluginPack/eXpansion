@@ -2,6 +2,8 @@
 
 namespace ManiaLivePlugins\eXpansion\Widgets_Map\Gui\Widgets;
 
+use ManiaLivePlugins\eXpansion\Maps\Structures\DbMap;
+
 class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
     protected $clockBg;
@@ -10,6 +12,7 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     protected $specs;
     protected $map;
     protected $author;
+    protected $style;
 
     protected function eXpOnBeginConstruct()
     {
@@ -27,68 +30,66 @@ class Map extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->map->setId('mapName');
         $this->map->setAlign("right", "top");
         $this->map->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
-        $this->map->setTextSize(2);
-        $this->map->setPosition(58, 0);
+        $this->map->setTextSize(3);
+        $this->map->setPosition(58, 1.5);
         $this->map->setTextColor('fff');
         $this->map->setTextPrefix('$s');
         $this->addComponent($this->map);
 
         $this->author = new \ManiaLib\Gui\Elements\Label(60, 6);
         $this->author->setId('mapAuthor');
-        $this->author->setAlign("right", "top");
+        $this->author->setAlign("right", "center2");
         $this->author->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
         $this->author->setTextSize(2);
-        $this->author->setPosition(58, -4.5);
+        $this->author->setPosition(51, -6);
         $this->author->setTextColor('fff');
         $this->author->setTextPrefix('$s');
         $this->addComponent($this->author);
+
+        $icon = new \ManiaLib\Gui\Elements\Quad(6, 6);
+        $icon->setId("country");
+        $icon->setAlign("left", "center");
+        $icon->setPosition(52, -6);
+        $this->addComponent($icon);
+
+        $this->style = new \ManiaLib\Gui\Elements\Label(60, 6);
+        $this->style->setAlign("right", "center");
+        $this->style->setId('style');
+        $this->style->setTextColor('fff');
+        $this->style->setTextSize(2);
+        $this->style->setStyle('TextRaceMessageBig');
+        $this->style->setPosition(58, -10);
+        $this->style->setTextPrefix('$s');
+        $this->addComponent($this->style);
 
         $this->author = new \ManiaLib\Gui\Elements\Label(60, 6);
         $this->author->setId('authorTime');
         $this->author->setAlign("right", "top");
-        $this->author->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceMessageBig);
-        $this->author->setTextSize(2);
-        $this->author->setPosition(58, -9);
+        $this->author->setStyle(\ManiaLib\Gui\Elements\Format::TextRaceChrono);
+        $this->author->setTextSize(3);
+        $this->author->setPosition(58, -13);
         $this->author->setTextColor('fff');
         $this->author->setTextPrefix('$s');
         $this->addComponent($this->author);
 
-        $line = new \ManiaLive\Gui\Controls\Frame(36, -14.5);
-        $line->setAlign("left", "top");
-        $layout = new \ManiaLib\Gui\Layouts\Line();
-        $layout->setMargin(1);
-        $line->setLayout($layout);
-        $icon = new \ManiaLib\Gui\Elements\Quad(5, 5);
-        $icon->setStyle("Icons128x32_1");
-        $icon->setAlign("left", "center");
-        $icon->setSubStyle(\ManiaLib\Gui\Elements\Icons128x32_1::RT_TimeAttack);
-        $line->addComponent($icon);
-
-        $clock = new \ManiaLib\Gui\Elements\Label(20, 8);
-        $clock->setAlign("left", "center");
-        $clock->setId('clock');
-        $clock->setTextColor('fff');
-        $clock->setTextSize(2);
-        $clock->setStyle('TextRaceMessageBig');
-        $clock->setTextPrefix('$s');
-        $line->addComponent($clock);
-
-
-        $this->frame = $line;
-        // 	$this->addComponent($this->frame);
-        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Map\Gui\Scripts_Map");
+        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Widgets_Map\\Gui\\Scripts_Map");
         $this->registerScript($script);
     }
 
-    public function setServerName($name)
+    public function setMap($map)
     {
+        if ($map instanceof DbMap) {
+            $this->style->setText($map->difficultyName . " / " . $map->styleName);
+        } else {
+            $this->style->setText("");
+        }
     }
 
     public function showMapInfo($login)
     {
         $window = \ManiaLivePlugins\eXpansion\Maps\Gui\Windows\MapInfo::create($login);
         $window->setMap(null);
-        $window->setSize(160, 90);
+        $window->setSize(150, 50);
         $window->show($login);
     }
 }

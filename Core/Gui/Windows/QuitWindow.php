@@ -1,55 +1,50 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core\Gui\Windows;
 
+use ManiaLib\Gui\Elements\Bgs1InRace;
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Elements\Quad;
 use ManiaLib\Gui\Manialink;
+use ManiaLive\Data\Storage;
+use ManiaLive\Gui\Controls\Frame;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 
 class QuitWindow
 {
 
-    protected $xml;
-    protected $entry;
-    protected $label;
-    /** @var \ManiaLive\Data\Storage */
-    protected $storage;
-
     public function getXml()
     {
         Manialink::load();
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $storage = Storage::getInstance();
 
 
-        $frame = new \ManiaLive\Gui\Controls\Frame();
-        $frame->setPosX(0, 0);
+        $frame = new Frame();
         $frame->setAlign("center", "center");
         $logourl = Config::getInstance()->logo;
         $size = 120;
-        $logo = new \ManiaLib\Gui\Elements\Quad($size, $size / 4);
+        $logo = new Quad($size, $size / 4);
         $logo->setImage($logourl, true);
         $logo->setUrl("http://ml-expansion.com");
         $logo->setAlign("center", "top");
         $logo->setPosition(0, 50, -50);
         $frame->addComponent($logo);
 
-        $background = new \ManiaLib\Gui\Elements\Quad(160, 50);
+        $background = new Quad(160, 50);
         $background->setStyle("Bgs1InRace");
         $background->setPosition(0, 0);
         $background->setAlign("center", "top");
-        $background->setSubStyle(\ManiaLib\Gui\Elements\Bgs1InRace::BgCard);
+        $background->setSubStyle(Bgs1InRace::BgCard);
         $frame->addComponent($background);
 
-        $server = new \ManiaLib\Gui\Elements\Label(160, 7);
+        $server = new Label(160, 7);
         $server->setAlign("center", "top");
         $server->setPosition(0, 20);
         $server->setScale(1.5);
-        $server->setText($this->storage->server->name);
+        $server->setText($storage->server->name);
         $server->setStyle("TextRaceMessageBig");
         $frame->addComponent($server);
 
         $frame->save();
-
-
         return Manialink::render(true);
     }
 }

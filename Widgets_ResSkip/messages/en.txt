@@ -28,6 +28,15 @@ $fffSkip
 AddToFav:$fffskips
 $fffskips
 
+AddToFav:$s$fffShow
+$s$fffShow
+
+AddToFav:$s$fffMap
+$s$fffMap
+
+AddToFav:$s$fffList
+$s$fffList
+
 Are you sure you want to restart this map
 Are you sure you want to restart this map
 

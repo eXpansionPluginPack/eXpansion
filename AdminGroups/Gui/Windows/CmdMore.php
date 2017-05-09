@@ -2,134 +2,150 @@
 
 namespace ManiaLivePlugins\eXpansion\AdminGroups\Gui\Windows;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
+use ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround;
+use ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 
 /**
  * Description of CmdMore
  *
  * @author oliverde8
  */
-class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class CmdMore extends Window
 {
 
+    /** @var  Label */
     protected $label_cmd;
+    /** @var  Label */
     protected $label_desc;
+    /** @var  Label */
     protected $label_descm;
+    /** @var  Label */
     protected $label_aliases;
+    /** @var  TitleBackGround */
     protected $bgt_cmd;
+    /** @var  TitleBackGround */
     protected $bgt_desc;
+    /** @var  TitleBackGround */
     protected $bgt_descm;
+    /** @var  TitleBackGround */
     protected $bgt_aliases;
-
+    /** @var  Label */
     protected $content_cmd;
+    /** @var  Label */
     protected $content_desc;
+    /** @var  Label */
     protected $content_descm;
+    /** @var  Label */
     protected $content_aliases;
+    /** @var  ListBackGround */
     protected $bg_cmd;
+    /** @var  ListBackGround */
     protected $bg_desc;
+    /** @var  ListBackGround */
     protected $bg_descm;
+    /** @var  ListBackGround */
     protected $bg_aliases;
 
+    /** @var  AdminCmd */
     private $cmd;
 
     protected function onConstruct()
     {
         parent::onConstruct();
 
-        $this->bgt_cmd = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround(30, 4);
+        $this->bgt_cmd = new TitleBackGround(30, 4);
         $this->bgt_cmd->setPosition(1, -1);
         $this->mainFrame->addComponent($this->bgt_cmd);
 
-        $this->label_cmd = new \ManiaLib\Gui\Elements\Label(30, 5);
+        $this->label_cmd = new Label(30, 5);
         $this->label_cmd->setAlign('left', 'center');
-        $this->label_cmd->setScale(0.8);
         $this->label_cmd->setPosition(1, -1);
         $this->mainFrame->addComponent($this->label_cmd);
 
-        $this->bgt_desc = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround(30, 4);
+        $this->bgt_desc = new TitleBackGround(30, 4);
         $this->bgt_desc->setPosY(-1);
         $this->mainFrame->addComponent($this->bgt_desc);
 
-        $this->label_desc = new \ManiaLib\Gui\Elements\Label(30, 4);
+        $this->label_desc = new Label(30, 4);
         $this->label_desc->setAlign('left', 'center');
-        $this->label_desc->setScale(0.8);
         $this->label_desc->setPosY(-1);
         $this->mainFrame->addComponent($this->label_desc);
 
-        $this->bgt_descm = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround(30, 4);
+        $this->bgt_descm = new TitleBackGround(30, 4);
         $this->bgt_descm->setPosition(1, -10);
         $this->mainFrame->addComponent($this->bgt_descm);
 
-        $this->label_descm = new \ManiaLib\Gui\Elements\Label(30, 4);
+        $this->label_descm = new Label(30, 4);
         $this->label_descm->setAlign('left', 'center');
-        $this->label_descm->setScale(0.8);
         $this->label_descm->setPosition(1, -10);
         $this->mainFrame->addComponent($this->label_descm);
 
-        $this->bgt_aliases = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround(30, 4);
+        $this->bgt_aliases = new TitleBackGround(30, 4);
         $this->bgt_aliases->setPosY(-10);
         $this->mainFrame->addComponent($this->bgt_aliases);
 
-        $this->label_aliases = new \ManiaLib\Gui\Elements\Label(30, 4);
+        $this->label_aliases = new Label(30, 4);
         $this->label_aliases->setAlign('left', 'center');
-        $this->label_aliases->setScale(0.8);
         $this->label_aliases->setPosY(-10);
         $this->mainFrame->addComponent($this->label_aliases);
 
-        $this->bg_cmd = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround(0, 30, 4);
+        $this->bg_cmd = new ListBackGround(0, 30, 4);
         $this->bg_cmd->setPosition(2, -5);
         $this->mainFrame->addComponent($this->bg_cmd);
 
-        $this->content_cmd = new \ManiaLib\Gui\Elements\Label(30, 4);
+        $this->content_cmd = new Label(30, 4);
         $this->content_cmd->setAlign('left', 'top');
-        $this->content_cmd->setScale(0.6);
         $this->content_cmd->setPosition(2, -4);
         $this->mainFrame->addComponent($this->content_cmd);
 
-        $this->bg_desc = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround(1, 30, 4);
+        $this->bg_desc = new ListBackGround(1, 30, 4);
         $this->bg_desc->setPositionY(-5);
         $this->mainFrame->addComponent($this->bg_desc);
 
-        $this->content_desc = new \ManiaLib\Gui\Elements\Label(30, 4);
+        $this->content_desc = new Label(30, 4);
         $this->content_desc->setAlign('left', 'top');
-        $this->content_desc->setScale(0.6);
         $this->content_desc->setPosY(-4);
         $this->mainFrame->addComponent($this->content_desc);
 
-        $this->bg_descm = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround(3, 30, 4);
+        $this->bg_descm = new ListBackGround(3, 30, 4);
         $this->bg_descm->setPosition(2, -13);
         $this->mainFrame->addComponent($this->bg_descm);
 
-        $this->content_descm = new \ManiaLib\Gui\Elements\Label(30, 4);
+        $this->content_descm = new Label(30, 4);
         $this->content_descm->setAlign('left', 'top');
-        $this->content_descm->setScale(0.6);
         $this->content_descm->setPosition(2, -13);
         $this->content_descm->setMaxline(100);
         $this->mainFrame->addComponent($this->content_descm);
 
-        $this->bg_aliases = new \ManiaLivePlugins\eXpansion\Gui\Elements\ListBackGround(2, 30, 4);
+        $this->bg_aliases = new ListBackGround(2, 30, 4);
         $this->bg_aliases->setPosition(2, -13);
         $this->mainFrame->addComponent($this->bg_aliases);
 
-        $this->content_aliases = new \ManiaLib\Gui\Elements\Label(30, 4);
+        $this->content_aliases = new Label(30, 4);
         $this->content_aliases->setAlign('left', 'top');
-        $this->content_aliases->setScale(0.6);
         $this->content_aliases->setPosY(-13);
         $this->content_aliases->setMaxline(100);
         $this->mainFrame->addComponent($this->content_aliases);
     }
 
-    public function setCommand(\ManiaLivePlugins\eXpansion\AdminGroups\AdminCmd $command)
+    public function setCommand(AdminCmd $command)
     {
         $this->cmd = $command;
     }
 
+    /**
+     * @param $oldX
+     * @param $oldY
+     */
     public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
 
-        $sizeX2 = $this->getSizeX() / .8;
-        $sizeX3 = $this->getSizeX() / .6;
+        $sizeX2 = $this->getSizeX();
 
         $this->label_cmd->setSizeX($sizeX2 / 2 - 4);
         $this->bgt_cmd->setSizeX($this->getSizeX() / 2 - 4);
@@ -147,15 +163,15 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->bgt_aliases->setPosX($this->getSizeX() / 1.5);
         $this->bgt_aliases->setSizeX($this->getSizeX() / 3 - 4);
 
-        $this->content_cmd->setSizeX($sizeX3 / 2 - 6);
+        $this->content_cmd->setSizeX($sizeX2 / 2 - 6);
         $this->bg_cmd->setSizeX($this->getSizeX() / 2 - 6);
 
         $this->content_desc->setPosX($this->getSizeX() / 2 + 1);
-        $this->content_desc->setSizeX($sizeX3 / 2 - 6);
+        $this->content_desc->setSizeX($sizeX2 / 2 - 6);
         $this->bg_desc->setPosX($this->getSizeX() / 2 + 1);
         $this->bg_desc->setSize($this->getSizeX() / 2 - 6);
 
-        $this->content_descm->setSizeX($sizeX3 / 1.5 - 6);
+        $this->content_descm->setSizeX($sizeX2 / 1.5 - 12);
         $this->content_descm->setSizeY($this->getSizeY() / .6 - 15);
         $this->bg_descm->setSize($this->getSizeX() / 1.5 - 6, $this->getSizeY() - 15);
         $this->bg_descm->setPosY(-12 - (($this->getSizeY() - 15) / 2));
@@ -191,7 +207,6 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
 
     public function destroy()
     {
-        parent::destroy();
         $this->bg_aliases->destroy();
         $this->bg_desc->destroy();
         $this->bg_descm->destroy();
@@ -211,5 +226,6 @@ class CmdMore extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->bgt_desc = null;
         $this->bgt_descm = null;
         $this->bgt_cmd = null;
+        parent::destroy();
     }
 }

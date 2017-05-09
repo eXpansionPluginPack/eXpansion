@@ -3,9 +3,9 @@ foreach (Player in Players) {
 
     declare <?php echo $this->varName ?> for Player = -1;
 
-    if (<?php echo $this->varName ?> != Player.CurRace.Checkpoints.count) {	
+    if (<?php echo $this->varName ?> != Player.CurRace.Checkpoints.count) {
 		//Update the current checkpoint of this user
-		declare curCp = Player.CurRace.Checkpoints.count -1 ;	
+		declare curCp = Player.CurRace.Checkpoints.count -1 ;
 		<?php echo $this->varName ?> = curCp+1;
 
 
@@ -67,7 +67,7 @@ if(!needUpdate){
     lastUpdateTime = Now;
 }
 
-if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered && exp_widgetLayersBuffered == activeLayer) || exp_widgetVisibilityChanged)) {
+if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered) || exp_widgetVisibilityChanged)) {
 
     needUpdate = False;
     lastUpdateTime = Now;

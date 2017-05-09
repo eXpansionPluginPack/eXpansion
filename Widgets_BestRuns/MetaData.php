@@ -13,7 +13,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Widget: Best runs");
+        $this->setName(" Best runs");
         $this->setDescription("Provides Best runs widget");
         $this->setGroups(array('Records', 'Widgets'));
 

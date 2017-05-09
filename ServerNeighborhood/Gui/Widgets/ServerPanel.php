@@ -84,7 +84,7 @@ class ServerPanel extends Widget
         $this->label_title->setPosition(3.5, -2);
         $this->label_title->setSizeY(4);
         $this->label_title->setTextColor("fff");
-        $this->label_title->setStyle("TextCardScores2");
+        $this->label_title->setAttribute("textfont","Oswald");
         $this->label_title->setText('$FFFServer Neighborhood');
         $this->label_title->setAlign("left", "center");
         $this->label_title->setTextSize(1);
@@ -239,11 +239,10 @@ class ServerPanel extends Widget
 
     public function destroy()
     {
-        parent::destroy();
         foreach ($this->items as $item) {
             $item->destroy();
         }
         $this->items = array();
-        $this->frame->destroy();
+        parent::destroy();
     }
 }

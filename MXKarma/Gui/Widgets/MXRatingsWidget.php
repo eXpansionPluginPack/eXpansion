@@ -64,7 +64,7 @@ class MXRatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $info->setTextColor('fff');
         $info->setAlign("center", "center");
         $info->setTextEmboss();
-        $info->setText($number . "% (" . $total . ")");
+        $info->setText(round($number, 1) . "% (" . $total . ")");
         $info->setPosition(17, -7);
         $this->frame->addComponent($info);
         $this->redraw();

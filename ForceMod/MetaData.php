@@ -16,7 +16,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Tools: Force Mod");
+        $this->setName("Force Mod");
         $this->setDescription("Forces a Mod for a server");
         $this->setGroups(array('Tools'));
         $config = Config::getInstance();

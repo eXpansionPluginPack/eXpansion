@@ -15,12 +15,16 @@ use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerManagement;
 use ManiaLivePlugins\eXpansion\Adm\Gui\Windows\ServerOptions;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Events\Event;
+use ManiaLivePlugins\eXpansion\AdminGroups\Events\Listener;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Core\Config;
+use ManiaLivePlugins\eXpansion\Core\ConfigManager;
 use ManiaLivePlugins\eXpansion\Core\I18n\Message;
+use ManiaLivePlugins\eXpansion\Core\MetaData as CoreMetaData;
 use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
-class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\Events\Listener
+class Adm extends ExpPlugin implements Listener
 {
     /** @var Message Messages needed */
     private $msgScriptSettings;
@@ -62,7 +66,12 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
         AdminPanel::$mainPlugin = $this;
 
 
-        $cmd = AdminGroups::addAdminCommand('server control', $this, 'serverControlMain', Permission::SERVER_CONTROL_PANEL);
+        $cmd = AdminGroups::addAdminCommand(
+            'server control',
+            $this,
+            'serverControlMain',
+            Permission::SERVER_CONTROL_PANEL
+        );
         $cmd->setHelp('Displays the main control panel for the server');
         $cmd->setMinParam(0);
         AdminGroups::addAlias($cmd, "server");
@@ -114,7 +123,7 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
      */
     public function onPlayerConnect($login, $isSpectator)
     {
-        if ($this->expStorage->isRelay) {
+   /*     if ($this->expStorage->isRelay) {
             return;
         }
 
@@ -123,7 +132,7 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
             $widget->setSize(40, 7);
             $widget->setDisableAxis("x");
             $widget->show($login);
-        }
+        }*/
     }
 
     /**
@@ -134,6 +143,7 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     public function serverOptions($login)
     {
         if (AdminGroups::getAdmin($login) != null) {
+            /** @var ServerOptions $window */
             $window = ServerOptions::Create($login);
             $window->setTitle(__('Server Options', $login));
             $window->centerOnScreen();
@@ -151,7 +161,11 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     {
         if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
             $gamemode = $this->storage->gameInfos->gameMode;
-            if ($gamemode == GameInfos::GAMEMODE_ROUNDS || $gamemode == GameInfos::GAMEMODE_TEAM || GameInfos::GAMEMODE_CUP) {
+            if ($gamemode == GameInfos::GAMEMODE_ROUNDS
+                || $gamemode == GameInfos::GAMEMODE_TEAM
+                || GameInfos::GAMEMODE_CUP
+            ) {
+                /** @var ForceScores $window */
                 $window = ForceScores::Create($login);
                 $window->setTitle(__('Force Scores', $login));
                 $window->centerOnScreen();
@@ -183,6 +197,7 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     public function gameOptions($login)
     {
         if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
+            /** @var GameOptions $window */
             $window = GameOptions::Create($login);
             $window->setTitle(__('Game Options', $login));
             $window->setSize(160, 85);
@@ -198,7 +213,10 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
      */
     public function serverManagement($login)
     {
-        if (AdminGroups::hasPermission($login, Permission::SERVER_STOP_DEDICATED) || AdminGroups::hasPermission($login, Permission::SERVER_STOP_MANIALIVE)) {
+        if (AdminGroups::hasPermission($login, Permission::SERVER_STOP_DEDICATED)
+            || AdminGroups::hasPermission($login, Permission::SERVER_STOP_MANIALIVE)
+        ) {
+            /** @var ServerManagement $window */
             $window = ServerManagement::Create($login);
             $window->setTitle(__('Server Control', $login));
             $window->setSize(90, 30);
@@ -215,6 +233,7 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     public function roundPoints($login)
     {
         if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
+            /** @var RoundPoints $window */
             $window = RoundPoints::Create($login);
             $window->setTitle(__('Custom Round Points', $login));
             $window->setSize(160, 90);
@@ -268,11 +287,16 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     /**
      * Show window to set up the match settings used
      *
-     *  string $login The login of the player
+     * @param string $login The login of the player
+     *
      */
     public function matchSettings($login)
     {
-        if (AdminGroups::hasPermission($login, Permission::GAME_MATCH_SAVE) || AdminGroups::hasPermission($login, 'game_matchDelete') || AdminGroups::hasPermission($login, 'game_match')) {
+        if (AdminGroups::hasPermission($login, Permission::GAME_MATCH_SAVE)
+            || AdminGroups::hasPermission($login, 'game_matchDelete')
+            || AdminGroups::hasPermission($login, 'game_match')
+        ) {
+            /** @var MatchSettings $window */
             $window = MatchSettings::Create($login);
             $window->setTitle(__('Match Settings', $login));
             $window->centerOnScreen();
@@ -290,6 +314,7 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     {
         if (AdminGroups::hasPermission($login, Permission::GAME_SETTINGS)) {
             if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
+                /** @var ScriptSettings $window */
                 $window = ScriptSettings::Create($login);
                 $window->setTitle(__('Script Settings', $login));
                 $window->centerOnScreen();
@@ -310,7 +335,11 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     {
         if (AdminGroups::hasPermission($login, Permission::SERVER_DATABASE)) {
             if ($this->isPluginLoaded("\\ManiaLivePlugins\\eXpansion\\Database\\Database")) {
-                $this->callPublicMethod("\\ManiaLivePlugins\\eXpansion\\Database\\Database", "showDbMaintenance", $login);
+                $this->callPublicMethod(
+                    "\\ManiaLivePlugins\\eXpansion\\Database\\Database",
+                    "showDbMaintenance",
+                    $login
+                );
             } else {
                 $this->eXpChatSendServerMessage($this->msgDatabasePlugin, $login);
             }
@@ -347,7 +376,11 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
 
             $this->connection->restartMap($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_CUP);
             $admin = $this->storage->getPlayerObject($login);
-            $this->eXpChatSendServerMessage('#admin_action#Admin#variable# %s #admin_action#restarts the challenge!', null, array($admin->nickName));
+            $this->eXpChatSendServerMessage(
+                '#admin_action#Admin#variable# %s #admin_action#restarts the challenge!',
+                null,
+                array($admin->nickName)
+            );
         }
     }
 
@@ -401,17 +434,18 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
     {
         try {
             $nick = $this->storage->getPlayerObject($login)->nickName;
-            $config = \ManiaLivePlugins\eXpansion\Core\Config::getInstance();
+            $config = Config::getInstance();
+            $intPoints = array();
             foreach ($points as $p) {
                 $intPoints[] = intval($p);
             }
 
             $config->roundsPoints = $intPoints;
 
-            $var = \ManiaLivePlugins\eXpansion\Core\MetaData::getInstance()->getVariable('roundsPoints');
+            $var = CoreMetaData::getInstance()->getVariable('roundsPoints');
             $var->setRawValue($intPoints);
 
-            \ManiaLivePlugins\eXpansion\Core\ConfigManager::getInstance()->check();
+            ConfigManager::getInstance()->check();
 
 
             if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
@@ -425,8 +459,9 @@ class Adm extends ExpPlugin implements \ManiaLivePlugins\eXpansion\AdminGroups\E
             } else {
                 $this->connection->setRoundCustomPoints($intPoints);
             }
-            $msg = eXpGetMessage('#admin_action#Admin %s $z$s#admin_action#sets custom ' .
-			"round points to #variable#%s" );
+            $msg = eXpGetMessage(
+                '#admin_action#Admin %s $z$s#admin_action#sets custom ' . "round points to #variable#%s"
+            );
             $this->eXpChatSendServerMessage($msg, null, array($nick, implode(",", $intPoints)));
         } catch (Exception $e) {
             $this->connection->chatSendServerMessage(__('#admin_error#Error: %s', $login, $e->getMessage()), $login);

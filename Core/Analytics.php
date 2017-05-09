@@ -1,4 +1,6 @@
 <?php
+namespace ManiaLivePlugins\eXpansion\Core;
+
 /**
  * @author       Oliver de Cramer (oliverde8 at gmail.com)
  * @copyright    GNU GENERAL PUBLIC LICENSE
@@ -20,13 +22,12 @@
  *  along with this program.  If not, see {http://www.gnu.org/licenses/}.
  */
 
-namespace ManiaLivePlugins\eXpansion\Core;
-
 use ManiaLib\Utils\Path;
 use ManiaLive\Application\ErrorHandling;
 use ManiaLive\Data\Storage;
 use ManiaLive\Event\Dispatcher;
 use ManiaLive\Features\Tick\Event as TickEvent;
+use ManiaLive\Features\Tick\Listener;
 use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLive\Utilities\Console;
 use ManiaLive\Utilities\Logger;
@@ -37,7 +38,7 @@ use ManiaLivePlugins\eXpansion\Helpers\Helper;
  *
  * @package ManiaLivePlugins\eXpansion\Core
  */
-class Analytics implements \ManiaLive\Features\Tick\Listener
+class Analytics implements Listener
 {
 
     const ERROR_LIMIT = 10;
@@ -146,7 +147,7 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
     public function handshake()
     {
         /** @var DataAccess $access */
-        $access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
+        $access = DataAccess::getInstance();
 
         $data = array(
             'page' => 'handshake',
@@ -176,12 +177,12 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
     }
 
     /**
-     * @param \Exception $exception to log
+     * @param mixed $error
      */
     public function ping($error = null)
     {
         /** @var DataAccess $access */
-        $access = \ManiaLivePlugins\eXpansion\Core\DataAccess::getInstance();
+        $access = DataAccess::getInstance();
 
         $buildDate = Helper::getBuildDate();
 
@@ -197,13 +198,15 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
             'country' => $this->expStorage->serverCountry,
             'version' => Core::EXP_VERSION,
             'php_version' => $this->expStorage->cleanPhpVersion,
+            'php_version_short' => $this->expStorage->shortPhpVersion,
             'mysql_version' => $this->expStorage->cleanMysqlVersion,
             'memory' => memory_get_usage(),
             'memory_peak' => memory_get_peak_usage(),
             'build' => $this->getDateTime($buildDate),
             'game' => $this->expStorage->simpleEnviTitle,
             'title' => str_replace('@', '_', $this->expStorage->titleId),
-            'mode' => $this->storage->gameInfos->gameMode == 0 ? $this->storage->gameInfos->scriptName : $this->storage->gameInfos->gameMode,
+            'mode' => $this->storage->gameInfos->gameMode == 0
+                ? $this->storage->gameInfos->scriptName : $this->storage->gameInfos->gameMode,
             'plugins' => implode(',', $this->pluginHandler->getLoadedPluginsList()),
             'serverOs' => $this->expStorage->serverOs,
         );
@@ -249,6 +252,9 @@ class Analytics implements \ManiaLive\Features\Tick\Listener
         return $url;
     }
 
+    /**
+     * @param $data
+     */
     public function completePing($data)
     {
         $this->running = false;

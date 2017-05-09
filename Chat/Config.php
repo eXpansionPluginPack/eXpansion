@@ -2,7 +2,9 @@
 
 namespace ManiaLivePlugins\eXpansion\Chat;
 
-class Config extends \ManiaLib\Utils\Singleton
+use ManiaLib\Utils\Singleton;
+
+class Config extends Singleton
 {
 
     public $publicChatColor = '$ff0';
@@ -14,4 +16,6 @@ class Config extends \ManiaLib\Utils\Singleton
     public $publicChatActive = true;
     public $enableSpectatorChat = false;
     public $useProfanityFilter = false;
+    public $useChannels = false;
+    public $channels = array("English", "German", "French");
 }

@@ -1,16 +1,24 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core;
 
+use ManiaLive\Data\Storage;
 use ManiaLive\Event\Dispatcher;
+use ManiaLive\Gui\ActionHandler;
 use ManiaLive\PluginHandler\PluginHandler;
 use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
 use ManiaLivePlugins\eXpansion\Core\Events\GameSettingsEvent;
 use ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent;
+use ManiaLivePlugins\eXpansion\Core\types\ExpPlugin;
+use ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj;
 use ManiaLivePlugins\eXpansion\Helpers\Helper;
+use ManiaLivePlugins\eXpansion\Helpers\Singletons;
+use ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics;
+use Maniaplanet\DedicatedServer\Connection;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
+use Maniaplanet\DedicatedServer\Structures\PlayerInfo;
 use Maniaplanet\DedicatedServer\Structures\ServerOptions;
+use SimpleXMLElement;
 
 /**
  * Description of Core
@@ -19,19 +27,21 @@ use Maniaplanet\DedicatedServer\Structures\ServerOptions;
  * @author reaby
  *
  */
-class Core extends types\ExpPlugin
+class Core extends ExpPlugin
 {
 
-    const EXP_VERSION = "1.0.1.2";
+    const EXP_VERSION = "1.1.0.0";
 
     const EXP_REQUIRE_MANIALIVE = "4.0.0";
 
     const EXP_REQUIRE_DEDIATED = "2014.7.24"; // replace dedicated 2013-7-30 to 2013.7.30
 
+    public $guestList;
+
     /**
      * Last used game mode
      *
-     * @var \Maniaplanet\DedicatedServer\Structures\GameInfos
+     * @var GameInfos
      */
 
     private $lastGameMode;
@@ -93,8 +103,6 @@ class Core extends types\ExpPlugin
      */
     private $configManager;
 
-    private $scriptDispatcher;
-
     public static $core = null;
 
     private $quitDialogXml = "";
@@ -128,10 +136,10 @@ class Core extends types\ExpPlugin
         }
 
         //Listen for changes on server events
-        Dispatcher::register(\ManiaLivePlugins\eXpansion\Core\Events\ServerSettingsEvent::getClass(), $this);
+        Dispatcher::register(ServerSettingsEvent::getClass(), $this);
 
         //Creata an action to show server information
-        $aHandler = \ManiaLive\Gui\ActionHandler::getInstance();
+        $aHandler = ActionHandler::getInstance();
         self::$action_serverInfo = $aHandler->createAction(array($this, 'showInfo'));
 
         //Starting the config manager.
@@ -228,7 +236,7 @@ EOT;
         }
 
         $this->console(
-            'Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . ' build ' .
+            'Version ' . Core::EXP_VERSION . ' build ' .
             date("Y-m-d h:i:s A", Helper::getBuildDate()) . ''
         );
 
@@ -261,13 +269,13 @@ EOT;
         }
 
         //Save last game mode
-        $this->lastGameMode = \ManiaLive\Data\Storage::getInstance()->gameInfos->gameMode;
+        $this->lastGameMode = Storage::getInstance()->gameInfos->gameMode;
 
         //let know the players they are on a great server running eXpansion
         $this->connection->chatSendServerMessage('$fff$w$oe$3afΧ$fffpansion');
         $this->connection->chatSendServerMessage('$000P L U G I N   P A C K  ');
         $this->connection->chatSendServerMessage(
-            'Version ' . \ManiaLivePlugins\eXpansion\Core\Core::EXP_VERSION . '  $n build '
+            'Version ' . Core::EXP_VERSION . '  $n build '
             . date("Y-m-d", Helper::getBuildDate()) . ''
         );
         if (DEBUG) {
@@ -403,7 +411,7 @@ EOT;
         $this->onBeginMap(null, null, null);
 
         //Reset extra data for players
-        $this->resetExpPlayers(true);
+        $this->resetExpPlayers();
 
         //The data is update
         $this->update = true;
@@ -478,7 +486,8 @@ EOT;
      */
     public static function optimizeScriptCallbacks()
     {
-        $connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
+        /** @var Connection $connection */
+        $connection = Singletons::getInstance()->getDediConnection();
         if (sizeof(self::$enabledCallbacks) > 0) {
             $connection->triggerModeScriptEvent("LibXmlRpc_BlockAllCallbacks", "");
             foreach (self::$enabledCallbacks as $callback) {
@@ -563,7 +572,7 @@ EOT;
     /**
      * Fixes error message on chat command /serverlogin
      *
-     * @param strin $login
+     * @param string $login
      */
     public function serverlogin($login)
     {
@@ -582,7 +591,7 @@ EOT;
         $this->configManager->check();
 
         //Current game mode
-        $gameSettings = \ManiaLive\Data\Storage::getInstance()->gameInfos;
+        $gameSettings = Storage::getInstance()->gameInfos;
         $newGameMode = $gameSettings->gameMode;
 
         //Check if game mode change
@@ -621,7 +630,7 @@ EOT;
         }
 
         //Detecting any changes in Server Settings
-        $serverSettings = \ManiaLive\Data\Storage::getInstance()->server;
+        $serverSettings = Storage::getInstance()->server;
         if ($this->lastServerSettings == null) {
             $this->lastServerSettings = clone $serverSettings;
         } else {
@@ -644,15 +653,15 @@ EOT;
         }
         $this->teamScores = array();
 
-        $this->connection->customizeQuitDialog($this->quitDialogXml, "", true, 0);
+        $this->updateQuitDialog();
     }
 
     /**
      * Compares the values  in 2 objects recursively.
      *
-     * @param object $obj1       First object
-     * @param object $obj2       Object to compare with
-     * @param array  $ignoreList Keys to ignore while comparing
+     * @param object $obj1 First object
+     * @param object $obj2 Object to compare with
+     * @param array $ignoreList Keys to ignore while comparing
      *
      * @return array List keys that has a different value. this is an array that has the same structure
      *               as the objects that were compared
@@ -686,15 +695,16 @@ EOT;
     /**
      * This event is called when game settings has changed
      *
-     * @param \Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings The old Game Infos
-     * @param \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings The new Game Infos
+     * @param GameInfos $oldSettings The old Game Infos
+     * @param GameInfos $newSettings The new Game Infos
      * @param  array $changes Differences between both of them
      */
     public function onGameSettingsChange(
-        \Maniaplanet\DedicatedServer\Structures\GameInfos $oldSettings,
-        \Maniaplanet\DedicatedServer\Structures\GameInfos $newSettings,
+        GameInfos $oldSettings,
+        GameInfos $newSettings,
         $changes
-    ) {
+    )
+    {
         $this->saveMatchSettings();
     }
 
@@ -703,20 +713,18 @@ EOT;
      *
      * @param ServerOptions $old old settings
      * @param ServerOptions $new new settings
-     * @param               $diff The differences between the old and the new settings
+     * @param array $diff The differences between the old and the new settings
      */
     public function onServerSettingsChange(ServerOptions $old, ServerOptions $new, $diff)
     {
-
-        $dediConfig = \ManiaLive\DedicatedApi\Config::getInstance();
         if ($this->expStorage->isRemoteControlled) {
             return;
         }
-
+        $path = realpath(
+            Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile
+        );
         try {
-            $path = realpath(
-                Helper::getPaths()->getDefaultMapPath() . "../Config/" . $this->config->dedicatedConfigFile
-            );
+
             if (!file_exists($path)) {
                 return;
             }
@@ -753,8 +761,7 @@ EOT;
             );
 
             foreach ($new as $key => $value) {
-
-                $search = $key;
+                //           $search = $key;
                 if (array_key_exists($key, $adapter)) {
                     $search = $adapter[$key];
                 } else {
@@ -768,8 +775,6 @@ EOT;
                         $out = "True";
                     }
                 }
-
-
                 $oldXml->server_options->{$search}[0] = $out;
             }
 
@@ -840,7 +845,7 @@ EOT;
         $this->console('                        | \ | | ___ | |_(_) ___ ___ ');
         $this->console('                        |  \| |/ _ \| __| |/ __/ _ \ ');
         $this->console('                        | |\  | (_) | |_| | (_|  __/ ');
-        $this->console("                        |_| \_|\___/ \__|_|\___\___|");
+        $this->console("                        |_| \\_|\\___/ \\__|_|\\___\\___|");
         $fill = "";
         $firstline = explode("\n", $message, 2);
         if (!is_array($firstline)) {
@@ -857,7 +862,6 @@ EOT;
      */
     private function checkLoadedPlugins()
     {
-        $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
         $this->console('Shutting down uncompatible plugins');
 
         /**
@@ -874,7 +878,7 @@ EOT;
                     try {
                         $this->callPublicMethod($pluginId, 'eXpUnload');
                     } catch (\Exception $ex) {
-
+                        $this->console("Error while unloading plugin:" . $pluginId . " -> " . $ex->getMessage());
                     }
                 }
             }
@@ -888,14 +892,14 @@ EOT;
     {
         $this->console('Starting compatible plugins');
 
-        $pHandler = \ManiaLive\PluginHandler\PluginHandler::getInstance();
+        $pHandler = PluginHandler::getInstance();
         foreach (\ManiaLivePlugins\eXpansion\AutoLoad\Config::getInstance()->plugins as $plugin_id) {
             $className = $plugin_id;
             if (class_exists($className)) {
                 if ($className::getMetaData()->checkAll() && !$this->isPluginLoaded($plugin_id)) {
                     try {
                         $pHandler->load($plugin_id);
-                    } catch (Exception $ex) {
+                    } catch (\Exception $ex) {
                         $this->console('Plugin : ' . $plugin_id . ' Maybe already loaded');
                     }
                 }
@@ -906,17 +910,17 @@ EOT;
     /**
      * Show server information
      *
-     * @param $login the login to show the information to
+     * @param string $login the login to show the information to
      */
     public function showInfo($login)
     {
         //If server statistics are loaded put an action so that we can have a button to show them.
         if ($this->isPluginLoaded('\ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics')) {
-            Gui\Windows\InfoWindow::$statsAction =
-                \ManiaLivePlugins\eXpansion\ServerStatistics\ServerStatistics::$serverStatAction;
+            Gui\Windows\InfoWindow::$statsAction = ServerStatistics::$serverStatAction;
         } else {
             Gui\Windows\InfoWindow::$statsAction = -1;
         }
+        /** @var Gui\Windows\InfoWindow $info */
         $info = Gui\Windows\InfoWindow::Create($login);
         $info->setTitle("Server info");
         $info->centerOnScreen();
@@ -977,6 +981,7 @@ EOT;
     {
         if (AdminGroups::hasPermission($login, Permission::CHAT_ADMINCHAT)) {
             Gui\Windows\NetStat::Erase($login);
+            /** @var Gui\Windows\NetStat $win */
             $win = Gui\Windows\NetStat::Create($login);
             $win->setTitle("Network Status");
             $win->setSize(140, 100);
@@ -1145,7 +1150,7 @@ EOT;
     /**
      * When the information of a player changes
      *
-     * @param $playerInfo new player information
+     * @param array $playerInfo new player information
      */
     public function onPlayerInfoChanged($playerInfo)
     {
@@ -1154,7 +1159,7 @@ EOT;
         }
 
         $this->update = true;
-        $player = \Maniaplanet\DedicatedServer\Structures\PlayerInfo::fromArray($playerInfo);
+        $player = PlayerInfo::fromArray($playerInfo);
 
         if (!array_key_exists($player->login, $this->expPlayers)) {
             $login = $player->login;
@@ -1177,7 +1182,7 @@ EOT;
             $this->expPlayers[$login]->isFinished = false;
             // in case player is joining to match in round, he needs to be marked as waiting
             if ($this->storage->gameInfos->gameMode
-                != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK
+                != GameInfos::GAMEMODE_TIMEATTACK
             ) {
                 $this->expPlayers[$login]->isWaiting = true;
             }
@@ -1205,12 +1210,8 @@ EOT;
 
     /**
      * Reset current players extended information
-     *
-     * @param bool $readRankings should rankings be read after reset
-     *
-     * @todo ^^check what this param is used for and remove if not used
      */
-    public function resetExpPlayers($readRankings = false)
+    public function resetExpPlayers()
     {
         self::$roundFinishOrder = array();
         self::$checkpointOrder = array();
@@ -1262,7 +1263,7 @@ EOT;
                 $this->expPlayers[$login]->checkpoints = array(0 => 0);
                 $this->expPlayers[$login]->finalTime = 0;
                 if ($this->storage->gameInfos->gameMode
-                    !== \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK
+                    !== GameInfos::GAMEMODE_TIMEATTACK
                 ) {
                     $this->expPlayers[$login]->hasRetired = true;
                     Dispatcher::dispatch(
@@ -1279,7 +1280,7 @@ EOT;
                 $this->expPlayers[$login]->finalTime = $timeOrScore;
                 $this->expPlayers[$login]->isFinished = true;
                 if ($this->storage->gameInfos->gameMode
-                    !== \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK
+                    !== GameInfos::GAMEMODE_TIMEATTACK
                 ) {
                     self::$roundFinishOrder[] = $login;
                 }
@@ -1287,7 +1288,7 @@ EOT;
 
             // set points
             if ($this->storage->gameInfos->gameMode
-                == \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TEAM
+                == GameInfos::GAMEMODE_TEAM
             ) {
                 $maxpoints = $this->storage->gameInfos->teamMaxPoints;
                 $total = 0;
@@ -1326,14 +1327,16 @@ EOT;
         }
     }
 
+    /**
+     *
+     */
     public function calculatePositions()
     {
         /** @var $playerPositions Structures\ExpPlayer[] */
         $playerPositions = array();
         /** @var $playerPositions Structures\ExpPlayer[] */
         $oldExpPlayers = $this->expPlayers;
-        $oldGiveupCount = $this->giveupCount;
-        $giveupCount = 0;
+
         $giveupPlayers = array();
         foreach ($this->expPlayers as $login => $player) {
             if (empty($player)) {
@@ -1429,13 +1432,17 @@ EOT;
         } // end of foreach playerpositions;
         // export infos..
         self::$playerInfo = $this->expPlayers;
-        \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc(self::$playerInfo, "position");
+        ArrayOfObj::asortAsc(self::$playerInfo, "position");
         Dispatcher::dispatch(
             new Events\PlayerEvent(Events\PlayerEvent::ON_PLAYER_POSITIONS_CALCULATED, self::$playerInfo)
         );
     }
 
-    /** converted from fast.. */
+    /** converted from fast..
+     * @param Structures\ExpPlayer $a
+     * @param Structures\ExpPlayer $b
+     * @return int
+     */
     public function positionCompare(Structures\ExpPlayer $a, Structures\ExpPlayer $b)
     {
         // no cp
@@ -1487,10 +1494,12 @@ EOT;
         }
         // all same... test time of previous checks
         for ($key = $a->curCpIndex - 1; $key >= 0; $key--) {
-            if ($a->checkpoints[$key] < $b->checkpoints[$key]) {
-                return -1;
-            } elseif ($a->checkpoints[$key] > $b->checkpoints[$key]) {
-                return 1;
+            if (isset($a->checkpoints[$key]) && isset($b->checkpoints[$key])) {
+                if ($a->checkpoints[$key] < $b->checkpoints[$key]) {
+                    return -1;
+                } elseif ($a->checkpoints[$key] > $b->checkpoints[$key]) {
+                    return 1;
+                }
             }
         }
         // really all same, use login  :p

@@ -105,11 +105,14 @@ class Widgets_Times extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
         }
     }
 
-    public function showPanel($login, $playerObject)
+    public function showPanel($login, $playerObject = false)
     {
+        if (!$playerObject)
+        {
+            $playerObject = $this->storage->getPlayerObject($login);
+        }
 
         $spectatorTarget = $login;
-
         if ($playerObject->currentTargetId) {
             $spec = $this->getPlayerObjectById($playerObject->currentTargetId);
             if ($spec->login) {

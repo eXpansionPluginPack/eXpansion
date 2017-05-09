@@ -7,13 +7,22 @@ foreach (Event in PendingEvents) {
         eXp_tabTime = Now;
         eXp_tabPressed = True;
     }
-    if (Event.Type == CMlEvent::Type::KeyPress  && Event.KeyCode == 48) {
+    if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 48) {
         exp_chatVisible = !exp_chatVisible;
         ClientUI.OverlayHideChat = !exp_chatVisible;
     }
+     if (Event.Type == CMlEvent::Type::MouseClick &&  Event.ControlId == "MenuButton") {
+        toggleSubmenu = True;
+        showStatus = True;
+        needUpdate = True;
+        firstClick = True;
+        Menu.RelativePosition.X = -159.;
+        Menu.RelativePosition.Y = 75.;
+        Menu.RelativePosition.Z = 50.0;
+    }
 }
 
-if(eXp_tabPressed) {
+if (eXp_tabPressed) {
     toggleSubmenu = False;
     Menu.Hide();
     if(showStatus){
@@ -21,7 +30,7 @@ if(eXp_tabPressed) {
         showStatus = False;
     }
 } else {
-        if(MouseRightButton && !eXp_mouseRightState && !eXp_tabPressed) {
+        if (MouseRightButton && !eXp_mouseRightState && !eXp_tabPressed) {
                 eXp_mouseRightTime = Now;
                 eXp_mouseRightState = True;
                 toggleSubmenu = False;
@@ -70,6 +79,14 @@ if(eXp_tabPressed){
 
 if (toggleSubmenu) {
 	foreach (Event in PendingEvents) {
+             if (Event.Type == CMlEvent::Type::MouseClick)
+             {
+                declare Text action = Event.Control.DataAttributeGet("action");
+                if (action != "") {
+                   // log(action);
+                    TriggerPageAction(action);
+                }
+             }
             if (Event.Type == CMlEvent::Type::MouseOver) {
                 if ( Event.Control.ControlClasses.count > 0) {
                     if (Event.Control.ControlClasses[0] == "group") {
@@ -106,7 +123,7 @@ if (needUpdate) {
         Menu.Show();
         showStamp = Now;
         outText = "";
-                foreach (idd => dump in eXp_widgetVisible[version]) {
+                foreach (idd => temp in eXp_widgetVisible[version]) {
                     if (!eXp_widgetVisible[version][idd].existskey(gameMode)) {
                         continue;
                     }
@@ -118,7 +135,7 @@ if (needUpdate) {
                             outText = outText ^ idd ^ ":" ^ gameMode ^ ":" ^ bool ^ "|";
                     }
                     // log(outText);
-                    widgetStatus.Value = outText;
+                   // widgetStatus.Value = outText;
                     needHidden = True;
 } else {
     if (needHidden) {
@@ -163,6 +180,7 @@ if (hideStamp != 0) {
 if (showStamp != 0) {
     if ((Now - showStamp) > 600) {
         showStamp = 0;
+        firstClick = False;
     }
       declare delay = 0;
           for (i, 1, itemCount ) {
@@ -184,8 +202,7 @@ if (showStamp != 0) {
           }
 }
 
-if (MouseLeftButton) {
-         showStatus = False;
-         needUpdate = True;
+if (MouseLeftButton && firstClick == False) {
+    showStatus = False;
+    needUpdate = True;
 }
-

@@ -40,7 +40,7 @@ if (edge_animatedId[id] == True) {
     }
 
     if (animActive) {
-        p2 = eXp_widgetLastPosRel[version][id][gameMode];
+        p2 = widgetLastPosRel[version][id][gameMode];
         declare Text pos = "";
         declare Text scale = "1.";
 

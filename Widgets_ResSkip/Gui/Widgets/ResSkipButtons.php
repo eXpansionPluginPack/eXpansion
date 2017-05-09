@@ -4,6 +4,7 @@ namespace ManiaLivePlugins\eXpansion\Widgets_Resskip\Gui\Widgets;
 
 use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetButton;
 use ManiaLivePlugins\eXpansion\Gui\Widgets\Widget;
+use ManiaLivePlugins\eXpansion\Maps\Maps;
 
 class ResSkipButtons extends Widget
 {
@@ -13,6 +14,7 @@ class ResSkipButtons extends Widget
      */
     protected $btn_res;
     protected $btn_skip;
+    protected $btn_maps;
     protected $btn_fav;
     protected $edgeWidget;
 
@@ -22,6 +24,18 @@ class ResSkipButtons extends Widget
         $line = new \ManiaLive\Gui\Controls\Frame(6, 0);
         $line->setAlign("center", "top");
         $line->setLayout(new \ManiaLib\Gui\Layouts\Line());
+
+        $this->btn_maps = new WidgetButton(10, 10);
+        $this->btn_maps->setPositionZ(-1);
+        $this->btn_maps->setText(
+            array(
+                eXpGetMessage('AddToFav:$s$fffShow'),
+                eXpGetMessage('AddToFav:$s$fffMap'),
+                eXpGetMessage('AddToFav:$s$fffList'),
+            )
+        );
+        $this->btn_maps->setAction(Maps::$actionOpenMapList);
+        $line->addComponent($this->btn_maps);
 
         $this->btn_skip = new WidgetButton(10, 10);
         $this->btn_skip->setPositionZ(-1);

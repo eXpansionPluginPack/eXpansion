@@ -29,7 +29,7 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
         $quad->setPosition($config->style_widget_title_bgXOffset, $config->style_widget_title_bgYOffset);
 
         $this->bg = clone $quad;
-        $this->bg->setStyle('Bgs1InRace');
+        $this->bg->setStyle('Bgs1');
         $this->bg->setSubStyle('BgWindow4');
         $this->bg->setAlign("center", "center");
         $this->addComponent($this->bg);
@@ -38,7 +38,7 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->lbl_title->setTextSize($config->style_widget_title_lbSize);
         $this->lbl_title->setTextColor($config->style_widget_title_lbColor);
         $this->lbl_title->setAlign("center", "center");
-        $this->lbl_title->setStyle("TextCardScores2");
+        $this->lbl_title->setAttribute("textfont","Oswald");
         $this->addComponent($this->lbl_title);
 
         $this->setSize($sizeX, $sizeY);
@@ -62,10 +62,10 @@ class WidgetTitle extends \ManiaLivePlugins\eXpansion\Gui\Control
                 $this->lbl_title->setAttribute("rot", 90);
                 break;
             default:
-                $this->bg->setSize($this->sizeX, 4);
-                $this->bg->setPosition(($this->sizeX / 2), -1.5);
+                $this->bg->setSize($this->sizeX, 4.25);
+                $this->bg->setPosition(($this->sizeX / 2), -2);
                 $this->lbl_title->setSizeX($this->sizeX - 2);
-                $this->lbl_title->setPosition(($this->sizeX / 2), -1.5);
+                $this->lbl_title->setPosition(($this->sizeX / 2), -2);
                 $this->lbl_title->setAttribute("rot", 0);
                 break;
         }

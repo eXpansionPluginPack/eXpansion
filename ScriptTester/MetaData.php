@@ -21,8 +21,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Tool: ManiaScript editor");
-        $this->setDescription("provides script editor and testing widgets");
+        $this->setName(" ManiaScript editor");
+        $this->setDescription("Provides script editor /adm editor");
         $this->setGroups(array('Tools'));
 
         $config = Config::getInstance();

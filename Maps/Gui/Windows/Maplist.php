@@ -2,49 +2,102 @@
 
 namespace ManiaLivePlugins\eXpansion\Maps\Gui\Windows;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Elements\Spacer;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLib\Utils\Formatting;
+use ManiaLive\Data\Player;
+use ManiaLive\Data\Storage;
+use ManiaLive\DedicatedApi\Callback\Event;
+use ManiaLive\Event\Dispatcher;
 use ManiaLive\Gui\ActionHandler;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLive\Utilities\Time;
+use ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups;
 use ManiaLivePlugins\eXpansion\AdminGroups\Permission;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
+use ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox;
+use ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager;
+use ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround;
 use ManiaLivePlugins\eXpansion\Gui\Gui;
+use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
+use ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj;
+use ManiaLivePlugins\eXpansion\Helpers\Singletons;
 use ManiaLivePlugins\eXpansion\Maps\Gui\Controls\Mapitem;
 use ManiaLivePlugins\eXpansion\Maps\Maps;
+use ManiaLivePlugins\eXpansion\Maps\Structures\DbMap;
+use ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode;
+use Maniaplanet\DedicatedServer\Structures\Map;
 
-class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
+class Maplist extends Window
 {
     public $records = array();
-    public static $mapsPlugin = null;
-    public static $localrecordsLoaded = false;
+
     protected $history = array();
     protected $items = array();
 
-    /** @var \ManiaLive\Gui\Controls\Pager */
+    public static $localrecordsLoaded = false;
+    /** @var OptimizedPager */
     protected $pager;
+    /** @var  Button */
     protected $btnRemoveAll;
+    /** @var  Button */
+    protected $btnUpdate;
+    /** @var  Frame */
     protected $frame;
+    /** @var  Label */
     protected $title_mapName;
+    /** @var  Label */
     protected $title_envi;
+    /** @var  Label */
     protected $title_authorName;
+    /** @var  Label */
     protected $title_goldTime;
+    /** @var  Label */
     protected $title_rank;
+    /** @var  Label */
     protected $title_rating;
+    /** @var  Label */
+    protected $title_difficulty;
+    /** @var  Label */
+    protected $title_style;
+    /** @var  Label */
     protected $title_actions;
+    /** @var  Inputbox */
     protected $searchBox;
-    protected $searchframe;
+
+    /** @var  Frame */
+    protected $searchFrame;
+    /** @var  Button */
     protected $btn_search;
+    /** @var  Button */
     protected $btn_search2;
+    /** @var  Button */
     protected $btn_sortNewest;
     protected $actionRemoveAll;
     protected $actionRemoveAllf;
+
+    protected $actionUpdateF;
+    protected $actionUpdate;
+
+    /** @var Map */
     protected $currentMap = null;
+
+    /** @var  TitleBackGround */
     protected $titlebg;
+
+    /** @var  DbMap[] */
+    protected $mxInfo;
 
     /** @var  \Maniaplanet\DedicatedServer\Connection */
     protected $connection;
 
     /** @var  \ManiaLive\Data\Storage */
     protected $storage;
-    protected $widths = array(5, 15, 4, 4, 3, 3, 3, .7);
+    protected $widths = array(6, 12, 4, 4, 4, 4, 4, 3, 4);
+    protected $actions = array();
 
-    /** @var \ManiaLivePlugins\eXpansion\Maps\Structures\SortableMap[] */
+    /** @var Map */
     protected $maps = array();
 
     protected function onConstruct()
@@ -52,27 +105,24 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         parent::onConstruct();
         $login = $this->getRecipient();
         $sizeX = 100;
-        $scaledSizes = Gui::getScaledSize($this->widths, $sizeX);
 
-        $config = \ManiaLive\DedicatedApi\Config::getInstance();
-        $this->connection = \ManiaLivePlugins\eXpansion\Helpers\Singletons::getInstance()->getDediConnection();
-        $this->storage = \ManiaLive\Data\Storage::getInstance();
+        $this->connection = Singletons::getInstance()->getDediConnection();
 
-        $this->titlebg = new \ManiaLivePlugins\eXpansion\Gui\Elements\TitleBackGround($sizeX, 6);
+        $this->titlebg = new TitleBackGround($sizeX, 6);
         $this->mainFrame->addComponent($this->titlebg);
 
 
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame = new Frame();
         $this->frame->setSize($sizeX, 4);
         $this->frame->setAlign("left", "top");
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Line());
+        $this->frame->setLayout(new Line());
         $this->mainFrame->addComponent($this->frame);
 
         $textStyle = "TextCardRaceRank";
         $textColor = "000";
         $textSize = "1.5";
 
-        $this->title_authorName = new \ManiaLib\Gui\Elements\Label();
+        $this->title_authorName = new Label();
         $this->title_authorName->setText(__("Author", $login));
         $this->title_authorName->setStyle($textStyle);
         $this->title_authorName->setTextColor($textColor);
@@ -80,24 +130,22 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->title_authorName->setTextSize($textSize);
         $this->frame->addComponent($this->title_authorName);
 
-        $this->title_mapName = new \ManiaLib\Gui\Elements\Label();
+        $this->title_mapName = new Label();
         $this->title_mapName->setText(__("Map name", $login));
         $this->title_mapName->setStyle($textStyle);
         $this->title_mapName->setTextColor($textColor);
         $this->title_mapName->setAction($this->createAction(array($this, "updateList"), "name"));
         $this->title_mapName->setTextSize($textSize);
-
-
         $this->frame->addComponent($this->title_mapName);
 
-        $this->title_envi = new \ManiaLib\Gui\Elements\Label();
+        $this->title_envi = new Label();
         $this->title_envi->setText(__("Title", $login));
         $this->title_envi->setStyle($textStyle);
         $this->title_envi->setTextColor($textColor);
         $this->title_envi->setTextSize($textSize);
         $this->frame->addComponent($this->title_envi);
 
-        $this->title_goldTime = new \ManiaLib\Gui\Elements\Label();
+        $this->title_goldTime = new Label();
         $this->title_goldTime->setText(__("Length", $login));
         $this->title_goldTime->setStyle($textStyle);
         $this->title_goldTime->setTextColor($textColor);
@@ -105,7 +153,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->title_goldTime->setTextSize($textSize);
         $this->frame->addComponent($this->title_goldTime);
 
-        $this->title_rank = new \ManiaLib\Gui\Elements\Label();
+        $this->title_rank = new Label();
         $this->title_rank->setText(__("Record", $login));
         $this->title_rank->setAlign("center");
         $this->title_rank->setStyle($textStyle);
@@ -114,17 +162,32 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->title_rank->setTextSize($textSize);
         $this->frame->addComponent($this->title_rank);
 
-        $this->title_rating = new \ManiaLib\Gui\Elements\Label();
+        $this->title_rating = new Label();
         $this->title_rating->setText(__("Rating", $login));
         $this->title_rating->setAlign("center");
         $this->title_rating->setStyle($textStyle);
         $this->title_rating->setTextColor($textColor);
         $this->title_rating->setAction($this->createAction(array($this, "updateList"), "rating"));
-
         $this->title_rating->setTextSize($textSize);
         $this->frame->addComponent($this->title_rating);
 
-        $this->title_actions = new \ManiaLib\Gui\Elements\Label();
+        $this->title_difficulty = new Label();
+        $this->title_difficulty->setText(__("Difficulty", $login));
+        $this->title_difficulty->setAlign("left");
+        $this->title_difficulty->setStyle($textStyle);
+        $this->title_difficulty->setTextColor($textColor);
+        $this->title_difficulty->setTextSize($textSize);
+        $this->frame->addComponent($this->title_difficulty);
+
+        $this->title_style = new Label();
+        $this->title_style->setText(__("Style", $login));
+        $this->title_style->setAlign("center");
+        $this->title_style->setStyle($textStyle);
+        $this->title_style->setTextColor($textColor);
+        $this->title_style->setTextSize($textSize);
+        $this->frame->addComponent($this->title_style);
+
+        $this->title_actions = new Label();
         $this->title_actions->setText(__("Actions", $login));
 
         $this->title_actions->setTextSize($textSize);
@@ -132,87 +195,71 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->title_actions->setStyle($textStyle);
         $this->frame->addComponent($this->title_actions);
 
-        $this->searchframe = new \ManiaLive\Gui\Controls\Frame();
-        $this->searchframe->setLayout(new \ManiaLib\Gui\Layouts\Line());
-        $this->searchframe->setAlign("right", "top");
-        $this->addComponent($this->searchframe);
+        $this->searchFrame = new Frame();
+        $this->searchFrame->setLayout(new Line());
+        $this->searchFrame->setAlign("right", "top");
+        $this->addComponent($this->searchFrame);
 
-        $this->searchBox = new \ManiaLivePlugins\eXpansion\Gui\Elements\Inputbox("searchbox");
+        $this->searchBox = new Inputbox("searchbox");
         $this->searchBox->setLabel(__("Search maps", $login));
-        $this->searchframe->addComponent($this->searchBox);
+        $this->searchFrame->addComponent($this->searchBox);
 
-        $spacer = new \ManiaLib\Gui\Elements\Spacer(3, 4);
-        $this->searchframe->addComponent($spacer);
+        $spacer = new Spacer(3, 4);
+        $this->searchFrame->addComponent($spacer);
 
-        $this->btn_search = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(40);
+        $this->btn_search = new Button(40);
         $this->btn_search->setAction($this->createAction(array($this, "doSearchMap")));
         $this->btn_search->setText(__("Search Map", $login));
         $this->btn_search->colorize('0a0');
-        $this->searchframe->addComponent($this->btn_search);
+        $this->searchFrame->addComponent($this->btn_search);
 
-        $this->btn_search2 = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(40);
+        $this->btn_search2 = new Button(40);
         $this->btn_search2->setAction($this->createAction(array($this, "doSearchAuthor")));
         $this->btn_search2->setText(__("Search Author", $login));
         $this->btn_search2->colorize('0a0');
-        $this->searchframe->addComponent($this->btn_search2);
+        $this->searchFrame->addComponent($this->btn_search2);
 
-        $this->btn_sortNewest = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(40);
+        $this->btn_sortNewest = new Button(40);
         $this->btn_sortNewest->setAction($this->createAction(array($this, "updateList"), "addTime"));
         $this->btn_sortNewest->setText(__("Sort By Add Date", $login));
-        $this->searchframe->addComponent($this->btn_sortNewest);
+        $this->searchFrame->addComponent($this->btn_sortNewest);
 
-        $this->pager = new \ManiaLivePlugins\eXpansion\Gui\Elements\OptimizedPager();
+        $this->pager = new OptimizedPager();
         $this->mainFrame->addComponent($this->pager);
 
         if (array_key_exists($login, Maps::$playerSortModes) == false) {
-            Maps::$playerSortModes[$login] = new \ManiaLivePlugins\eXpansion\Maps\Structures\MapSortMode();
+            Maps::$playerSortModes[$login] = new MapSortMode();
         }
 
-        if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
+        if (AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
             $this->actionRemoveAllf = $this->createAction(array($this, "removeAllMaps"));
             $this->actionRemoveAll = Gui::createConfirm($this->actionRemoveAllf);
-            $this->btnRemoveAll = new \ManiaLivePlugins\eXpansion\Gui\Elements\Button(35);
+            $this->btnRemoveAll = new Button(35);
             $this->btnRemoveAll->setAction($this->actionRemoveAll);
-            $this->btnRemoveAll->setText('$d00' . __("Clear Maplist", $login));
-            $this->btnRemoveAll->setScale(0.5);
+            $this->btnRemoveAll->setText(__("Clear Maplist", $login));
+            $this->btnRemoveAll->colorize('d00');
             $this->mainFrame->addComponent($this->btnRemoveAll);
         }
-    }
 
-    static function Initialize($mapsPlugin)
-    {
-        self::$mapsPlugin = $mapsPlugin;
-    }
+        if (AdminGroups::hasPermission($login, Permission::MAP_ADD_MX)) {
+            $this->actionUpdateF = $this->createAction(array($this, "mxUpdate"));
+            $this->actionUpdate = Gui::createConfirm($this->actionUpdateF);
+            $this->btnUpdate = new Button(35);
+            $this->btnUpdate->setAction($this->actionUpdate);
+            $this->btnUpdate->setText(__("Fetch Map Style", $login));
+            $this->btnUpdate->colorize('0a0');
+            $this->mainFrame->addComponent($this->btnUpdate);
+        }
 
-    public function gotoMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
-    {
-        self::$mapsPlugin->gotoMap($login, $map);
-        $this->Erase($this->getRecipient());
-    }
-
-    public function removeMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
-    {
-        self::$mapsPlugin->removeMap($login, $map);
-        $this->RedrawAll();
-    }
-
-    public function queueMap($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
-    {
-        self::$mapsPlugin->playerQueueMap($login, $map, false);
-    }
-
-    public function showRec($login, \Maniaplanet\DedicatedServer\Structures\Map $map)
-    {
-        self::$mapsPlugin->showRec($login, $map);
     }
 
     public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
 
-        $this->searchframe->setPosition(2, -7);
+        $this->searchFrame->setPosition(2, -7);
 
-        $this->pager->setSize($this->getSizeX() - 6, $this->getSizeY() - 20);
+        $this->pager->setSize($this->getSizeX() - 2, $this->getSizeY() - 20);
 
         $this->pager->setPosition(3, -17);
 
@@ -228,19 +275,25 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->title_envi->setSizeX($scaledSizes[2]);
         $this->title_goldTime->setSizeX($scaledSizes[3]);
         $this->title_rank->setSizeX($scaledSizes[4]);
-        $this->title_rating->setSizeX($scaledSizes[5]);
-        $this->title_actions->setSizeX($scaledSizes[6]);
+        $this->title_difficulty->setSizeX($scaledSizes[5]);
+        $this->title_style->setSizeX($scaledSizes[6]);
+        $this->title_rating->setSizeX($scaledSizes[7]);
+        $this->title_actions->setSizeX($scaledSizes[8]);
 
+        if (is_object($this->btnRemoveAll)) {
+            $this->btnRemoveAll->setPosition($this->getSizeX() - 25, 2);
+        }
+        if (is_object($this->btnUpdate)) {
+            $this->btnUpdate->setPosition($this->getSizeX() - 25, -3);
+        }
 
-        if (is_object($this->btnRemoveAll)) $this->btnRemoveAll->setPosition($this->getSizeX() - 25, 2);
     }
 
     public function removeAllMaps($login)
     {
         $mapsAtServer = array();
-        $maps = $this->connection->getMapList(-1, 0);
 
-        foreach ($maps as $map) {
+        foreach ($this->maps as $map) {
             $mapsAtServer[] = $map->fileName;
         }
 
@@ -256,62 +309,19 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    public function updateList($login, $column = null, $sortType = null, $maps = null)
+    /**
+     * @param $login
+     * @param null $column
+     */
+    public function updateList($login, $column = null)
     {
 
         $this->pager->clearItems();
 
-        if ($maps == null) {
-            $maps = $this->storage->maps;
-        } else {
-            $this->title_mapName->setAction(null);
-            $this->title_authorName->setAction(null);
-            $this->title_rating->setAction(null);
-            $this->title_rank->setAction(null);
-            $this->title_goldTime->setAction(null);
-        }
-
         foreach ($this->items as $item) {
             $item->erase();
         }
-
         $this->items = array();
-
-
-        $isAdmin = \ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission(
-            $login,
-            Permission::MAP_REMOVE_MAP
-        );
-
-        $this->maps = array();
-
-        $maxrec = \ManiaLivePlugins\eXpansion\LocalRecords\Config::getInstance()->recordsCount;
-
-        foreach ($maps as $map) {
-            if (!isset($map->strippedName)) {
-                $map->strippedName = \ManiaLib\Utils\Formatting::stripStyles($map->name);
-            }
-
-            if (!empty(Maps::$searchTerm[$login])) {
-                $field = Maps::$searchField[$login];
-
-                if ($field == "name") {
-                    $field = "strippedName";
-                }
-
-                $substring = $this->shortest_edit_substring(
-                    Maps::$searchTerm[$login],
-                    \ManiaLib\Utils\Formatting::stripStyles($map->{$field})
-                );
-                $dist = $this->edit_distance(Maps::$searchTerm[$login], $substring);
-                if (!empty($substring) && $dist < 2) {
-                    $this->maps[] = $map;
-                }
-            } else {
-                $this->maps[] = $map;
-            }
-        }
-
 
         if ($column !== null) {
             if ($column != Maps::$playerSortModes[$login]->column) {
@@ -323,7 +333,9 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
 
         // select sorttype and sort the list
-        $sortmode = SORT_STRING;
+        $removePermission = AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP);
+        $adminPermission = AdminGroups::hasPermission($login, Permission::SERVER_ADMIN);
+
         switch (Maps::$playerSortModes[$login]->column) {
             case "rating":
                 if (Maps::$playerSortModes[$login]->sortMode == 1) {
@@ -335,76 +347,117 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 break;
             case "localrecord":
                 if (Maps::$playerSortModes[$login]->sortMode == 1) {
-                    self::sortByRecordAsc($this->maps, $login);
+                    ArrayOfObj::asortAsc($this->maps, "localrecord");
                 }
                 if (Maps::$playerSortModes[$login]->sortMode == 2) {
-                    self::sortByRecordDesc($this->maps, $login);
+                    ArrayOfObj::asortDesc($this->maps, "localrecord");
                 }
                 break;
             case "name":
                 if (Maps::$playerSortModes[$login]->sortMode == 1) {
-                    \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc($this->maps, "strippedName");
+                    ArrayOfObj::asortAsc($this->maps, "strippedName");
                 }
                 if (Maps::$playerSortModes[$login]->sortMode == 2) {
-                    \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc($this->maps, "strippedName");
+                    ArrayOfObj::asortDesc($this->maps, "strippedName");
                 }
                 break;
             default:
                 if (Maps::$playerSortModes[$login]->sortMode == 1) {
-                    \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortAsc(
+                    ArrayOfObj::asortAsc(
                         $this->maps,
                         Maps::$playerSortModes[$login]->column
                     );
                 }
                 if (Maps::$playerSortModes[$login]->sortMode == 2) {
-                    \ManiaLivePlugins\eXpansion\Helpers\ArrayOfObj::asortDesc(
+                    ArrayOfObj::asortDesc(
                         $this->maps,
                         Maps::$playerSortModes[$login]->column
                     );
                 }
+                break;
         }
-
 
         // add items to display
         $x = 0;
 
-
         foreach ($this->maps as $sortableMap) {
-            $isHistory = false;
-            if (array_key_exists($sortableMap->uId, $this->history)) {
-                $isHistory = true;
+
+            if (!empty(Maps::$searchTerm[$login])) {
+                $field = Maps::$searchField[$login];
+
+                if ($field == "name") {
+                    $field = "strippedName";
+                }
+
+                $substring = $this->shortest_edit_substring(
+                    Maps::$searchTerm[$login],
+                    Formatting::stripStyles($sortableMap->{$field})
+                );
+                $dist = $this->edit_distance(Maps::$searchTerm[$login], $substring);
+                if (!empty($substring) && $dist < 2) {
+
+                } else {
+                    continue;
+                }
             }
 
-            $queueMapAction = $this->createAction(array($this, 'queueMap'), $sortableMap);
-            $removeMapAction = $this->createAction(array($this, 'removeMap'), $sortableMap);
-            $showRecsAction = $this->createAction(array($this, 'showRec'), $sortableMap);
-            $showInfoAction = $this->createAction(array($this, 'showInfo'), $sortableMap->uId);
 
             if (isset($sortableMap->mapRating)) {
                 $rate = ($sortableMap->mapRating->rating / 5) * 100;
                 $rate = round($rate) . "%" . '  $n' . "(" . $sortableMap->mapRating->totalvotes . ")";
                 if ($sortableMap->mapRating->rating == -1) {
-                    $rate = " - ";
+                    $rate = " -";
                 }
             } else {
-                $rate = " - ";
+                $rate = " -";
             }
 
             $localrecord = "-";
-            if (isset($sortableMap->localRecords) && isset($sortableMap->localRecords[$login])) {
-                $localrecord = $sortableMap->localRecords[$login] + 1;
+            if (isset($sortableMap->localrecord)) {
+                $localrecord = $sortableMap->localrecord + 1;
             }
 
-            $this->pager->addSimpleItems(array(Gui::fixString($sortableMap->name) => $queueMapAction,
-                Gui::fixString($sortableMap->author) => -1,
-                $sortableMap->environnement => -1,
-                \ManiaLive\Utilities\Time::fromTM($sortableMap->goldTime) => -1,
-                $localrecord => -1,
-                $rate => -1,
-                "Info" => $showInfoAction,
-                "Recs" => $showRecsAction,
-                "x" => $removeMapAction,
-            ));
+            if ($sortableMap->uId == $this->currentMap->uId) {
+                $name = '$fff' . $sortableMap->strippedName;
+                $author = '$fff' . $sortableMap->author;
+                $color = '$fff';
+            } else if (isset($this->history[$sortableMap->uId])) {
+                $name = '$888' . $sortableMap->strippedName;
+                $author = '$888' . $sortableMap->author;
+                $color = '$888';
+            } else {
+                $name = $sortableMap->name;
+                $author = $sortableMap->author;
+                $color = '$cdd';
+            }
+
+            $diff = " - ";
+            if (isset($this->mxInfo[$sortableMap->uId]) && $this->mxInfo[$sortableMap->uId]->difficultyName != "") {
+                $diff = $this->mxInfo[$sortableMap->uId]->difficultyName;
+            }
+
+            $style = "- ";
+            if (isset($this->mxInfo[$sortableMap->uId]) && $this->mxInfo[$sortableMap->uId]->styleName != "") {
+                $style = $this->mxInfo[$sortableMap->uId]->styleName;
+
+            }
+
+            $array = array(
+                Gui::fixString($name) => $sortableMap->queueMapAction,
+                Gui::fixString($author) => -1,
+                $color . $sortableMap->environnement => -1,
+                $color . Time::fromTM($sortableMap->goldTime) => -1,
+                $color . $localrecord => -1,
+                $color . $rate => -1,
+                $color . $diff => -1,
+                $color . $style => -1,
+                "Info" => $sortableMap->showInfoAction,
+                "Recs" => $sortableMap->showRecsAction,
+                "x" => $removePermission ? $sortableMap->removeMapAction : -1,
+                "Tag" => $adminPermission ? $sortableMap->showTagAction : -1
+            );
+
+            $this->pager->addSimpleItems($array);
             $x++;
         }
 
@@ -414,23 +467,19 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->redraw($this->getRecipient());
     }
 
-    public function showInfo($login, $uid)
-    {
-        $window = MapInfo::create($login);
-        if (!$window->setMap($uid)) {
-            return;
-        }
-        $window->setSize(160, 90);
-        $window->show($login);
-    }
 
     public function setRecords($records)
     {
         self::$localrecordsLoaded = true;
-        $this->records = $records;
+        foreach ($records as $uid => $record) {
+            if (isset($this->maps[$uid])) {
+                $this->maps[$uid]->localrecord = $record;
+            }
+        }
+
     }
 
-    /** @param \Maniaplanet\DedicatedServer\Structures\Map[] $history */
+    /** @param Map[] $history */
     public function setHistory($history)
     {
         $this->history = array();
@@ -439,13 +488,33 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         }
     }
 
-    public function setCurrentMap(\Maniaplanet\DedicatedServer\Structures\Map $map)
+    public function setRatings($ratings)
+    {
+        foreach ($ratings as $uid => $rating) {
+            if (isset($this->maps[$uid])) {
+                $this->maps[$uid]->mapRating = $rating;
+            }
+        }
+    }
+
+    public function setMaps($maps)
+    {
+        $this->maps = $maps;
+    }
+
+    public function setCurrentMap(Map $map)
     {
         $this->currentMap = $map;
     }
 
     public function destroy()
     {
+        /** @var ActionHandler $ah */
+        $ah = ActionHandler::getInstance();
+        foreach ($this->actions as $action) {
+            $ah->deleteAction($action);
+        }
+
         foreach ($this->items as $item) {
             $item->erase();
         }
@@ -457,7 +526,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->destroyComponents();
 
         ActionHandler::getInstance()->deleteAction($this->actionRemoveAll);
-        ActionHandler::getInstance()->deleteAction($this->actionRemoveAllf);
+        ActionHandler::getInstance()->deleteAction($this->actionUpdate);
 
         parent::destroy();
     }
@@ -469,6 +538,14 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $this->updateList($login);
         $this->redraw($login);
     }
+
+    public function mxUpdate($login)
+    {
+        /** @var Player $player */
+        $player = Storage::getInstance()->getPlayerObject($login);
+        Dispatcher::dispatch(new Event("PlayerChat", array($player->playerId, $login, "/mx update", true)));
+    }
+
 
     public function doSearchAuthor($login, $entries)
     {
@@ -489,13 +566,12 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
                 $min_key = $k;
             }
         }
-
         return $min_key;
     }
+
     /*
       Following code is from experts-exchange answer:
      */
-
     // Calculate the edit distance between two strings
     public function edit_distance($string1, $string2)
     {
@@ -559,6 +635,7 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $m = strlen($needle);
         $n = strlen($haystack);
         $d = array();
+        $backtrace = array();
         for ($i = 0; $i <= $m; $i++) {
             $d[$i][0] = $i;
             $backtrace[$i][0] = null;
@@ -596,6 +673,12 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         return substr($haystack, $start, $end - $start);
     }
 
+    public function setMxInfo($maps)
+    {
+        $this->mxInfo = $maps;
+    }
+
+
     protected static function sortByRankingAsc(&$array)
     {
         usort(
@@ -632,51 +715,4 @@ class Maplist extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         );
     }
 
-    protected static function sortByRecordDesc(&$array, $login)
-    {
-        usort(
-            $array,
-            function ($a, $b) use ($login) {
-                if (!isset($a->localRecords) && !isset($b->localRecords)) {
-                    return 0;
-                } elseif (!isset($a->localRecords)) {
-                    return -1;
-                } elseif (!isset($b->localRecords)) {
-                    return 1;
-                } elseif (!isset($a->localRecords[$login]) && !isset($b->localRecords[$login])) {
-                    return 0;
-                } elseif (!isset($a->localRecords[$login])) {
-                    return -1;
-                } elseif (!isset($b->localRecords[$login])) {
-                    return 1;
-                } else {
-                    return $a->localRecords[$login] > $b->localRecords[$login] ? -1 : 1;
-                }
-            }
-        );
-    }
-
-    protected static function sortByRecordAsc(&$array, $login)
-    {
-        usort(
-            $array,
-            function ($a, $b) use ($login) {
-                if (!isset($a->localRecords) && !isset($b->localRecords)) {
-                    return 0;
-                } elseif (!isset($a->localRecords)) {
-                    return 1;
-                } elseif (!isset($b->localRecords)) {
-                    return -1;
-                } elseif (!isset($a->localRecords[$login]) && !isset($b->localRecords[$login])) {
-                    return 0;
-                } elseif (!isset($a->localRecords[$login])) {
-                    return 1;
-                } elseif (!isset($b->localRecords[$login])) {
-                    return -1;
-                } else {
-                    return $a->localRecords[$login] > $b->localRecords[$login] ? 1 : -1;
-                }
-            }
-        );
-    }
 }

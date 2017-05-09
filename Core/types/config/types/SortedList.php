@@ -11,7 +11,7 @@ namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
 class SortedList extends BasicList
 {
 
-    private $lowToHight = true;
+    private $lowToHigh = true;
 
     /**
      * Adds a value to the end of the list
@@ -26,10 +26,10 @@ class SortedList extends BasicList
             $array = $this->getRawValue();
             $array[] = $this->type->castValue($value);
 
-            if ($this->lowToHight && sort($array)) {
+            if ($this->lowToHigh && sort($array)) {
                 $this->setRawValue($array);
             } else {
-                if (!$this->lowToHight && rsort($array)) {
+                if (!$this->lowToHigh && rsort($array)) {
                     $this->setRawValue($array);
                 } else {
                     return false;
@@ -54,10 +54,10 @@ class SortedList extends BasicList
         $array = $this->getRawValue();
         unset($array[$index]);
         $array = array_values($array);
-        if ($this->lowToHight && sort($array)) {
+        if ($this->lowToHigh && sort($array)) {
             $this->setRawValue($array);
         } else {
-            if (!$this->lowToHight && rsort($array)) {
+            if (!$this->lowToHigh && rsort($array)) {
                 $this->setRawValue($array);
             } else {
                 return false;
@@ -84,10 +84,10 @@ class SortedList extends BasicList
     {
         switch (strtolower($order)) {
             case "desc":
-                $this->lowToHight = false;
+                $this->lowToHigh = false;
                 break;
             default:
-                $this->lowToHight = true;
+                $this->lowToHigh = true;
                 break;
         }
     }

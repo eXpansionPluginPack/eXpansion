@@ -17,18 +17,20 @@ class Clock extends Widget
     {
         $frame = new Frame();
         $frame->setId("Frame");
+
         $this->setName("Local time");
+
         $bg = new WidgetBackGround(28, 6);
         $bg->setPosX(-6);
         $frame->addComponent($bg);
 
-        $label = new Label(20, 6);
+        $label = new Label(36, 17);
         $label->setPosition(0, -1);
         $label->setAlign("left", "top");
         $label->setId("Time");
-        $label->setStyle("TextValueSmallSm");
-        $label->setTextSize(3);
-        $frame->addComponent($label);
+        $label->setAttribute("textfont", "RajdhaniMono");
+        $label->setTextSize(6);
+        $this->addComponent($label);
 
         $script = new Script("Widgets_Clock/Gui/Script");
         $this->registerScript($script);
@@ -42,21 +44,21 @@ class Clock extends Widget
         $quad->setPosition(16, -3);
         $quad->setId("minimizeButton");
         $quad->setScriptEvents();
-        $frame->addComponent($quad);
-        $this->addComponent($frame);
+        //$frame->addComponent($quad);
+        //$this->addComponent($frame);
 
     }
 
     public function eXpOnEndConstruct()
     {
-        $this->setSize(36, 6);
-        $this->setPosition(-160, 74);
-        $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
+        $this->setSize(36, 12);
+        $this->setPosition(-6, 65);
+     /*   $script = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui\Scripts\TrayWidget");
         $script->setParam('isMinimized', 'False');
         $script->setParam('autoCloseTimeout', 0);
         $script->setParam('posXMin', -12);
         $script->setParam('posX', -12);
         $script->setParam('posXMax', -2);
-        $this->registerScript($script);
+        $this->registerScript($script); */
     }
 }

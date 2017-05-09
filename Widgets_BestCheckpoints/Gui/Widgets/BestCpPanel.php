@@ -17,7 +17,9 @@ class BestCpPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     protected function eXpOnBeginConstruct()
     {
         $this->frame = new \ManiaLive\Gui\Controls\Frame();
-        $this->frame->setLayout(new \ManiaLib\Gui\Layouts\Flow(220, 20));
+        $layout = new \ManiaLib\Gui\Layouts\Flow(220, 20);
+        $layout->setMargin(1, 1);
+        $this->frame->setLayout($layout);
         $this->frame->setSize(220, 20);
         $this->frame->setPosY(-2);
         $this->addComponent($this->frame);

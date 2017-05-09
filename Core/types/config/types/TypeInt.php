@@ -1,21 +1,21 @@
 <?php
-
 namespace ManiaLivePlugins\eXpansion\Core\types\config\types;
+
+use ManiaLivePlugins\eXpansion\Core\types\config\Variable;
 
 /**
  * Description of Int
  *
  * @author De Cramer Oliver
  */
-class TypeInt extends \ManiaLivePlugins\eXpansion\Core\types\config\Variable
+class TypeInt extends Variable
 {
 
     public function setValue($value)
     {
         if ($this->basicValueCheck($value)) {
-            return $this->setRawValue((Int)$value);
+            return $this->setRawValue((int)$value);
         }
-
         return false;
     }
 

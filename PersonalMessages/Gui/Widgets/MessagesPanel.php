@@ -180,7 +180,7 @@ class MessagesPanel extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     public function setTargetPlayer($login)
     {
         $this->targetPlayer = $login;
-        $this->labelReciever->setText($targetPlayer->nickName);
+        $this->labelReciever->setText($this->targetPlayer->nickName);
         $this->onResize($this->sizeX, $this->sizeY);
         // $this->status = "False";
         $this->redraw($this->getRecipient());

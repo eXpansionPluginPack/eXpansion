@@ -13,7 +13,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Widget: Current map");
+        $this->setName(" Current map");
         $this->setDescription("Displays simple map infos widget at top right corner");
         $this->setGroups(array('Widgets', 'Maps'));
     }
