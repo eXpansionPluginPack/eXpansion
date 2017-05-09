@@ -16,7 +16,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Tools: Customize Scores table");
+        $this->setName("Customize Scores table");
         $this->setDescription("Customizes the scoretable for scripted modes");
         $this->setGroups(array('Tools'));
 

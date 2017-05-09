@@ -156,35 +156,28 @@ class MxSearch extends \ManiaLivePlugins\eXpansion\Gui\Windows\Window
         $storage = Storage::getInstance();
 
         if ($storage->simpleEnviTitle == Storage::TITLE_SIMPLE_SM) {
-
-            $script = $this->connection->getModeScriptInfo();
-            $query = "";
-
             /** @var Storage $storage */
             $storage = Storage::getInstance();
             $titlePack = $storage->version->titleId;
             $mapType = $storage->baseMapType;
             $parts = explode('@', $titlePack);
-            $titlePack = $parts[0];
 
-            $group = "";
-            if ($filter) {
-                $group = "&mapgroup=2";
-            }
             $query = 'https://sm.mania-exchange.com/tracksearch2/search?mode=0&vm=0&trackname='
                 . rawurlencode($trackname) . '&author=' . rawurlencode($author) . '&mtype=All&mtype='
                 . rawurlencode($mapType) . '&priord=2&limit=100&environments=1&tracksearch&api=on&format=json'.$filter;
         } else {
             $query = 'https://tm.mania-exchange.com/tracksearch2/search?api=on&format=json';
-
             switch ($info->titleId) {
                 case "TMCanyon":
+                case "TMCanyon@nadeo":
                     $query .= "&tpack=TMCanyon,Canyon";
                     break;
                 case "TMStadium":
+                case "TMStadium@nadeo":
                     $query .= "&tpack=TMStadium,Stadium";
                     break;
                 case "TMValley":
+                case "TMValley@nadeo":
                     $query .= "&tpack=TMValley,Valley";
                     break;
                 case "TM2Snow@florenzius":

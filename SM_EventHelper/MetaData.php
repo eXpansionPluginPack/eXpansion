@@ -14,7 +14,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     {
         parent::onBeginLoad();
 
-        $this->setName("Helper: used for PlatformBeta@nadeolabs events");
+        $this->setName("Helper used for PlatformBeta@nadeolabs events");
         $this->setDescription("Event helper, needed for the platform scores to work");
         $this->setGroups(array('Helpers'));
 

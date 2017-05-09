@@ -36,7 +36,7 @@ class Editbox extends Control
         $this->label = new Label($sizeX, 4);
         $this->label->setAlign('left', 'top');
         $this->label->setTextSize(1);
-        $this->label->setStyle("TextCardScores2");
+        $this->label->setAttribute("textfont","Oswald");
         $this->label->setTextEmboss();
         $this->addComponent($this->label);
 

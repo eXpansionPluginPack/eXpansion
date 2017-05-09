@@ -34,12 +34,12 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
             self::$counter = 0;
         }
 
-        $this->button = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
+        $this->button = new \ManiaLib\Gui\Elements\Label($sizeX, $sizeY);
+        $this->button->setScriptEvents();
         $this->button->setAlign('left', 'center2');
-        $this->button->setStyle('Icons64x64_1');
-        $this->button->setSubStyle('GenericButton');
+        $this->button->setTextSize(2.5);
+        $this->button->setText('$fff☑');
         $this->button->setId('eXp_CheckboxQ_' . $this->checkboxId);
-        $this->button->setScriptEvents(true);
         $this->addComponent($this->button);
 
 
@@ -53,10 +53,10 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
 
         if (self::$script == null) {
             self::$script = new \ManiaLivePlugins\eXpansion\Gui\Scripts\CheckboxScript();
-            self::$script->setParam("disabledActiveUrl", "<0.5,1.0,0.5>");
-            self::$script->setParam("disabledUrl", "<1.0,0.5,0.5>");
-            self::$script->setParam("ActiveUrl", "<0.,1.,0.>");
-            self::$script->setParam("InactiveUrl", "<1.,0.,0.>");
+            self::$script->setParam("disabledActiveUrl", '$999☑');
+            self::$script->setParam("disabledUrl", '$999☐');
+            self::$script->setParam("ActiveUrl", '$fff☑');
+            self::$script->setParam("InactiveUrl", '$fff☐');
         }
 
         $this->label = new \ManiaLib\Gui\Elements\Label($textWidth, 4);
@@ -64,7 +64,7 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         $this->label->setTextSize(1);
         $this->label->setScale(1.1);
         $this->label->setTextColor("fff");
-        $this->label->setStyle("TextCardInfoSmall");
+        $this->label->setAttribute("textfont","Oswald");
         $this->addComponent($this->label);
 
         $this->setSize($sizeX + $textWidth, 6);
@@ -93,18 +93,34 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
     {
         self::$script->reset();
         $config = Config::getInstance();
-
-        if (!$this->enabled) {
-            if ($this->active) {
-                $this->button->setColorize("7f7");
+        if ($this->skin == "ratiobutton") {
+            if (!$this->enabled) {
+                if ($this->active) {
+                    $this->button->setText("$999☑");
+                } else {
+                    $this->button->setText("$999☐");
+                }
             } else {
-                $this->button->setColorize("f77");
+                if ($this->active) {
+                    $this->button->setText('$fff☑');
+                } else {
+                    $this->button->setText('$fff☐');
+                }
             }
-        } else {
-            if ($this->active) {
-                $this->button->setColorize("0f0");
+        }
+        if ($this->skin == "checkbox") {
+            if (!$this->enabled) {
+                if ($this->active) {
+                    $this->button->setText("$999☑");
+                } else {
+                    $this->button->setText("$999☐");
+                }
             } else {
-                $this->button->setColorize("f00");
+                if ($this->active) {
+                    $this->button->setText('$fff☑');
+                } else {
+                    $this->button->setText('$fff☐');
+                }
             }
         }
     }
@@ -114,11 +130,10 @@ class CheckboxScripted extends \ManiaLivePlugins\eXpansion\Gui\Control implement
         $this->skin = $value;
         $this->skinWidth = 5;
         if (is_object(self::$script)) {
-            $config = Config::getInstance();
-            self::$script->setParam("disabledActiveUrl", "<0.5,1.,0.5>");
-            self::$script->setParam("disabledUrl", "<1.,0.5,0.5>");
-            self::$script->setParam("ActiveUrl", "<0.,1.,0.>");
-            self::$script->setParam("InactiveUrl", "<1.,0.,0.>");
+            self::$script->setParam("disabledActiveUrl", '$999☑');
+            self::$script->setParam("disabledUrl", '$999☐');
+            self::$script->setParam("ActiveUrl", '$fff☑');
+            self::$script->setParam("InactiveUrl", '$fff☐');
         }
     }
 

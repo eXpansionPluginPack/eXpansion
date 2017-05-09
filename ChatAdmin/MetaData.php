@@ -18,7 +18,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Core: Chat based administration");
+        $this->setName("Chat based administration");
         $this->setDescription("Adds chat based admin commands for you to use");
         $this->setGroups(array('Core', 'Chat'));
     }

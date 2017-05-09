@@ -80,7 +80,7 @@ class ChatAdmin extends ExpPlugin
         $adminGroup = AdminGroups::getInstance();
 
         $cmd = AdminGroups::addAdminCommand('game script', $this, 'fastScript', Permission::GAME_SETTINGS);
-        $cmd->setHelp('/script load toto will load that script.');
+        $cmd->setHelp('/script load TimeAttack.script.txt will load the Time Attack script script.');
         $adminGroup->addShortAlias($cmd, 'script');
 
         $cmd = AdminGroups::addAdminCommand('game ta', $this, 'fastTa', Permission::GAME_SETTINGS);
@@ -472,7 +472,7 @@ Other server might use the same blacklist file!!'
         AdminGroups::addAlias($cmd, 'loadscript'); //xaseco
 
         $cmd = AdminGroups::addAdminCommand('reload script', $this, 'reloadScript', Permission::GAME_GAMEMODE);
-        $cmd->setHelp('Loads script for the next game.')
+        $cmd->setHelp('ReLoads same script for the next game.')
             ->addLineHelpMore('$w\admin script reload Reloads current script. (Usefull if script was changed).');
         $cmd->setMinParam(1);
         AdminGroups::addAlias($cmd, 'reloadscript'); //xaseco
@@ -1835,33 +1835,26 @@ Other server might use the same blacklist file!!'
             return;
         }
 
-        $mapsDir = Helper::getPaths()->getDefaultMapPath();
+        $dataDir = Helper::getPaths()->getGameDataPath();
         $mode = "TrackMania";
         if ($this->expStorage->simpleEnviTitle == "SM") {
             $mode = "ShootMania";
         }
 
-        $scriptName = dirname($mapsDir) . "/Scripts/Modes/" . $mode . "/" . $params[0];
+        $scriptName = $params[0];
 
         // Append .Script.txt if left out
         if (strtolower(substr($scriptName, -11)) !== '.script.txt') {
             $scriptName .= '.Script.txt';
         }
 
-        if (file_exists($scriptName)) {
-            $data = file_get_contents($scriptName);
-
-            try {
-                $this->connection->setModeScriptText($data);
-                $this->connection->setScriptName($params[0]);
-                $this->eXpChatSendServerMessage("Script loaded to server runtime: " . $params[0]);
-            } catch (\Exception $e) {
-                $this->eXpChatSendServerMessage("#admin_error#Couldn't load script : ", $e->getMessage());
-            }
-
-            return;
+        try {
+            //   $this->connection->setModeScriptText($data);
+            $this->connection->setScriptName($scriptName);
+            $this->eXpChatSendServerMessage("Script " . $scriptName . " will be loaded after this map!");
+        } catch (\Exception $e) {
+            $this->eXpChatSendServerMessage("#admin_error#" . $e->getMessage(), $fromLogin);
         }
-        $this->eXpChatSendServerMessage("#admin_error#Error: Script wasn't found !", $fromLogin);
     }
 
     /**
@@ -2704,6 +2697,16 @@ Other server might use the same blacklist file!!'
     public function setGameMode($fromLogin, $params)
     {
         $gamemode = null;
+
+        // if gamemode is script
+        if ($this->storage->gameInfos->gameMode == 0) {
+            $gamemode = $params[0];
+            if (strtolower($gamemode) == "ta") {
+                $gamemode = "timeattack";
+            }
+            $this->loadScript($fromLogin, [ucfirst($gamemode)]);
+            return;
+        }
 
         if (is_numeric($params[0])) {
             $gamemode = $params[0];

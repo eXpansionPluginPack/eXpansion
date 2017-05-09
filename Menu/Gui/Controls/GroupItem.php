@@ -63,7 +63,9 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         if ($handle) {
             $action = $this->createAction(array($plugin, "actionHandler"), $handle);
             //$label->setAction($action);
-            $quad->setAction($action);
+            $label->setAttribute("data-action", $action);
+            $quad->setAttribute("data-action", $action);
+            // $quad->setAction($action);
         }
 
         $frame->addComponent($quad);
@@ -80,6 +82,7 @@ class GroupItem extends \ManiaLivePlugins\eXpansion\Gui\Control
         $label->setStyle("TextRaceChat");
         $label->setPosX(2);
         $label->setTextColor("fff");
+
         $label->setAlign("left", "center");
 
         return $label;

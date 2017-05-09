@@ -7,6 +7,7 @@ use ManiaLib\Gui\Elements\Quad;
 use ManiaLive\Gui\Container;
 use ManiaLivePlugins\eXpansion\Gui\Config;
 use ManiaLivePlugins\eXpansion\Gui\Control;
+use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
 use ManiaLivePlugins\eXpansion\Widgets_BestCheckpoints\Structures\Checkpoint;
 
 class CheckpointElem extends Control
@@ -26,13 +27,11 @@ class CheckpointElem extends Control
         $sizeY = 5;
 
         $config = Config::getInstance();
-        $this->bg = new Quad($sizeX, $sizeY);
-        $this->bg->setPosX(-2);
+        $this->bg = new WidgetBackGround($sizeX, $sizeY);
+        $this->bg->setPosition(-1,2);
         $this->bg->setId("Bg" . $x);
-        $this->bg->setStyle("BgsPlayerCard");
-        $this->bg->setSubStyle("BgRacePlayerName");
-        $this->bg->setAlign('left', 'center');
-        $this->bg->setColorize($config->style_widget_bgColorize); // tämä
+        //$this->bg->setStyle("BgsPlayerCard");
+        //$this->bg->setSubStyle("BgRacePlayerName");
         $this->bg->setHidden(1);
         $this->addComponent($this->bg);
 
@@ -57,6 +56,7 @@ class CheckpointElem extends Control
         $this->nick->setAlign('left', 'center');
         $this->nick->setTextSize(1);
         $this->nick->setPosX(12);
+        $this->nick->setScale(0.85);
         $this->nick->setId("CpNick_" . $x);
         $this->addComponent($this->nick);
 

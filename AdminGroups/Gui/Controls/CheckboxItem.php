@@ -19,13 +19,14 @@ class CheckboxItem extends Control
 
     public function __construct($counter, Checkbox $permission, CheckBox $inheritance = null)
     {
+        $inheritanceSizeX = !is_null($inheritance) ? $inheritance->getSizeX() : 0;
         $this->frame = new Frame();
         $this->frame->setSize(68, 4);
-        $this->frame->addComponent(new ListBackGround($counter, 68, 4));
+        $this->frame->addComponent(new ListBackGround($counter, $permission->getSizeX() + $inheritanceSizeX + 2, 4));
         $this->frame->addComponent($permission);
         if ($inheritance != null) {
             $this->frame->addComponent($inheritance);
-            $inheritance->setPosX(54);
+            $inheritance->setPosX($permission->getSizeX() + 2);
         }
         $this->addComponent($this->frame);
         $this->setSize(68, 4);

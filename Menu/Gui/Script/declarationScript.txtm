@@ -7,7 +7,7 @@ declare CMlEntry widgetStatus <=> (Page.GetFirstChild("widgetStatus") as CMlEntr
 declare Text outText = "";
 
 declare Boolean toggleSubmenu = False;
-declare persistent Boolean[Text][Text][Text] eXp_widgetVisible;
+declare Boolean[Text][Text][Text] eXp_widgetVisible for LocalUser = Boolean[Text][Text][Text];
 
 declare Text version = "<?php echo $this->version ?>";
 declare Text id = "<?php echo $this->name ?>";
@@ -26,6 +26,7 @@ declare lastMousePos = <0., 0.>;
 declare hideStamp = 0;
 declare showStamp = 0;
 
+declare Boolean firstClick = False;
 declare Boolean exp_enableHudMove for UI = False;
 declare Boolean exp_needToCheckPersistentVars for UI = False;
 declare persistent Boolean exp_chatVisible = True;

@@ -1,7 +1,7 @@
 declare Integer eXp_lastClockUpdate = Now;
 declare Integer start = Now-2000;
 declare persistent Boolean[Text] exp_trayId = Boolean[Text];
-declare Vec3 p = eXp_widgetLastPosRel[version][id][gameMode];
+declare Vec3 p = Window.RelativePosition;
 
 // from edge script
 declare Boolean edge_isMinimized for UI = False;

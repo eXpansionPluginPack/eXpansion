@@ -13,7 +13,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Widget: Personal best");
+        $this->setName(" Personal best");
         $this->setDescription("Provides personal best widget");
         $this->setGroups(array('Widgets', 'Records'));
 

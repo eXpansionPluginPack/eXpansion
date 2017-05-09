@@ -34,12 +34,12 @@ class ListBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
             $this->bg->setModulateColor(
                 $config->style_list_bgColor[$indexNumber % sizeof($config->style_list_bgColor)]
             );
+        } else {
+            $this->bg->setBgcolor(
+                $config->style_list_bgColor[$indexNumber % sizeof($config->style_list_bgColor)]
+            );
         }
 
-        $image = "even";
-        if ($indexNumber % 2 == 1) {
-            $image = "odd";
-        }
 
         $this->bg->setPosition($config->style_list_posXOffset, $config->style_list_posYOffset);
 

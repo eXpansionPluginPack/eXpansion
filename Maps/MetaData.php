@@ -17,7 +17,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Maps: Generic Management and Jukebox");
+        $this->setName("Generic Management and Jukebox");
         $this->setDescription("Provides common functions for maps, add, remove, list and jukebox");
         $this->setGroups(array('Maps'));
 
@@ -43,17 +43,17 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $var = new Boolean("showCurrentMapWidget", "Show Now Playing map widget", $config, false, false);
         $var->setGroup("Widgets");
-        $var->setDefaultValue(true);
+        $var->setDefaultValue(false);
         $this->registerVariable($var);
 
         $var = new Boolean("showNextMapWidget", "Show next map widget", $config, false, false);
         $var->setGroup("Widgets");
-        $var->setDefaultValue(true);
+        $var->setDefaultValue(false);
         $this->registerVariable($var);
 
         $var = new Boolean("showEndMatchNotices", "Show end map notices", $config, false, false);
         $var->setGroup("Chat Messages");
-        $var->setDefaultValue(true);
+        $var->setDefaultValue(false);
         $this->registerVariable($var);
     }
 }

@@ -6,7 +6,6 @@ use ManiaLive\Event\Dispatcher;
 use ManiaLive\PluginHandler\Dependency;
 use ManiaLivePlugins\eXpansion\LocalRecords\Events\Event as LocalEvent;
 use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\LocalPanel;
-use ManiaLivePlugins\eXpansion\Widgets_LocalRecords\Gui\Widgets\LocalPanel2;
 
 class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
 {
@@ -57,38 +56,13 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             if ($login == null) {
                 $panelMain = Gui\Widgets\LocalPanel::Create($login);
                 $panelMain->setSizeX($this->panelSizeX);
-                $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
-                if (!$this->config->isHorizontal) {
-                    if ($this->eXpGetCurrentCompatibilityGameMode()
-                        != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK
-                    ) {
-                        $panelMain->setDirection("right");
-                    } else {
-                        $panelMain->setDirection("left");
-                    }
-                }
+                $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
                 $this->widgetIds["LocalPanel"] = $panelMain;
                 $this->widgetIds["LocalPanel"]->update();
                 $this->widgetIds["LocalPanel"]->show();
             } elseif (isset($localRecs[0])) {
                 $localRecs[0]->update();
                 $localRecs[0]->show($login);
-            }
-
-            if (!$gui->disablePersonalHud) {
-                $localRecs = LocalPanel2::GetAll();
-                if ($login == null) {
-                    $panelScore = Gui\Widgets\LocalPanel2::Create($login);
-                    $panelScore->setSizeX($this->panelSizeX);
-                    $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
-                    $panelScore->setVisibleLayer("scorestable");
-                    $this->widgetIds["LocalPanel2"] = $panelScore;
-                    $this->widgetIds["LocalPanel2"]->update();
-                    $this->widgetIds["LocalPanel2"]->show();
-                } elseif (isset($localRecs[0])) {
-                    $localRecs[0]->update();
-                    $localRecs[0]->show($login);
-                }
             }
         }
     }
@@ -112,7 +86,6 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         self::$raceOn = false;
         $this->widgetIds = array();
         Gui\Widgets\LocalPanel::EraseAll();
-        Gui\Widgets\LocalPanel2::EraseAll();
     }
 
     public function onEndMap($rankings, $map, $wasWarmUp, $matchContinuesOnNextMap, $restartMap)
@@ -127,7 +100,6 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             self::$localrecords = array(); //  reset
             $this->widgetIds = array();
             Gui\Widgets\LocalPanel::EraseAll();
-            Gui\Widgets\LocalPanel2::EraseAll();
         }
     }
 
@@ -137,7 +109,6 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $this->forceUpdate = true;
         $this->widgetIds = array();
         Gui\Widgets\LocalPanel::EraseAll();
-        Gui\Widgets\LocalPanel2::EraseAll();
         $this->updateLocalPanel();
         self::$secondMap = true;
         self::$raceOn = true;
@@ -153,7 +124,6 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
         $this->forceUpdate = true;
         $this->widgetIds = array();
         Gui\Widgets\LocalPanel::EraseAll();
-        Gui\Widgets\LocalPanel2::EraseAll();
         $this->updateLocalPanel();
         self::$secondMap = true;
         self::$raceOn = true;
@@ -184,7 +154,6 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     public function eXpOnUnload()
     {
         Gui\Widgets\LocalPanel::EraseAll();
-        Gui\Widgets\LocalPanel2::EraseAll();
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_RECORDS_LOADED);
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_NEW_RECORD);
         Dispatcher::unregister(LocalEvent::getClass(), $this, LocalEvent::ON_UPDATE_RECORDS);

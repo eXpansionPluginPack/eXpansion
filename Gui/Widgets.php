@@ -59,37 +59,9 @@ class Widgets extends \ManiaLib\Utils\Singleton
         GameInfos::GAMEMODE_LAPS => 5,
         GameInfos::GAMEMODE_CUP => 5);
 
-    public $CombinedPanel_posX = array(self::config_default => -161,
-        GameInfos::GAMEMODE_ROUNDS => -161,
-        GameInfos::GAMEMODE_TEAM => -161,
-        GameInfos::GAMEMODE_LAPS => -161,
-        GameInfos::GAMEMODE_CUP => -161);
-    public $CombinedPanel_posY = array(self::config_default => 63,
-        GameInfos::GAMEMODE_ROUNDS => 63,
-        GameInfos::GAMEMODE_TEAM => 63,
-        GameInfos::GAMEMODE_LAPS => 63,
-        GameInfos::GAMEMODE_CUP => 63);
-    public $CombinedPanel_nbFields = array(self::config_default => 13,
-        GameInfos::GAMEMODE_ROUNDS => 13,
-        GameInfos::GAMEMODE_TEAM => 13,
-        GameInfos::GAMEMODE_LAPS => 13,
-        GameInfos::GAMEMODE_CUP => 13);
-    public $CombinedPanel_nbFirstFields = array(self::config_default => 10,
-        GameInfos::GAMEMODE_ROUNDS => 10,
-        GameInfos::GAMEMODE_TEAM => 10,
-        GameInfos::GAMEMODE_LAPS => 10,
-        GameInfos::GAMEMODE_CUP => 10);
+    public $LocalRecordsPanel_posX = array(self::config_default => 110);
+    public $LocalRecordsPanel_posY = array(self::config_default => 60);
 
-    public $LocalRecordsPanel_posX = array(self::config_default => 120,
-        GameInfos::GAMEMODE_ROUNDS => -161,
-        GameInfos::GAMEMODE_TEAM => -161,
-        GameInfos::GAMEMODE_LAPS => -161,
-        GameInfos::GAMEMODE_CUP => -161);
-    public $LocalRecordsPanel_posY = array(self::config_default => 64,
-        GameInfos::GAMEMODE_ROUNDS => 9,
-        GameInfos::GAMEMODE_TEAM => 9,
-        GameInfos::GAMEMODE_LAPS => 9,
-        GameInfos::GAMEMODE_CUP => 9);
     public $LocalRecordsPanel_nbFields = array(self::config_default => 15,
         GameInfos::GAMEMODE_ROUNDS => 12,
         GameInfos::GAMEMODE_TEAM => 12,
@@ -132,10 +104,10 @@ class Widgets extends \ManiaLib\Utils\Singleton
     public $NextMap_posX = array(self::config_default => 20);
     public $NextMap_posY = array(self::config_default => 65);
 
-    public $MapRatingsWidget_posX = array(self::config_default => 128,
-        self::config_shootmania => 38);
-    public $MapRatingsWidget_posY = array(self::config_default => 75,
-        self::config_shootmania => 90);
+    public $MapRatingsWidget_posX = array(self::config_default => -156,
+        self::config_shootmania => -156);
+    public $MapRatingsWidget_posY = array(self::config_default => 65,
+        self::config_shootmania => 65);
 
     public $MXMapRatingWidget_posX = array(
         self::config_default => 128,

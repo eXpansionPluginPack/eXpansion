@@ -1359,7 +1359,7 @@ class AdminGroups extends ExpPlugin
         /** @var Help $window */
         $window = Gui\Windows\Help::Create($login);
         $window->setTitle(__(self::$txt_helpTitle, $login));
-        $window->setSize(120, 100);
+        $window->setSize(158, 100);
         $window->centerOnScreen();
         $window->show();
     }

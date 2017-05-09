@@ -19,7 +19,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Tools: Server Neighborhood");
+        $this->setName(" Server Neighborhood");
         $this->setDescription('Connects to other server to show information');
         $this->setGroups(array("Widgets", "Connectivity", "Tools"));
         $config = Config::getInstance();

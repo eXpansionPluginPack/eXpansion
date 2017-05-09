@@ -43,7 +43,7 @@ class ScriptSettings extends Window
 
         $this->pager = new Pager();
         $this->pager->setPosX(5);
-        $this->mainFrame->addComponent($this->pager);
+        $this->addComponent($this->pager);
         $this->actionOk = $this->createAction(array($this, "ok"));
         $this->actionCancel = $this->createAction(array($this, "cancel"));
 
@@ -68,7 +68,7 @@ class ScriptSettings extends Window
         parent::onResize($oldX, $oldY);
         $this->pager->setSize($this->sizeX - 5, $this->sizeY - 8);
         $this->pager->setStretchContentX($this->sizeX);
-        $this->ok->setPosition($this->sizeX - 38, -$this->sizeY + 6);
+        $this->ok->setPosition($this->sizeX - 46, -$this->sizeY + 6);
         $this->cancel->setPosition($this->sizeX - 20, -$this->sizeY + 6);
     }
 
