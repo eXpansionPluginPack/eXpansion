@@ -6,6 +6,7 @@ class Config extends \ManiaLib\Utils\Singleton
 
     public $notices = true;
     public $map_info = true;
+	public $live_info = false;
     public $chat = true;
     public $countdown = true;
     public $crosshair = true;

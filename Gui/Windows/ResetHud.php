@@ -22,13 +22,13 @@ class ResetHud extends \ManiaLive\Gui\Window
         $this->xml->setContent('    
         <script><!--
                        main () {     
-                        declare persistent Vec3[Text][Text] exp_windowLastPos;
-                        declare persistent Vec3[Text][Text] exp_windowLastPosRel;
+                        declare Vec3[Text][Text] exp_windowLastPos for LocalUser;
+                        declare Vec3[Text][Text] exp_windowLastPosRel for LocalUser;
 			
-                        declare persistent Vec3[Text][Text][Text] eXp_widgetLastPos;
-                        declare persistent Vec3[Text][Text][Text] eXp_widgetLastPosRel;
-                        declare persistent Boolean[Text][Text][Text] eXp_widgetVisible;
-			declare persistent Text[Text][Text][Text] eXp_widgetLayers;
+                        declare Vec3[Text][Text][Text] eXp_widgetLastPos for LocalUser;
+                        declare Vec3[Text][Text][Text] eXp_widgetLastPosRel for LocalUser;
+                        declare Boolean[Text][Text][Text] eXp_widgetVisible for LocalUser;
+			declare Text[Text][Text][Text] eXp_widgetLayers for LocalUser;
 			declare Boolean exp_needToCheckPersistentVars for UI = False;
 			declare persistent Boolean exp_chatVisible = True;
 			exp_chatVisible = True;

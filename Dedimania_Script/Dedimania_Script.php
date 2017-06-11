@@ -19,9 +19,26 @@ class Dedimania_Script extends DedimaniaAbstract
     public function eXpOnReady()
     {
         parent::eXpOnReady();
-        $this->enableScriptEvents(array("LibXmlRpc_BeginMap", "LibXmlRpc_OnWayPoint", "LibXmlRpc_EndMatch"));
+        // $this->enableScriptEvents(array("ManiaPlanet.BeginMatch", "Trackmania.Event.WayPoint", "ManiaPlanet.EndMatch"));
     }
 
+    public function eXpOnModeScriptCallback($callback, $array)
+    {
+        switch ($callback) {
+            case "ManiaPlanet.BeginMap":
+                $this->LibXmlRpc_BeginMap(0);
+                break;
+
+            case "ManiaPlanet.EndMatch":
+                call_user_func_array(array($this, "LibXmlRpc_EndMatch"), json_decode($array[0]));
+                break;
+
+            case "Trackmania.Event.WayPoint":
+                call_user_func_array(array($this, "LibXmlRpc_OnWayPoint"), json_decode($array[0]));
+                break;
+
+        }
+    }
 
     public function LibXmlRpc_BeginMap($number)
     {
@@ -36,7 +53,24 @@ class Dedimania_Script extends DedimaniaAbstract
         $this->gReplay = "";
     }
 
-    public function LibXmlRpc_OnWayPoint($login, $blockId, $time, $cpIndex, $isEndBlock, $lapTime, $lapNb, $isLapEnd)
+    /*
+     *  [0] => {
+        "time": 3008982,
+        "login": "reaby",
+        "racetime": 135730,
+        "laptime": 135730,
+        "stuntsscore": 5,
+        "checkpointinrace": 0,
+        "checkpointinlap": 0,
+        "isendrace": false,
+        "isendlap": false,
+        "curracecheckpoints": [135730],
+        "curlapcheckpoints": [135730],
+        "blockid": "#1641745",
+        "speed": 199.2640,
+        "distance": 331.8980
+     */
+    public function LibXmlRpc_OnWayPoint($time,$login, $time, $lapTime, $stuntsscore, $checkpoint, $checkpointinlap, )
     {
         if (!$this->running) {
             return;
