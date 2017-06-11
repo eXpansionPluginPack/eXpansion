@@ -43,7 +43,7 @@ class PlayerScoreWidget extends Widget
         $this->lbl_title = new Label(30, 5);
         $this->lbl_title->setTextSize(1);
         $this->lbl_title->setTextColor("fff");
-        $this->lbl_title->setStyle("TextCardScores2");
+        $this->lbl_title->setAttribute("textfont","Oswald");
         $this->lbl_title->setText('Round Points');
         $this->lbl_title->setAlign("center", "center");
         $this->addComponent($this->lbl_title);

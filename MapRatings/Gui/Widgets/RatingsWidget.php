@@ -2,8 +2,18 @@
 
 namespace ManiaLivePlugins\eXpansion\MapRatings\Gui\Widgets;
 
+use ManiaLib\Gui\Elements\Label;
+use ManiaLib\Gui\Layouts\Line;
+use ManiaLive\Gui\Controls\Frame;
+use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround;
+use ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle;
+use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
+use ManiaLivePlugins\eXpansion\Helpers\Helper;
+use ManiaLivePlugins\eXpansion\Helpers\Storage;
+
 class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 {
+    /** @var  Frame */
     protected $frame;
     protected $starFrame;
     protected $move;
@@ -14,32 +24,32 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     protected function eXpOnBeginConstruct()
     {
-        $this->frame = new \ManiaLive\Gui\Controls\Frame();
+        $this->frame = new Frame();
         $this->frame->setAlign("left", "top");
         $this->addComponent($this->frame);
 
-        $bg = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetBackGround(34, 10);
+        $bg = new WidgetBackGround(34, 6);
+        $bg->setPosition(0, -4);
         $bg->setAction($this->createAction(array(self::$parentPlugin, "showRatingsManager")));
-        $this->addComponent($bg);
+        // $this->addComponent($bg);
 
-        $title = new \ManiaLivePlugins\eXpansion\Gui\Elements\WidgetTitle(34, 4);
+        $title = new WidgetTitle(34, 4);
         $title->setText(eXpGetMessage('Map Rating'));
-        $this->addComponent($title);
+        //$this->addComponent($title);
 
 
-        $this->starFrame = new \ManiaLive\Gui\Controls\Frame();
-        $this->starFrame->setPosition(2, -2);
-        $this->starFrame->setSize(34, 4);
+        $this->starFrame = new Frame(0, 0, new Line());
+        $this->starFrame->setSize(34, 6);
         $this->frame->addComponent($this->starFrame);
-        $this->gauge = new \ManiaLive\Gui\Elements\Xml();
 
         $this->setName("Map Ratings Widget");
 
-        $storage = \ManiaLivePlugins\eXpansion\Helpers\Storage::getInstance();
-        if ($storage->simpleEnviTitle == "TM") {
-            $this->edgeWidget = new \ManiaLivePlugins\eXpansion\Gui\Structures\Script("Gui/Scripts/EdgeWidget");
-            $this->registerScript($this->edgeWidget);
-        }
+        /*
+         $storage = Storage::getInstance();
+         if ($storage->simpleEnviTitle == "TM") {
+             $this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
+             $this->registerScript($this->edgeWidget);
+         } */
     }
 
     public function onResize($oldX, $oldY)
@@ -49,40 +59,49 @@ class RatingsWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     public function setStars($number, $total)
     {
-        $this->frame->clearComponents();
-        $login = $this->getRecipient();
+        $this->starFrame->clearComponents();
 
-        $test = ($number / 6) * 100;
-        $color = "fff";
-        if ($test < 30) {
-            $color = "0ad";
-        }
-        if ($test >= 30) {
-            $color = "2af";
-        }
-        if ($test > 60) {
-            $color = "0cf";
+        for ($x = 0; $x < floor($number); $x++) {
+            $star = new Label();
+            $star->setSize(6, 6);
+            $star->setText('');
+            $star->setTextSize(5);
+            $this->starFrame->addComponent($star);
         }
 
-        $this->gauge->setContent(
-            '<gauge sizen="32 7" drawblockbg="1" style="ProgressBarSmall" color="'
-            . $color . '" drawbg="1" rotation="0" posn="0 -3.5" grading="1" ratio="'
-            . ($number / 5) . '" centered="0" />'
-        );
-        $this->frame->addComponent($this->gauge);
+        $fraction = $number - floor($number);
 
-        $score = ($number / 5) * 100;
-        $score = round($score);
+        $star = new Label();
+        $star->setSize(6, 6);
+        $star->setTextSize(5);
+        $star->setText('');
 
+        if ($fraction < 0.33) {
+            $star->setText('');
+        }
 
-        $info = new \ManiaLib\Gui\Elements\Label();
-        $info->setTextSize(1);
+        if ($fraction >= 0.66) {
+            $star->setText('');
+
+        }
+        if ($fraction != 0) {
+            $this->starFrame->addComponent($star);
+        }
+        for ($x = 0; $x < floor(5 - $number); $x++) {
+            $star = new Label();
+            $star->setSize(6, 6);
+            $star->setText('');
+            $star->setTextSize(5);
+            $this->starFrame->addComponent($star);
+        }
+
+       /* $info = new Label();
         $info->setTextColor('fff');
-        $info->setAlign("center", "center");
+        $info->setAlign("left", "top");
         $info->setTextEmboss();
-        $info->setText($score . "% (" . $total . ")");
-        $info->setPosition(17, -7);
-        $this->frame->addComponent($info);
-        $this->redraw();
+        $info->setTextSize(3);
+        $info->setText("number:" . $number);
+        $this->starFrame->addComponent($info);
+        $this->redraw(); */
     }
 }

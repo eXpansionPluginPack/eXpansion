@@ -71,9 +71,9 @@ class Gui extends ExpPlugin
 
         $this->loadWidgetConfigs();
 
-        $edge = Widgets\Edge::Create(null);
+       /* $edge = Widgets\Edge::Create(null);
         $edge->setPosition(-160, -35);
-        $edge->show();
+        $edge->show(); */
     }
 
     public static function getScaledSize($sizes, $totalSize)

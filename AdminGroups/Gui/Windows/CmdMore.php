@@ -63,7 +63,6 @@ class CmdMore extends Window
 
         $this->label_cmd = new Label(30, 5);
         $this->label_cmd->setAlign('left', 'center');
-        $this->label_cmd->setScale(0.8);
         $this->label_cmd->setPosition(1, -1);
         $this->mainFrame->addComponent($this->label_cmd);
 
@@ -73,7 +72,6 @@ class CmdMore extends Window
 
         $this->label_desc = new Label(30, 4);
         $this->label_desc->setAlign('left', 'center');
-        $this->label_desc->setScale(0.8);
         $this->label_desc->setPosY(-1);
         $this->mainFrame->addComponent($this->label_desc);
 
@@ -83,7 +81,6 @@ class CmdMore extends Window
 
         $this->label_descm = new Label(30, 4);
         $this->label_descm->setAlign('left', 'center');
-        $this->label_descm->setScale(0.8);
         $this->label_descm->setPosition(1, -10);
         $this->mainFrame->addComponent($this->label_descm);
 
@@ -93,7 +90,6 @@ class CmdMore extends Window
 
         $this->label_aliases = new Label(30, 4);
         $this->label_aliases->setAlign('left', 'center');
-        $this->label_aliases->setScale(0.8);
         $this->label_aliases->setPosY(-10);
         $this->mainFrame->addComponent($this->label_aliases);
 
@@ -103,7 +99,6 @@ class CmdMore extends Window
 
         $this->content_cmd = new Label(30, 4);
         $this->content_cmd->setAlign('left', 'top');
-        $this->content_cmd->setScale(0.6);
         $this->content_cmd->setPosition(2, -4);
         $this->mainFrame->addComponent($this->content_cmd);
 
@@ -113,7 +108,6 @@ class CmdMore extends Window
 
         $this->content_desc = new Label(30, 4);
         $this->content_desc->setAlign('left', 'top');
-        $this->content_desc->setScale(0.6);
         $this->content_desc->setPosY(-4);
         $this->mainFrame->addComponent($this->content_desc);
 
@@ -123,7 +117,6 @@ class CmdMore extends Window
 
         $this->content_descm = new Label(30, 4);
         $this->content_descm->setAlign('left', 'top');
-        $this->content_descm->setScale(0.6);
         $this->content_descm->setPosition(2, -13);
         $this->content_descm->setMaxline(100);
         $this->mainFrame->addComponent($this->content_descm);
@@ -134,7 +127,6 @@ class CmdMore extends Window
 
         $this->content_aliases = new Label(30, 4);
         $this->content_aliases->setAlign('left', 'top');
-        $this->content_aliases->setScale(0.6);
         $this->content_aliases->setPosY(-13);
         $this->content_aliases->setMaxline(100);
         $this->mainFrame->addComponent($this->content_aliases);
@@ -153,8 +145,7 @@ class CmdMore extends Window
     {
         parent::onResize($oldX, $oldY);
 
-        $sizeX2 = $this->getSizeX() / .8;
-        $sizeX3 = $this->getSizeX() / .6;
+        $sizeX2 = $this->getSizeX();
 
         $this->label_cmd->setSizeX($sizeX2 / 2 - 4);
         $this->bgt_cmd->setSizeX($this->getSizeX() / 2 - 4);
@@ -172,15 +163,15 @@ class CmdMore extends Window
         $this->bgt_aliases->setPosX($this->getSizeX() / 1.5);
         $this->bgt_aliases->setSizeX($this->getSizeX() / 3 - 4);
 
-        $this->content_cmd->setSizeX($sizeX3 / 2 - 6);
+        $this->content_cmd->setSizeX($sizeX2 / 2 - 6);
         $this->bg_cmd->setSizeX($this->getSizeX() / 2 - 6);
 
         $this->content_desc->setPosX($this->getSizeX() / 2 + 1);
-        $this->content_desc->setSizeX($sizeX3 / 2 - 6);
+        $this->content_desc->setSizeX($sizeX2 / 2 - 6);
         $this->bg_desc->setPosX($this->getSizeX() / 2 + 1);
         $this->bg_desc->setSize($this->getSizeX() / 2 - 6);
 
-        $this->content_descm->setSizeX($sizeX3 / 1.5 - 6);
+        $this->content_descm->setSizeX($sizeX2 / 1.5 - 12);
         $this->content_descm->setSizeY($this->getSizeY() / .6 - 15);
         $this->bg_descm->setSize($this->getSizeX() / 1.5 - 6, $this->getSizeY() - 15);
         $this->bg_descm->setPosY(-12 - (($this->getSizeY() - 15) / 2));

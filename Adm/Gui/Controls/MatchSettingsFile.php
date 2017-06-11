@@ -81,7 +81,7 @@ class MatchSettingsFile extends Control
         $spacer->setStyle(Icons64x64_1::EmptyIcon);
         //$this->frame->addComponent($spacer);
 
-        $this->label = new Label(90, 4);
+        $this->label = new Label(75, 4);
         $this->label->setAlign('left', 'center');
         $file = explode(DIRECTORY_SEPARATOR, $filename);
         $text = utf8_encode(end($file));

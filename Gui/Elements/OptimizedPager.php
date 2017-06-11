@@ -50,32 +50,28 @@ class OptimizedPager extends Control implements ScriptedContainer
 
         $this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 40);
         $this->scrollBg->setAlign("center", "top");
-        $this->scrollBg->setStyle("Bgs1InRace");
-        $this->scrollBg->setSubStyle('BgPlayerCard');
         $this->scrollBg->setId("ScrollBg");
-        $this->scrollBg->setOpacity(0.9);
+        $this->scrollBg->setBgcolor("fff");
+        $this->scrollBg->setOpacity(0.3);
         $this->addComponent($this->scrollBg);
 
         $this->scroll = new \ManiaLib\Gui\Elements\Quad(3, 15);
         $this->scroll->setAlign("center", "top");
-        $this->scroll->setStyle("BgsPlayerCard");
-        $this->scroll->setSubStyle('BgRacePlayerName');
+        $this->scroll->setBgcolor("fff");
         $this->scroll->setId("ScrollBar");
         $this->scroll->setScriptEvents();
         $this->addComponent($this->scroll);
 
-        $this->scrollDown = new \ManiaLib\Gui\Elements\Quad(6.5, 6.5);
+        $this->scrollDown = new \ManiaLib\Gui\Elements\Label(6.5, 6.5);
         $this->scrollDown->setAlign("center", "top");
-        $this->scrollDown->setStyle("Icons64x64_1");
-        $this->scrollDown->setSubStyle("ArrowDown");
+        $this->scrollDown->setText('▼');
         $this->scrollDown->setId("ScrollDown");
         $this->scrollDown->setScriptEvents();
         $this->addComponent($this->scrollDown);
 
-        $this->scrollUp = new \ManiaLib\Gui\Elements\Quad(6.5, 6.5);
+        $this->scrollUp = new \ManiaLib\Gui\Elements\Label(6.5, 6.5);
         $this->scrollUp->setAlign("center", "bottom");
-        $this->scrollUp->setStyle("Icons64x64_1");
-        $this->scrollUp->setSubStyle("ArrowUp");
+        $this->scrollUp->setText('▲');
         $this->scrollUp->setId("ScrollUp");
         $this->scrollUp->setScriptEvents();
         $this->addComponent($this->scrollUp);
@@ -130,8 +126,8 @@ class OptimizedPager extends Control implements ScriptedContainer
         $this->scrollBg->setPosition($this->sizeX - 3);
         $this->scrollBg->setSizeY($this->sizeY - 4);
 
-        $this->scrollDown->setPosition($this->sizeX - 3, -($this->sizeY - 5));
-        $this->scrollUp->setPosition($this->sizeX - 3, -1);
+        $this->scrollDown->setPosition($this->sizeX - 3, -($this->sizeY - 4));
+        $this->scrollUp->setPosition($this->sizeX - 3, -0);
     }
 
     public function setContentLayout($className)

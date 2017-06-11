@@ -25,7 +25,7 @@ class AdminItem extends Control
 
     public function __construct($indexNumber, Admin $admin, $controller, $login)
     {
-        $sizeX = 75;
+        $sizeX = 85;
         $sizeY = 6;
 
         $actionRemove = $this->createAction(array($controller, 'clickRemove'), $admin);
@@ -36,27 +36,24 @@ class AdminItem extends Control
 
         $this->addComponent(new ListBackGround($indexNumber, $sizeX, $sizeY));
 
-        $gui_name = new Label(40, 4);
+        $gui_name = new Label(30, 4);
         $gui_name->setAlign('left', 'center');
         $gui_name->setText($admin->getLogin());
-        $gui_name->setScale(0.8);
         $frame->addComponent($gui_name);
 
         $player = Storage::getInstance()->getPlayerObject($admin->getLogin());
-        $gui_nick = new Label(32, 4);
+        $gui_nick = new Label(30, 4);
         $gui_nick->setAlign('left', 'center');
         $gui_nick->setText($player != null ? $player->nickName : "");
         $gui_nick->setTextColor("fff");
-        $gui_nick->setScale(0.8);
 
         $frame->addComponent($gui_nick);
 
         if (AdminGroups::hasPermission($login, Permission::ADMINGROUPS_ADMIN_ALL_GROUPS) && !$admin->isReadOnly()) {
-
             $this->plistButton = new MyButton(30, 4);
             $this->plistButton->setAction($actionRemove);
             $this->plistButton->setText(__(AdminGroups::$txt_rmPlayer, $login));
-            $this->plistButton->setScale(0.6);
+            $this->plistButton->setScale(0.7);
             $frame->addComponent($this->plistButton);
         }
 

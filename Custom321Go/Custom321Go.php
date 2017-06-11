@@ -17,6 +17,7 @@ class Custom321Go extends ExpPlugin
         parent::eXpOnReady();
 
         $this->enableDedicatedEvents();
+
         $window = Gui\Hud\CountdownHud::create();
         $window->show();
     }

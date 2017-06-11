@@ -17,7 +17,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Core: AutoLoader");
+        $this->setName("AutoLoader");
         $this->setDescription('Autoloader, all-in-one solution for loading eXpansion easily');
         $this->setGroups(array('Core'));
 

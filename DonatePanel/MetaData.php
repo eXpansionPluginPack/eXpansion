@@ -19,7 +19,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Widget: Donates panel");
+        $this->setName(" Donates panel");
         $this->setDescription("Donates for players to send for server or eachother");
         $this->setGroups(array('Widgets'));
         $config = Config::getInstance();

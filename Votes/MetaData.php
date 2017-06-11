@@ -21,7 +21,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Tools: Votes");
+        $this->setName("Votes");
         $this->setDescription("Provides Votes handler");
         $this->setGroups(array('Tools'));
 

@@ -8,7 +8,7 @@ use ManiaLivePlugins\eXpansion\AdminGroups\Group;
 use ManiaLivePlugins\eXpansion\AdminGroups\Gui\Controls\CheckboxItem;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Button;
 use ManiaLivePlugins\eXpansion\Gui\Elements\Checkbox;
-use ManiaLivePlugins\eXpansion\Gui\Elements\Pager;
+use ManiaLive\Gui\Controls\Pager;
 use ManiaLivePlugins\eXpansion\Gui\Windows\Window;
 
 /**
@@ -46,19 +46,19 @@ class Permissions extends Window
         parent::onConstruct();
 
         $this->pager = new Pager();
-        $this->mainFrame->addComponent($this->pager);
+        $this->_windowFrame->addComponent($this->pager);
 
         $this->button_ok = new Button(20, 5);
         $this->button_ok->setText(__("OK"));
         $this->action_ok = $this->createAction(array($this, 'clickOk'));
         $this->button_ok->setAction($this->action_ok);
-        $this->mainFrame->addComponent($this->button_ok);
+        $this->_windowFrame->addComponent($this->button_ok);
 
         $this->button_cancel = new Button(20, 5);
         $this->button_cancel->setText(__("Cancel"));
         $this->action_cancel = $this->createAction(array($this, 'clickCancel'));
         $this->button_cancel->setAction($this->action_cancel);
-        $this->mainFrame->addComponent($this->button_cancel);
+        $this->_windowFrame->addComponent($this->button_cancel);
     }
 
     /**
@@ -84,12 +84,12 @@ class Permissions extends Window
     public function onResize($oldX, $oldY)
     {
         parent::onResize($oldX, $oldY);
-        $this->pager->setSize($this->sizeX - 2, $this->sizeY - 12);
-        $this->pager->setPosition(1, -1);
+        $this->pager->setSize($this->sizeX, $this->sizeY - 10);
+        $this->pager->setPosition(0, -3);
 
         $centerX = $this->sizeX / 2 - 10;
-        $this->button_ok->setPosition($centerX + 5, -$this->sizeY + 5);
-        $this->button_cancel->setPosition($centerX + 30, -$this->sizeY + 5);
+        $this->button_ok->setPosition($centerX + 5, -$this->sizeY - 1);
+        $this->button_cancel->setPosition($centerX + 30, -$this->sizeY - 1);
     }
 
     /**
@@ -126,21 +126,21 @@ class Permissions extends Window
             $cPermission = new Checkbox(4, 4, 60);
             $cPermission->setStatus($this->group->hasPermission($key));
             $cPermission->setText('$fff' . __(AdminGroups::getPermissionTitleMessage($key), $this->getRecipient()));
-            $cPermission->setScale(0.8);
 
             $cInherit = null;
 
             $inheritances = $this->group->getInherits();
             if (!empty($inheritances)) {
-                $cInherit = new Checkbox(4, 4, 15, $cPermission);
+                $cInherit = new Checkbox(4, 4, 23, $cPermission);
                 $cInherit->setText('$fff' . __(AdminGroups::$txt_inherits, $this->getRecipient()) . "?");
-                $cInherit->setScale(0.8);
                 if ($this->group->getPermission($key) == AdminGroups::UNKNOWN_PERMISSION) {
                     $cPermission->SetIsWorking(false);
                     $cInherit->setStatus(true);
                 } else {
                     $cInherit->setStatus(false);
                 }
+            } else {
+                $cPermission->setSizeX(85);
             }
 
             $this->permissions[$key] = array($cPermission, $cInherit);

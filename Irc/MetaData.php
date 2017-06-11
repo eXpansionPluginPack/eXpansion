@@ -17,7 +17,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Tools: IRC chat link and remote admin");
+        $this->setName("IRC chat link and remote admin");
         $this->setDescription("Provides IRC link for chatting and remote administration, needs php_sockets extension.");
         $this->setGroups(array('Connectivity', 'Chat', 'Tools'));
         $config = Config::getInstance();

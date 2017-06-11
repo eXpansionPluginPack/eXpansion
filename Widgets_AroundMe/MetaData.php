@@ -13,7 +13,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Widget: Around Me");
+        $this->setName(" Around Me");
         $this->setDescription("Provides Around Me time display widget");
         $this->setGroups(array('Records', 'Widgets'));
 

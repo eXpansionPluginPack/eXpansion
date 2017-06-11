@@ -199,7 +199,7 @@ abstract class LocalBase extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugi
 
         // %1$s - nickname; %2$s - rank; %3$s - time; %4$s - old rank; %5$s - time difference
         $this->msg_secure = eXpGetMessage('#variable#%1$s #record#secures #rank#%2$s. #record#Local Record!'
-            . '#time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)');
+            . ' #time#%3$s #record#(#rank#%4$s #time#-%5$s#record#)');
         // %1$s - nickname; %2$s - rank; %3$s - time
         $this->msg_new = eXpGetMessage('#variable#%1$s #record#new #rank#%2$s.#record# Local Record! #time#%3$s');
         // %1$s - nickname; %2$s - rank; %3$s - time

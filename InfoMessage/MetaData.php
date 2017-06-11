@@ -17,7 +17,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Chat: Info Messages");
+        $this->setName("Info Messages");
         $this->setDescription("Send informatic chat message every now and then");
         $this->setGroups(array('Tools', 'Chat'));
 

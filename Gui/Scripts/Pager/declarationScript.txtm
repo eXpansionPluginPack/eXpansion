@@ -2,10 +2,10 @@ declare CMlFrame Pager <=> (Page.GetFirstChild("Pager") as CMlFrame);
 declare CMlQuad ScrollBar <=> (Page.GetFirstChild("ScrollBar") as CMlQuad);
 declare CMlQuad ScrollBg <=> (Page.GetFirstChild("ScrollBg") as CMlQuad);
 
-declare CMlQuad ScrollUp <=> (Page.GetFirstChild("ScrollUp") as CMlQuad);
-declare CMlQuad ScrollDown <=> (Page.GetFirstChild("ScrollDown") as CMlQuad);
+declare ScrollUp <=> (Page.GetFirstChild("ScrollUp") as CMlLabel );
+declare ScrollDown <=> (Page.GetFirstChild("ScrollDown") as CMlLabel);
 
-declare Real pagerMouseY;                    
+declare Real pagerMouseY;
 
 declare Real ScrollBarHeight = ScrollBar.Size.Y;
 declare Real ScrollBgHeight = ScrollBg.Size.Y;
@@ -14,10 +14,10 @@ declare Real pagerStartPos = ScrollBar.RelativePosition.Y;
 declare Real pagerStopPosition = pagerStartPos - ScrollBgHeight + ScrollBarHeight;
 declare maxDelta = pagerStartPos - pagerStopPosition;
 
-declare Real pager_scrollYOriginPosition;                    
-declare Real pager_mouseYPosition;                    
-declare Real pager_deltaMouseYPosition;                    
-declare Real pager_startMouseYPosition;                    
+declare Real pager_scrollYOriginPosition;
+declare Real pager_mouseYPosition;
+declare Real pager_deltaMouseYPosition;
+declare Real pager_startMouseYPosition;
 declare pager_moveScroll = False;
 declare pager_firstClick = False;
 declare Real itemSizeY = <?php echo $this->getNumber($this->sizeY); ?>;
@@ -35,9 +35,9 @@ declare Boolean isScrollDown = False;
 declare Boolean isScrollUp = False;
 
 foreach (item in Pager.Controls) {
-    item.RelativePosition.Y = -itemSizeY * nb;                    
-	if(item.RelativePosition.Y < -pagerSizeY) { 
-	   item.Hide();           
+    item.RelativePosition.Y = -itemSizeY * nb;
+	if(item.RelativePosition.Y < -pagerSizeY) {
+	   item.Hide();
 	   if (itemsPerPage == -1) {
 		itemsPerPage = nb - 1;
 	   }

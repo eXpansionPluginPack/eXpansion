@@ -162,7 +162,7 @@ if(!needUpdate){
     lastUpdateTime = Now;
 }
 
-if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered && exp_widgetLayersBuffered == activeLayer) || exp_widgetVisibilityChanged)) {
+if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered) || exp_widgetVisibilityChanged)) {
     lastUpdateTime = Now;
 
     needUpdate = False;
@@ -267,19 +267,6 @@ if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered &&
         }
     }
 
-}
-
-foreach (Event in PendingEvents) {
-    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer") {
-        if (eXp_widgetLayers[version][id][gameMode] == "normal") {
-            eXp_widgetLayers[version][id][gameMode] = "scorestable";
-            exp_needToCheckPersistentVars = True;
-        } else {
-            eXp_widgetLayers[version][id][gameMode] = "normal";
-            exp_needToCheckPersistentVars = True;
-
-        }
-    }
 }
 
 

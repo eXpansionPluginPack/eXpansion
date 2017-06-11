@@ -37,32 +37,27 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
         $this->scrollBg = new \ManiaLib\Gui\Elements\Quad(4, 40);
         $this->scrollBg->setAlign("center", "top");
         $this->scrollBg->setId("ScrollBg");
-        $this->scrollBg->setStyle("Bgs1InRace");
-        $this->scrollBg->setSubStyle('BgPlayerCard');
-
-        $this->scrollBg->setOpacity(0.9);
+        $this->scrollBg->setBgcolor("fff");
+        $this->scrollBg->setOpacity(0.3);
         $this->barFrame->addComponent($this->scrollBg);
 
         $this->scroll = new \ManiaLib\Gui\Elements\Quad(3, 15);
         $this->scroll->setAlign("center", "top");
-        $this->scroll->setStyle("BgsPlayerCard");
-        $this->scroll->setSubStyle('BgRacePlayerName');
+        $this->scroll->setBgcolor("fff");
         $this->scroll->setId("ScrollBar");
         $this->scroll->setScriptEvents();
         $this->barFrame->addComponent($this->scroll);
 
-        $this->scrollDown = new \ManiaLib\Gui\Elements\Quad(6.5, 6.5);
+        $this->scrollDown = new \ManiaLib\Gui\Elements\Label(6.5, 6.5);
         $this->scrollDown->setAlign("center", "top");
-        $this->scrollDown->setStyle("Icons64x64_1");
-        $this->scrollDown->setSubStyle("ArrowDown");
+        $this->scrollDown->setText('▼');
         $this->scrollDown->setId("ScrollDown");
         $this->scrollDown->setScriptEvents();
         $this->barFrame->addComponent($this->scrollDown);
 
-        $this->scrollUp = new \ManiaLib\Gui\Elements\Quad(6.5, 6.5);
+        $this->scrollUp = new \ManiaLib\Gui\Elements\Label(6.5, 6.5);
         $this->scrollUp->setAlign("center", "bottom");
-        $this->scrollUp->setStyle("Icons64x64_1");
-        $this->scrollUp->setSubStyle("ArrowUp");
+        $this->scrollUp->setText('▲');
         $this->scrollUp->setId("ScrollUp");
         $this->scrollUp->setScriptEvents();
         $this->barFrame->addComponent($this->scrollUp);
@@ -82,8 +77,8 @@ class Pager extends \ManiaLivePlugins\eXpansion\Gui\Control implements \ManiaLiv
         $this->scrollBg->setPosition($this->sizeX - 3, -0);
         $this->scrollBg->setSizeY($this->sizeY - 9);
 
-        $this->scrollDown->setPosition($this->sizeX - 3, -($this->sizeY - 10));
-        $this->scrollUp->setPosition($this->sizeX - 3, -1);
+        $this->scrollDown->setPosition($this->sizeX - 3, -($this->sizeY - 9));
+        $this->scrollUp->setPosition($this->sizeX - 3, 0);
 
         foreach ($this->items as $item) {
             $scale = $item->getScale();

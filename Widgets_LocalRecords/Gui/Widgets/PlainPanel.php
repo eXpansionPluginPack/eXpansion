@@ -89,7 +89,7 @@ class PlainPanel extends Widget
         $this->layer->setIcon("UIConstruction_Buttons", "Down");
         $this->layer->setId("setLayer");
         $this->layer->setDescription("Switch from Race view to Score View(Visible on Tab)", 75);
-        $this->addComponent($this->layer);
+      //  $this->addComponent($this->layer);
 
         $this->edgeWidget = new Script("Gui/Scripts/EdgeWidget");
         $this->registerScript($this->edgeWidget);
@@ -162,7 +162,7 @@ class PlainPanel extends Widget
 
         $this->bgFirst->setPosX(($this->sizeX / 2) + 1);
 
-        $this->bg->setSize($this->sizeX, $this->sizeY + 1.5);
+        $this->bg->setSize($this->sizeX, $this->sizeY);
 
         $this->bgTitle->setSize($this->sizeX, $this->sizeY);
 

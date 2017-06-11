@@ -13,7 +13,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Core: Admin Groups");
+        $this->setName("Admin Groups");
         $this->setDescription("Provides Admin Groups");
         $this->setGroups(array('Core'));
 

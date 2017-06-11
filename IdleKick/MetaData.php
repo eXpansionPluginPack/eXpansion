@@ -19,7 +19,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName("Tools: Idle Kick");
+        $this->setName("Idle Kick");
         $this->setDescription("Automatically kicks the players who just idles at the server");
         $this->setGroups(array('Tools'));
 

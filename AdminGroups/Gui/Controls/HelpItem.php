@@ -26,34 +26,39 @@ class HelpItem extends Control
     {
         $this->action = $this->createAction(array($this, 'cmdMore'), $cmd);
 
-        $this->setSize(116, 4);
+        $this->setSize(154, 4);
         $frame = new Frame();
         $frame->setSize($this->getSizeX(), $this->getSizeY());
         $frame->setLayout(new Line());
 
         $this->addComponent(new ListBackGround($indexNumber, $this->getSizeX(), $this->getSizeY()));
 
-        $gui_cmd = new Label(50 * (.8 / .6), 4);
+        $gui_cmd = new Label(40 * (1/0.8), 4);
         $gui_cmd->setAlign('left', 'center');
-        $gui_cmd->setText(__($cmd->getCmd(), $login));
-        $gui_cmd->setScale(0.6);
+        $gui_cmd->setText($cmd->getCmd());
+        $gui_cmd->setScale(0.8);
         $frame->addComponent($gui_cmd);
 
-        $gui_desc = new Label(
-            ($this->getSizeX() - ($gui_cmd->getSizeX() / (.8 / .6))) * (1 / .6) - 8,
-            4
-        );
+        $gui_scmd = new Label(20 * (1/0.8), 4);
+        $gui_scmd->setAlign('left', 'center');
+        if (!empty($cmd->getAliases())) {
+            $gui_scmd->setText(array_pop($cmd->getAliases()));
+        }
+        $gui_scmd->setScale(0.8);
+        $frame->addComponent($gui_scmd);
+
+        $gui_desc = new Label(70 * (1/0.8), 4);
         $gui_desc->setAlign('left', 'center');
         if ($cmd->getHelp() != null) {
             $gui_desc->setText(__($cmd->getHelp(), $login));
         }
-        $gui_desc->setScale(0.6);
+        $gui_desc->setScale(0.8);
         $frame->addComponent($gui_desc);
 
         $this->moreButton = new MyButton(30, 6);
         $this->moreButton->setAction($this->action);
         $this->moreButton->setText(__(AdminGroups::$txt_descMore, $login));
-        $this->moreButton->setScale(0.4);
+        $this->moreButton->setScale(0.6);
         $frame->addComponent($this->moreButton);
 
         $this->addComponent($frame);

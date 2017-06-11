@@ -107,7 +107,8 @@ class Mapitem extends Control implements OptimizedPagerElement
         $this->showInfoButton = new MyButton(5, 5);
         $this->showInfoButton->setDescription(__('Map Info', $login), 40);
         $this->showInfoButton->setAction($action);
-        $this->showInfoButton->setIcon('Icons64x64_1', 'TrackInfo');
+        $this->showInfoButton->setGlyph('');
+        //$this->showInfoButton->setIcon('Icons64x64_1', 'TrackInfo');
         $this->showInfoButton->setId('column_' . $indexNumber . '_8');
         $this->showInfoButton->setClass("eXpOptimizedPagerAction");
         $this->actionsFrame->addComponent($this->showInfoButton);
@@ -116,7 +117,8 @@ class Mapitem extends Control implements OptimizedPagerElement
             $this->showRecsButton = new MyButton(5, 5);
             $this->showRecsButton->setDescription(__('Show Records', $login), 40);
             $this->showRecsButton->setAction($action);
-            $this->showRecsButton->setIcon('BgRaceScore2', 'ScoreLink');
+            $this->showRecsButton->setGlyph('🏆');
+            //$this->showRecsButton->setIcon('BgRaceScore2', 'ScoreLink');
             $this->showRecsButton->setId('column_' . $indexNumber . '_9');
             $this->showRecsButton->setClass("eXpOptimizedPagerAction");
             $this->actionsFrame->addComponent($this->showRecsButton);
@@ -124,10 +126,11 @@ class Mapitem extends Control implements OptimizedPagerElement
 
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_REMOVE_MAP)) {
             $this->removeButton = new MyButton(5, 5);
-            $this->removeButton->setDescription(__('$F22Remove this map from server', $login), 70);
+            $this->removeButton->setDescription(__('Remove this map from server', $login), 70);
             $this->removeButton->setAction($action);
             $this->removeButton->colorize('a22');
-            $this->removeButton->setIcon('Icons64x64_1', 'Close');
+            $this->removeButton->setGlyph('');
+            //$this->removeButton->setIcon('Icons64x64_1', 'Close');
             $this->removeButton->setId('column_' . $indexNumber . '_10');
             $this->removeButton->setClass("eXpOptimizedPagerAction");
             $this->actionsFrame->addComponent($this->removeButton);
@@ -135,9 +138,10 @@ class Mapitem extends Control implements OptimizedPagerElement
 
         if (\ManiaLivePlugins\eXpansion\AdminGroups\AdminGroups::hasPermission($login, Permission::MAP_JUKEBOX_ADMIN)) {
             $this->tagButton = new MyButton(5, 5);
-            $this->tagButton->setDescription(__('$F22Set map tags', $login), 70);
+            $this->tagButton->setDescription(__('Set map tags', $login), 70);
             $this->tagButton->setAction($action);
-            $this->tagButton->setIcon('Icons64x64_1', 'Save');
+            $this->tagButton->setGlyph('');
+            //$this->tagButton->setIcon('Icons64x64_1', 'Save');
             $this->tagButton->setId('column_' . $indexNumber . '_11');
             $this->tagButton->setClass("eXpOptimizedPagerAction");
             $this->actionsFrame->addComponent($this->tagButton);

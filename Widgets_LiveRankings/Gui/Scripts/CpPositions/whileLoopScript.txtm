@@ -68,7 +68,7 @@ if(!needUpdate){
     lastUpdateTime = Now;
 }
 
-if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered && exp_widgetLayersBuffered == activeLayer) || exp_widgetVisibilityChanged)) {
+if (needUpdate && (((Now - lastUpdateTime) > 500 && exp_widgetVisibleBuffered) || exp_widgetVisibilityChanged)) {
     lastUpdateTime = Now;
 
     needUpdate = False;
@@ -306,15 +306,5 @@ foreach (Event in PendingEvents) {
                 SetSpectateTarget(playerScoreRanks[index]);
                 //log("spectator" ^ playerScoreRanks[index]);
         }
-    }
-
-    if (Event.Type == CMlEvent::Type::MouseClick && Event.ControlId == "setLayer") {
-		if (eXp_widgetLayers[version][id][gameMode] == "normal") {
-			eXp_widgetLayers[version][id][gameMode] = "scorestable";
-			exp_needToCheckPersistentVars = True;
-		} else {
-			eXp_widgetLayers[version][id][gameMode] = "normal";
-			exp_needToCheckPersistentVars = True;
-		}
     }
 }

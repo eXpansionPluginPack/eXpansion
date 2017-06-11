@@ -30,7 +30,7 @@ use SimpleXMLElement;
 class Core extends ExpPlugin
 {
 
-    const EXP_VERSION = "1.0.2.0";
+    const EXP_VERSION = "1.1.0.0";
 
     const EXP_REQUIRE_MANIALIVE = "4.0.0";
 

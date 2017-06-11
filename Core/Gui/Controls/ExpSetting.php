@@ -80,18 +80,19 @@ class ExpSetting extends Control
             $this->button_change->setAction($this->createAction(array($this, "openWin"), $var));
             $this->addComponent($this->button_change);
         } elseif ($var->getDescription() != "") {
-
             $this->button_change = new Button(8, 8);
-            $this->button_change->setIcon('UIConstructionSimple_Buttons', 'Help');
+            $this->button_change->setGlyph('💡');
+            //$this->button_change->setIcon('UIConstructionSimple_Buttons', 'Help');
             $this->button_change->setDescription($var->getDescription(), 120, 5, 2);
             $this->addComponent($this->button_change);
         }
 
         $this->button_reset = new Button(8, 8);
-        $this->button_reset->setIcon(Quad::Icons128x128_1, Icons128x128_1::DefaultIcon);
+        //$this->button_reset->setIcon(Quad::Icons128x128_1, Icons128x128_1::DefaultIcon);
+        $this->button_reset->setGlyph('');
         $this->button_reset->setDescription(__('Reset the settings !', $login));
         $this->button_reset->setAction($this->createAction(array($this, 'reset')));
-        if ($var->getDefaultValue() != null) {
+        if ($var->getDefaultValue() !== null) {
             $this->addComponent($this->button_reset);
         }
 
@@ -131,13 +132,15 @@ class ExpSetting extends Control
 
         $this->icon_global = new Button(7, 7);
         if ($var->getIsGlobal()) {
-            $this->icon_global->setIcon('Icons64x64_1', 'IconLeaguesLadder');
+            //$this->icon_global->setIcon('Icons64x64_1', 'IconLeaguesLadder');
+            $this->icon_global->setGlyph('');
             $this->icon_global->setDescription(
                 __("Global Setting, Saved for all servers sharing this configuration", $login),
                 120
             );
         } else {
-            $this->icon_global->setIcon('Icons64x64_1', 'IconServers');
+            //$this->icon_global->setIcon('Icons64x64_1', 'IconServers');
+            $this->icon_global->setGlyph('🌐');
             $this->icon_global->setDescription(__("Server Setting, Saved for this server only", $login), 80);
         }
         $this->addComponent($this->icon_global);

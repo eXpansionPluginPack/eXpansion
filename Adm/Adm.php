@@ -123,17 +123,16 @@ class Adm extends ExpPlugin implements Listener
      */
     public function onPlayerConnect($login, $isSpectator)
     {
-        if ($this->expStorage->isRelay) {
+   /*     if ($this->expStorage->isRelay) {
             return;
         }
 
         if (AdminGroups::isInList($login)) {
-            /** @var AdminPanel $widget */
             $widget = AdminPanel::Create($login);
             $widget->setSize(40, 7);
             $widget->setDisableAxis("x");
             $widget->show($login);
-        }
+        }*/
     }
 
     /**

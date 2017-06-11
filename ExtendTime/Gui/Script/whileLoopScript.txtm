@@ -1,0 +1,75 @@
+if (PrevSettingsUpdate != Net_LibUI_SettingsUpdate) {
+    PrevSettingsUpdate = Net_LibUI_SettingsUpdate;
+    foreach (SettingName => SettingValue in Net_LibUI_Settings) {
+        if (SettingName == "TMUIModule_Countdown_CutOffTimeLimit") {
+            CutOffTimeLimit = TL::ToInteger(SettingValue);
+        }
+    }
+}
+
+declare Time = (CutOffTimeLimit - GameTime + 1);
+
+if (Time < 60000) {
+    if (isVoted == True) {
+        Window.Hide();
+    } else {
+        Window.Show();
+    }
+} else {
+    Window.Hide();
+    sentEvent = False;
+    isEventSent = False;
+    isVoted = False;
+}
+
+if (Time < 15000) {
+    sentEvent = True;
+    Window.Hide();
+}
+
+foreach (Event in PendingEvents) {
+
+  if (Event.Type == CMlEvent::Type::MouseOver) {
+         if (Event.ControlId == "button_0") {
+            AnimMgr.Add(Lbl_no, "<label scale='1.5' />", 100, CAnimManager::EAnimManagerEasing::QuadIn);
+            AnimMgr.Add(Lbl_no2, "<label scale='1.5' />", 100, CAnimManager::EAnimManagerEasing::BounceIn);
+        }
+
+        if (Event.ControlId == "button_5") {
+            AnimMgr.Add(Lbl_yes, "<label scale='1.5' />",  100, CAnimManager::EAnimManagerEasing::QuadIn);
+            AnimMgr.Add(Lbl_yes2, "<label scale='1.5' />",  100, CAnimManager::EAnimManagerEasing::BounceIn);
+        }
+
+    }
+
+    if (Event.Type == CMlEvent::Type::MouseOut) {
+        if (Event.ControlId == "button_0" || Event.ControlId == "button_5") {
+            AnimMgr.Add(Lbl_no, "<label scale='1.' />", 100, CAnimManager::EAnimManagerEasing::QuadIn);
+            AnimMgr.Add(Lbl_no2, "<label scale='1.' />", 100, CAnimManager::EAnimManagerEasing::QuadIn);
+            AnimMgr.Add(Lbl_yes, "<label scale='1.' />", 100, CAnimManager::EAnimManagerEasing::QuadIn);
+            AnimMgr.Add(Lbl_yes2, "<label scale='1.' />", 100, CAnimManager::EAnimManagerEasing::QuadIn);
+        }
+    }
+
+    if (Event.Type == CMlEvent::Type::MouseClick) {
+        if (Event.ControlId == "button_0") {
+            TriggerPageAction(actionNo);
+            isVoted = True;
+        }
+        if (Event.ControlId == "button_5") {
+            TriggerPageAction(actionYes);
+            isVoted = True;
+        }
+    }
+}
+
+if (sentEvent == True && isEventSent == False) {
+    isEventSent = True;
+    TriggerPageAction(actionCalcVotes);
+}
+
+//Label.Value = ""^(CutOffTimeLimit - GameTime + 1);
+//Label.Value = TL::TimeToText(CutOffTimeLimit - GameTime + 1);
+
+// if (CutOffTimeLimit >= GameTime) Label_Countdown.Value = TimeToText(CutOffTimeLimit - GameTime + 1);
+//    else Label_Countdown.Value = TimeToText(0);

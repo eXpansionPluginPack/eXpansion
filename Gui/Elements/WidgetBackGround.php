@@ -1,6 +1,7 @@
 <?php
 
 namespace ManiaLivePlugins\eXpansion\Gui\Elements;
+use ManiaLivePlugins\eXpansion\Gui\Config;
 
 /**
  * Description of ListBackGround
@@ -13,6 +14,7 @@ class WidgetBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
     protected $bg;
     protected $bgborder;
 
+    /** @var Config */
     protected $config;
 
     public function __construct($sizeX, $sizeY)
@@ -23,17 +25,8 @@ class WidgetBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
         $this->bg = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
         $this->bg->setOpacity($config->style_widget_bgOpacity);
         $this->bg->setBgcolor($config->style_widget_bgColorize);
+
         $this->bg->setPosition($config->style_widget_bgXOffset, $config->style_widget_bgYOffset);
-
-        // @TODO CHECK IF THIS IS USEFULL
-        $this->bgborder = new \ManiaLib\Gui\Elements\Quad($sizeX, $sizeY);
-        $this->bgborder->setStyle("BgsPlayerCard");
-        $this->bgborder->setSubStyle("BgRacePlayerLine");
-        $this->bgborder->setAttribute("rot", 180);
-        $this->bgborder->setAlign("right", "bottom");
-        $this->bgborder->setOpacity($config->style_widget_bgOpacity - 0.25);
-        $this->bgborder->setPosition($config->style_widget_bgXOffset, $config->style_widget_bgYOffset);
-
         $this->addComponent($this->bg);
 
 
@@ -43,18 +36,16 @@ class WidgetBackGround extends \ManiaLivePlugins\eXpansion\Gui\Control
     public function onResize($oldX, $oldY)
     {
         $this->bg->setSize(
-            $this->getSizeX() + (float)$this->config->style_list_sizeXOffset,
-            $this->getSizeY() + (float)$this->config->style_list_sizeYOffset
+            $this->getSizeX(),
+            $this->getSizeY()
         );
-        $this->bgborder->setSize(
-            $this->getSizeX() + (float)$this->config->style_list_sizeXOffset,
-            $this->getSizeY() + (float)$this->config->style_list_sizeYOffset
-        );
+
     }
 
     public function setAction($action)
     {
         $this->bg->setAction($action);
+        $this->bg->setBgcolorFocus($this->config->style_widget_title_bgColorize);
     }
 
     public function onIsRemoved(\ManiaLive\Gui\Container $target)

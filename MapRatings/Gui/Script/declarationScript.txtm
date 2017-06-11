@@ -1,3 +1,9 @@
 declare Text rate_0 = "<?php echo $this->rate_0 ?>";
-declare Text rate_5 = "<?php echo $this->rate_5 ?>";  
+declare Text rate_5 = "<?php echo $this->rate_5 ?>";
+
 Window.Show();
+
+declare CMlLabel quad1 <=> (Page.GetFirstChild("rate_0") as CMlLabel);
+declare CMlLabel quad2 <=> (Page.GetFirstChild("rate_5") as CMlLabel);
+declare CMlLabel label1 <=> (Page.GetFirstChild("label_0") as CMlLabel);
+declare CMlLabel label2 <=> (Page.GetFirstChild("label_5") as CMlLabel);
