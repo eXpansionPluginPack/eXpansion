@@ -14,7 +14,7 @@ class ServerInfo extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
 
     protected function eXpOnBeginConstruct()
     {
-        $bg = new \ManiaLib\Gui\Elements\Quad(60, 15);
+        $bg = new \ManiaLib\Gui\Elements\Quad(60, 8);
         $bg->setAlign("left", "top");
         $bg->setStyle("Bgs1InRace");
         $bg->setSubStyle("Empty");

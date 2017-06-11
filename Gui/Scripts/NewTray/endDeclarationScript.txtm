@@ -1,12 +1,12 @@
 declare Integer eXp_lastClockUpdate = Now;
 declare Integer start = Now-2000;
-declare persistent Boolean[Text] exp_trayId = Boolean[Text];
+declare Boolean[Text] exp_trayId for LocalUser = Boolean[Text];
 declare Vec3 p = Window.RelativePosition;
 
 // from edge script
 declare Boolean edge_isMinimized for UI = False;
 declare Boolean edge_isAnimated for UI = False;
-declare persistent Boolean edge_isLockedVisible2 = True;
+declare Boolean edge_isLockedVisible2 for LocalUser= True;
 
 declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
 declare Boolean lastValue = edge_isMinimized;

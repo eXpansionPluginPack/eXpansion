@@ -4,8 +4,8 @@ declare  CMlQuad Diff <=> (Page.GetFirstChild("Diff") as CMlQuad);
 declare Boolean edge_isMinimized for UI = False;
 declare Boolean edge_isAnimated for UI= False;
 declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
-declare persistent Boolean edge_isLockedVisible2 = True;
-declare persistent Boolean edge_showDiff = False;
+declare Boolean edge_isLockedVisible2 for LocalUser = True;
+declare Boolean edge_showDiff for LocalUser = False;
 declare imageOn = <?php echo $this->imageOn; ?>;
 declare imageOff = <?php echo $this->imageOff; ?>;
 

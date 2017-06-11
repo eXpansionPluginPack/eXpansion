@@ -17,7 +17,7 @@ foreach (Event in PendingEvents) {
         needUpdate = True;
         firstClick = True;
         Menu.RelativePosition.X = -159.;
-        Menu.RelativePosition.Y = 75.;
+        Menu.RelativePosition.Y = 73.;
         Menu.RelativePosition.Z = 50.0;
     }
 }

@@ -121,7 +121,7 @@ class Database extends ExpPlugin
                 $this->updatePlayTime($this->storage->players[$player->login]);
             }
 
-            if ($player->rank == 1 && $player->bestTime > 0 && sizeof($rankings) > 1 && !$firstFound) {
+            if ($player->rank == 1 && sizeof($rankings) > 1 && !$firstFound) {
                 $this->incrementWins($player);
                 $firstFound = true;
             }

@@ -1,4 +1,5 @@
 <?php
+
 namespace ManiaLivePlugins\eXpansion\Gui\Elements;
 
 use ManiaLivePlugins\eXpansion\Gui\Control;
@@ -122,10 +123,9 @@ class OptimizedPager extends Control implements ScriptedContainer
         $args = func_get_args();
         $this->sizeX = $args[0];
         $this->sizeY = $args[1];
-        $this->scroll->setPosition($this->sizeX - 3, 0);
-        $this->scrollBg->setPosition($this->sizeX - 3);
-        $this->scrollBg->setSizeY($this->sizeY - 4);
-
+        $this->scroll->setPosition($this->sizeX - 3, 0, 2);
+        $this->scrollBg->setPosition($this->sizeX - 3, 0, 1);
+        $this->scrollBg->setSizeY($this->sizeY-4);
         $this->scrollDown->setPosition($this->sizeX - 3, -($this->sizeY - 4));
         $this->scrollUp->setPosition($this->sizeX - 3, -0);
     }
