@@ -17,12 +17,16 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     {
         parent::onBeginLoad();
         $this->setName("Game UI Elements");
-        $this->setDescription("Enables you to showw/hide ingame hud elements");
+        $this->setDescription("Enables you to show/hide ingame hud elements");
         $this->setGroups(array('Tools'));
 
         $config = Config::getInstance();
 
         $var = new Boolean("notices", "Notices", $config, false, false);
+        $var->setDefaultValue(true);
+        $this->registerVariable($var);
+
+        $var = new Boolean("live_info", "live_info", $config, false, false);
         $var->setDefaultValue(true);
         $this->registerVariable($var);
 

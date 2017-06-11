@@ -285,12 +285,14 @@ EOT;
         if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
             $this->connection->triggerModeScriptEvent("LibXmlRpc_UnblockAllCallbacks", "");
             try {
+                $this->connection->triggerModeScriptEvent("XmlRpc.EnableCallbacks", ["true"]);
                 $this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => true));
             } catch (\Exception $ex) {
                 $this->console(
                     "Script mode running, but can't enable 'S_UseScriptCallbacks'... perhaps non-nadeo script running ?"
                 );
             }
+
             $this->connection->triggerModeScriptEvent("LibXmlRpc_UnblockAllCallbacks", "");
             $this->enableScriptEvents("LibXmlRpc_Callbacks");
         }
@@ -450,6 +452,7 @@ EOT;
 
         if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
             $this->connection->triggerModeScriptEvent("LibXmlRpc_ListCallbacks", "");
+         //   $this->connection->triggerModeScriptEvent("LibXmlRpc_UnblockAllCallbacks");
         }
     }
 
@@ -458,7 +461,7 @@ EOT;
     {
         $params = func_get_args();
         self::$availableCallbacks = $params;
-        self::optimizeScriptCallbacks();
+         self::optimizeScriptCallbacks();
     }
 
     public function onSettingsChanged(types\config\Variable $var)

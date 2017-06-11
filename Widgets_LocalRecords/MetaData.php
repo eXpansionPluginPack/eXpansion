@@ -15,7 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName(" Local Records");
+        $this->setName("Widget: Local Records");
         $this->setDescription("Local Records widget");
         $this->setGroups(array('Widgets', 'Records'));
 
@@ -29,6 +29,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
         $this->addGameModeCompability(\Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_SCRIPT, 'TeamAttack.Script.txt');
 
         $config = Config::getInstance();
-
+        $var = new Boolean("isHorizontal", "Use horizontal (old) widget style", $config, false, false);
+        $var->setDefaultValue(false);
+        $this->registerVariable($var);
     }
 }

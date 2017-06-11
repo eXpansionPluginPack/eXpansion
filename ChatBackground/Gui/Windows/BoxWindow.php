@@ -5,8 +5,10 @@ namespace ManiaLivePlugins\eXpansion\ChatBackground\Gui\Windows;
 use ManiaLib\Gui\Elements\Quad;
 use ManiaLive\Gui\Window;
 use ManiaLivePlugins\eXpansion\ChatBackground\Config;
+use ManiaLivePlugins\eXpansion\Gui\Structures\Script;
+use ManiaLivePlugins\eXpansion\Gui\Widgets\PlainWidget;
 
-class BoxWindow extends Window
+class BoxWindow extends PlainWidget
 {
     protected $quad;
     protected $quad2;
@@ -14,7 +16,11 @@ class BoxWindow extends Window
 
     protected function onConstruct()
     {
+        parent::onConstruct();
+
         $this->config = Config::getInstance();
+
+        $this->setName("chatBackground");
 
         $this->quad = new Quad($this->config->width, $this->config->height);
         $this->quad->setStyle("BgsPlayerCard");
@@ -34,5 +40,8 @@ class BoxWindow extends Window
         $this->quad2->setAttribute("rot", 180);
         $this->quad2->setAlign("center", "top");
         $this->addComponent($this->quad2);
+
+        $this->registerScript(new Script("ChatBackground\Gui\Script"));
+
     }
 }

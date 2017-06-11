@@ -177,14 +177,14 @@ class Chat extends ExpPlugin
                 if (array_key_exists($login, $this->exclude)) {
                     unset($this->exclude[$login]);
                 }
-                $this->eXpChatSendServerMessage(eXpGetMessage("Chat messages enabled."), $login);
+                $this->connection->chatSendServerMessage(eXpGetMessage("Chat messages enabled."), $login);
                 break;
             case "off":
                 $this->exclude[$login] = $login;
-                $this->eXpChatSendServerMessage(eXpGetMessage("Chat messages disabled."), $login);
+                $this->connection->chatSendServerMessage(eXpGetMessage("Chat messages disabled."), $login);
                 break;
             default:
-                $this->eXpChatSendServerMessage(eXpGetMessage("Usage: /chat on or /chat off."), $login);
+                $this->connection->chatSendServerMessage(eXpGetMessage("Usage: /chat on or /chat off."), $login);
                 break;
         }
     }
@@ -380,7 +380,7 @@ class Chat extends ExpPlugin
                         if ($this->expStorage->isRelay) {
                             $color = $config->otherServerChatColor;
                         }
-                        $this->eXpChatSendServerMessage(
+                        $this->connection->chatSendServerMessage(
                             $channel .
                             $config->adminSign . '$fff$<' . $nick . '$z$s$> '
                             . $config->chatSeparator . $color . $force . $text,
@@ -392,7 +392,7 @@ class Chat extends ExpPlugin
                             $color = $config->otherServerChatColor;
                         }
 
-                        $this->eXpChatSendServerMessage(
+                        $this->connection->chatSendServerMessage(
                             $channel . '$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text,
                             $receivers
                         );
@@ -421,7 +421,7 @@ class Chat extends ExpPlugin
 
 
                         $color = $config->otherServerChatColor;
-                        $this->eXpChatSendServerMessage(
+                        $this->connection->chatSendServerMessage(
                             '$fff$<' . $nick . '$z$s$> ' . $config->chatSeparator . $color . $force . $text,
                             $recepient
                         );

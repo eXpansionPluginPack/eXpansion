@@ -1,4 +1,4 @@
-declare persistent Boolean[Text][Text][Text] eXp_widgetVisible;
+declare Boolean[Text][Text][Text] eXp_widgetVisible for LocalUser;
 declare Text gamemode = "all";
 
 if (!eXp_widgetVisible.existskey(version) ) {

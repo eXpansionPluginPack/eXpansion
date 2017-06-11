@@ -56,7 +56,16 @@ class Widgets_LocalRecords extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             if ($login == null) {
                 $panelMain = Gui\Widgets\LocalPanel::Create($login);
                 $panelMain->setSizeX($this->panelSizeX);
-                $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+                $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
+                if (!$this->config->isHorizontal) {
+                    if ($this->eXpGetCurrentCompatibilityGameMode()
+                        != \Maniaplanet\DedicatedServer\Structures\GameInfos::GAMEMODE_TIMEATTACK
+                    ) {
+                        $panelMain->setDirection("right");
+                    } else {
+                        $panelMain->setDirection("left");
+                    }
+                }
                 $this->widgetIds["LocalPanel"] = $panelMain;
                 $this->widgetIds["LocalPanel"]->update();
                 $this->widgetIds["LocalPanel"]->show();

@@ -25,7 +25,7 @@ class Widgets_ServerInfo extends ExpPlugin
     {
         ServerInfo::EraseAll();
         $info = ServerInfo::Create(null, true);
-        $info->setSize(60, 15);
+        $info->setSize(60, 8);
         $info->setScale(0.75);
         $info->setLadderLimits(
             $this->storage->server->ladderServerLimitMin,
