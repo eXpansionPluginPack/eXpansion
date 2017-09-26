@@ -19,22 +19,28 @@ class Dedimania_Script extends DedimaniaAbstract
     public function eXpOnReady()
     {
         parent::eXpOnReady();
-        // $this->enableScriptEvents(array("ManiaPlanet.BeginMatch", "Trackmania.Event.WayPoint", "ManiaPlanet.EndMatch"));
+        $this->enableScriptEvents(array(
+            "ManiaPlanet.BeginMap_Start",
+            "Trackmania.Event.WayPoint",
+            "ManiaPlanet.EndMatch_Start",
+        ));
     }
 
     public function eXpOnModeScriptCallback($callback, $array)
     {
+
         switch ($callback) {
-            case "ManiaPlanet.BeginMap":
+            case "Maniaplanet.StartMap_Start":
                 $this->LibXmlRpc_BeginMap(0);
                 break;
-
-            case "ManiaPlanet.EndMatch":
-                call_user_func_array(array($this, "LibXmlRpc_EndMatch"), json_decode($array[0]));
+            case "Maniaplanet.EndMap_Start":
+                call_user_func_array(array($this, "LibXmlRpc_EndMatch"), array());
                 break;
-
             case "Trackmania.Event.WayPoint":
-                call_user_func_array(array($this, "LibXmlRpc_OnWayPoint"), json_decode($array[0]));
+                call_user_func_array(array($this, "LibXmlRpc_OnWayPoint"),
+                    json_decode($array[0], true)
+                );
+
                 break;
 
         }
@@ -42,7 +48,7 @@ class Dedimania_Script extends DedimaniaAbstract
 
     public function LibXmlRpc_BeginMap($number)
     {
-        $this->endmatchTriggered = false;
+
         if (!$this->running) {
             return;
         }
@@ -70,8 +76,23 @@ class Dedimania_Script extends DedimaniaAbstract
         "speed": 199.2640,
         "distance": 331.8980
      */
-    public function LibXmlRpc_OnWayPoint($time,$login, $time, $lapTime, $stuntsscore, $checkpoint, $checkpointinlap, )
-    {
+    public function LibXmlRpc_OnWayPoint(
+        $gametime,
+        $login,
+        $time,
+        $lapTime,
+        $stuntsscore,
+        $checkpoint,
+        $checkpointinlap,
+        $isendrace,
+        $isendlap,
+        $curracecheckpoints,
+        $curlapcheckpoints,
+        $blockid,
+        $speed,
+        $distance
+    ) {
+
         if (!$this->running) {
             return;
         }
@@ -82,7 +103,7 @@ class Dedimania_Script extends DedimaniaAbstract
 
         $playerinfo = Core::$playerInfo;
 
-        if (!$isEndBlock) {
+        if (!$isendrace) {
             return;
         }
 
@@ -117,14 +138,16 @@ class Dedimania_Script extends DedimaniaAbstract
 
         if (!array_key_exists('BestTime', $this->rankings[$login])) {
             $this->rankings[$login] = array(
-                'Login' => $login, 'BestTime' => $time,
-                'BestCheckpoints' => implode(",", $playerinfo[$login]->checkpoints)
+                'Login' => $login,
+                'BestTime' => $time,
+                'BestCheckpoints' => implode(",", $curracecheckpoints),
             );
         } else {
             if ($time < $this->rankings[$login]['BestTime']) {
                 $this->rankings[$login] = array(
-                    'Login' => $login, 'BestTime' => $time,
-                    'BestCheckpoints' => implode(",", $playerinfo[$login]->checkpoints)
+                    'Login' => $login,
+                    'BestTime' => $time,
+                    'BestCheckpoints' => implode(",", $curracecheckpoints),
                 );
             }
         }
@@ -133,7 +156,7 @@ class Dedimania_Script extends DedimaniaAbstract
         if (count($this->records) == 0) {
             $player = $this->storage->getPlayerObject($login);
             $playerinfo = Core::$playerInfo;
-            if ($this->storage->currentMap->nbCheckpoints !== count($playerinfo[$login]->checkpoints)) {
+            if ($this->storage->currentMap->nbCheckpoints !== count($curracecheckpoints)) {
                 $this->console("Player CP mismatch");
             }
 
@@ -143,7 +166,7 @@ class Dedimania_Script extends DedimaniaAbstract
                 DediConnection::$players[$login]->maxRank,
                 $time,
                 -1,
-                $playerinfo[$login]->checkpoints
+                $curracecheckpoints
             );
             $this->reArrage($login);
             Dispatcher::dispatch(new DediEvent(DediEvent::ON_NEW_DEDI_RECORD, $this->records[$login]));
@@ -165,7 +188,7 @@ class Dedimania_Script extends DedimaniaAbstract
 
         if ($time <= $this->lastRecord->time || count($this->records) <= $maxrank) {
 
-            //  print "times matches!";
+            // print "times matches!";
             // if player exists on the list... see if he got better time
 
             $player = $this->storage->getPlayerObject($login);
@@ -186,7 +209,7 @@ class Dedimania_Script extends DedimaniaAbstract
                         DediConnection::$players[$login]->maxRank,
                         $time,
                         -1,
-                        array()
+                        $curracecheckpoints
                     );
 
                     // if new records count is greater than old count, and doesn't exceed the maxrank of the server
@@ -218,7 +241,7 @@ class Dedimania_Script extends DedimaniaAbstract
                     DediConnection::$players[$login]->maxRank,
                     $time,
                     -1,
-                    array()
+                    $curracecheckpoints
                 );
                 // if new records count is greater than old count, increase the map records limit
 
@@ -227,6 +250,7 @@ class Dedimania_Script extends DedimaniaAbstract
                 ) {
                     DediConnection::$dediMap->mapMaxRank++;
                 }
+
                 $this->reArrage($login);
 
                 // have to recheck if the player is still at the dedi array
@@ -239,29 +263,14 @@ class Dedimania_Script extends DedimaniaAbstract
         }
     }
 
-    public function LibXmlRpc_EndMatch($number)
-    {
-        $this->sendScores();
-    }
-
-    /**
-     *
-     * @param array $rankings_old
-     * @param string $winnerTeamOrMap
-     *
-     */
-    public function onEndMatch($rankings_old, $winnerTeamOrMap)
+    public function LibXmlRpc_EndMatch()
     {
         $this->sendScores();
     }
 
     public function sendScores()
     {
-        if ($this->endmatchTriggered == true) {
-            return;
-        } else {
-            $this->endmatchTriggered = true;
-        }
+
         if (!$this->running) {
             return;
         }
@@ -311,7 +320,7 @@ class Dedimania_Script extends DedimaniaAbstract
                 $rankings[0]['Login']
             );
             $this->connection->saveBestGhostsReplay($rankings[0]['Login'], $grfile);
-            $this->gReplay = file_get_contents($this->connection->gameDataDirectory() . 'Replays/' . $grfile);
+            $this->gReplay = file_get_contents($this->connection->gameDataDirectory().'Replays/'.$grfile);
 
             // Dedimania doesn't allow times sent without validation relay. So, let's just stop here if there is none.
             if (empty($this->vReplay)) {
@@ -321,10 +330,10 @@ class Dedimania_Script extends DedimaniaAbstract
 
                 return;
             }
-
+            $this->console("[Dedimania] Attempting to send times");
             $this->dedimania->setChallengeTimes($this->storage->currentMap, $rankings, $this->vReplay, $this->gReplay);
         } catch (Exception $e) {
-            $this->console("[Dedimania] " . $e->getMessage());
+            $this->console("[Dedimania] ".$e->getMessage());
             $this->vReplay = "";
             $this->gReplay = "";
         }

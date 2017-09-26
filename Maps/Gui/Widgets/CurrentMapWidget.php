@@ -72,7 +72,6 @@ class CurrentMapWidget extends Widget
         $this->country = new Quad(14, 9);
         $this->country->setId("authorZone");
         $this->country->setImage("", true);
-        $this->country->setImage("http://reaby.kapsi.fi/ml/flags/Other%20Countries.dds", true);
         $this->country->setAlign("left", "top");
         $this->leftFrame->addComponent($this->country);
 

@@ -94,7 +94,7 @@ class Maplist extends Window
 
     /** @var  \ManiaLive\Data\Storage */
     protected $storage;
-    protected $widths = array(6, 12, 4, 4, 4, 4, 4, 3, 4);
+    protected $widths = array(6, 12, 4, 4, 4, 4);
     protected $actions = array();
 
     /** @var Map */
@@ -138,13 +138,6 @@ class Maplist extends Window
         $this->title_mapName->setTextSize($textSize);
         $this->frame->addComponent($this->title_mapName);
 
-        $this->title_envi = new Label();
-        $this->title_envi->setText(__("Title", $login));
-        $this->title_envi->setStyle($textStyle);
-        $this->title_envi->setTextColor($textColor);
-        $this->title_envi->setTextSize($textSize);
-        $this->frame->addComponent($this->title_envi);
-
         $this->title_goldTime = new Label();
         $this->title_goldTime->setText(__("Length", $login));
         $this->title_goldTime->setStyle($textStyle);
@@ -170,22 +163,6 @@ class Maplist extends Window
         $this->title_rating->setAction($this->createAction(array($this, "updateList"), "rating"));
         $this->title_rating->setTextSize($textSize);
         $this->frame->addComponent($this->title_rating);
-
-        $this->title_difficulty = new Label();
-        $this->title_difficulty->setText(__("Difficulty", $login));
-        $this->title_difficulty->setAlign("left");
-        $this->title_difficulty->setStyle($textStyle);
-        $this->title_difficulty->setTextColor($textColor);
-        $this->title_difficulty->setTextSize($textSize);
-        $this->frame->addComponent($this->title_difficulty);
-
-        $this->title_style = new Label();
-        $this->title_style->setText(__("Style", $login));
-        $this->title_style->setAlign("center");
-        $this->title_style->setStyle($textStyle);
-        $this->title_style->setTextColor($textColor);
-        $this->title_style->setTextSize($textSize);
-        $this->frame->addComponent($this->title_style);
 
         $this->title_actions = new Label();
         $this->title_actions->setText(__("Actions", $login));
@@ -272,13 +249,10 @@ class Maplist extends Window
 
         $this->title_authorName->setSizeX($scaledSizes[0]);
         $this->title_mapName->setSizeX($scaledSizes[1]);
-        $this->title_envi->setSizeX($scaledSizes[2]);
-        $this->title_goldTime->setSizeX($scaledSizes[3]);
-        $this->title_rank->setSizeX($scaledSizes[4]);
-        $this->title_difficulty->setSizeX($scaledSizes[5]);
-        $this->title_style->setSizeX($scaledSizes[6]);
-        $this->title_rating->setSizeX($scaledSizes[7]);
-        $this->title_actions->setSizeX($scaledSizes[8]);
+        $this->title_goldTime->setSizeX($scaledSizes[2]);
+        $this->title_rank->setSizeX($scaledSizes[3]);
+        $this->title_rating->setSizeX($scaledSizes[4]);
+        $this->title_actions->setSizeX($scaledSizes[5]);
 
         if (is_object($this->btnRemoveAll)) {
             $this->btnRemoveAll->setPosition($this->getSizeX() - 25, 2);
@@ -301,10 +275,10 @@ class Maplist extends Window
 
         try {
             $this->connection->RemoveMapList($mapsAtServer);
-            $this->connection->chatSendServerMessage("Maplist cleared with:" . count($mapsAtServer) . " maps!", $login);
+            $this->connection->chatSendServerMessage("Maplist cleared with:".count($mapsAtServer)." maps!", $login);
         } catch (\Exception $e) {
             $this->connection->chatSendServerMessage(
-                "Oops, couldn't clear the map list. server said:" . $e->getMessage()
+                "Oops, couldn't clear the map list. server said:".$e->getMessage()
             );
         }
     }
@@ -404,7 +378,7 @@ class Maplist extends Window
 
             if (isset($sortableMap->mapRating)) {
                 $rate = ($sortableMap->mapRating->rating / 5) * 100;
-                $rate = round($rate) . "%" . '  $n' . "(" . $sortableMap->mapRating->totalvotes . ")";
+                $rate = round($rate)."%".'  $n'."(".$sortableMap->mapRating->totalvotes.")";
                 if ($sortableMap->mapRating->rating == -1) {
                     $rate = " -";
                 }
@@ -413,22 +387,24 @@ class Maplist extends Window
             }
 
             $localrecord = "-";
-            if (isset($sortableMap->localrecord)) {
-                $localrecord = $sortableMap->localrecord + 1;
+            if (isset($this->records[$sortableMap->uId])) {
+                $localrecord = $this->records[$sortableMap->uId] + 1;
             }
 
             if ($sortableMap->uId == $this->currentMap->uId) {
-                $name = '$fff' . $sortableMap->strippedName;
-                $author = '$fff' . $sortableMap->author;
+                $name = '$fff'.$sortableMap->strippedName;
+                $author = '$fff'.$sortableMap->author;
                 $color = '$fff';
-            } else if (isset($this->history[$sortableMap->uId])) {
-                $name = '$888' . $sortableMap->strippedName;
-                $author = '$888' . $sortableMap->author;
-                $color = '$888';
             } else {
-                $name = $sortableMap->name;
-                $author = $sortableMap->author;
-                $color = '$cdd';
+                if (isset($this->history[$sortableMap->uId])) {
+                    $name = '$888'.$sortableMap->strippedName;
+                    $author = '$888'.$sortableMap->author;
+                    $color = '$888';
+                } else {
+                    $name = $sortableMap->name;
+                    $author = $sortableMap->author;
+                    $color = '$cdd';
+                }
             }
 
             $diff = " - ";
@@ -445,16 +421,13 @@ class Maplist extends Window
             $array = array(
                 Gui::fixString($name) => $sortableMap->queueMapAction,
                 Gui::fixString($author) => -1,
-                $color . $sortableMap->environnement => -1,
-                $color . Time::fromTM($sortableMap->goldTime) => -1,
-                $color . $localrecord => -1,
-                $color . $rate => -1,
-                $color . $diff => -1,
-                $color . $style => -1,
+                $color.Time::fromTM($sortableMap->goldTime) => -1,
+                $color.$localrecord => -1,
+                $color.$rate => -1,
                 "Info" => $sortableMap->showInfoAction,
                 "Recs" => $sortableMap->showRecsAction,
                 "x" => $removePermission ? $sortableMap->removeMapAction : -1,
-                "Tag" => $adminPermission ? $sortableMap->showTagAction : -1
+                "Tag" => $adminPermission ? $sortableMap->showTagAction : -1,
             );
 
             $this->pager->addSimpleItems($array);
@@ -471,12 +444,7 @@ class Maplist extends Window
     public function setRecords($records)
     {
         self::$localrecordsLoaded = true;
-        foreach ($records as $uid => $record) {
-            if (isset($this->maps[$uid])) {
-                $this->maps[$uid]->localrecord = $record;
-            }
-        }
-
+        $this->records = $records;
     }
 
     /** @param Map[] $history */
@@ -566,6 +534,7 @@ class Maplist extends Window
                 $min_key = $k;
             }
         }
+
         return $min_key;
     }
 

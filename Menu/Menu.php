@@ -195,11 +195,11 @@ class Menu extends ExpPlugin implements Listener
             $voteGroup->addItem('$f00Cancel', "!admcancel", $this);
         }
 
-        $hudGroup = $menu->addGroup(' Hud');
-        $hudGroup->addItem("Move", "!hudMove", $this);
-        $hudGroup->addItem("Lock", "!hudLock", $this);
-        $hudGroup->addItem("Reset", "!hudReset", $this);
-        $hudGroup->addItem("Config...", "!hudConfig", $this);
+        /*    $hudGroup = $menu->addGroup(' Hud');
+            $hudGroup->addItem("Move", "!hudMove", $this);
+            $hudGroup->addItem("Lock", "!hudLock", $this);
+            $hudGroup->addItem("Reset", "!hudReset", $this);
+            $hudGroup->addItem("Config...", "!hudConfig", $this); */
 
         // admin
 
@@ -391,12 +391,12 @@ class Menu extends ExpPlugin implements Listener
                     }
                     break;
                 default:
-                    $this->eXpChatSendServerMessage("not found: " . $action, $login);
-                    Logger::info("menu command not found: " . $action);
+                    $this->eXpChatSendServerMessage("not found: ".$action, $login);
+                    Logger::info("menu command not found: ".$action);
                     break;
             }
         } catch (Exception $ex) {
-            Logger::error("Error in Menu while running action : " . $action);
+            Logger::error("Error in Menu while running action : ".$action);
         }
     }
 
@@ -408,7 +408,7 @@ class Menu extends ExpPlugin implements Listener
      */
     private function getPluginClass($plugin)
     {
-        return "\\ManiaLivePlugins\\eXpansion\\" . $plugin . "\\" . $plugin;
+        return "\\ManiaLivePlugins\\eXpansion\\".$plugin."\\".$plugin;
     }
 
     /**

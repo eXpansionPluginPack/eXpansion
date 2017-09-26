@@ -7,11 +7,8 @@ foreach (Event in PendingEvents) {
         eXp_tabTime = Now;
         eXp_tabPressed = True;
     }
-    if (Event.Type == CMlEvent::Type::KeyPress && Event.KeyCode == 48) {
-        exp_chatVisible = !exp_chatVisible;
-        ClientUI.OverlayHideChat = !exp_chatVisible;
-    }
-     if (Event.Type == CMlEvent::Type::MouseClick &&  Event.ControlId == "MenuButton") {
+
+    if (Event.Type == CMlEvent::Type::MouseClick &&  Event.ControlId == "MenuButton") {
         toggleSubmenu = True;
         showStatus = True;
         needUpdate = True;

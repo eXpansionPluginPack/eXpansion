@@ -24,7 +24,8 @@ use ManiaLivePlugins\eXpansion\Helpers\Singletons;
 use ManiaLivePlugins\eXpansion\Helpers\Storage as eXpStorage;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 use Maniaplanet\DedicatedServer\Structures\Map;
-use /** @noinspection PhpUndefinedClassInspection */ Maniaplanet\DedicatedServer\Xmlrpc\Request;
+use /** @noinspection PhpUndefinedClassInspection */
+    Maniaplanet\DedicatedServer\Xmlrpc\Request;
 
 /**
  * Class Connection
@@ -113,7 +114,7 @@ class Connection extends Singleton implements AppListener, TickListener
                 $this->lastUpdate = time();
             }
         } catch (Exception $e) {
-            $this->console("OnTick Update failed: " . $e->getMessage());
+            $this->console("OnTick Update failed: ".$e->getMessage());
         }
     }
 
@@ -203,17 +204,19 @@ class Connection extends Singleton implements AppListener, TickListener
                 break;
         }
 
-        $args = array(array(
-            "Game" => "TM2",
-            "Login" => strtolower($config->login),
-            "Code" => $config->code,
-            "Tool" => "eXpansion",
-            "Version" => Core::EXP_VERSION,
-            "Packmask" => $packmask,
-            "ServerVersion" => $version->version,
-            "ServerBuild" => $version->build,
-            "Path" => $serverInfo->path,
-        ));
+        $args = array(
+            array(
+                "Game" => "TM2",
+                "Login" => strtolower($config->login),
+                "Code" => $config->code,
+                "Tool" => "eXpansion",
+                "Version" => Core::EXP_VERSION,
+                "Packmask" => $packmask,
+                "ServerVersion" => $version->version,
+                "ServerBuild" => $version->build,
+                "Path" => $serverInfo->path,
+            ),
+        );
 
         $request = new dediRequest("dedimania.OpenSession", $args);
         $this->send($request, array($this, "xOpenSession"));
@@ -258,7 +261,7 @@ class Connection extends Singleton implements AppListener, TickListener
         if ($this->dediUid != $map->uId) {
             $this->console(
                 "[Warning] Map UId mismatch! Map UId differs from dedimania"
-                . " recieved uid for the map. Times are not sent."
+                ." recieved uid for the map. Times are not sent."
             );
 
             return;
@@ -273,7 +276,7 @@ class Connection extends Singleton implements AppListener, TickListener
                         array(
                             "Login" => $rank['Login'],
                             "Best" => intval($rank['BestTime']),
-                            "Checks" => implode(',', $rank['BestCheckpoints'])
+                            "Checks" => implode(',', $rank['BestCheckpoints']),
                         );
                 }
             }
@@ -314,7 +317,8 @@ class Connection extends Singleton implements AppListener, TickListener
             $this->_getMapInfo($map),
             $this->_getGameMode(),
             $times,
-            $replays);
+            $replays,
+        );
 
         $request = new dediRequest("dedimania.SetChallengeTimes", $args);
         $this->send($request, array($this, "xSetChallengeTimes"));
@@ -447,6 +451,7 @@ class Connection extends Singleton implements AppListener, TickListener
 
         if ($player->login == $this->storage->serverLogin) {
             $this->debug("Abort. tried to send server login.");
+
             return;
         }
 
@@ -509,7 +514,7 @@ class Connection extends Singleton implements AppListener, TickListener
             }
         }
 
-        if ($request instanceof  dediRequest) {
+        if ($request instanceof dediRequest) {
             $this->send($request, array($this, "xPlayerMultiConnect"));
         }
     }
@@ -529,7 +534,8 @@ class Connection extends Singleton implements AppListener, TickListener
         $args = array(
             $this->sessionId,
             $login,
-            "");
+            "",
+        );
         $request = new dediRequest("dedimania.PlayerDisconnect", $args);
         $this->send($request, array($this, "xPlayerDisconnect"));
     }
@@ -545,16 +551,20 @@ class Connection extends Singleton implements AppListener, TickListener
     {
         if ($this->sessionId === null) {
             $this->debug("Session id is null!");
+
             return;
         }
 
         if (is_array($map)) {
             $uid = $map['UId'];
-        } else if (is_object($map)) {
-            $uid = $map->uId;
         } else {
-            $this->console("Error: updateServerPlayers: map is not array or object");
-            return;
+            if (is_object($map)) {
+                $uid = $map->uId;
+            } else {
+                $this->console("Error: updateServerPlayers: map is not array or object");
+
+                return;
+            }
         }
 
         $players = array();
@@ -579,6 +589,7 @@ class Connection extends Singleton implements AppListener, TickListener
 
         $request = new dediRequest("dedimania.UpdateServerPlayers", $args);
         $this->send($request, array($this, "xUpdateServerPlayers"));
+
         return;
     }
 
@@ -654,7 +665,6 @@ class Connection extends Singleton implements AppListener, TickListener
      */
     public function _process($dedires, $callback)
     {
-
         try {
 
             if (is_array($dedires) && array_key_exists('Message', $dedires)) {
@@ -666,8 +676,8 @@ class Connection extends Singleton implements AppListener, TickListener
                 if (count($errors) > 0 && array_key_exists('methods', $errors[0])) {
                     foreach ($errors[0]['methods'] as $error) {
                         if (!empty($error['errors'])) {
-                            $this->console('[Dedimania service return error] Method:' . $error['methodName']);
-                            $this->console('Error string:' . $error['errors']);
+                            $this->console('[Dedimania service return error] Method:'.$error['methodName']);
+                            $this->console('Error string:'.$error['errors']);
                         }
                     }
                 }
@@ -678,12 +688,14 @@ class Connection extends Singleton implements AppListener, TickListener
 
 
                 if (array_key_exists("faultString", $array[0])) {
-                    $this->console("Fault from dedimania server: " . $array[0]['faultString']);
+                    $this->console("Fault from dedimania server: ".$array[0]['faultString']);
+
                     return;
                 }
 
                 if (!empty($array[0][0]['Error'])) {
-                    $this->console("Error from dedimania server: " . $array[0][0]['Error']);
+                    $this->console("Error from dedimania server: ".$array[0][0]['Error']);
+
                     return;
                 }
 
@@ -697,7 +709,7 @@ class Connection extends Singleton implements AppListener, TickListener
                 $this->console("[Dedimania Error] Can't find Message from Dedimania reply");
             }
         } catch (Exception $e) {
-            $this->console("[Dedimania Error] connection to dedimania server failed." . $e->getMessage());
+            $this->console("[Dedimania Error] connection to dedimania server failed.".$e->getMessage());
         }
 
     }
@@ -718,6 +730,7 @@ class Connection extends Singleton implements AppListener, TickListener
         } elseif ($a['Best'] > $b['Best']) {// best b better than best a
             return 1;
         }
+
         return 0;
     }
 
@@ -729,13 +742,13 @@ class Connection extends Singleton implements AppListener, TickListener
         if (isset($data[0][0]['SessionId'])) {
             $this->sessionId = $data[0][0]['SessionId'];
             $this->console("Authentication success to dedimania server!");
-            $this->debug("recieved Session key:" . $this->sessionId);
+            $this->debug("recieved Session key:".$this->sessionId);
             Dispatcher::dispatch(new dediEvent(dediEvent::ON_OPEN_SESSION, $this->sessionId));
 
             return;
         }
         if (!empty($data[0][0]['Error'])) {
-            $this->console("Authentication Error occurred: " . $data[0][0]['Error']);
+            $this->console("Authentication Error occurred: ".$data[0][0]['Error']);
 
             return;
         }
@@ -754,7 +767,8 @@ class Connection extends Singleton implements AppListener, TickListener
         self::$dediMap = null;
 
         if (!empty($data[0]['Error'])) {
-            $this->console("Error from dediserver: " . $data[0]['Error']);
+            $this->console("Error from dediserver: ".$data[0]['Error']);
+
             return;
         }
 
@@ -820,7 +834,7 @@ class Connection extends Singleton implements AppListener, TickListener
             try {
                 $player = $this->storage->getPlayerObject($dediplayer->login);
                 $this->connection->chatSendServerMessage(
-                    "Player" . $player->nickName . '$z$s$fff[' . $player->login . '] is $f00BANNED$fff from dedimania.'
+                    "Player".$player->nickName.'$z$s$fff['.$player->login.'] is $f00BANNED$fff from dedimania.'
                 );
             } catch (Exception $e) {
 
@@ -843,7 +857,7 @@ class Connection extends Singleton implements AppListener, TickListener
                 try {
                     $pla = $this->storage->getPlayerObject($dediPlayer->login);
                     $this->connection->chatSendServerMessage(
-                        "Player" . $pla->nickName . '$z$s$fff[' . $pla->login . '] is $f00BANNED$fff from dedimania.'
+                        "Player".$pla->nickName.'$z$s$fff['.$pla->login.'] is $f00BANNED$fff from dedimania.'
                     );
                 } catch (Exception $e) {
 

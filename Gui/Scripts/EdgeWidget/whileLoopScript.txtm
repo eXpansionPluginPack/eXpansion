@@ -40,22 +40,22 @@ if (edge_animatedId[id] == True) {
     }
 
     if (animActive) {
-        p2 = widgetLastPosRel[version][id][gameMode];
+        p2 = eXp_widgetLastPosRel[version][id][gameMode];
         declare Text pos = "";
         declare Text scale = "1.";
 
         declare Real edge = -200.;
-        if (p2.X > 1) {
+        if (p2.X > 1.) {
             edge = 200.;
         }
 
         if (edge_isMinimized) {
             declare value = edge * AL::Ease("EaseInCirc", (Now - edgeStart) * 1., 0., 1., 500.);
-            Window.RelativePosition.X = p2.X + value;
+            Window.RelativePosition_V3.X = p2.X + value;
         }
         else {
             declare value = edge * AL::Ease("EaseOutCirc", (Now - edgeStart) * 1., 1., -1., 500.);
-            Window.RelativePosition.X = p2.X + value;
+            Window.RelativePosition_V3.X = p2.X + value;
         }
     }
 } else {

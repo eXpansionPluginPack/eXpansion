@@ -1,22 +1,21 @@
 declare Integer eXp_lastClockUpdate = Now;
-declare Integer start = Now-2000;
+declare Integer start = Now - 2000;
 declare Boolean[Text] exp_trayId for LocalUser = Boolean[Text];
-declare Vec3 p = Window.RelativePosition;
+declare Vec2 p = Window.RelativePosition_V3;
 
 // from edge script
 declare Boolean edge_isMinimized for UI = False;
 declare Boolean edge_isAnimated for UI = False;
-declare Boolean edge_isLockedVisible2 for LocalUser= True;
-
+declare Boolean edge_isLockedVisible2 for LocalUser = True;
 declare Boolean[Text] edge_animatedId for UI = Boolean[Text];
-declare Boolean lastValue = edge_isMinimized;
+declare Boolean lastValue = False;
 
 declare Integer edgeStart = Now;
 declare Boolean animActive = False;
 declare Real value = 0.;
 
 if (!edge_animatedId.existskey(id) ) {
-    edge_animatedId[id] = edge_isMinimized;
+    edge_animatedId[id] = False;
 }
 
 if (!exp_trayId.existskey(id) ) {
@@ -24,12 +23,12 @@ if (!exp_trayId.existskey(id) ) {
 }
 
 declare Real diff = -(Window.Size.X / 2) + 8;
-    if (Window.RelativePosition.X > 1) {
+    if (Window.RelativePosition_V3.X > 1) {
        diff = (Window.Size.X / 2) - 10 ;
     }
 
 if (exp_trayId[id]) {
-    Window.RelativePosition.X = p.X + diff;
+    Window.RelativePosition_V3.X = p.X + diff;
 }
 
 declare Real edge = -200.;

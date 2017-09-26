@@ -3,6 +3,7 @@
 namespace ManiaLivePlugins\eXpansion\Widgets_LiveRankings;
 
 use ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Gui\Widgets\LivePanel;
+use ManiaLivePlugins\eXpansion\Widgets_LiveRankings\Gui\Widgets\LivePanel2;
 use Maniaplanet\DedicatedServer\Structures\GameInfos;
 
 class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlugin
@@ -54,6 +55,9 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             $panelMain = Gui\Widgets\LivePanel::Create($login);
             $panelMain->setLayer(\ManiaLive\Gui\Window::LAYER_NORMAL);
             $panelMain->setSizeX($this->panelSizeX);
+            if (!$this->config->isHorizontal) {
+                $panelMain->setDirection("left");
+            }
             $this->widgetIds["LivePanel"] = $panelMain;
             $this->widgetIds["LivePanel"]->update();
             $this->widgetIds["LivePanel"]->show();
@@ -61,6 +65,24 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
             if (isset($localRecs[0])) {
                 $localRecs[0]->update();
                 $localRecs[0]->show($login);
+            }
+        }
+
+        if (!$gui->disablePersonalHud) {
+            $localRecs = LivePanel2::GetAll();
+            if ($login == null) {
+                $panelScore = Gui\Widgets\LivePanel2::Create($login);
+                $panelScore->setLayer(\ManiaLive\Gui\Window::LAYER_SCORES_TABLE);
+                $panelScore->setVisibleLayer("scorestable");
+                $panelScore->setSizeX($this->panelSizeX);
+                $this->widgetIds["LivePanel2"] = $panelScore;
+                $this->widgetIds["LivePanel2"]->update();
+                $this->widgetIds["LivePanel2"]->show();
+            } else {
+                if (isset($localRecs[0])) {
+                    $localRecs[0]->update();
+                    $localRecs[0]->show($login);
+                }
             }
         }
 
@@ -82,7 +104,7 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
     public function hideLivePanel()
     {
         Gui\Widgets\LivePanel::EraseAll();
-
+        Gui\Widgets\LivePanel2::EraseAll();
         $this->widgetIds = array();
 
     }
@@ -167,16 +189,19 @@ class Widgets_LiveRankings extends \ManiaLivePlugins\eXpansion\Core\types\ExpPlu
 
     public function onPlayerConnect($login, $isSpectator)
     {
+
         $this->showLivePanel($login);
     }
 
     public function onPlayerDisconnect($login, $reason = null)
     {
         Gui\Widgets\LivePanel::Erase($login);
+        Gui\Widgets\LivePanel2::Erase($login);
     }
 
     public function eXpOnUnload()
     {
         Gui\Widgets\LivePanel::EraseAll();
+        Gui\Widgets\LivePanel2::EraseAll();
     }
 }

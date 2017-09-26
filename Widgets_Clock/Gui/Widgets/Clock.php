@@ -18,7 +18,7 @@ class Clock extends Widget
         $frame = new Frame();
         $frame->setId("Frame");
 
-        $this->setName("Local time");
+        $this->setName("Local Time");
 
         $bg = new WidgetBackGround(28, 6);
         $bg->setPosX(-6);
