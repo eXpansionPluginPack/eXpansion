@@ -25,11 +25,11 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
 
         $config = Config::getInstance();
 
-        $var = new Boolean("disablePersonalHud", "Enable widget positions override for admins", $config);
+        /*$var = new Boolean("disablePersonalHud", "Enable widget positions override for admins", $config);
         $var->setDescription("If set, the server admin hud defined positions are forced to all players");
         $var->setGroup("GUI");
         $var->setDefaultValue(false);
-        $this->registerVariable($var);
+        $this->registerVariable($var); */
 
         $var = new ColorCode("windowTitleColor", "Window Title Text color", $config);
         $var->setDescription("you can use short 3 (+1 for alpha) or full 6 (+2 for alpha) color code for this value");

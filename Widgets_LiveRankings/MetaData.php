@@ -15,7 +15,7 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
     public function onBeginLoad()
     {
         parent::onBeginLoad();
-        $this->setName(" Live Rankings");
+        $this->setName("Widget: Live Rankings");
         $this->setDescription("Provides live rankings for all Trackmania game modes.");
         $this->setGroups(array('Records', 'Widgets'));
 
@@ -31,5 +31,8 @@ class MetaData extends \ManiaLivePlugins\eXpansion\Core\types\config\MetaData
             'TeamAttack.Script.txt'
         );
         $config = Config::getInstance();
+        $var = new Boolean("isHorizontal", "Use horizontal (old) widget style", $config, false, false);
+        $var->setDefaultValue(false);
+        $this->registerVariable($var);
     }
 }

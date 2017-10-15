@@ -29,7 +29,6 @@ declare showStamp = 0;
 declare Boolean firstClick = False;
 declare Boolean exp_enableHudMove for UI = False;
 declare Boolean exp_needToCheckPersistentVars for UI = False;
-declare persistent Boolean exp_chatVisible = True;
 declare Boolean showStatus = False;
 declare Boolean needUpdate = True;
 declare Boolean needHidden = False;
@@ -54,4 +53,4 @@ foreach (control in Page.GetClassChildren_Result) {
    control.Hide();
 }
 
-ClientUI.OverlayHideChat = !exp_chatVisible;
+ClientUI.OverlayHideChat = False;

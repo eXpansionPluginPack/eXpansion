@@ -53,23 +53,19 @@ class Widgets_DedimaniaRecords extends \ManiaLivePlugins\eXpansion\Core\types\Ex
 
     public function onTick()
     {
-
-        if ((time() - $this->lastUpdate) > 20) {
-
-            if (($this->needUpdate & self::DEDIMANIA) == self::DEDIMANIA
-                || $this->forceUpdate
-                || ($this->needUpdate & self::DEDIMANIA_FORCE) == self::DEDIMANIA_FORCE
-            ) {
-                if ($this->dedi || $this->needUpdate == self::DEDIMANIA_FORCE) {
-                    $this->updateDediPanel();
-                    $this->dedi = false;
-                }
+        if (($this->needUpdate & self::DEDIMANIA) == self::DEDIMANIA
+            || $this->forceUpdate
+            || ($this->needUpdate & self::DEDIMANIA_FORCE) == self::DEDIMANIA_FORCE
+        ) {
+            if ($this->dedi || $this->needUpdate == self::DEDIMANIA_FORCE) {
+                $this->updateDediPanel();
+                $this->dedi = false;
             }
-
-            $this->lastUpdate = time();
-            $this->forceUpdate = false;
-            $this->needUpdate = false;
         }
+
+        $this->lastUpdate = time();
+        $this->forceUpdate = false;
+        $this->needUpdate = false;
     }
 
     public function updateDediPanel($login = null)

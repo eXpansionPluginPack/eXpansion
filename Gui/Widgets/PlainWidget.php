@@ -43,7 +43,7 @@ class PlainWidget extends \ManiaLive\Gui\Window
             }
 
             if ($component instanceof \ManiaLive\Gui\Container) {
-                $this->detectElements($component->getComponents(), $component);
+                $this->detectElements($component->getComponents());
             }
 
             if ($component instanceof \ManiaLivePlugins\eXpansion\Gui\Structures\ScriptedContainer) {

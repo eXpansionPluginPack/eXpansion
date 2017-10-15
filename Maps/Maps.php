@@ -349,7 +349,7 @@ class Maps extends ExpPlugin
 
     public function showCurrentMapWidget($login)
     {
-        if ($this->config->showCurrentMapWidget) {
+        if (Config::getInstance()->showCurrentMapWidget) {
             $info = CurrentMapWidget::Create(null, true);
             $info->setMap($this->storage->currentMap);
             $info->setLayer(Window::LAYER_SCORES_TABLE);
@@ -360,7 +360,7 @@ class Maps extends ExpPlugin
 
     public function showNextMapWidget($login)
     {
-        if ($this->config->showNextMapWidget) {
+        if (Config::getInstance()->showNextMapWidget) {
             $info = NextMapWidget::Create(null, true);
             $info->setLayer(Window::LAYER_SCORES_TABLE);
             $info->setAction($this->actionShowJukeList);
@@ -402,9 +402,9 @@ class Maps extends ExpPlugin
         $this->is_onEndMatch = true;
 
         $this->config = Config::getInstance();
-        if ($this->wasWarmup) {
-            return;
-        }
+        // if ($this->wasWarmup) {
+        //    return;
+        // }
 
         $this->atPodium = true;
 
@@ -1083,6 +1083,9 @@ class Maps extends ExpPlugin
         }
         // update all open Maplist windows
         if ($isListModified) {
+			$this->maps = array();
+			$this->getMapsCache();
+
             $this->preloadHistory();
             // update local cache
             self::$dbMapsByUid = array();

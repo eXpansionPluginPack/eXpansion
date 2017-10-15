@@ -59,7 +59,7 @@ class Widgets extends \ManiaLib\Utils\Singleton
         GameInfos::GAMEMODE_LAPS => 5,
         GameInfos::GAMEMODE_CUP => 5);
 
-    public $LocalRecordsPanel_posX = array(self::config_default => 110);
+    public $LocalRecordsPanel_posX = array(self::config_default => 120);
     public $LocalRecordsPanel_posY = array(self::config_default => 60);
 
     public $LocalRecordsPanel_nbFields = array(self::config_default => 15,

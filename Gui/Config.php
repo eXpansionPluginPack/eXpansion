@@ -41,7 +41,7 @@ class Config extends \ManiaLib\Utils\Singleton
     public $style_widget_title_lbSize = 1;
     public $style_widget_title_lbColor = 'DEE';
     public $disableAnimations = false;
-    public $disablePersonalHud = false;
+    public $disablePersonalHud = true;
     public $allWidgetPositions = array();
     public $colorPreview = "http://reaby.kapsi.fi/ml/ui3/colorchooser/1.png";
     public $colorHue = "http://reaby.kapsi.fi/ml/ui3/colorchooser/2.png";

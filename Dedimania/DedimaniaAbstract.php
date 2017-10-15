@@ -271,9 +271,9 @@ abstract class DedimaniaAbstract extends \ManiaLivePlugins\eXpansion\Core\types\
 
 
                 // update checkpoints for the record
-                $playerinfo = \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo;
 
-                $record->checkpoints = implode(",", $playerinfo[$login]->checkpoints);
+              //  $playerinfo = \ManiaLivePlugins\eXpansion\Core\Core::$playerInfo;
+              //  $record->checkpoints = implode(",", $playerinfo[$login]->checkpoints);
 
                 // add record
                 $newrecords[$record->login] = $record;

@@ -12,7 +12,7 @@ class CurrentTrackWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
     protected $background;
     protected $action = null;
 
-    public function onConstruct()
+    public function eXpOnBeginConstruct()
     {
         $this->setName("Music Widget");
 
@@ -32,13 +32,6 @@ class CurrentTrackWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->frame->setAlign("center", "top");
         $this->frame->setSizeX(90);
 
-
-        /* $this->quad = new \ManiaLib\Gui\Elements\Quad();
-            $this->quad->setStyle("Icons128x32_1");
-            $this->quad->setSubStyle("Sound");
-            $this->quad->setAlign("left", "center");
-            $this->quad->setSize(8, 8);
-            $this->frame->addComponent($this->quad); */
         $label = new \ManiaLib\Gui\Elements\Label(16, 8);
         $label->setAlign("left", "center");
         $label->setTextColor('fff');
@@ -54,16 +47,7 @@ class CurrentTrackWidget extends \ManiaLivePlugins\eXpansion\Gui\Widgets\Widget
         $this->label->setTextSize(1);
         $this->frame->addComponent($this->label);
 
-
         $this->addComponent($this->frame);
-
-        //$this->label->enableAutonewline();
-        parent::onConstruct();
-    }
-
-    public function onResize($oldX, $oldY)
-    {
-
     }
 
     public function setSong(\ManiaLivePlugins\eXpansion\MusicBox\Structures\Song $song)
