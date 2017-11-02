@@ -30,11 +30,11 @@ use SimpleXMLElement;
 class Core extends ExpPlugin
 {
 
-    const EXP_VERSION = "1.1.0.0";
+    const EXP_VERSION = "1.1.0.2";
 
     const EXP_REQUIRE_MANIALIVE = "4.0.0";
 
-    const EXP_REQUIRE_DEDIATED = "2014.7.24"; // replace dedicated 2013-7-30 to 2013.7.30
+    const EXP_REQUIRE_DEDIATED = "2017.7.12";
 
     public $guestList;
 
@@ -180,6 +180,18 @@ class Core extends ExpPlugin
                  \___/_/ \_\ .__/ \__,_|_| |_|___/_|\___/|_| |_|
 ...........................| |.........Plugin Pack for Manialive...............
                            |_|                                                  
+
+  _    _____                              _         _                                _   _ 
+ | |  / ____|                            | |       | |                              | | | |
+ | | | (___  _   _ _ __  _ __   ___  _ __| |_    __| |_ __ ___  _ __  _ __   ___  __| | | |
+ | |  \___ \| | | | '_ \| '_ \ / _ \| '__| __|  / _` | '__/ _ \| '_ \| '_ \ / _ \/ _` | | |
+ |_|  ____) | |_| | |_) | |_) | (_) | |  | |_  | (_| | | | (_) | |_) | |_) |  __/ (_| | |_|
+ (_) |_____/ \__,_| .__/| .__/ \___/|_|   \__|  \__,_|_|  \___/| .__/| .__/ \___|\__,_| (_)
+                  | |   | |                                    | |   | |                   
+..................|_|...|_| eXpansion² is planned..............|_|...|_|...................
+............................but give it time, lot's of time :(
+...please don't report bugs on eXp1, while waiting for exp² switch to another controller...
+...........................................................................................
 EOT;
 
         $this->console($expansion);
@@ -285,7 +297,6 @@ EOT;
         if ($this->storage->gameInfos->gameMode == GameInfos::GAMEMODE_SCRIPT) {
             $this->connection->triggerModeScriptEvent("LibXmlRpc_UnblockAllCallbacks", "");
             try {
-                $this->connection->triggerModeScriptEvent("XmlRpc.EnableCallbacks", ["true"]);
                 $this->connection->setModeScriptSettings(array("S_UseScriptCallbacks" => true));
             } catch (\Exception $ex) {
                 $this->console(
