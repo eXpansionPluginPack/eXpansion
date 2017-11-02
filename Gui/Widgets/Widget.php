@@ -78,7 +78,12 @@ class Widget extends PlainWidget
 
         $widgetName = str_replace(" ", "", $this->getName());
 
-        $config = parse_ini_file(APP_ROOT.DIRECTORY_SEPARATOR."config".DIRECTORY_SEPARATOR."widgets.ini", true,
+        $configFile = APP_ROOT.DIRECTORY_SEPARATOR."config".DIRECTORY_SEPARATOR."widgets.ini";
+        if (!file_exists($configFile)) {
+            $configFile = __DIR__ . '/../widgets.ini';
+        }
+
+        $config = parse_ini_file($configFile, true,
             INI_SCANNER_TYPED);
 
         //Getting exact game mode
